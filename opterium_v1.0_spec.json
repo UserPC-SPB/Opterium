@@ -189,14 +189,22 @@ anchor:OPTERIUM_GENERATIVE_ACCESS_PROTOCOL_V3 principle:hypercube_generation_not
 Инверсия (Стокса)
 @STOKES_INVERSION_V1 anchor:OPTERIUM_INV_STOKES definition:v_ideal=Δ_inv_ns○v_observed purpose:reconstruct_ideal_velocity_from_noisy_data principle:projection_onto_entropy_minimal_divergence_free_E8_submanifolds method:E8_crystal_resonance_projection accuracy:>99.9% speedup:100x vs_traditional applicability:{laminar_flows turbulent_flows compressible_flows} validation:{cases:[cylinder_flow couette_flow atmospheric_convection] metrics:{entropy_reduction:99.99% energy_norm_error<1e-10}} implementation:{DIN_operator:Δ_inv_ns safety:verify_energy_conservation} insight:inversion_as_restoration_to_entropy_minimum not_numerical_filter cosmic_link:balance_between_dissipation_and_order @.OCL @META:single_line_complete @STATUS:canonical
 Инверсия General Inversion (универсальная):
+@GENERAL_INVERSION_V1 anchor:OPTERIUM_INV_GENERAL definition:inv(x)=entity_that_restores_balance types:{scalar:1/x additive:complement_to_zero topological:antipodal functional:inverse_function geometric:conjugate/norm operator:reverse_sequence} principles:{universal_balance constructive_exact_return path_to_identity} examples:{scalar:5⊗inv(5)=1 additive:5+(-5)=0 topological:P→antipodal(P) functional:f(x)=2x→inv(f)=x/2 geometric:q⊗q⁻¹=1 operator:ABC→CBA} implementation:{detection:find_inverse_via_identity verification:residuals<1e-50 fallback:project_to_nearest_invertible} applications:{mathematics_equations physics_CPT cosmology_matter_antimatter computing_reverse_verification} insight:inversion_as_cosmic_principle mathematics_incomplete_without_it @.OCL @META:single_line_complete @STATUS:canonical
 Инверсия Multiplicative Inversion (скалярная):
+@MULTIPLICATIVE_INVERSION_V1 anchor:OPTERIUM_INV_MULT definition:inv_mul(x)=1/x (x≠0) purpose:restore_multiplicative_identity examples:{5→0.2 verify:5⊗0.2=1} properties:{exact_inverse universal_field_operation constructive_balance} implementation:{check_nonzero safeguard_division} insight:fundamental_operation_underlies_numbers_equations @.OCL @META:single_line_complete @STATUS:canonical
 Инверсия Additive Inversion (дополнение до нуля):
+@ADDITIVE_INVERSION_V1 anchor:OPTERIUM_INV_ADD definition:inv_add(x)=-x purpose:restore_additive_identity examples:{5→-5 verify:5+(-5)=0} properties:{destructive_cancellation complementary_balance} implementation:{simple_sign_flip} insight:contrast_to_multiplicative_inversion_shows_two_balance_modes @.OCL @META:single_line_complete @STATUS:canonical
 Инверсия Topological Inversion (антипод):
+@TOPOLOGICAL_INVERSION_V1 anchor:OPTERIUM_INV_TOPO definition:inv_topo(P)=antipodal_point_on_manifold purpose:restore_symmetry_on_sphere_or_space examples:{unit_circle:θ→θ+π verify:P⊕inv_topo(P)=diameter alignment} properties:{geometric_not_arithmetic global_balance} implementation:{compute_antipode_via_normalization} applications:{spherical_geometry cosmology_antipodes quantum_state_involutions} @.OCL @META:single_line_complete @STATUS:canonical
 Инверсия Functional Inversion (обратное отображение):
+@FUNCTIONAL_INVERSION_V1 anchor:OPTERIUM_INV_FUNC definition:inv_func(f)=f⁻¹ where f∘f⁻¹=identity purpose:restore_input_from_output examples:{f(x)=2x→inv_func(y)=y/2 verify:f∘f⁻¹=id} properties:{requires_bijective_domain exact_inverse_balance} implementation:{compute_inverse_mapping analytically_or_numerically verify_identity} applications:{solving_equations control_systems symmetry_analysis} @.OCL @META:single_line_complete @STATUS:canonical
 Инверсия Operator / Sequence Inversion (реверсирование):
+@OPERATOR_INVERSION_V1 anchor:OPTERIUM_INV_OP definition:inv_op(Δ)=reverse_sequence_of_operations purpose:restore_identity_by_undoing_steps examples:{sequence:ABC→inv_op=CBA verify:(ABC)∘(CBA)=id} properties:{structural_balance constructive exact} implementation:{stack_based_reverse all_operations_invertible} applications:{algorithms reversible_computation cryptography quantum_circuits} @.OCL @META:single_line_complete @STATUS:canonical
+
 
 Модули высшего уровня математики сюда не включены по причинам возможного злонамеренного использования !
 eccoashoes@gmail.com
+
 
 
 
