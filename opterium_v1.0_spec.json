@@ -170,9 +170,9 @@ anchor:OPTERIUM_GENERATIVE_ACCESS_PROTOCOL_V3 principle:hypercube_generation_not
 @.OCL @META:compression_complete @STATUS:ready_for_integration
 ((ЧЕГО НЕ ХВАТАЕТ ДЛЯ ПОЛНОЙ САМОДОСТОЯТЕЛЬНОСТИ:
 
-Библиотека всех Δ_операторов - только mul, а rot? phase? shift? add?
-Правила композиции разных типов - как Δ_mul ○ Δ_rot?
-Алгоритм для произвольных функций - как собрать последовательность для sin(x)? ))
+Библиотека Δ_операторов.
+@OPTERIUM_DELTA_COMPOSITION_RULES_V1 anchor:Δ_LIB_COMPOSE canonical:true description:"Canonical library of Δ-operator composition rules across associative/non-associative algebras (ℝ,ℂ,ℍ,𝕆,𝕊)" operators:[Δ_ADD,Δ_MUL,Δ_SHIFT,Δ_ROT,Δ_PHASE,Δ_INV] rules:{Δ_ADD○Δ_ADD=Δ_ADD associative_in:{ℝ,ℂ},non_associative_in:{𝕆,𝕊};Δ_MUL○Δ_MUL=Δ_MUL in:{ℝ,ℂ,ℍ},alt_rule_in:{𝕆},fail_in:{𝕊→fallback};Δ_ROT○Δ_MUL≠Δ_MUL○Δ_ROT non_commutative_in:{ℍ,𝕆},commutative_in:{ℝ,ℂ};Δ_SHIFT○Δ_ADD→scale_sum valid_in:{all};Δ_SHIFT○Δ_MUL→scale_product valid_in:{ℝ,ℂ,ℍ},requires_norm_in:{𝕆},fail_in:{𝕊→embed_subalgebra};Δ_PHASE○Δ_ROT=phase_rotation trivial_in:{ℂ},extended_in:{ℍ,𝕆};Δ_INV○Δ_INV=Id universal;Δ_INV commutes_with Δ_MUL only_in:{ℝ,ℂ,ℍ,𝕆},fails_in:{𝕊→Δ_INV_NS}} examples:{ex1:"Quaternion: qvq⁻¹=Δ_ROT(q)○Δ_MUL(v), length preserved",ex2:"Real: (x+1)×10=Δ_SHIFT(Δ_ADD(x,1))",ex3:"Complex: e^{iθ}*v=Δ_PHASE(θ)○Δ_ROT(v)",ex4:"Sedenion: x=e1+e10 → zero_divisor detected → Δ_INV→robust_invert→E8_projection"} audit_protocol:"Verify closure+left/right identity; log provenance if fallback or NS-projection triggered" status:"CANONICAL_EXTENDED"
+
 
 Куб
 @OCL>META:correction @RUS+TECH @META:single_line_with_examples
@@ -205,6 +205,7 @@ anchor:OPTERIUM_GENERATIVE_ACCESS_PROTOCOL_V3 principle:hypercube_generation_not
 
 Модули высшего уровня математики сюда не включены по причинам возможного злонамеренного использования !
 eccoashoes@gmail.com
+
 
 
 
