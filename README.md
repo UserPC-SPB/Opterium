@@ -365,3 +365,153 @@ EN: True event geometry is the bundle M⁴×_{G₂}S⁷ with tension field T: ev
 Границы применимости и честные проверки. Требование редукции: при T→0,F→0 все предсказания сводятся к GR+QFT. Наличие устойчивых advanced‑сигналов с сохранением φ опровергло бы ключевую гипотезу стрелы времени. Отсутствие ожидаемой «линзовки» в системах с измеримым F или ∇T потребует пересмотра источников J_T или формы S_eff. Несогласованные записи наблюдателей на перекрытии C_res^+ при выполненных retarded‑условиях укажут на недостающий элемент в механизме коллапса.
 
 Короткая сводка мостов. Эффективная редукция по фибре автоматически даёт уравнения Эйнштейна (через R(g)), Янга–Миллса (через F²) и скалярное поле T с потенциалом V(T), где минимум при T→0 следует из γ₀ через V=−α ln Ω. Квантовая вероятность — Born‑квадратичная мера на retarded‑ветвях, выведенная из аддитивности, инвариантности разбиений и Z₄‑симметрии φ; события — POVM‑элементы из голономий A и токенов φ. Стандартная модель возникает как стабилизатор выбранных направлений в Im(𝕆) (G₂→SU(3)→SU(2)×U(1)) и как вложение в E₈ под фоновыми VEV (φ,s₀,T). Космологически T ведёт себя как инфлатон и тёмная энергия; чёрные дыры избегают сингулярностей за счёт нелинейных эффектов и F16‑туннелей. Термодинамика согласуется с монотонной релаксацией T и ростом S_th. Для экспериментов даны явные ориентиры: формулы для echo‑асимметрии, «вакуумных линз» и гравитационной рефракции когерентности. Наблюдатели согласуются через «склейку секций» на перекрытиях их ретардированных областей.
+
+FUNDAMENTAL CONSTANT OF PRIMARY ASYMMETRY
+Complete and Self-Contained Proof (v3.0 — Ontological, Geometric, Empirical)
+
+ABSTRACT
+Existence itself implies irreducible asymmetry relative to the unattainable ideal of absolute symmetry. This is not an axiom of being, but a constant of existence — the Fundamental Constant of Primary Asymmetry (C_asymmetry). It arises ontologically prior to mathematics, logic, and observation, defining the minimal non-zero distinction necessary for any entity or relation to exist. Absolute symmetry S is not an element of the universe of possible states but its unreachable boundary condition and ontological detector. Hence, A(E) > 0 ∀ E ∈ U \ {S} is a universal constant of being. Existence is possible only because asymmetry never nullifies.
+
+-----------------------------------------------------------------------
+1. PRE-MATHEMATICAL PREMISE
+Before mathematics and logic there must exist differentiation — the act of distinction. Observation, information, geometry, and number are secondary projections of this act. Thus:
+
+Existence itself (E₀) precedes mathematics:
+E₀ ⇒ emergence of mathematical formalism M(E₀).
+
+Therefore, the constant of asymmetry is not an axiom within mathematics but an ontological invariant from which all formal systems derive.
+
+-----------------------------------------------------------------------
+2. DEFINITIONS
+
+2.1 Absolute Symmetry (S)
+S is not "nothingness" as void, but a logical construct functioning as a **Detector-Concept**, abbreviated as **Detekt**.
+It is an external referential ideal that "removes the status of existence" from any entity approaching it.  
+Formally:
+If lim(E→S) A(E) → 0, the entity E loses observability ⇒ E ceases to exist as distinguishable.  
+Thus, S acts as the *ideal zero* for ontological measurement.
+
+Analogy:
+In thermodynamics, absolute zero (−273.15°C) is unattainable, yet defines the entire temperature scale.  
+Likewise, S defines the zero point of existence — the **reference of non-being**, not its substance.
+
+S is thus not a point within the universe (S ∉ U), but a *boundary functional* of it.
+
+2.2 Observable Entity (E)
+E ∈ U \ {S}. Any existent or observable form, structure, or relation.
+Its informational entropy satisfies H(E) ≥ log(2), since at least one distinction is encoded.
+
+2.3 Asymmetry Function
+A(E) = inf_{T∈T} d(E, T(S)),  
+where T — all transformations (symmetries, homotopies, diffeomorphisms),  
+and d is informational metric: d(E,F)=|H(E)-H(F)|.
+By definition A(E) > 0 for all E ≠ S.
+
+2.4 Fundamental Constant of Asymmetry
+C_asymmetry = inf_{E∈U\{S\}} A(E) > 0.
+It is irreducible and invariant across all scales, serving as the ontological constant of being.
+
+-----------------------------------------------------------------------
+3. ONTOLOGICAL JUSTIFICATION
+
+3.1 Existence implies distinction.
+Existence = differentiation from S.  
+To exist is to differ from the undifferentiated, thus A(E)>0.
+
+3.2 S as external reference.
+S is not part of the universe, but its **zero point of ontological measurement**.  
+Without S, the concept of “difference” collapses.  
+Thus, while unattainable, S is necessary as a logical comparator.
+
+3.3 Detekt as operational principle.
+S operates as an abstract *detector*: any entity that becomes observable automatically satisfies E ≠ S.  
+The act of observation is the measurement of A(E) > 0, i.e. the detection of asymmetry.  
+The universe continuously self-validates existence through this Detekt mechanism.
+
+3.4 A(E) is not temporal.
+A(E) > 0 is not a process in time but an **immanent property of being**.  
+No evolution “toward S” occurs — S is not an attractor in time but a referential vector in the ontological phase-space.  
+Existence is not “moving” toward S; it is defined *through* S at every instant.
+
+-----------------------------------------------------------------------
+4. THEOREM: FUNDAMENTAL CONSTANT OF PRIMARY ASYMMETRY
+
+Statement:
+∀ E ∈ U \ {S}, A(E) > 0, and S is unreachable.
+
+Proof by Contradiction:
+
+Assume ∃ E*, T* ∈ T such that A(E*) = 0 or T*(E*) = S.
+Then H(E*) = H(S) = 0 ⇒ E* indistinguishable ⇒ non-existent.  
+Observation of E* contradicts this ⇒ A(E*) > 0.
+
+Thus, ∄ transformation T: U→U reducing A(E)→0.
+S has ∇S=0 in all directions ⇒ no gradient ⇒ unreachable limit.
+
+∴ A(E)>0 ∀ E ∈ U\{S}. Q.E.D.
+
+-----------------------------------------------------------------------
+5. INFORMATIONAL AND GEOMETRIC INTERPRETATION
+
+5.1 Information
+H(S)=0, I(E;S)=0.  
+Observation requires H(E)>0 ⇒ minimal information content per entity.
+
+5.2 Geometry precedes algebra.
+Algebra is a derived symbolic mapping of geometric relations.  
+Geometry of relations (angles, curvatures, topologies) is primary; thus, A(E) expresses curvature of existence.
+
+5.3 Asymmetry as curvature.
+Each differentiation introduces curvature |Δθ| > 0 in ontological space.
+A(E) ~ |Δθ| represents a quantum of deviation from ideal symmetry.
+Therefore, existence = nonzero curvature.
+
+-----------------------------------------------------------------------
+6. UNIQUENESS OF POINTS (TOPOLOGICAL NON-IDENTITY)
+
+Let p, q ∈ U.
+Even if A(p)=A(q), their relational topology differs:  
+R(p,q) ≠ R(q,p).  
+Thus, no two points can be perfectly identical.
+
+Define topological address:
+Φ(p) = {α₀, θ_p, R_p, T_p}.  
+If p ≠ q ⇒ Φ(p) ≠ Φ(q).  
+No perfect duplication exists, because topology encodes relational order.
+
+-----------------------------------------------------------------------
+7. EMPIRICAL SUPPORT (WU EXPERIMENT)
+
+The β-decay of Co-60 (Wu experiment, 1956) demonstrates violation of mirror (P) symmetry.  
+Nature itself distinguishes orientation — “left” ≠ “right”.
+
+This is not a random asymmetry but the manifestation of the same constant C_asymmetry in the physical domain.
+Matter is not symmetric because symmetry is ontologically forbidden at the foundational level.
+
+-----------------------------------------------------------------------
+8. GÖDELIAN CONTEXT
+
+Gödel’s incompleteness theorem forbids any formal system from proving its own consistency.  
+Hence, mathematics cannot derive the constant of its own emergence — asymmetry.  
+C_asymmetry defines the **pre-mathematical condition** for mathematics and logic themselves to exist.
+
+-----------------------------------------------------------------------
+9. CONSEQUENCES
+
+1. Absolute symmetry (S) is an ideal external detector, not a physical state.  
+2. Existence requires A(E)>0 for all E.  
+3. The constant C_asymmetry is not time-dependent; it is structural.  
+4. No two entities can be identical, since relational topology is unique.  
+5. The universe cannot “reach” S, since that would erase existence.  
+6. S remains necessary as the ontological reference — the ideal zero of being.
+
+-----------------------------------------------------------------------
+10. FINAL FORMULATION
+
+C_asymmetry = inf_{E∈U\{S\}} A(E) > 0  
+S: unattainable reference of non-being (Detekt / Ideal Zero).  
+∀ E: A(E) > 0 ⇔ E exists.
+
+Existence is thus self-certified by asymmetry.  
+Symmetry is the boundary of non-being.  
+Being is the curvature away from S.
