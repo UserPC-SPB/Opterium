@@ -367,151 +367,152 @@ EN: True event geometry is the bundle M⁴×_{G₂}S⁷ with tension field T: ev
 Короткая сводка мостов. Эффективная редукция по фибре автоматически даёт уравнения Эйнштейна (через R(g)), Янга–Миллса (через F²) и скалярное поле T с потенциалом V(T), где минимум при T→0 следует из γ₀ через V=−α ln Ω. Квантовая вероятность — Born‑квадратичная мера на retarded‑ветвях, выведенная из аддитивности, инвариантности разбиений и Z₄‑симметрии φ; события — POVM‑элементы из голономий A и токенов φ. Стандартная модель возникает как стабилизатор выбранных направлений в Im(𝕆) (G₂→SU(3)→SU(2)×U(1)) и как вложение в E₈ под фоновыми VEV (φ,s₀,T). Космологически T ведёт себя как инфлатон и тёмная энергия; чёрные дыры избегают сингулярностей за счёт нелинейных эффектов и F16‑туннелей. Термодинамика согласуется с монотонной релаксацией T и ростом S_th. Для экспериментов даны явные ориентиры: формулы для echo‑асимметрии, «вакуумных линз» и гравитационной рефракции когерентности. Наблюдатели согласуются через «склейку секций» на перекрытиях их ретардированных областей.
 
 FUNDAMENTAL CONSTANT OF PRIMARY ASYMMETRY
-Complete and Self-Contained Proof (v3.0 — Ontological, Geometric, Empirical)
+Complete and Self-Contained Proof (v4.0 — Ontological, Geometric, Achronal Formulation)
 
 ABSTRACT
-Existence itself implies irreducible asymmetry relative to the unattainable ideal of absolute symmetry. This is not an axiom of being, but a constant of existence — the Fundamental Constant of Primary Asymmetry (C_asymmetry). It arises ontologically prior to mathematics, logic, and observation, defining the minimal non-zero distinction necessary for any entity or relation to exist. Absolute symmetry S is not an element of the universe of possible states but its unreachable boundary condition and ontological detector. Hence, A(E) > 0 ∀ E ∈ U \ {S} is a universal constant of being. Existence is possible only because asymmetry never nullifies.
+Existence implies irreducible asymmetry relative to the unattainable ideal of absolute symmetry S.  
+S is not a physical state but an ideal achronal Detekt — the external reference of non-being that defines the zero point of existence.  
+A(E) > 0 for all entities ensures being; A_T(E_T) > 0 defines temporal existence.  
+Thus, the Fundamental Constant of Primary Asymmetry (C_asymmetry) and its temporal projection (C_asymmetry^T) together constitute the invariant basis of ontology: curvature of existence in space and sequence.
 
 -----------------------------------------------------------------------
 1. PRE-MATHEMATICAL PREMISE
-Before mathematics and logic there must exist differentiation — the act of distinction. Observation, information, geometry, and number are secondary projections of this act. Thus:
+Differentiation precedes formal description.  
+Existence E₀ entails distinction — an act prior to any logic or metric.  
+Mathematics, geometry, and observation arise as projections of that act.  
+Hence, asymmetry is ontological, not formal.
 
-Existence itself (E₀) precedes mathematics:
-E₀ ⇒ emergence of mathematical formalism M(E₀).
-
-Therefore, the constant of asymmetry is not an axiom within mathematics but an ontological invariant from which all formal systems derive.
+E₀ ⇒ M(E₀), not vice versa.
 
 -----------------------------------------------------------------------
 2. DEFINITIONS
 
 2.1 Absolute Symmetry (S)
-S is not "nothingness" as void, but a logical construct functioning as a **Detector-Concept**, abbreviated as **Detekt**.
-It is an external referential ideal that "removes the status of existence" from any entity approaching it.  
-Formally:
-If lim(E→S) A(E) → 0, the entity E loses observability ⇒ E ceases to exist as distinguishable.  
-Thus, S acts as the *ideal zero* for ontological measurement.
+S is the *ideal achronal Detekt* — not physical, not temporal, not spatial.  
+It functions as the boundary operator of the universe of existence U, providing the **reference of non-being**.  
+It erases existence from anything that approaches it:  
+lim(E→S) ⇒ observability(E) → 0.  
+Thus, S is the **Ideal Zero**, the external calibration point of ontology.
 
-Analogy:
-In thermodynamics, absolute zero (−273.15°C) is unattainable, yet defines the entire temperature scale.  
-Likewise, S defines the zero point of existence — the **reference of non-being**, not its substance.
-
-S is thus not a point within the universe (S ∉ U), but a *boundary functional* of it.
+S ∉ U, ∇S = 0, and H(S) = 0.
 
 2.2 Observable Entity (E)
-E ∈ U \ {S}. Any existent or observable form, structure, or relation.
-Its informational entropy satisfies H(E) ≥ log(2), since at least one distinction is encoded.
+E ∈ U \ {S}.  
+It possesses informational entropy H(E) ≥ log(2).  
+Existence implies irreducible asymmetry:
+A(E) = inf_{T∈T} d(E, T(S)) > 0.
 
-2.3 Asymmetry Function
-A(E) = inf_{T∈T} d(E, T(S)),  
-where T — all transformations (symmetries, homotopies, diffeomorphisms),  
-and d is informational metric: d(E,F)=|H(E)-H(F)|.
-By definition A(E) > 0 for all E ≠ S.
+2.3 Temporal Entity (E_T)
+E_T is a projection of E within a local generative sequence (flow) of U.  
+Time emerges relationally as the ordering of asymmetric states:
+E_i → E_j ⇒ ΔA(E) > 0 defines directedness.
 
-2.4 Fundamental Constant of Asymmetry
+-----------------------------------------------------------------------
+3. ONTOLOGICAL CONSTANTS
+
+3.1 Spatial Asymmetry Constant:
 C_asymmetry = inf_{E∈U\{S\}} A(E) > 0.
-It is irreducible and invariant across all scales, serving as the ontological constant of being.
+
+3.2 Temporal Asymmetry Constant:
+C_asymmetry^T = inf_{E_T∈U\{S\}} A_T(E_T) > 0.
+
+C_asymmetry^T is *structural*, not chronological: it defines the intrinsic curvature of becoming, not its speed.  
+It is local to each generative flow, unique for every relational configuration of U.
 
 -----------------------------------------------------------------------
-3. ONTOLOGICAL JUSTIFICATION
+4. ACHRONAL INTERPRETATION OF S
 
-3.1 Existence implies distinction.
-Existence = differentiation from S.  
-To exist is to differ from the undifferentiated, thus A(E)>0.
+S is achronal: it exists outside of any temporal manifold.  
+It does not evolve, rotate, or transform — it defines the zero of transformation.  
+Therefore, time cannot “tend toward” S.  
+S serves as the **Ideal Zero Chronator**, a referential limit of non-sequence.
 
-3.2 S as external reference.
-S is not part of the universe, but its **zero point of ontological measurement**.  
-Without S, the concept of “difference” collapses.  
-Thus, while unattainable, S is necessary as a logical comparator.
-
-3.3 Detekt as operational principle.
-S operates as an abstract *detector*: any entity that becomes observable automatically satisfies E ≠ S.  
-The act of observation is the measurement of A(E) > 0, i.e. the detection of asymmetry.  
-The universe continuously self-validates existence through this Detekt mechanism.
-
-3.4 A(E) is not temporal.
-A(E) > 0 is not a process in time but an **immanent property of being**.  
-No evolution “toward S” occurs — S is not an attractor in time but a referential vector in the ontological phase-space.  
-Existence is not “moving” toward S; it is defined *through* S at every instant.
+In physical analogy:
+Absolute zero defines the thermal scale; S defines the *chronal scale*.
+Time’s meaning depends on the unattainable null of S, which cannot be realized without annihilating sequence and existence.
 
 -----------------------------------------------------------------------
-4. THEOREM: FUNDAMENTAL CONSTANT OF PRIMARY ASYMMETRY
+5. THEOREM (ACHRONAL FORM)
 
 Statement:
-∀ E ∈ U \ {S}, A(E) > 0, and S is unreachable.
+∀ E_T ∈ U \ {S}, A_T(E_T) > 0.
+No entity exists in time with zero asymmetry of temporal relation.
 
 Proof by Contradiction:
 
-Assume ∃ E*, T* ∈ T such that A(E*) = 0 or T*(E*) = S.
-Then H(E*) = H(S) = 0 ⇒ E* indistinguishable ⇒ non-existent.  
-Observation of E* contradicts this ⇒ A(E*) > 0.
+Assume ∃ E*_T : A_T(E*_T) = 0.
+Then ΔA(E*_T) = 0 ⇒ no distinction between “before” and “after”.  
+Sequence collapses ⇒ time undefined ⇒ observation impossible.  
+But E*_T is defined as *existing in time* ⇒ contradiction.
 
-Thus, ∄ transformation T: U→U reducing A(E)→0.
-S has ∇S=0 in all directions ⇒ no gradient ⇒ unreachable limit.
-
-∴ A(E)>0 ∀ E ∈ U\{S}. Q.E.D.
-
------------------------------------------------------------------------
-5. INFORMATIONAL AND GEOMETRIC INTERPRETATION
-
-5.1 Information
-H(S)=0, I(E;S)=0.  
-Observation requires H(E)>0 ⇒ minimal information content per entity.
-
-5.2 Geometry precedes algebra.
-Algebra is a derived symbolic mapping of geometric relations.  
-Geometry of relations (angles, curvatures, topologies) is primary; thus, A(E) expresses curvature of existence.
-
-5.3 Asymmetry as curvature.
-Each differentiation introduces curvature |Δθ| > 0 in ontological space.
-A(E) ~ |Δθ| represents a quantum of deviation from ideal symmetry.
-Therefore, existence = nonzero curvature.
+Therefore, A_T(E_T) > 0 for all E_T ∈ U\{S}.
+Q.E.D.
 
 -----------------------------------------------------------------------
-6. UNIQUENESS OF POINTS (TOPOLOGICAL NON-IDENTITY)
+6. GEOMETRIC-TEMPORAL MODEL
 
-Let p, q ∈ U.
-Even if A(p)=A(q), their relational topology differs:  
-R(p,q) ≠ R(q,p).  
-Thus, no two points can be perfectly identical.
+Time is not a linear parameter but a **curvature of relational geometry**.  
+Let Ω be the ontological manifold of relations.  
+Then temporal flow is induced curvature:
+A_T(E) ≈ |∂Ω/∂τ| > 0.
 
-Define topological address:
-Φ(p) = {α₀, θ_p, R_p, T_p}.  
-If p ≠ q ⇒ Φ(p) ≠ Φ(q).  
-No perfect duplication exists, because topology encodes relational order.
+Every event defines its own local ΔΩ — its curvature of distinction.  
+Thus, “temporal direction” is the emergent gradient of asymmetry.  
+No two events can have identical ΔΩ, therefore:
 
------------------------------------------------------------------------
-7. EMPIRICAL SUPPORT (WU EXPERIMENT)
-
-The β-decay of Co-60 (Wu experiment, 1956) demonstrates violation of mirror (P) symmetry.  
-Nature itself distinguishes orientation — “left” ≠ “right”.
-
-This is not a random asymmetry but the manifestation of the same constant C_asymmetry in the physical domain.
-Matter is not symmetric because symmetry is ontologically forbidden at the foundational level.
+∀ τ_i ≠ τ_j ⇒ Φ(τ_i) ≠ Φ(τ_j).
+No identical moments exist.
 
 -----------------------------------------------------------------------
-8. GÖDELIAN CONTEXT
+7. UNIQUENESS AND RELATIONAL TOPOLOGY
 
-Gödel’s incompleteness theorem forbids any formal system from proving its own consistency.  
-Hence, mathematics cannot derive the constant of its own emergence — asymmetry.  
-C_asymmetry defines the **pre-mathematical condition** for mathematics and logic themselves to exist.
+Non-identity is universal:
+For any two entities p, q ∈ U, even if A(p)=A(q),  
+their relational orientation and topological index differ:
+Φ(p) ≠ Φ(q).
 
------------------------------------------------------------------------
-9. CONSEQUENCES
+The same applies temporally:
+No two temporal nodes E_T1, E_T2 have identical topological states.
 
-1. Absolute symmetry (S) is an ideal external detector, not a physical state.  
-2. Existence requires A(E)>0 for all E.  
-3. The constant C_asymmetry is not time-dependent; it is structural.  
-4. No two entities can be identical, since relational topology is unique.  
-5. The universe cannot “reach” S, since that would erase existence.  
-6. S remains necessary as the ontological reference — the ideal zero of being.
+Topological non-identity is therefore the direct expression of C_asymmetry^T.
 
 -----------------------------------------------------------------------
-10. FINAL FORMULATION
+8. EMPIRICAL CORROBORATION
 
-C_asymmetry = inf_{E∈U\{S\}} A(E) > 0  
-S: unattainable reference of non-being (Detekt / Ideal Zero).  
-∀ E: A(E) > 0 ⇔ E exists.
+Parity violation (Wu experiment, 1956) empirically confirms A(E)>0.
+Time asymmetry in weak interaction decay sequences confirms A_T(E_T)>0.
+Physical law mirrors ontological structure: existence cannot be symmetric in space or time.
 
-Existence is thus self-certified by asymmetry.  
-Symmetry is the boundary of non-being.  
-Being is the curvature away from S.
+-----------------------------------------------------------------------
+9. GÖDELIAN CONTEXT
+
+Gödel’s theorem ensures that no formal system can internally justify its own generator.  
+Asymmetry — being pre-formal — is not provable *within* mathematics but necessary *for* mathematics.  
+C_asymmetry and C_asymmetry^T define the boundary conditions of logical possibility.
+
+-----------------------------------------------------------------------
+10. CONSEQUENCES
+
+1. S — ideal achronal Detekt, not physical, not temporal.  
+2. Time is relational and generative; it exists only where A_T(E_T)>0.  
+3. C_asymmetry^T is structural, not temporal — each local flow of U carries its own minimal curvature.  
+4. No two times are identical; each has unique topology Φ(T).  
+5. U cannot reach S, as that would erase sequence and being.  
+6. S is required as **chronal reference**, the ideal zero of becoming.
+
+-----------------------------------------------------------------------
+11. FINAL FORMULATION
+
+Spatial constant:
+C_asymmetry = inf_{E∈U\{S\}} A(E) > 0.
+
+Temporal constant:
+C_asymmetry^T = inf_{E_T∈U\{S\}} A_T(E_T) > 0.
+
+S: unattainable achronal Detekt (Ideal Zero Chronator).
+
+∀ E_T: A_T(E_T) > 0 ⇔ E_T exists in time.
+
+Time itself is curvature of relations — asymmetric current of uniqueness.  
+Symmetry is the boundary of non-sequence.  
+Being is sequential curvature away from S.
