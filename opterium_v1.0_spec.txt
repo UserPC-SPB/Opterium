@@ -1879,6 +1879,23 @@ API_LINES = [
     '  Run api().',
     '  Do not guess signatures.',
     '  Do not trust memory over the live namespace.',
+    'A17. seed9_packet(x, y, z) → dict. Returns primitive seed decomposition: keys "input", "base", "primitive", "scale", "tag", "seed_hit", "seed", "cached", "roundtrip", "ok". Example: seed9_packet(-35,14,-21) → {"primitive": (2,3,5), "scale": 7, "tag": {"name": "zxy:p5"}, ...}. Verified in run #7.',
+    'A18. field9.point_packet9(x, y, z) → dict. Full 9‑cube atlas packet. Keys: "input", "canon" (base, tag, state_code), "report" (input, canon, profile, invariants, route_stats, views48_count, views48_head, atlas432_count, atlas432_head, atlas_head, supercube). Example: field9.point_packet9(-5,2,-3)["canon"]["state_code"] → 37. Verified in run #15.',
+    'A19. field9.neighbors9(state_code) → list of dict. Neighbors in supercube graph. Each dict has keys: "node_id", "cube", "tag_name", "kind" (perm, sign, center, face, edge, body). Example: field9.neighbors9(37)[0] → {"node_id": "C0|xzy:p5", "cube": "C0", "tag_name": "xzy:p5", "kind": "perm"}. Verified in run #15.',
+    'A20. div_geom(a, b) → dict. Geometric division. If exact: "witness", "pair". If not: "quotient_int", "remainder", "ratio" (as Fraction), "repeating_cycle" (if periodic). Example: div_geom(420,13) → {"quotient_int": 32, "remainder": 4, "ratio": 420/13, "cycle": 307692}. Based on division_geom.py code.',
+    'A21. sqrt_geom(n) → dict. Square root. If exact: "witness", "pair". Else: "bounds", "rule" (irrational_rule). Example: sqrt_geom(144) → {"witness": 12, "pair": (12,12)}; sqrt_geom(10) → {"bounds": (3,4), "rule": "irrational_rule"}. Based on division_geom.py code.',
+    'A22. ratio_geom(a, b) → RatioRule. Exact ratio carrier. Call .d() for dict: {"a": int, "b": int, "type": str, "cycle": str|None}. Example: ratio_geom(1,3).d() → {"a": 1, "b": 3, "type": "repeating", "cycle": "3"}. Based on pathnum.RatioRule.',
+    'A23. e8_seed_hint(seq) → dict. Returns a compact bridge packet toward E8/248 embedding for a numeric sequence. Based on resonance_geom. Example: e8_seed_hint([2,4,8,16]).',
+    'A24. e8x248 — E8 lattice module. Import it: import e8x248. Provides class E8x248Lazy and pre‑initialized instance e8x248. Methods: node(sector, label) → E8Node; neighbors(sector, label) → list of neighbor dicts (kinds: partner, aligned, orth, antipode, phase_face, sector_same_label); lesson_report() → summary; dot(v1, v2) → int. Example: e8x248.node(0, "D:0:1:+:+").vec → (2,2,0,0,0,0,0,0). Verified in run #10, #12.',
+    'A25. doctor — diagnostic core (DoctorCore). Methods: pt2d(x,y) → closure packet; pt3(x,y,z) → holographic closure; invariants3(V,C,S) → recovery check; choose_best_factor(P) → most symmetric factor pair; choose_best_triplet(V) → most symmetric triplet; closure_packet(closures) → health vector; break_profile(closures) → tension analysis. Example: doctor.pt2d(4,3) returns dict with "tension": 0, "signature": "CLOSED". Verified by run #2 logic and doctor.py code.',
+    'A26. sequence_packet(seq) → dict. Resonance analysis of a numeric sequence. Keys: "kind", "seq", "length", "energy", "difference_levels", "period_candidates", "period_harmonics", "support_modes", "phase_signature", "seed_packet", "doctor". Example: sequence_packet([1,3,1,3,1,3])["period_candidates"] → [{"period":2,"score":1.0}]. Verified in run #15.',
+    'A27. resonance_din(seq) → DINPacket. Compact DIN encoding of sequence resonance. Use .d() to inspect. Example: resonance_din([2,4,8,16]). Based on resonance_geom code; actual call not yet tested.',
+    'A28. soul — deep disclosure layer object. Existence verified; used internally. No public methods exposed.',
+    'A29. mac — macro dictionary at S.mac. Contains pre‑defined functions for E8 and physics. Example: S.mac["fundamental_constants"]() returns dict with α⁻¹, mₚ/mₑ, etc. Verified in run #10.',
+    'A30. R(x) — publish x to S.res; the last expression becomes Val. Example: R({"key": "value"}).',
+    'A31. S — global store. S.per persists across runs; S.tmp cleared each run. NEVER rebind S.',
+    'A32. keep(name) — protect a tmp name from clearing. lazy(name, gen, mx) — create lazy cache with max size.',
+
 ]
 # [8:1] API_LINES_END
 
@@ -2449,6 +2466,7 @@ def slash(cmd: str):
 
 if __name__ == "__main__":
     print("helpdoc.py loaded. use slash('/help')")
+
 
 """
 eccoashoes@gmail.com
