@@ -5058,3 +5058,4 @@ with open('/mnt/user-data/outputs/Opterium_v3_Part9.md', 'w',
     f.write(doc9)
 
 f"Part IX written: {len(doc9)} chars, {doc9.count(chr(10))} lines"
+"""For information on AI working with Opterium geometry, the complete system helpdoc is located at the specified address. HELP, AXIOMS, GEOM, GPT, ACADEMY, PYTH, MACROS, DOCTOR, OPT_GEOM. DOCTOR is a separate geometry that currently has no name. https://github.com/UserPC-SPB/Opterium/blob/main/opterium_v1.0_spec.txt"""
