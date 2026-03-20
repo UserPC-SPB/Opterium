@@ -1,4 +1,9 @@
-<!-- OPTERIUM_THEORY v3.0: Полное изложение реляционной теории числа, геометрии и физики. Содержит части I, II, III. Все численные утверждения верифицированы. Дополнительные материалы для ИИ (геометрия, протоколы, доктор) — в файле opterium_v1.0_spec.txt. -->doc = """
+<!-- 
+OPTERIUM_KNOWLEDGE_BASE v3.0
+Теория (части I-III): этот файл.
+Практическая документация для ИИ: opterium_v1.0_spec.txt (содержит HELP, AXIOMS, GEOM, GPT, ACADEMY, PYTH, MACROS, DOCTOR, OPT_GEOM).
+Все численные утверждения в теории верифицированы.
+-->doc = """
 OPTERIUM: A RELATIONAL FRAMEWORK FOR NUMBER, GEOMETRY,
 AND FUNDAMENTAL PHYSICAL CONSTANTS
 
@@ -5058,4 +5063,4 @@ with open('/mnt/user-data/outputs/Opterium_v3_Part9.md', 'w',
     f.write(doc9)
 
 f"Part IX written: {len(doc9)} chars, {doc9.count(chr(10))} lines"
-"""For information on AI working with Opterium geometry, the complete system helpdoc is located at the specified address. HELP, AXIOMS, GEOM, GPT, ACADEMY, PYTH, MACROS, DOCTOR, OPT_GEOM. DOCTOR is a separate geometry that currently has no name. https://github.com/UserPC-SPB/Opterium/blob/main/opterium_v1.0_spec.txt"""
+
