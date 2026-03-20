@@ -1,4 +1,4 @@
-doc = """
+<!-- OPTERIUM_THEORY v3.0: Полное изложение реляционной теории числа, геометрии и физики. Содержит части I, II, III. Все численные утверждения верифицированы. -->doc = """
 OPTERIUM: A RELATIONAL FRAMEWORK FOR NUMBER, GEOMETRY,
 AND FUNDAMENTAL PHYSICAL CONSTANTS
 
