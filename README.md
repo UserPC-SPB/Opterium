@@ -5315,7 +5315,7 @@ No quark mass is used as input to determine any n.
 
 Collecting the results:
 
-    m_q = m_e × exp( 3n/8 )
+    m_q = m_e × exp( 3n/4 )
 
 where n is given in the table of Section 58.4 and
 m_e = 0.511 MeV is the electron mass (the single
@@ -5703,7 +5703,7 @@ the asymmetry between the two lepton mass scales.
 
 65.1 Numerical Predictions
 
-Using the formula m = m_e × exp(3n/8) with n-values
+Using the formula m = m_e × exp(3n/4) with n-values
 derived above:
 
     Lepton  n          Predicted (MeV)  Actual (MeV)   Error
@@ -5770,7 +5770,7 @@ internal consistency of the framework.
 
 66.1 All Nine Masses from One Formula
 
-The formula m = m_e × exp(3n/8) with the n-assignments
+The formula m = m_e × exp(3n/4) with the n-assignments
 below predicts all nine charged fermion masses:
 
     Fermion  n       Sector      Origin of n
