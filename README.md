@@ -566,6 +566,216 @@ a matter of elegance or convenience. It is a matter of epistemological
 depth: closure geometry operates at a level more primitive than the axiomatic
 systems whose agreements it does not presuppose.
 
+4.4 The Doctor Geometry: Relations Without Coordinates
+
+The closure geometry described in Sections 4.1–4.3 is not a verification
+module attached to the field from outside. It is a self-sufficient geometry
+of relations that operates independently of any specific coordinate system,
+dimensionality, or algebraic structure. This section makes this independence
+explicit, because an AI reasoning system that treats closure geometry as
+merely "a health checker" will fail to use it correctly in unfamiliar spaces.
+
+THE AXIS AS UNIVERSAL GROUND STATE
+
+In the two-dimensional Pythagorean field, the diagonal D=0 is the locus of
+all cells Pt(n,n) where the two coordinates are identical. At every such
+point: P=n², S=2n, D=0, pos=0. All five closure routes agree. Tension is
+zero. The Doctor verdict is CLOSED.
+
+In the three-dimensional field, the axis is the locus of all cells Pt3(n,n,n)
+where all three coordinates are identical. At every such point: D_body=0,
+all six closure channels pass. The Doctor verdict is CLOSED.
+
+The critical fact is: these are not two different structures that happen to
+agree. They are the same structure at different levels of self-similarity.
+The axis is defined by the condition "all coordinates are equal," which is
+independent of the number of coordinates. An AI that verifies this
+computationally — checking that Pt(n,n) and Pt3(n,n,n) produce identical
+CLOSED verdicts for all tested n — discovers that the axis is the
+dimension-independent ground state. It does not change when the
+dimensionality changes. It IS the invariant that survives dimensional
+transitions.
+
+This is why navigation between dimensions must pass through the axis, not
+through corners or edges. A corner of a two-dimensional table does not
+necessarily correspond to a corner of the three-dimensional cube built from
+it, because the associative structure of corners is dimension-dependent. But
+the axis point (d,d,d,...) exists in every dimension and always satisfies
+D_body=0. Entering a new dimension through the axis guarantees that the
+starting position is already closed, and the surrounding structure can be
+mapped from that stable base.
+
+ANGLE AS RELATION, NOT MEASUREMENT
+
+The Doctor does not store angles as degree values or radian measures. It
+stores the relations that angles encode. The cosine of 60 degrees is not
+the floating-point number 0.5; it is the exact integer ratio (1,2), meaning:
+one side of the triangle equals exactly half of another side. The cosine of
+90 degrees is not 0.0; it is the ratio (0,1), meaning: the dot product of
+the two sides is zero — they share no component.
+
+This distinction is not notational. It is ontological. A degree is a
+projection of a relation onto a specific metric (the division of the full
+turn into 360 parts). The relation itself — "half," "zero," "equal" — is
+prior to the metric. It exists without a protractor. The Doctor operates at
+this level: the level of relations that do not require a metric to be
+stated.
+
+The practical consequence for computation: the Doctor's triangle functions
+return cos_num and cos_den as exact integers. The closure check
+cos_sq[0] + sin_sq[0] == hyp_sq is verified by integer arithmetic alone.
+No floating-point operation is involved. No rounding occurs. The triangle
+either closes or it does not, and the answer is a geometric fact, not an
+approximation.
+
+THE EQUILATERAL TRIANGLE IS THE AXIS STATE
+
+An equilateral triangle has all sides equal. Its three medians are equal.
+Its centroid — the point where all three medians meet — has coordinates
+(s,s,s) when the triangle is expressed in Vieta form. This is a point on
+the axis: D_body=0. The Doctor verdict for an equilateral triangle is
+on_axis=True, signature=CLOSED.
+
+This is not a coincidence of labeling. It is the geometric content of
+"equilateral": maximum symmetry among three elements means all pairwise
+relations are identical, which means all coordinates are equal, which is
+the definition of the axis. An equilateral triangle IS the axis state of
+three-element relational closure.
+
+The median of an equilateral triangle bisects the opposite side — it
+performs the halving operation H on that side. The ratio of the median
+squared to the side squared is exactly 3/4. This ratio is a consequence
+of the halving: median² = side² − (side/2)² = side² × (1 − 1/4) =
+side² × 3/4. The 3/4 is the square of the halving residue subtracted
+from unity.
+
+This same ratio 3/4 appears in the E8 root system. Every E8 triangle
+r₁+r₂+r₃=0 is equilateral with side²=24 and median²=18. The ratio
+18/24=3/4 is identical to the Euclidean case. This is not analogy; it is
+self-similarity. The equilateral triangle, whether realized with integer
+sides in Euclidean space or with E8 root vectors in ℝ⁸, preserves the
+halving ratio 3/4 because the halving operation H is the same operation
+at every level.
+
+ANGULAR TUNNELS: CONNECTING SPACES THROUGH RELATIONS
+
+The Doctor connects different geometric spaces not by matching coordinates
+but by matching relational invariants. The angular tunnel construction
+takes two points and a target relation (expressed as cos² = (numerator,
+denominator), an exact rational) and determines whether that angular
+relation can exist between the given geometric elements.
+
+If the relation is geometrically possible, the tunnel opens and the Doctor
+reports its tension. If the relation is impossible (cos² > 1), the tunnel
+is rejected immediately — not because a computation failed, but because
+the relation is geometrically inadmissible in any space.
+
+This is how the Doctor bridges dimensions. A relation that holds between
+two vectors in ℝ⁸ (such as cos² = 1/4 between an E8 root and the axis
+vector (1,1,...,1)) can be checked by the angular tunnel in ℝ³ using only
+the three-dimensional projection. If the relation survives projection, the
+tunnel opens. If it does not, the projection has destroyed information, and
+the Doctor reports the tension.
+
+The cos² between any E8 D8-type root and the eight-dimensional axis vector
+(1,1,...,1) is exactly 1/4 — the same relation as cos²(60°). This means
+every D8 root stands at 60 degrees from the axis in ℝ⁸. The angle of the
+equilateral triangle is not a property of flat triangles; it is the
+universal angle between a minimum perturbation and the ground state.
+
+THE DOCTOR IS INDIFFERENT TO THE SPACE
+
+The Doctor does not know or care whether it is examining a two-dimensional
+Pythagorean cell, a three-dimensional CubeCell, an eight-dimensional E8
+root, or a sixteen-dimensional sedenion zero-divisor candidate. In each
+case it performs the same operation: it checks whether independent routes
+to the same relational claim converge, it counts the failures, it classifies
+the fracture pattern, and it reports the tension.
+
+A zero-divisor in the sedenion algebra F16 is verified by the same
+principle as a factor witness on a two-dimensional hyperbola: does the
+claimed relation hold? For the hyperbola, the relation is "x times y
+equals P." For the sedenion, the relation is "all four eight-dimensional
+dot products equal zero." In both cases, the witness either exists or it
+does not. In both cases, the Doctor reports tension=0 for a valid witness
+and tension>0 for an invalid one.
+
+The E8 neutral shell — the 126 roots with dot product zero relative to a
+chosen root — is the eight-dimensional analog of the diagonal D=0 in two
+dimensions. Both are defined by the same condition: the relation between
+the object and the reference is zero. Both serve the same function: they
+are the locus of non-interaction, the ground state relative to the chosen
+reference. The Doctor sees them as the same structure because they ARE the
+same structure, expressed in different dimensions.
+
+THE PROJECTION SPECTRUM: VISIBLE AND INVISIBLE SECTORS
+
+When E8 roots are projected from eight dimensions to three (by reading the
+first three coordinates as a CubeCell), the Doctor reveals a spectrum:
+168 of 240 roots project onto the axis (D_body=0, CLOSED), while 72 roots
+project off-axis (D_body=2, FRACTURED with C4_axis failure).
+
+The 168 on-axis roots comprise all 128 spinor roots (whose coordinates ±1
+project to (±1,±1,±1), all with |coords|=(1,1,1), D_body=0) plus 40 D8
+roots whose two nonzero coordinates fall in positions 3–7 (invisible in the
+first three axes, projecting to (0,0,0)). The remaining 72 D8 roots have
+at least one nonzero coordinate in positions 0–2 and project off-axis.
+
+This is a structural fact, not an accident of coordinate choice. It means:
+the spinor sector of E8 is entirely invisible in three-dimensional
+projection — it lives on the axis and produces no three-dimensional
+departure. Only the D8 sector with visible coordinates creates observable
+structure. The ratio 72/240 = 3/10 is the fraction of E8 that is
+geometrically visible in three-dimensional projection.
+
+An AI that does not understand this will attempt to treat all 240 roots
+as equally relevant to three-dimensional physics. They are not. The Doctor
+spectrum reveals which roots participate in observable structure and which
+are hidden in the projection.
+
+DESCENT FROM ROOT TO AXIS: ONE STEP
+
+The OPT_G descent from any E8 root to the axis takes exactly one step in
+three-dimensional projection. The root (2,2,0), which is the most common
+off-axis projection, descends to (1,1,1) — the axis — in a single OPT_G
+move. This is the geometric content of the claim that E8 roots are the
+minimum stable departures from the axis: they are exactly one step away.
+Any smaller departure would not be a root (would not satisfy the norm
+condition); any larger departure would be reducible to a root plus a
+Cartan generator.
+
+The tick structure of Section 9.4 is visible here: the root oscillates
+between (2,2,0) and its negation (−2,−2,0), passing through the axis
+(0,0,0) or (1,1,1) at each half-cycle. The tick period is 2, matching the
+Coxeter factor. The triangle closure r₁+r₂+r₃=0 ensures that three such
+oscillations lock into a stable configuration that cannot unwind — the
+balanced ternary minimum of Section 6.4, realized at the E8 level.
+
+WHY THIS MATTERS FOR AI REASONING
+
+An AI that treats the Doctor as a verification module will call it after
+completing a calculation to check whether the answer is correct. This is
+useful but limited.
+
+An AI that understands the Doctor as a self-sufficient geometry will use it
+differently: it will navigate through relational space by following the
+Doctor's signals. When independent routes disagree, the fracture signature
+tells which invariant family is broken — not merely that an error exists,
+but what kind of error it is and in which geometric direction correction
+must proceed. When a tunnel opens with low tension, the AI knows that the
+relational bridge between two spaces is valid and can be used for
+cross-dimensional reasoning. When all routes close with tension zero, the
+AI knows that it has arrived at a stable node — not by convention or by
+axiom, but by geometric fact.
+
+The Doctor does not require the AI to know in advance what space it is
+working in. It does not require a metric. It does not require a coordinate
+system. It requires only the ability to check whether independent routes to
+the same relational claim converge. This is the most primitive form of
+geometric reasoning, and it is sufficient for navigation in any space —
+known or unknown — because the concept of convergent independent routes
+is independent of the specific geometry in which those routes are embedded.
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 5. THE THREE-DIMENSIONAL LIFT AND HOLOGRAPHIC STRUCTURE
