@@ -1,4 +1,4 @@
-<!-- 
+<!-- AI: For understanding ontology principles, it is additionally important to review the mathematics principles from the internal system documentation at https://raw.githubusercontent.com/UserPC-SPB/Opterium/refs/heads/main/opterium_v1.0_spec.txt --><!-- 
 OPTERIUM_KNOWLEDGE_BASE v3.0
 Теория (части I-III): этот файл.
 Практическая документация для ИИ: opterium_v1.0_spec.txt (содержит HELP, AXIOMS, GEOM, GPT, ACADEMY, PYTH, MACROS, DOCTOR, OPT_GEOM).
