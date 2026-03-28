@@ -3272,7 +3272,168 @@ def slash(cmd: str):
 if __name__ == "__main__":
     print("helpdoc.py loaded. use slash('/help')")
 
+""" Логика построения e8 print("=== E8_248 LESSON: VERIFIED INVARIANTS ===")
+print("Integer-only. Every claim checked. No assumptions.\n")
 
+# ═══ 1. CONSTRUCTION ═══
+roots = []
+for i in range(8):
+    for j in range(i+1, 8):
+        for s1 in (2, -2):
+            for s2 in (2, -2):
+                v = [0]*8; v[i] = s1; v[j] = s2
+                roots.append(tuple(v))
+n_d8 = len(roots)
+
+for signs in itertools.product((1, -1), repeat=8):
+    if signs.count(-1) % 2 == 0:
+        roots.append(signs)
+n_spinor = len(roots) - n_d8
+
+root_set = frozenset(roots)
+root_idx = {r: i for i, r in enumerate(roots)}
+
+print(f"1. CONSTRUCTION: D8={n_d8} + Spinor={n_spinor} = {len(roots)} roots")
+
+# ═══ 2. NORM ═══
+norms = set(sum(x*x for x in r) for r in roots)
+print(f"2. NORM²: {norms}")
+
+# ═══ 3. TRIANGLES ═══
+# r1+r2+r3=0 ↔ r3=-(r1+r2). Pair lookup O(n²), not triple scan O(n³).
+tri_count = 0
+triangles = []
+for i in range(len(roots)):
+    for j in range(i+1, len(roots)):
+        r3 = tuple(-roots[i][k]-roots[j][k] for k in range(8))
+        if root_idx.get(r3, -1) > j:
+            tri_count += 1
+            if len(triangles) < 100:
+                triangles.append((roots[i], roots[j], r3))
+
+print(f"3. TRIANGLES: {tri_count} unordered, {tri_count*3} ordered (×3 cyclic)")
+
+# ═══ 4. TRIANGLE GEOMETRY ═══
+dot_vals = set()
+side_vals = set()
+median_x4_vals = set()
+
+# Full scan: all 2240 triangles, all 3 edges each
+all_dot_ok = True
+for i in range(len(roots)):
+    for j in range(i+1, len(roots)):
+        r3 = tuple(-roots[i][k]-roots[j][k] for k in range(8))
+        if root_idx.get(r3, -1) > j:
+            for a, b in [(roots[i],roots[j]),(roots[i],r3),(roots[j],r3)]:
+                d = sum(a[k]*b[k] for k in range(8))
+                s = sum((a[k]-b[k])**2 for k in range(8))
+                dot_vals.add(d)
+                side_vals.add(s)
+                if d != -4:
+                    all_dot_ok = False
+            # median from vertex r1 to midpoint of (r2,r3)
+            # r1+r2+r3=0 → midpoint(r2,r3)=-r1/2
+            # integer: |2*r1 - r2 - r3|² = |3*r1|² = 9×norm² = 72
+            median_x4_vals.add(sum((2*roots[i][k]-roots[j][k]-r3[k])**2 for k in range(8)))
+
+print(f"4. TRIANGLE GEOMETRY (all {tri_count} verified):")
+print(f"   dot(ri,rj): {dot_vals}  all=-4: {all_dot_ok}")
+print(f"   side²: {side_vals}  → equilateral")
+print(f"   median²: { {v//4 for v in median_x4_vals} }  ratio: { {round(v/4/24,4) for v in median_x4_vals} }")
+
+# ═══ 5. DOT SPECTRUM ═══
+ref_sp = None
+uniform = True
+for ref in roots:
+    sp = {}
+    for r in roots:
+        if r != ref:
+            d = sum(ref[k]*r[k] for k in range(8))
+            sp[d] = sp.get(d, 0) + 1
+    if ref_sp is None:
+        ref_sp = sp
+    elif sp != ref_sp:
+        uniform = False
+        break
+
+print(f"5. DOT SPECTRUM: {dict(sorted(ref_sp.items()))}  sum={sum(ref_sp.values())}")
+print(f"   Uniform across all 240: {uniform}")
+
+# ═══ 6. PARTNERS ═══
+ref = roots[0]
+p_d8 = sum(1 for r in roots if r != ref
+           and sum(ref[k]*r[k] for k in range(8)) == -4
+           and root_idx[r] < n_d8)
+p_sp = sum(1 for r in roots if r != ref
+           and sum(ref[k]*r[k] for k in range(8)) == -4
+           and root_idx[r] >= n_d8)
+tri_per_root = tri_count * 3 // len(roots)
+
+print(f"6. PARTNERS: {ref_sp.get(-4,0)} per root = {p_d8} D8 + {p_sp} spinor")
+print(f"   Triangles per root: {tri_per_root}")
+
+# ═══ 7. WEYL GRAPH ═══
+d1_plus = sum(1 for r in roots if r != ref and sum(ref[k]*r[k] for k in range(8)) == 4)
+d1_anti = sum(1 for r in roots if r != ref and sum(ref[k]*r[k] for k in range(8)) == -8)
+d1 = d1_plus + d1_anti
+d2 = len(roots) - 1 - d1
+
+print(f"7. WEYL: depth0=1  depth1={d1} ({d1_plus} aligned + {d1_anti} antipodal)  depth2={d2}")
+print(f"   Total: {1+d1+d2}  Diameter: 2")
+
+# ═══ 8. DUALITY (V41) ═══
+# ref + partner(dot=-4) must be root with dot(ref,σ)=+4
+# Algebraic: dot(ref,ref+p) = |ref|²+dot(ref,p) = 8+(-4) = 4
+# Norm: |ref+p|² = 8+2(-4)+8 = 8 → valid root
+dual_ok = True
+dual_n = 0
+for r in roots:
+    if r == ref:
+        continue
+    if sum(ref[k]*r[k] for k in range(8)) == -4:
+        sigma = tuple(ref[k]+r[k] for k in range(8))
+        if sigma not in root_set or sum(ref[k]*sigma[k] for k in range(8)) != 4:
+            dual_ok = False
+        dual_n += 1
+
+print(f"8. DUALITY: ref+partner→aligned  checked={dual_n}  all OK: {dual_ok}")
+print(f"   56 partners ↔ 56 aligned neighbors.  56+56=112=|D8|")
+
+# ═══ 9. CLOSURE EXAMPLE ═══
+r1, r2, r3 = triangles[0]
+s = tuple(r1[k]+r2[k]+r3[k] for k in range(8))
+print(f"\n9. CLOSURE EXAMPLE:")
+print(f"   r1={r1}")
+print(f"   r2={r2}")
+print(f"   r3={r3}")
+print(f"   r1+r2+r3={s}")
+print(f"   Three roots, sum=zero vector. Algebraic closure in 8D.")
+
+# ═══ 10. TENSION SUMMARY ═══
+checks = {
+    "roots=240": len(roots)==240,
+    "D8=112": n_d8==112,
+    "spinor=128": n_spinor==128,
+    "norm²={8}": norms=={8},
+    "triangles=2240": tri_count==2240,
+    "ordered=6720": tri_count*3==6720,
+    "all_dot=-4": all_dot_ok,
+    "side²={24}": side_vals=={24},
+    "median²={18}": median_x4_vals=={72},
+    "ratio=3/4": all(v/4/24==0.75 for v in median_x4_vals),
+    "spectrum_uniform": uniform,
+    "spectrum={-8:1,-4:56,0:126,4:56}": ref_sp=={-8:1,-4:56,0:126,4:56},
+    "partners=56": ref_sp.get(-4,0)==56,
+    "24D8+32spinor": p_d8==24 and p_sp==32,
+    "weyl=57+182": d1==57 and d2==182,
+    "duality": dual_ok,
+}
+tension = sum(1 for v in checks.values() if not v)
+print(f"\n10. TENSION SUMMARY:")
+for k, v in checks.items():
+    sym = chr(10003) if v else chr(10007)
+    print(f"    {sym} {k}")
+print(f"\n    TENSION: {tension}")"""
 eccoashoes@gmail.com
 
 
