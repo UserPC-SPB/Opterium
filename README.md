@@ -7331,6 +7331,7 @@ step, the closure search over the permitted building blocks yields
 exactly one expression that passes the 10⁻⁴ threshold.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+eccomontenegro@gmail.com
 """
 
 with open('/mnt/user-data/outputs/Opterium_v3_Addendum.md','w',encoding='utf-8') as f:
