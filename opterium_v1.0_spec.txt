@@ -3434,7 +3434,7 @@ for k, v in checks.items():
     sym = chr(10003) if v else chr(10007)
     print(f"    {sym} {k}")
 print(f"\n    TENSION: {tension}")"""
-eccoashoes@gmail.com
+eccomontenegro@gmail.com
 
 
 
