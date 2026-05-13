@@ -8051,11 +8051,31 @@ GAP 4 is **closed**.  The explicit selection of four D8 roots provides a const
 The demonstration is self‑contained and requires only the 112 D8 roots, the Euclidean dot product, and the standard Bell–CHSH theorem.  It therefore constitutes the first complete derivation of quantum non‑locality from a discrete geometric first principle.
 Neutrino angles: θ₁₃ (8.571°), θ₁₂ (33.333°), θ₂₃ (49.091°) — all within 0.1° of NuFit 6.0.
 
-Quark masses: 5 of 6 within 3%; charm quark discrepancy (5.4%) matches QCD non-perturbative threshold.
+=== QUARK MASSES (MeV) ===
+u: pred=2.29, exp=2.30, diff=0.4%
+d: pred=4.85, exp=4.80, diff=1.0%
+s: pred=97.38, exp=95.00, diff=2.5%
+c: pred=1344.28, exp=1275.00, diff=5.4%
+b: pred=4140.68, exp=4180.00, diff=0.9%
+t: pred=176066.02, exp=173000.00, diff=1.8%
 
-Lepton masses: muon and tau within 0.14%.
+=== LEPTON MASSES (MeV) ===
+e: pred=0.511, exp=0.511, diff=0.00%
+mu: pred=105.764, exp=105.658, diff=0.10%
+tau: pred=1774.394, exp=1776.860, diff=0.14%
 
-Fundamental constants: α⁻¹, m_p/m_e, m_H, α_s, sin²θ_W — all within experimental uncertainty.
+=== NEUTRINO MIXING ANGLES (deg) ===
+θ13: pred=8.571°, exp=8.57°, Δ=0.001°
+θ12: pred=33.333°, exp=33.44°, Δ=0.107°
+θ23: pred=49.091°, exp=49.00°, Δ=0.091°
+
+=== OTHER CONSTANTS ===
+α⁻¹ pred=137.036004, exp=137.035999177, diff=0.00000379%
+m_p/m_e pred=1836.152613, exp=1836.152673, diff=0.00000329%
+m_H pred=125.199 GeV, exp=125.20±0.11 GeV
+α_s(M_Z) pred=0.118000, exp=0.1180, diff=0.000108%
+sin²θ_W pred=0.231214, exp=0.23122, diff=0.002708%
+
 
 eccomontenegro@gmail.com
 """
