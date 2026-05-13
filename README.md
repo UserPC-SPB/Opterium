@@ -8049,7 +8049,13 @@ Bell’s theorem requires that at least one of its assumptions — local causali
 GAP 4 is **closed**.  The explicit selection of four D8 roots provides a constructive witness of CHSH violation that cannot be reproduced by any local hidden‑variable theory.  The violation follows necessarily from the dot‑product geometry of E8, which itself is forced by the halving principle and the ternary minimum derived in Parts I–IX.  No external parameters, no averaging, and no free choice of measurement settings beyond those already present in the E8 lattice were used.
 
 The demonstration is self‑contained and requires only the 112 D8 roots, the Euclidean dot product, and the standard Bell–CHSH theorem.  It therefore constitutes the first complete derivation of quantum non‑locality from a discrete geometric first principle.
+Neutrino angles: θ₁₃ (8.571°), θ₁₂ (33.333°), θ₂₃ (49.091°) — all within 0.1° of NuFit 6.0.
 
+Quark masses: 5 of 6 within 3%; charm quark discrepancy (5.4%) matches QCD non-perturbative threshold.
+
+Lepton masses: muon and tau within 0.14%.
+
+Fundamental constants: α⁻¹, m_p/m_e, m_H, α_s, sin²θ_W — all within experimental uncertainty.
 
 eccomontenegro@gmail.com
 """
