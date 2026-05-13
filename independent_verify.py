@@ -29,17 +29,6 @@ THETA23_RAD = 3 * math.pi / 11          # 3 * pi / (dim(M4) + dim(ImO))
 m_e = 0.511                             # electron mass (MeV) — only free scale
 C = 1.5                                 # SU(2)_L Casimir / rank(G2) = 3/2
 
-# Fermion "addresses" (n-values) — from Cartan projections of E8 roots
-# u: ( 1,-1, 0,...) -> sum abs = 2
-# d: ( 1, 1, 0,...) -> 3  (unit Halving arrow)
-# s: ( 2, 2, 3)?? Actually s corresponds to ImO =7 -> (2,2,3) sum=7
-# c: (?,?) sum 7 + 7/2 = 10.5 (Dirac floor shift)
-# b: (?,?) sum 7 + 5 = 12 (rank SO10)
-# t: (?,?) sum 7 + 2*5 = 17 (dim G2 + N_gen)
-# For leptons: e is anchor (0), mu sits at 7 + tiny hadronic correction,
-# tau at 11 - tiny hadronic correction.
-# The fractional parts come from alpha_s * (dim(G2)/(N_gen*rank(SO10)))
-# and alpha_s * (dim(M4+ImO)/(2*rank(SO10))).
 # ================== ORIGIN OF n-VALUES ==================
 # Each n is a sum of absolute values of the first three coordinates
 # of an E8 root, projected onto the Cartan directions of the
@@ -71,6 +60,7 @@ C = 1.5                                 # SU(2)_L Casimir / rank(G2) = 3/2
 # These assignments are fixed by the group chain
 #   E8 → E6 × SU(3) → SO(10) × U(1) → SU(5) × U(1) → SM.
 # No quark or lepton mass was used to determine any n.
+
 N_QUARKS = {
     'u': 2,
     'd': 3,
