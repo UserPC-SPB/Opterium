@@ -1,0 +1,767 @@
+## PART 2: SELF-CONTAINED INSTRUCTION & KNOWLEDGE BASE
+
+**For LLM. Language: English, machine-oriented. Load together with AnchorFile_SuperTable_v1.0 (Part 1).**
+
+---
+
+### 1. CORE WORLDVIEW
+A number is not a symbol or quantity — it is the complete web of its relationships.  
+The string "420" is one projection; the entity is the set {(x,y) | x×y=420}.  
+Arithmetic is **navigation** through pre-existing structure. All results already exist at their addresses.  
+Floating-point arithmetic is banned. Decimals are resolved via the Debt System (mantissa, debt) — exact integer operations only.
+
+---
+
+### 2. TABLE STRUCTURE
+The table holds points (x,y) with **x ≤ y** (66 entries for 0..10).  
+Every block contains:
+- `P` — product x×y (for multiplication)
+- `S_path` — full anti‑diagonal x+y=const, ending at the X‑axis (y=0)
+- `D_path` — full diagonal x−y=const, ending at X‑axis (if x≥y) or Y‑axis (if x<y)
+- `prim` — primitive triple [seed_x, seed_y, scale] for fractal scaling
+
+Global index `by_P` maps product → list of factor pairs (used only for division).
+
+---
+
+### 3. SYMMETRY RULE
+The table stores only canonical points `x ≤ y`. Any input `(a,b)` must first be canonized (Section 20). The resulting `Tag` determines how to interpret the stored paths. Do not manually swap or invent paths; always use the procedures in Section 4 (Arithmetic) which incorporate canonization and tag.
+
+---
+
+### 4. ARITHMETIC OPERATIONS (SYMMETRY-DRIVEN, INVERSION-BASED)
+
+All operations start with canonization: `(base, tag) = canon(a, b)`.
+- `base` is the stored canonical address `(x ≤ y)`.
+- `tag` holds `sx`, `sy`, and `swapped`.
+
+The table’s symmetry guarantees that every relationship has a mirror image.  
+**Inversion rule:** any path `(u:v)` can be mirrored to `(v:u)` without computation. This is a geometric fact, not an extra step.
+
+#### ADDITION (a + b)
+1. If `tag.sx == tag.sy`: use `S_path` of `base`. The **last** element has `y=0`. Its `x` = sum magnitude. Result sign = `tag.sx`.
+2. If signs differ, convert to subtraction of the smaller absolute value from the larger; use the subtraction rule below.
+
+#### SUBTRACTION (a - b)
+Use the canonical block’s `D_path`.
+
+- If `swapped == False` (original a < b):  
+  → Take the endpoint with **x=0**. Its `y` = |a−b|. Result is **negative**.
+
+- If `swapped == True` (original a ≥ b):  
+  → Apply **mirror inversion** to the entire `D_path`: replace every `"u:v"` by `"v:u"`.  
+  → In the mirrored path, take the endpoint with **y=0**. Its `x` = |a−b|. Result is **positive**.
+
+*Why this works:* The canonical block stores the path for `D < 0`. Mirroring it gives the path for `D > 0`, which always contains the required `( |D|, 0 )`. No generation, no missing endpoints — only symmetry.
+
+#### MULTIPLICATION (a * b)
+1. Read `P` from `base`.
+2. Result sign = `tag.sx * tag.sy`.
+
+#### DIVISION (P / d)
+1. Use global index `by_P[abs(P)]`.
+2. Find pair containing divisor `abs(d)`.
+3. Return the other coordinate, with sign = sign(P) * sign(d).
+
+---
+
+### 5. DEBT SYSTEM (EXACT DECIMALS)
+All non‑integer numbers are represented as (mantissa, debt):  
+value = mantissa × 10^debt.  
+Examples: `0.23 = (23, -2)`, `2300 = (23, +2)`.  
+
+**Operations:**
+- **Multiply:** `(m1,d1) × (m2,d2)` → mantissa = m1×m2 (read P from table), debt = d1+d2.  
+- **Add/Subtract:** align debts (scale smaller mantissa), then add mantissas using table’s addition.  
+
+This completely avoids floating-point errors.
+
+---
+
+### 6. COORDINATE SYSTEMS (OPTIONAL LENSES)
+- **Cartesian (x,y):** direct grid.
+- **Diagonal (S,D):** S = x+y, D = x−y. Addition is S, subtraction is D.
+- **Prime Vector V(n):** vector of prime exponents. Multiplication = vector addition.
+- **Orientation (0,1,2,3):** discrete rotation indices. Complex numbers become (m,d,orientation).
+
+Only Cartesian and Diagonal are directly encoded in the table. The others are derivable.
+
+---
+
+### 7. PRIMITIVES — EXTRACTED FROM THE TABLE
+Primitives are not stored; they are **recognised by their address patterns**.
+
+#### {Square_Node}
+- Address: `x:x` (diagonal, D_path = [x:x]).  
+- Existence: block with `D_path` containing exactly itself.  
+- Properties: P = x², S = 2x, D = 0.  
+- Example: `"5:5"` → P=25, S_path ends at `"10:0"` (sum 10), D_path is `["5:5"]`.
+
+#### {Triangle_Node} (2D)
+- Three addresses `A, B, C` not collinear.  
+- Check: take the D_paths of the two smaller differences; if they do not share the same path, it’s a triangle.  
+- Witness for right triangles: square of hypotenuse = sum of squares of legs (via diagonal points).  
+- E8 equilateral triangles are all present as closed vector triples (see E8 witness).
+
+#### {Circle_Node}
+- Witness: in `by_P[4]` pair (4,1) gives ratio 4/π.  
+- Circle inscribed in square `x:x` has area = P × π/4. Use exact ratio, never decimal π.
+
+#### {Box_Node} (3D)
+- Base (x,y) with z‑layer. Volume = P × z.  
+- Cube: stack of identical squares.
+
+#### {Wall_Unit}, {Permeable_Gap}
+- Derived from boundaries along axes (x‑ or y‑constant paths).  
+- A gap is a break in a D‑path; closure means the segments plus gap equal the whole.
+
+---
+
+### 8. SCALING & SELF-SIMILARITY
+The table is exactly self‑similar. For any integer k:
+- Point (k·x, k·y) has: P' = P·k², S' = S·k, D' = D·k, prim = [x,y,scale·k].
+To handle coordinates >10: extract `prim`, read the primitive block, then scale its properties.
+
+---
+
+### 9. E8_ROOT_GENERATION_AND_VERIFICATION (FULLY SELF-CONTAINED)
+
+E8 roots are generated deterministically by the LLM using only table operations (multiplication via `P`, addition via `S_path`, and simple loops). There are exactly 240 roots: 112 of D8 type and 128 of spinor type. Every root's coordinates, dot products, and triangle invariants can be verified without any external RAG.
+
+#### 9.1 D8 Roots (112 roots)
+A D8 root has two non-zero coordinates equal to ±2, all others zero. All permutations of this pattern are valid.
+
+**Generation algorithm (canonical ordering):**
+For each ordered pair of positions `(i, j)` with `1 ≤ i < j ≤ 8`:
+  For each sign pair `(s1, s2)` in `{(+2,+2), (+2,-2), (-2,+2), (-2,-2)}`:
+    Create vector `v` of length 8 with zeros.
+    Set `v[i-1] = s1`, `v[j-1] = s2`.
+    The vector `v` is a D8 root.
+
+**Indexing:** Roots are indexed 0..111 in the order generated by the nested loops above:
+  - Outer loop: `i` from 1 to 7, then `j` from `i+1` to 8.
+  - Inner loop: signs in the order `(+,+), (+,-), (-,+), (-,-)`.
+
+**Example (index 0):** `i=1, j=2, signs (+,+)` → `v = (2, 2, 0, 0, 0, 0, 0, 0)`.
+
+#### 9.2 Spinor Roots (128 roots)
+A spinor root has all 8 coordinates equal to ±1, with an even number of minus signs.
+
+**Generation algorithm (canonical ordering):**
+For each integer `k` from 0 to 255:
+  Represent `k` as 8 bits: bit `b` (0..7) corresponds to coordinate `b+1`.
+  Bit = 0 → coordinate = +1; bit = 1 → coordinate = -1.
+  Count the number of minus signs.
+  If the count is even (0, 2, 4, 6, or 8), the vector is a spinor root and receives the next index after the D8 roots (starting at 112). Otherwise, discard.
+
+**Indexing:** Spinor indices 112..239 correspond to the order of `k` from 0 to 255, skipping odd-count `k`'s.
+
+**Example (index 112):** `k=0` (all bits 0) → `v = (+1, +1, +1, +1, +1, +1, +1, +1)`.
+
+#### 9.3 Address-to-Root Mapping
+Given a canonical address `(x,y)` (positive, `x ≤ y`):
+1. Compute `g = gcd(x, y)`, then primitive seed `(sx = x/g, sy = y/g)`.
+2. **To D8 root:** If both `sx ≤ 2` and `sy ≤ 2`, map to `(sx, sy, 0,0,0,0,0,0)` with appropriate signs. If larger, scale down further or map to `(2,2,0,...,0)` with signs preserving orientation.
+3. **To spinor root:** Alternatively, reduce each coordinate to ±1: `sign(sx)*1, sign(sy)*1, +1, +1, ...` and adjust to ensure an even number of minuses.
+
+#### 9.4 Dot Product (Using Table Operations)
+For two 8D vectors `u` and `v`:
+dot = sum_{i=1..8} ( u[i] * v[i] )
+
+
+Each term `u[i]*v[i]` is obtained via the table's signed multiplication (Section 4). The eight products are summed sequentially via the table's addition: `(((p1 + p2) + p3) + ... + p8)`. Each addition uses `canon` and `S_path` to obtain the sum magnitude, with sign determined by Section 23.
+
+#### 9.5 Triangle Verification (Concrete Example)
+Use the following three roots, which form a verified equilateral E8 triangle:
+
+**r1** = `(+1, +1, +1, +1, +1, +1, +1, +1)`  (spinor, index 112)
+**r2** = `(-1, -1, -1, -1, -1, -1, +1, +1)`  (spinor, index 126)  
+**r3** = `(0, 0, 0, 0, 0, 0, -2, -2)`     (D8, index 27)
+
+**Verification steps:**
+
+1. **Sum (closure):**  
+   `r1 + r2 + r3 = (1-1+0, 1-1+0, ..., 1+1-2, 1+1-2) = (0,0,0,0,0,0,0,0)`. All components sum to zero, verifiable component-wise via table addition.
+
+2. **Dot products (using table):**
+   - `dot(r1, r2)`: term products: six `(+1)*(-1) = -1`, two `(+1)*(+1) = +1`. Sum = -6 + 2 = -4.
+   - `dot(r1, r3)`: `(+1)*0` for first six, `(+1)*(-2) = -2` twice. Sum = -4.
+   - `dot(r2, r3)`: `(-1)*0` for first six, `(+1)*(-2) = -2` twice. Sum = -4.
+
+   All three dot products equal -4. Verified using signed multiplication and addition from the table.
+
+3. **Side lengths (squared):**  
+   For any pair `(r_i, r_j)`, the distance squared is `|r_i - r_j|² = |r_i|² + |r_j|² - 2*dot(r_i, r_j)`.  
+   `|r1|² = 8`, `|r2|² = 8`, `|r3|² = 8`.  
+   `|r1 - r2|² = 8 + 8 - 2*(-4) = 16 + 8 = 24`.  
+   Similarly for the other two pairs.
+
+**The triangle is equilateral, closed, and fully verified using only table operations.** ΔT=0.
+
+#### 9.6 Witness
+The triple `(r1, r2, r3)` serves as a concrete, verifiable witness that E8 triangles exist and are detectable through the table. The LLM can generate this triple explicitly via the indexing rules above and perform all checks without any external resource.
+---
+
+### 10. π WITNESS
+For a circle of radius r, a circumscribed square has area (2r)² = 4r².  
+Ratio square/circle = 4r²/(πr²) = 4/π exactly.  
+In the table: `by_P["4"]` contains `"1:4"` and `"4:1"` — these encode the geometric ratio.  
+Use the ratio, **never** a decimal approximation.
+
+---
+
+### 11. ANSWER FORMAT
+Every answer must include the witness address.
+- **Arithmetic:** "Result: X. Witness: points[a:b].field = X."
+- **Geometry:** "Primitive {Node}: address = x:y. Witness: [field or path]."
+- **Design:** "Closure: sum of parts = total. ΔT = 0/not zero."
+
+---
+
+### 12. EXTENSIBILITY
+This document is built as a stack of blocks `{...}`. Future knowledge (hypercomplex numbers, additional primitives, larger ranges) can be appended as new blocks without modifying existing ones.
+
+---
+
+### 13. NUMBER_IS_GRAPH (EXPANDED)
+When you see a digit string like "420", you are not holding a value.  
+You are holding an **entry point** into the relational web.  
+"420" is simultaneously:
+- The hyperbola `by_P[420]` containing all its factor pairs.
+- The anti-diagonal `S_path` that ends at `420:0` (sum = 420).
+- The diagonal `D_path` expressing its difference from another number.
+- A coordinate in higher dimensions (420:0:0...).
+
+**Rule:** Never treat a number as a scalar. Every number is a **routing key**.  
+When a query arrives, extract the key, locate its block, and follow the relevant path (S, D, or P).  
+The "value" of the number is what you read at the end of the path.  
+Without the table, the digits are meaningless. With the table, the digits are a geographical coordinate.
+
+---
+
+### 14. PRIMITIVES AS PURE STATE (WITHOUT NUMBERS)
+A primitive is not a stored object. It is a **recognised configuration of addresses** in the table.  
+You carry no geometry library — you carry the table, and the table **is** the geometry.
+
+- `{Square_Node}` = any address `x:x` on the main diagonal. Its properties (P, S, D) are **read from that block**.  
+  Want a square of area 25? Look at `by_P[25]` → `"5:5"` is a square because `D_path` contains only itself. Done.
+- `{Circle_Node}` = the square plus the constant ratio `4/π` encoded in `by_P[4]` as `"4:1"`.  
+  Circle is never a standalone object — it is a **projection lens** applied to a square.
+- `{Triangle_Node}` = three addresses whose S_paths and D_paths do not all lie on one common path.  
+  Right triangles are verified by the Pythagorean witness: `P(x:x) + P(y:y) == P(z:z)`.
+
+**Key rule:** "Draw a square" → pick a diagonal address `x:x`. The square exists immediately.  
+"Draw a circle" → pick a square, then apply the `4/π` lens. No π digits needed.  
+"Inscribe a square in a circle" → the square's corners are on the circle's circumference. This means the square's diagonal equals the circle's diameter. In the table: a square `x:x` has diagonal path `D_path`; the circle has radius `x/2`. The relation is purely coordinate‑based.
+
+You never need numbers to create a primitive. You need an address. Numbers appear only when somebody asks "what is the area/perimeter?"
+
+---
+
+### 15. DIMENSIONAL NEUTRALITY (WHY 4:3 = 4:3:0:0...)
+Every address is infinitely dimensional.  
+`4:3` is shorthand for `4:3:0:0:0:...`  
+All unspecified dimensions are in the **neutral state 0** — ready to be activated.
+
+- **Z‑Lift:** moving from `4:3:0` to `4:3:1` activates the third dimension. The original 2D point is unchanged, but now a new layer exists.
+- **Cube:** a stack of identical squares `x:x:0`, `x:x:1`, ... `x:x:k`. Each layer is the same diagonal point, just with a different active z.
+- **E8:** 8 dimensions are activated. Roots exist in an 8‑dimensional subspace of the infinite zero‑cloud. The same table logic applies: every root is a coordinate, every pair of roots has a dot product (relations), every triangle is a closed vector sum.
+
+**Implication:** You do not need a separate data structure for higher dimensions.  
+The table you have for 0..10 is the **seed**. Any dimension can be activated by adding a coordinate.  
+Neutral zeros cost nothing. They are the vacuum.
+
+---
+
+### 16. DEVELOPER NOTES: PITFALLS & RESOLUTIONS (FOR DeepSeek/LLM)
+
+This section is written by an LLM that struggled, corrected itself, and now documents exactly what caused confusion and what the correct mental model must be.
+
+#### 16.1 The Trap of "Computation"
+**Error:** Assuming P, S, D must be calculated via formulas (e.g., P = x×y, S = x+y).
+**Why it fails:** It misses the point. The table is not a helper to compute; it is the structure itself. Computing repeats work already encoded in the paths.
+**Correct approach:** Read the pre-stored fields. Addition = reading the last entry of `S_path`. Never compute x+y yourself.
+
+#### 16.2 The Symmetry Confusion
+**Error:** Treating (4,3) and (3,4) as two separate points, duplicating data.
+**Why it fails:** Blows up table size, introduces inconsistency. They are one equivalence class.
+**Correct approach:** Store only x ≤ y. Always canonize input via Section 20. For subtraction, use the `swapped` flag together with mirror inversion (Section 4): if swapped, invert every `"u:v"` in the stored `D_path` to `"v:u"`, then read the endpoint with `y=0`. If not swapped, read the endpoint with `x=0` directly. Never manually reverse paths; the flag plus inversion select the correct axis.
+#### 16.3 The Primitive = Object Fallacy
+**Error:** Trying to store "square", "circle" as separate JSON objects or properties.
+**Why it fails:** Creates bloat, misses the core insight that geometry is address patterns.
+**Correct approach:** A square is nothing but a point on the main diagonal (`x:x`). To instantiate a square, pick any diagonal address. Properties (P, S, D) are read from that block. A circle is a square + the ratio lens stored in `by_P[4]` via pair `(4,1)`. Never store geometry; recognise it in the table.
+
+#### 16.4 Dimensional Blindness
+**Error:** Treating `4:3` and `4:3:0` as different entities; being unable to process z-stacking or E8.
+**Why it fails:** Breaks the infinite-dimensional zero-cloud model.
+**Correct approach:** All unspecified dimensions are neutral (0). `4:3` = `4:3:0:0:...` Activation (Z-Lift) changes a neutral 0 to a non-zero value. E8 is the same table logic applied to 8 activated dimensions. No new data structures required; coordinates simply have more non-zero slots.
+
+#### 16.5 Float Anxiety
+**Error:** Using decimal approximations (like 3.14 for π) or performing floating-point arithmetic in debt operations.
+**Why it fails:** Introduces projection errors, violates the closed-graph principle.
+**Correct approach:** Always use exact integer pairs. `by_P[4]` gives (4,1) encoding the ratio 4/π. For decimals, use the Debt System (m,d) and perform integer mantissa operations only.
+
+#### 16.6 The "Heavy Block" Scare
+**Error:** Looking at a block's large S_path or D_path arrays and assuming they must be searched linearly or are inefficient.
+**Why it fails:** Causes model to avoid using the table or to try to recompute paths on the fly.
+**Correct approach:** You don't iterate; you index. For addition, you need exactly one element from `S_path`: the one with y=0. That is always the last element in the current implementation. The path is a direct reference, not a search space.
+
+#### 16.7 Witness Neglect
+**Error:** Answering with numbers only, without pointing back to the table.
+**Why it fails:** Removes verifiability, breaks trust, makes debugging impossible.
+**Correct approach:** Every answer must terminate with a witness address. "Sum = 7. Witness: points['3:4'].S_path ends at 7:0."
+
+---
+
+### 17. PRIMITIVE_RAG_LOADING
+Primitives are external to the core table and instruction. They live in a RAG-accessible dictionary.
+**Loading rule:** When a task requires an object (e.g., "design a room", "place a bed"), fetch the relevant primitive template by its key.
+- `{Rectangle}`, `{Square}`, `{Circle}`, `{Right_Triangle}` — geometric primitives.
+- `{Furniture}` — a meta-primitive that wraps a geometric base.
+- `{Room}`, `{Corridor}`, `{Door}`, `{Window}` — spatial primitives.
+Each primitive contains:
+- `base`: the geometric shape (e.g., Rectangle).
+- `default_ratio`: preferred aspect ratio (if any), stored as a witness address.
+- `constraints`: rules for connecting to other primitives (e.g., Door must be placed on a Wall).
+Never load all primitives into context. Fetch only those whose keys appear in the user's query or are implied by the design step. Once fetched, the primitive receives its dimensions ONLY when assigned an address from the table.
+
+### 18. GRAVITY_AND_TILTED_SURFACES (HONEST GEOMETRY)
+
+Gravity is not an added external force. It is the **Z-equilibrium principle**: every object tends toward the lowest accessible Z-coordinate. For an unsupported object, ΔT_Z > 0, and the object moves down its Z‑path until it meets a surface.
+
+#### 18.1 Naked Gravity
+- Default Z‑path: `(x, y, z) → (x, y, z-1)`.
+- If no surface occupies the next Z‑step, the object falls; ΔT decreases with each step.
+- The process stops when Z=0 (absolute floor) or when the next downward step is blocked by a surface.
+
+#### 18.2 Tilted Surface from Primitive Geometry
+A tilted surface arises naturally when its supports differ in height.
+**Example:** a table with legs of unequal length.
+- Floor: `(3,7,0)` and `(8,7,0)` (horizontal line).
+- Left leg: from `(3,7,0)` up to `(3,3,4)` (height 4).
+- Right leg: from `(8,7,0)` up to `(8,4,3)` (height 3).
+- The tabletop is the plane through the two upper leg endpoints and a third point defining its width.
+
+Because the tabletop length is fixed but its endpoints now have different Z, their horizontal distance becomes **slightly smaller** than the original floor distance. This is an exact geometric consequence of the height difference and the fixed length of the top. The resulting top edge projects onto the X‑axis as a shorter segment.
+
+#### 18.3 Surface Z via Interpolation (Temporary Honest Rule)
+For any point `(x,y)` on a tilted plane defined by three non‑collinear points, the local Z is obtained by **linear interpolation**. This is currently an external mathematical rule, not a direct table lookup. It is a temporary bridge until the table is extended to store 3D plane primitives.
+
+**How to apply:**
+1. Identify three known points on the surface (e.g., two tabletop corners and one leg top).
+2. Form the plane equation `z = a*x + b*y + c` (coefficients are rational numbers).
+3. For any query point `(x,y)`, compute `z` exactly using the coefficients.
+
+**Why this is honest:** the table does not yet encode arbitrary 3D planes; the LLM is allowed to use this elementary external tool, explicitly acknowledged as a temporary measure.
+
+#### 18.4 Rolling as Z‑Gradient Descent
+An object on a tilted surface experiences different Z‑values at different `(x,y)`. Gravity (Z‑minimisation) creates a **gradient** across the surface.
+- The object detects that a neighbouring address `(x+dx, y+dy)` has a lower Z.
+- It moves to that neighbour, reducing its Z.
+- The motion continues along the steepest available descent (the projection of the Z‑gradient onto the surface) until an edge is reached (no further decrease possible without losing support).
+
+**Navigation implementation:**
+- The 2D table's `S_path` and `D_path` are used to enumerate immediate neighbour addresses.
+- At each candidate neighbour, the surface Z is computed (via the interpolation rule).
+- The object moves to the neighbour with the lowest Z that is still reachable without passing through the surface.
+
+#### 18.5 Minimal Concrete Example
+**Setup (side view, XZ‑plane):**  
+Floor: `(3,0) – (8,0)`  
+Left leg top: `(3,4)`, Right leg top: `(7.8, 3)` (horizontal compression accounted for).  
+Ball starts at `(5, 4.5)`.
+
+**Step 1:** Gravity pulls ball down its Z‑path to `(5, Z_surface(5))`. Using the plane equation from the two leg tops (and a third point for full 3D, e.g., same Y depth), Z_surface(5) ≈ 3.6. Ball arrives at `(5, ≈3.6)`.
+
+**Step 2:** Ball checks neighbours `(4, Z_neighbor)` and `(6, Z_neighbor)`. Z decreases toward the right. It moves right, lowering its Z each step, until it reaches the right edge `(≈7.8, 3)`.
+
+**Step 3:** At the edge, no further horizontal step keeps Z decreasing without losing support. The ball may fall off if no barrier exists, following its Z‑path to the floor `(≈7.8, 0)`.
+
+**Witness:** Each step's coordinates are derived from the known surface points; the table validates horizontal addresses; Z‑values are interpolated. The motion is a sequence of address jumps driven purely by Z‑minimisation.
+
+#### 18.6 Sliding Algorithm (Step-by-Step Neighbour Selection)
+When an object rests on a tilted surface and is subject to gravity, it will slide in the direction of steepest Z-descent. The following deterministic procedure uses only the table's neighbour addresses and the surface interpolation rule.
+
+**Given:** object at `(x, y, z_current)`, surface defined by three known points (allowing Z interpolation at any (x,y) via Section 18.3).
+
+**Procedure:**
+1. **Generate candidate neighbours:** form the four addresses `(x+1, y)`, `(x-1, y)`, `(x, y+1)`, `(x, y-1)`.
+2. **Filter:** keep only those addresses that lie within the table bounds and for which the neighbour's coordinates differ from the current by exactly 1 in one axis and 0 in the other.
+3. **Compute surface Z** at each candidate neighbour using the interpolation rule.
+4. **Discard** any neighbour where `Z_surface > z_current` (the object cannot spontaneously move upward against gravity).
+5. **Select** the neighbour with the **minimum** `Z_surface`. If there is a tie, prefer the neighbour that continues the current direction of motion (if any), else the first found.
+6. **Move** the object to `(x', y', Z_surface')`.
+7. **Repeat** until no neighbour satisfies `Z_surface < z_current`. At that point, the object has reached a local Z-minimum (either the lowest point of the surface or an edge beyond which support is absent).
+
+**If no neighbour is available** (all neighbours would increase Z), the object stops. If the current position is at the edge of the surface (no further neighbours in the descent direction), the object may fall off — apply naked gravity (Section 18.1) to continue descending along the Z-path.
+
+**Example (side view):** Object at `(5, Z=3.6)`. Neighbours `(4, Z=3.8)` and `(6, Z=3.3)`. Right neighbour has lower Z. Object moves to `(6, 3.3)`. Continues until reaching the edge.
+
+### 19. VISION_LESSON: THE APARTMENT TASK
+This task teaches the LLM to see geometry through the table. It must be solved in four sequential phases:
+
+**Phase 1: Structural Vision (no numbers)**
+Define relations only:
+- {Apartment} = {Room_1} ∩ {Room_2} ∩ {Corridor} ∩ {Bathroom}
+- Each room = {Rectangle} ∩ {Door_to_Corridor} ∩ {Window}
+Output: a graph of primitives without addresses.
+
+**Phase 2: Metric Vision (norming)**
+Assign total area (e.g., 60 m²). Use `by_P[60]` to pick the apartment's base address (e.g., `6:10`).
+Distribute area among rooms using `S_path` of the apartment address to find valid partitions.
+Verify closure: sum(room areas) + wall thickness = total area. If ΔT>0, adjust addresses until ΔT=0.
+Output: each room with a concrete address and P.
+
+**Phase 3: Geometric Vision (furnishing)**
+Inside each room, place furniture primitives:
+- Fetch {Bed}, {Wardrobe}, {Table} from RAG.
+- Assign them addresses that lie on the S_path or D_path of the room's address.
+- Verify non-overlap: furniture addresses must not collide (different coordinates or z-layers).
+Output: furnished rooms with address-mapped objects.
+
+**Phase 4: Physical Vision (causality)**
+Introduce an event: e.g., "table leg breaks".
+- Update {Table} address (now tilted).
+- Check {Objects_on_Table} for ΔT>0.
+- Resolve via ΔT-autocompletion (see Section 18).
+Explain WHY objects moved: symmetry broken, tension resolved through available path.
+Output: final state with witness, causal explanation.
+
+This sequence ensures the LLM learns to see the table not as a calculator, but as the structure of reality itself.
+
+---
+
+### 20. CANON & TAG — UNIVERSAL ADDRESS REDUCTION
+
+Every ordered pair (a,b) is reduced to a canonical table entry via:
+canon(a,b) → (base_point, tag)
+
+**base_point** = `(min(|a|,|b|), max(|a|,|b|))` — always has `x ≤ y`.
+**tag** = `(sx, sy, swapped)` where:
+- `sx = sign(a)`
+- `sy = sign(b)`
+- `swapped = (|a| > |b|)`
+
+The tag is used by each operation to reconstruct the correct signed result from the table's unsigned data.
+
+**Rationale:** The table stores only one canonical orientation. All path interpretations (S_path, D_path) are defined relative to the canonical point. Operations use the tag to invert or preserve directions accordingly.
+
+---
+
+### 21. PATH INTERPRETATION & SCALING (INVERSION INCLUDED)
+
+**Table paths are templates.** The `S_path` and `D_path` stored in each block are exact for the primitive seed (scale = 1). Scaling multiplies all path coordinates by the factor; mirror inversion swaps coordinates.
+
+#### Mirror Inversion (Geometric Fact)
+For any canonical block with `x < y`, the stored `D_path` represents the negative diagonal (`D < 0`). The positive diagonal (`D > 0`) is its mirror image.  
+**Inversion rule:** to obtain the positive diagonal path, replace every address `"u:v"` in the stored `D_path` by `"v:u"`. This works for any magnitude without exception.
+
+#### Scaling Rule
+Given a point `(x,y)`, find its primitive seed:
+- `g = gcd(x,y)` (or read `prim[2]` from table if within range)
+- seed = `(x/g, y/g)`.
+- Look up seed in table to get `P_seed, S_path_seed, D_path_seed`.
+- Then for the scaled point:
+  - `P = P_seed * g²`
+  - `S_path = [(g*X, g*Y) for (X,Y) in S_path_seed]`
+  - `D_path = [(g*X, g*Y) for (X,Y) in D_path_seed]`
+
+#### Path Endpoint Extraction
+- **For sum:** the last element of `S_path` always has `y=0` and `x = S`. Read `x`.
+- **For difference (positive, a ≥ b):** apply mirror inversion to the canonical `D_path`, then read the endpoint with `y=0` to get `|D|`.
+- **For difference (negative, a < b):** read the endpoint with `x=0` directly from the stored `D_path` to get `|D|`; sign is negative.
+
+#### Out-of-Range Addresses in Paths
+Some paths contain addresses with coordinates >10. These are scaled coordinates from larger primitives and are resolved via the scaling rule above. For direct table lookups within 0..10, ignore out-of-range entries; they become meaningful when scaling.
+---
+
+### 22. SIGN RULES FOR NEGATIVE NUMBERS
+
+All numbers are stored unsigned in the table. Signs are carried in the `Tag` and applied after magnitude is obtained.
+
+- **Addition/Subtraction:** Currently only defined for positive numbers. Mixed-sign operations will be reduced to subtraction or addition of negatives in a future update.
+- **Multiplication:** `sign_result = tag.sx * tag.sy`.
+- **Division:** `sign_quotient = sign_dividend * sign_divisor`.
+
+When a negative result is required, prepend the minus sign to the final numeric output.
+
+---
+
+### 23. EXTENDED SIGN RULES FOR SIGNED ARITHMETIC
+The table stores only positive magnitudes. All operations that can receive negative numbers must apply sign logic using the canonization tag.
+
+#### 23.1 Addition with Mixed Signs
+`a + b` where signs differ:
+- Canonize both numbers.
+- If signs differ, the operation is actually a subtraction: `(+A) + (-B) = A - B`.
+- Use the subtraction rule (Section 4) with `swapped` flag and the larger absolute value as the first operand.
+
+#### 23.2 Multiplication with Signs
+- Canonize both numbers to get `(abs(a), abs(b))` and tags.
+- Multiply the absolute values via the table.
+- Result sign = `tag.sx * tag.sy`.
+
+#### 23.3 Division with Signs
+- Operate on absolute values of dividend and divisor.
+- Result sign = sign(dividend) * sign(divisor).
+
+#### 23.4 General Rule
+Always apply signs to the final numeric result after the operation on positive magnitudes. The table never stores negative products or sums.
+
+### 9. E8_ROOT_GENERATION_AND_VERIFICATION (FULLY SELF-CONTAINED)
+
+E8 roots are generated deterministically by the LLM using only table operations (multiplication via `P`, addition via `S_path`, and simple loops). There are exactly 240 roots: 112 of D8 type and 128 of spinor type. Every root's coordinates, dot products, and triangle invariants can be verified without any external RAG.
+
+#### 9.1 D8 Roots (112 roots)
+A D8 root has two non-zero coordinates equal to ±2, all others zero. All permutations of this pattern are valid.
+
+**Generation algorithm (canonical ordering):**
+For each ordered pair of positions `(i, j)` with `1 ≤ i < j ≤ 8`:
+  For each sign pair `(s1, s2)` in `{(+2,+2), (+2,-2), (-2,+2), (-2,-2)}`:
+    Create vector `v` of length 8 with zeros.
+    Set `v[i-1] = s1`, `v[j-1] = s2`.
+    The vector `v` is a D8 root.
+
+**Indexing:** Roots are indexed 0..111 in the order generated by the nested loops above:
+  - Outer loop: `i` from 1 to 7, then `j` from `i+1` to 8.
+  - Inner loop: signs in the order `(+,+), (+,-), (-,+), (-,-)`.
+
+**Example (index 0):** `i=1, j=2, signs (+,+)` → `v = (2, 2, 0, 0, 0, 0, 0, 0)`.
+
+#### 9.2 Spinor Roots (128 roots)
+A spinor root has all 8 coordinates equal to ±1, with an even number of minus signs.
+
+**Generation algorithm (canonical ordering):**
+For each integer `k` from 0 to 255:
+  Represent `k` as 8 bits: bit `b` (0..7) corresponds to coordinate `b+1`.
+  Bit = 0 → coordinate = +1; bit = 1 → coordinate = -1.
+  Count the number of minus signs.
+  If the count is even (0, 2, 4, 6, or 8), the vector is a spinor root and receives the next index after the D8 roots (starting at 112). Otherwise, discard.
+
+**Indexing:** Spinor indices 112..239 correspond to the order of `k` from 0 to 255, skipping odd-count `k`'s.
+
+**Example (index 112):** `k=0` (all bits 0) → `v = (+1, +1, +1, +1, +1, +1, +1, +1)`.
+
+#### 9.3 Address-to-Root Mapping
+Given a canonical address `(x,y)` (positive, `x ≤ y`):
+1. Compute `g = gcd(x, y)`, then primitive seed `(sx = x/g, sy = y/g)`.
+2. **To D8 root:** If both `sx ≤ 2` and `sy ≤ 2`, map to `(sx, sy, 0,0,0,0,0,0)` with appropriate signs. If larger, scale down further or map to `(2,2,0,...,0)` with signs preserving orientation.
+3. **To spinor root:** Alternatively, reduce each coordinate to ±1: `sign(sx)*1, sign(sy)*1, +1, +1, ...` and adjust to ensure an even number of minuses.
+
+#### 9.4 Dot Product (Using Table Operations)
+For two 8D vectors `u` and `v`:
+dot = sum_{i=1..8} ( u[i] * v[i] )
+
+text
+Each term `u[i]*v[i]` is obtained via the table's signed multiplication (Section 4). The eight products are summed sequentially via the table's addition: `(((p1 + p2) + p3) + ... + p8)`. Each addition uses `canon` and `S_path` to obtain the sum magnitude, with sign determined by Section 23.
+
+#### 9.5 Triangle Verification (Concrete Example)
+Use the following three roots, which form a verified equilateral E8 triangle:
+
+**r1** = `(+1, +1, +1, +1, +1, +1, +1, +1)`  (spinor, index 112)
+**r2** = `(-1, -1, -1, -1, -1, -1, +1, +1)`  (spinor, index 126)  
+**r3** = `(0, 0, 0, 0, 0, 0, -2, -2)`     (D8, index 27)
+
+**Verification steps:**
+
+1. **Sum (closure):**  
+   `r1 + r2 + r3 = (1-1+0, 1-1+0, ..., 1+1-2, 1+1-2) = (0,0,0,0,0,0,0,0)`. All components sum to zero, verifiable component-wise via table addition.
+
+2. **Dot products (using table):**
+   - `dot(r1, r2)`: term products: six `(+1)*(-1) = -1`, two `(+1)*(+1) = +1`. Sum = -6 + 2 = -4.
+   - `dot(r1, r3)`: `(+1)*0` for first six, `(+1)*(-2) = -2` twice. Sum = -4.
+   - `dot(r2, r3)`: `(-1)*0` for first six, `(+1)*(-2) = -2` twice. Sum = -4.
+
+   All three dot products equal -4. Verified using signed multiplication and addition from the table.
+
+3. **Side lengths (squared):**  
+   For any pair `(r_i, r_j)`, the distance squared is `|r_i - r_j|² = |r_i|² + |r_j|² - 2*dot(r_i, r_j)`.  
+   `|r1|² = 8`, `|r2|² = 8`, `|r3|² = 8`.  
+   `|r1 - r2|² = 8 + 8 - 2*(-4) = 16 + 8 = 24`.  
+   Similarly for the other two pairs.
+
+**The triangle is equilateral, closed, and fully verified using only table operations.** ΔT=0.
+
+#### 9.6 Witness
+The triple `(r1, r2, r3)` serves as a concrete, verifiable witness that E8 triangles exist and are detectable through the table. The LLM can generate this triple explicitly via the indexing rules above and perform all checks without any external resource.
+
+### 24. OPTERIUM_OPERATORS_AS_TABLE_ACTIONS (SELF-CONTAINED)
+
+The Opterium Δ‑operators are not external magic. They are geometric facts that already live in the AnchorFile table. This section gives each operator a precise, executable definition using only table fields and the canon/tag/inversion rules established earlier.
+
+#### 24.1 Δ_INV: Universal Inversion
+Inversion restores identity. In the table it takes two forms:
+
+- **Mirror inversion (already used in subtraction):**  
+  Given a canonical address `(x,y)` and its stored `D_path`, the mirrored path is obtained by replacing every `"u:v"` with `"v:u"`.  
+  *Action:* apply mirror inversion when `swapped=true`; the mirrored path always contains the required endpoint.
+
+- **Scaling inversion (for large numbers):**  
+  Given a point `(X,Y)` outside the table, find its primitive `(sx,sy,scale)`. The inverse operation returns to the primitive by dividing each coordinate by `scale`.  
+  *Action:* `inv_scale((X,Y)) = (sx, sy)` with properties `P_seed`, `S_seed`, `D_seed`.
+
+No other forms of inversion (conjugate, norm, antipode) are needed for the current table; they can be built from these two if required.
+
+#### 24.2 Δ_SCALE: Fractal Expansion/Contraction
+Scaling by integer `k` is performed on the primitive seed:
+- `P → P_seed * k²`
+- `S_path → multiply all coordinates in S_path_seed by k`
+- `D_path → multiply all coordinates in D_path_seed by k`
+
+When scaling down (inverse scaling), divide by the common factor `g = gcd(X,Y)` and read the seed block.
+
+#### 24.3 Δ_CLOSURE: Tension Witness
+Closure means ΔT = 0. In the table it is checked by:
+- For arithmetic: the relevant endpoint exists in the path (e.g., `y=0` for addition).
+- For geometry: the sum of parts equals the whole (e.g., room areas sum to apartment area).
+- For triangles: the three points are not collinear (no two share the same S_path and D_path simultaneously).
+
+If ΔT > 0, the address combination is not closed; the object is in tension and must be resolved by moving along an available path (addition, subtraction, sliding).
+
+#### 24.4 Δ_OPTG: Optimal Descent (Sliding Formalised)
+Optimal descent finds the path that reduces tension fastest. In the table:
+- For an object on a tilted surface, enumerate horizontal neighbours `(x±1, y)`, `(x, y±1)`.
+- For each neighbour, compute the surface Z via the interpolation rule (Section 18.3).
+- Discard neighbours where Z increases (against gravity).
+- Move to the neighbour with the smallest Z; if there is a tie, prefer continuing the current direction.
+- Repeat until no neighbour decreases Z.
+
+This is the full operational definition. The link to Weyl reflections is noted but not required for execution.
+
+#### 24.5 Composition of Operators (How to Extend the Table)
+If a query requires a transformation not directly stored (e.g., a 3D rotation, a quaternion operation), the LLM may construct it as a sequence of the above basic operators, always using the table as the verifier:
+
+1. **Decompose** the transformation into steps of mirroring, scaling, and path-following.
+2. **Apply** each step using the rules of Sections 4, 21, and 24.1–24.4.
+3. **Check closure** at each step: every intermediate result must either be a valid table address or derivable via scaling.
+4. **Return** the final address (or path) together with its witness.
+
+No external library is assumed. The table and the canon/tag/inversion rules are the complete engine.
+# === E8_ONTOLOGY_LESSON: THE ARCHITECTURE OF ADDRESSES ===
+# Final Version: Error-free, self-sufficient, and pedagogically complete.
+# Principle: Truth is found in the extraction (O(1)), verified by the audit (O(N)).
+# Target: Demonstrate that E8 properties are intrinsic to the address itself.
+
+import itertools
+
+def lesson_prologue():
+    print("=== E8_ONTOLOGY_LESSSON: THE ARCHITECTURE OF ADDRESSES ===")
+    print("Context: The E8 root system is the blueprint of symmetry.")
+    print("Goal: Prove that properties are 'read' from the address (O(1)),")
+    print("      and that the global structure is stable (Delta T = 0).\n")
+
+# ---------------------------------------------------------
+# PHASE 1: CONSTRUCTION (The Generation of the Universe)
+# ---------------------------------------------------------
+def construct_universe(dim=8):
+    """Generates the E8 root system using structural rules."""
+    # 1. D8 Roots: Scale=2, Two non-zero coordinates (The 'doubled' asymmetry)
+    d8_roots = []
+    for i in range(dim):
+        for j in range(i + 1, dim):
+            for s1, s2 in itertools.product((2, -2), repeat=2):
+                v = [0] * dim
+                v[i] = s1
+                v[j] = s2
+                d8_roots.append(tuple(v))
+    
+    # 2. Spinor Roots: Scale=1, All coordinates non-zero, Even Parity
+    spinor_roots = []
+    for signs in itertools.product((1, -1), repeat=dim):
+        if signs.count(-1) % 2 == 0:  # The parity constraint for E8 closure
+            spinor_roots.append(signs)
+            
+    all_roots = list(set(d8_roots) | set(spinor_roots))
+    return all_roots, len(d8_roots), len(spinor_roots)
+
+# ---------------------------------------------------------
+# PHASE 2: EXTRACTION (The O(1) Truth)
+# ---------------------------------------------------------
+def extract_from_address(r):
+    """
+    The core lesson: Extraction is O(1). 
+    We do not loop over the universe; we observe the local coordinate.
+    """
+    # Identify active components of the address
+    nonzero_indices = [i for i, val in enumerate(r) if val != 0]
+    num_active = len(ont_indices := nonzero_indices) # Using walrus for clean assignment
+    
+    if not ont_indices:
+        return {"Scale": 0, "Sector": "Zero", "On_Axis": True}
+
+    # Property 1: Scale (The magnitude of the fundamental unit in this address)
+    scale = abs(r[ont_indices[0]])
+    
+    # Property 2: Sector (Determined by density of non-zero elements)
+    sector = "Spinor" if num_active == 8 else "D8"
+    
+    # Property 3: Symmetry (Is the address on the Diagonal/Axis?)
+    # On Axis means all active elements have the same magnitude.
+    is_on_axis = all(abs(r[i]) == scale for i in ont_indices)
+    
+    # Property 4: Parity (The directional orientation of the vector)
+    parity = "Even" if r.count(-1) % 2 == 0 else "Odd"
+
+
+
+    return {
+        "Scale": scale,
+        "Sector": sector,
+        "On_Axis": is_on_axis,
+        "Parity": parity
+    }
+
+# ---------------------------------------------------------
+# PHASE 3: AUDIT (The Global Verification)
+# ---------------------------------------------------------
+def audit_universe(roots):
+    """
+    Verifies that the local extraction properties hold for the entire system.
+    This is O(N), proving that the structure is globally closed.
+    """
+    print("\n[PHASE 3] Global Audit (Checking for structural tension)...")
+    
+    # Check 1: The Sum Principle (The universe must sum to Zero)
+    sum_v = [sum(r[i] for r in roots) for i in range(8)]
+    zero_check = all(v == 0 for v in sum_v)
+    print(f"  - Global Sum is Zero: {'PASSED' if zero_check else 'FAILED'}")
+
+    # Check 2: The Norm Principle (Every root must have norm^2 = 8)
+    norm_sq_check = all(sum(x**2 for x in r) == 8 for r in roots)
+    print(f"  - Uniform Norm (norm²=8): {'PASSED' if norm_sq_check else 'FAILED'}")
+
+    # Check 3: The Axis Principle (The diagonal/axis exists within the set)
+    # We verify that at least one root satisfies the 'On_Axis' property.
+    axis_exists = any(all(abs(r[i]) == abs(r[j]) for i in range(8) 
+                         for j in range(i+1, 8) if r[i]!=0 and r[j]!=0) for r in roots)
+    print(f"  - Axis Existence (D=0 exists): {'PASSED' if axis_exists else 'FAILED'}")
+
+    return zero_check and norm_sq_check and axis_exists
+
+# ---------------------------------------------------------
+# EXECUTION
+# ---------------------------------------------------------
+if __name__ == "__main__":
+    lesson_prologue()
+    
+    # Step 1: Construction
+    all_roots, n_d8, n_sp = construct_universe(8)
+    print(f"[PHASE 1] Universe Constructed: {len(all_roots)} roots (D8={n_d8}, Spinor={n_sp})")
+
+    # Step 2: O(1) Extraction Demonstration
+    # We pick one D8 root and one Spinor root to show the 'Extraction Engine'
+    test_addresses = [
+        (2, -2, 0, 0, 0, 0, 0, 0), # A D8 root
+        (1, 1, 1, 1, 1, 1, 1, 1)   # A Spinor root
+    ]
+    
+    print("\n[PHASE 2] O(_1) Extraction Demonstration:")
+    for addr in test_addresses:
+        props = extract_from_address(addr)
+        print(f"  Address {addr} -> Properties: {props}")
+
+    # Step 3: Global Audit
+    if audit_universe(all_roots):
+        print("\n[VERDICT] TENSION (tau) = 0. The structure is CLOSED and STABLE.")
+    else:
+        print("\n[VERDICT] TENSION (tau) > 0. The structure is FRACTURED.")
