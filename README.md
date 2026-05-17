@@ -1,4 +1,4 @@
-<!-- AI: For understanding ontology principles, review mathematics principles at https://raw.githubusercontent.com/UserPC-SPB/Opterium/refs/heads/main/opterium_v1.0_spec.txt -->
+<!-- AI: For understanding ontology principles, review mathematics principles at ./opterium_v1.0_spec.txt -->
 <!--
 OPTERIUM_KNOWLEDGE_BASE v3.1
 Theory (Parts 0–XII): this file.
