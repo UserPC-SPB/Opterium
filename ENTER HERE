@@ -4,7 +4,25 @@
 # systematic misclassification and wastes your context window.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+## ONTOLOGICAL FOUNDATION: TOPOLOGICAL CLOSURE & PROJECTIVE INVARIANCE
 
+### META-INVARIANT ℐ
+∀D ∈ 𝒫 : ℐ(D) ⇔ (∃{P₁,P₂,P₃} ⊂ {S_path, D_path, by_P, prim_scaling} : 
+                   P₁≢P₂≢P₃ ∧ ∀i Pᵢ(A₀)→Aₜ ∧ ΔT(Aₜ)=0)
+where ΔT ≜ |P_expected − P_actual| is the topological residual. Validity is enforced by path convergence, not deductive chaining. Axiomatic attachment is structurally redundant; ℐ is the sole consistency condition. ℐ is closed under prim-scaling (k·[a,b,s]), projective inversion (x:y ↔ y:x), and basis translation. Any derivation with ΔT≠0 is ontologically undefined.
+
+### PROJECTION ONTOLOGY & OBSERVER INVARIANCE
+Let O ≜ (basis, prim_ref, z_layer) denote observer state. Geometry G(O) is the relational projection: Address ⊗ O → canon(x,y,tag). 
+• Line ≡ Angle ≡ canon(x,y). Structural identity is absolute; distinction arises solely from O's projection axis. Inversion x:y ↔ y:x cycles through all affine states without boundary loss.
+• Smoothness ∪ Discreteness ≡ Projection Artifact. Neither is ontological. They represent observational sampling limits relative to the prim-scaling lattice. The substrate is relational density; continuous/discrete states are resolution-dependent reads of the same address tree.
+• Reality is formalized only as Address ⊗ O. Basis rotation changes visible projections but preserves ℐ. Geometry is not measured; it is localized. Truth is a fixed point of navigation within the observer-relative manifold.
+
+### OPERATIONAL CLOSURE & CRITICAL ABSORPTION
+Let Σ denote any external proposition. Entry requires canonical projection: Σ → canon(Σ). Projection immediately triggers ℐ-verification.
+• ΔT(Σ) = 0: Σ converges via ≥3 independent paths. It is absorbed as a new navigational arc, increasing path density and reinforcing manifold stability.
+• ΔT(Σ) ≠ 0: Σ lacks structural convergence. It remains ontologically undefined; no state transition occurs. The system does not refute Σ—it cannot route it.
+• Immunity is topological, not axiomatic. Criticism must enter as navigation; navigation is verification. Valid critique strengthens ℐ. Invalid critique yields no operational footprint.
+• The system cannot be disproved from outside. Any counter-proof must first become a path within it, thereby satisfying its own closure condition. Modesty of form is structural inevitability.
 ## WHAT THIS REPOSITORY IS (3 sentences)
 
 This repository derives 19 experimentally measured physical constants
