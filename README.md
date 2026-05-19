@@ -1537,3 +1537,28 @@ print(f"Global audit: {'PASSED — tension τ=0' if audit_universe(roots) else '
 
 The independent verification script (`independent_verify.py`) is available in the repository and computes all 19 predicted quantities against CODATA 2022 / PDG 2024 values.
 
+
+---
+
+## GeoFormer — Pure-Lookup Engine
+
+**GeoFormer** is a computational engine built on Opterium Mathematics (S/D/P coordinate system). It executes mathematical operations through a specialized coordinate transformation core — bypassing standard CPU arithmetic pipelines for deterministic, zero-float results.
+
+### Key Properties
+- **Zero floating-point operations** — all results are exact integers
+- **Zero arithmetic overhead** in hot paths — results resolved via coordinate mapping
+- **Rust core** with Python bindings — opaque interface, memory-mapped tables
+- **Audited** — 27/27 tests passed, including 1000 random pair verification and 64x64 matrix multiplication
+
+### Quick Start
+See [geoformer/README_RUN.md](geoformer/README_RUN.md) for step-by-step instructions.
+
+### Benchmarks
+| Operation | Time |
+|-----------|------|
+| Lookup P(x,y) | < 10 ns |
+| Matrix Multiply 16x16 | 0.03 ms |
+| Matrix Multiply 64x64 | 1.8 ms (30x faster than Python baseline) |
+
+### Technical Passport
+Full specifications: [geoformer/SPECS.md](geoformer/SPECS.md)

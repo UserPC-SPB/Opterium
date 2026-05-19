@@ -1,0 +1,14 @@
+[package]
+name = "geofield"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "staticlib"]
+name = "geofield"
+
+[dependencies]
+memmap2 = "0.9"
+
+[features]
+embedded-tables = []

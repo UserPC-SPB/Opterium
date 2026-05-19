@@ -1,0 +1,7 @@
+# GeoFormer build artifacts
+geoformer/native/target/
+geoformer/native/Cargo.lock
+geoformer/src/.cache/
+geoformer/__pycache__/
+geoformer/native/python/__pycache__/
+geoformer/src/__pycache__/
