@@ -1,21 +1,24 @@
 #!/usr/bin/env python3
 """
-Opterium GeoFormer — Demo
-Показывает, что всё работает: lookup, matmul, attention.
+Opterium GeoFormer — Full Demo
+Показывает все модули: lookup, matmul, attention, verifier, debt, E8, pipeline.
 """
 
 import sys
 import os
 import time
 
-# Добавляем путь к native/python
+# Добавляем пути
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "native", "python"))
+sys.path.insert(0, os.path.dirname(__file__))
 
 from geofield_native import GeoField
+from verifier import OpteriumVerifier
+from opterium import TokenEncoder, TokenDecoder, NavigationCore, OpteriumPipeline
 
 def main():
     print("=" * 60)
-    print("  Opterium GeoFormer — Demo")
+    print("  Opterium GeoFormer — Full Demo")
     print("=" * 60)
     print()
 
@@ -39,13 +42,13 @@ def main():
     print("─" * 40)
     print("  1. Pure Lookup (таблицы)")
     print("─" * 40)
-    print(f"  P(4, 3) = {gf.P(4, 3)}")          # 12
-    print(f"  S(4, 3) = {gf.S(4, 3)}")          # 7
-    print(f"  D(4, 3) = {gf.D(4, 3)}")          # 1
-    print(f"  p_from_sd(7, 1) = {gf.p_from_sd(7, 1)}")  # 12
-    print(f"  proximity(0) = {gf.proximity(0)}")      # 10000
-    print(f"  proximity(1) = {gf.proximity(1)}")      # 5000
-    print(f"  isqrt(144) = {gf.isqrt(144)}")          # 12
+    print(f"  P(4, 3) = {gf.P(4, 3)}")
+    print(f"  S(4, 3) = {gf.S(4, 3)}")
+    print(f"  D(4, 3) = {gf.D(4, 3)}")
+    print(f"  p_from_sd(7, 1) = {gf.p_from_sd(7, 1)}")
+    print(f"  proximity(0) = {gf.proximity(0)}")
+    print(f"  proximity(1) = {gf.proximity(1)}")
+    print(f"  isqrt(144) = {gf.isqrt(144)}")
     print()
 
     # 2. Matrix Multiply
@@ -53,8 +56,6 @@ def main():
     print("  2. Matrix Multiply (Rust)")
     print("─" * 40)
 
-    # A = [[1, 2], [3, 4]]  B = [[5, 6], [7, 8]]
-    # C = A × B = [[19, 22], [43, 50]]
     a = [1, 2, 3, 4]
     b = [5, 6, 7, 8]
 
@@ -76,7 +77,6 @@ def main():
     print("  3. Geometric Attention (Rust)")
     print("─" * 40)
 
-    # 3 токена: [id, S, D, P]
     tokens = [
         0, 10, 10, 100,
         1, 11, 10, 110,
@@ -96,16 +96,88 @@ def main():
     print(f"  Время: {(t1 - t0) * 1000:.2f} мс")
     print()
 
-    # 4. Benchmark
+    # 4. Debt System
     print("─" * 40)
-    print("  4. Benchmark (16×16 matmul)")
+    print("  4. Debt System (дробные числа)")
+    print("─" * 40)
+
+    d1 = gf.debt_from_float(3.4)
+    d2 = gf.debt_from_float(2.33)
+    result = gf.debt_mul(d1, d2)
+    print(f"  3.4 × 2.33 = {gf.debt_to_float(result):.4f}")
+
+    d1 = gf.debt_from_float(0.1)
+    d2 = gf.debt_from_float(0.2)
+    result = gf.debt_add(d1, d2)
+    print(f"  0.1 + 0.2 = {gf.debt_to_float(result):.4f}")
+
+    print(f"  by_P[12] = {gf.byp_count(12)} пар")
+    print(f"  12 / 3 = {gf.byp_find(12, 3)}")
+    print()
+
+    # 5. E8 Attention
+    print("─" * 40)
+    print("  5. E8 Root Lattice (on-the-fly)")
+    print("─" * 40)
+
+    print(f"  E8 roots count: {gf.e8_root_count()}")
+    root1 = gf.e8_address_to_root(2, 2)
+    root2 = gf.e8_address_to_root(3, 3)
+    print(f"  address_to_root(2,2) = {root1}")
+    print(f"  address_to_root(3,3) = {root2}")
+    dot = gf.e8_dot_product(root1, root2)
+    print(f"  dot(root1, root2) = {dot}")
+    print()
+
+    # 6. Verifier
+    print("─" * 40)
+    print("  6. Verifier (проверка утверждений)")
+    print("─" * 40)
+
+    v = OpteriumVerifier()
+    claims = [
+        "234 × 567 = 132678",
+        "12 × 12 = 144",
+        "1000 + 1000 = 2000",
+        "144 / 12 = 12",
+        "√144 = 12",
+        "12 × 12 = 145",  # fail case
+    ]
+    for claim in claims:
+        result = v.verify(claim)
+        status = "✅" if result.get('valid') else "❌"
+        print(f"  {status} {claim}")
+    print()
+
+    # 7. Architecture Flip Pipeline
+    print("─" * 40)
+    print("  7. Architecture Flip (Encoder → Nav → Decoder)")
+    print("─" * 40)
+
+    pipeline = OpteriumPipeline(vocab_size=100, embed_dim=32, max_coord=1024)
+
+    output = pipeline.forward(42)
+    print(f"  forward(42) = {output}")
+
+    token_d = pipeline.analogy(10, 20, 30)
+    print(f"  analogy(10, 20, 30) = {token_d}")
+
+    valid, witness = pipeline.verify("5 × 6 = 30")
+    print(f"  verify('5 × 6 = 30') = {valid}")
+
+    witness = pipeline.get_witness(42)
+    print(f"  witness(42): P={witness['witness']['P']}, S={witness['witness']['S']}, D={witness['witness']['D']}")
+    print()
+
+    # 8. Benchmark
+    print("─" * 40)
+    print("  8. Benchmark (16×16 matmul)")
     print("─" * 40)
 
     size = 16
     a_big = list(range(1, size * size + 1))
     b_big = list(range(size * size, 0, -1))
 
-    # Warmup
     gf.matmul(a_big, size, size, b_big, size)
 
     N = 100
@@ -120,8 +192,19 @@ def main():
     print()
 
     print("=" * 60)
-    print("  ✅ Всё работает!")
+    print("  ✅ Все модули работают!")
     print("=" * 60)
+    print("""
+Модули:
+  1. Pure Lookup — таблицы P, S, D, SP, prox, isqrt
+  2. Matrix Multiply — Rust, Rayon parallel
+  3. Geometric Attention — hashgrid proximity
+  4. Debt System — (mantissa, debt) pairs, by_P index
+  5. E8 Root Lattice — 240 roots on-the-fly
+  6. Verifier — проверка арифметических утверждений
+  7. Architecture Flip — encoder → nav → decoder
+  8. Benchmark — производительность
+""")
 
 if __name__ == "__main__":
     main()

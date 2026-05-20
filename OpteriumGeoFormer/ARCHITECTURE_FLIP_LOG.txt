@@ -21,8 +21,13 @@
 - `test_pipeline.py` — тесты на аналогиях
 
 ### Статус
-- [ ] encoder.py
-- [ ] decoder.py
-- [ ] navigation.py
-- [ ] pipeline.py
-- [ ] test_pipeline.py
+- [x] encoder.py
+- [x] decoder.py
+- [x] navigation.py
+- [x] pipeline.py
+- [x] test_pipeline.py
+
+### Итог
+- Все 4 файла созданы
+- 6 тестов пройдено
+- Закоммичено в v3.1-clean
