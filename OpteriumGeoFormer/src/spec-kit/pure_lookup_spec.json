@@ -1,0 +1,348 @@
+{
+  "spec_name": "pure_lookup_engine",
+  "version": "1.0",
+  "date": "2026-05-19",
+  "goal": "Replace all arithmetic in hot paths with pure table lookup. Zero computation, zero float, zero Pt allocations in matmul loops.",
+
+  "phases": [
+    {
+      "phase": 1,
+      "name": "PT._SP — SD-to-P Direct Lookup Table",
+      "description": "Add a new table to PtTable indexed by (S, D) → P. This eliminates the formula (S²−D²)//4 in sd_matmul and all other SD→P conversions.",
+      "files_modified": ["src/arith_table.py"],
+      "files_created": [],
+      "tasks": [
+        {
+          "id": "1.1",
+          "task": "Add self._SP 2D array to PtTable.__init__",
+          "detail": "Size: (2*max_coord+1) × (2*max_coord+1) to handle negative D. offset = max_coord. _SP[S][D+offset] = P.",
+          "acceptance": "PT._SP[7][1+1024] == 12 (for Pt(4,3): S=7, D=1)"
+        },
+        {
+          "id": "1.2",
+          "task": "Populate _SP during table build",
+          "detail": "In the existing build loop, after computing s, d, p: self._SP[s][d+offset] = p",
+          "acceptance": "All 1025×2049 entries filled"
+        },
+        {
+          "id": "1.3",
+          "task": "Add PT.p_from_sd(S, D) method",
+          "detail": "Returns P via _SP lookup. Fallback to formula only if out of range. Must use PT.isqrt for any sqrt needs.",
+          "acceptance": "PT.p_from_sd(7, 1) == 12, PT.p_from_sd(24, 0) == 144"
+        },
+        {
+          "id": "1.4",
+          "task": "Add PT.p_from_xy(x, y) method",
+          "detail": "Returns P via _P lookup. Fallback to _product_scaled for out of range.",
+          "acceptance": "PT.p_from_xy(4, 3) == 12"
+        },
+        {
+          "id": "1.5",
+          "task": "Add _SP to cache save/load",
+          "detail": "Include _SP and offset in pickle cache. Bump CACHE_VERSION.",
+          "acceptance": "Cache reload preserves _SP"
+        },
+        {
+          "id": "1.6",
+          "task": "Add selftest for _SP table",
+          "detail": "Test 10 random (S,D) pairs, verify _SP matches formula. Test edge cases: S=0, D=0, negative D.",
+          "acceptance": "All assertions pass"
+        }
+      ]
+    },
+    {
+      "phase": 2,
+      "name": "PT._PROX — Integer Proximity Weight Table",
+      "description": "Replace float weight 1.0/(1+dist) with integer proximity lookup. dist = |ΔS| + |ΔD| ranges 0..4096.",
+      "files_modified": ["src/arith_table.py"],
+      "files_created": [],
+      "tasks": [
+        {
+          "id": "2.1",
+          "task": "Add self._PROX array to PtTable",
+          "detail": "Size: 4097 entries. _PROX[dist] = integer weight rank. Formula: SCALE // (1 + dist) where SCALE = 10000 for precision.",
+          "acceptance": "PT._PROX[0] == 10000, PT._PROX[1] == 5000, PT._PROX[100] == 99"
+        },
+        {
+          "id": "2.2",
+          "task": "Add PT.proximity(dist) method",
+          "detail": "Returns _PROX[dist] if in range, else 0.",
+          "acceptance": "PT.proximity(0) == 10000, PT.proximity(4096) == 2"
+        },
+        {
+          "id": "2.3",
+          "task": "Add PT.int_weight(S1, D1, S2, D2) method",
+          "detail": "dist = PT.abs(PT.diff(S1, S2)) + PT.abs(PT.diff(D1, D2)). Return PT.proximity(dist).",
+          "acceptance": "PT.int_weight(10, 5, 10, 5) == 10000 (same point)"
+        },
+        {
+          "id": "2.4",
+          "task": "Add to cache",
+          "detail": "Include _PROX in pickle cache.",
+          "acceptance": "Cache reload preserves _PROX"
+        }
+      ]
+    },
+    {
+      "phase": 3,
+      "name": "sd_matmul — Pure Lookup Rewrite",
+      "description": "Rewrite sd_matmul to use PT.p_from_sd() instead of (S²−D²)//4 formula.",
+      "files_modified": ["src/spec-kit/methods/sd_matmul.py"],
+      "files_created": [],
+      "tasks": [
+        {
+          "id": "3.1",
+          "task": "Replace sd_product formula with lookup",
+          "detail": "OLD: P1 = (S1*S1 - D1*D1) // 4. NEW: P1 = PT.p_from_sd(S1, D1). Same for P2.",
+          "acceptance": "sd_product(7, 1, 5, 3) returns same value as before"
+        },
+        {
+          "id": "3.2",
+          "task": "Replace product P1*P2 with PT.product lookup",
+          "detail": "Use PT.product(P1, P2) for gcd-scaled lookup. Falls back to P1*P2 only if out of range.",
+          "acceptance": "Result matches torch.matmul for 4×4"
+        },
+        {
+          "id": "3.3",
+          "task": "Update sd_matmul_from_ints to use SD tuples directly",
+          "detail": "Avoid creating Pt objects. Work with (S, D) tuples throughout.",
+          "acceptance": "No Pt() calls in inner loop"
+        },
+        {
+          "id": "3.4",
+          "task": "Run correctness tests",
+          "detail": "test_all_methods_match, test_identity, test_zero, test_healthvector, test_shape_validation.",
+          "acceptance": "All 5 tests pass"
+        }
+      ]
+    },
+    {
+      "phase": 4,
+      "name": "geo_resonant — Zero Float Rewrite",
+      "description": "Replace float weights and math.isqrt with integer proximity and PT.isqrt.",
+      "files_modified": ["src/spec-kit/methods/geo_resonant.py"],
+      "files_created": [],
+      "tasks": [
+        {
+          "id": "4.1",
+          "task": "Replace float weight with PT.proximity",
+          "detail": "OLD: weight = 1.0 / (1.0 + dist). NEW: weight = PT.proximity(dist). All integer.",
+          "acceptance": "No float literals in weight computation"
+        },
+        {
+          "id": "4.2",
+          "task": "Replace float accumulation with int",
+          "detail": "OLD: p_weighted += weight * nb['P'] (float). NEW: p_weighted += weight * nb['P'] (int). w_total += weight (int).",
+          "acceptance": "context = p_weighted // w_total (integer division)"
+        },
+        {
+          "id": "4.3",
+          "task": "Replace math.isqrt with PT.isqrt",
+          "detail": "OLD: int(math.isqrt(new_P)). NEW: PT.isqrt(new_P).",
+          "acceptance": "No math.isqrt calls in file"
+        },
+        {
+          "id": "4.4",
+          "task": "Remove float from HashGrid class in geo_resonant",
+          "detail": "HashGrid.lookup returns integer-weighted neighbors. No float in insert/lookup.",
+          "acceptance": "HashGrid selftest passes with zero float"
+        },
+        {
+          "id": "4.5",
+          "task": "Run geo_resonant selftest",
+          "detail": "Verify embed_int_sequence, geo_attention, geo_resonant all work with integer-only math.",
+          "acceptance": "All assertions pass"
+        }
+      ]
+    },
+    {
+      "phase": 5,
+      "name": "hashgrid — Zero Float Rewrite",
+      "description": "Replace geometric_weight float with PT.proximity. Replace float context with int.",
+      "files_modified": ["src/hashgrid.py"],
+      "files_created": [],
+      "tasks": [
+        {
+          "id": "5.1",
+          "task": "Replace geometric_weight with PT.int_weight",
+          "detail": "OLD: 1.0 / (eps + |ΔS| + |ΔD|). NEW: PT.int_weight(S1, D1, S2, D2). Returns integer.",
+          "acceptance": "No float in geometric_weight"
+        },
+        {
+          "id": "5.2",
+          "task": "Replace float accumulation in geometric_attention",
+          "detail": "w_total and p_weighted become int. context = p_weighted // w_total.",
+          "acceptance": "context is int, not float"
+        },
+        {
+          "id": "5.3",
+          "task": "Replace PT.isqrt for output restoration",
+          "detail": "Use PT.isqrt(mixed) instead of math.isqrt.",
+          "acceptance": "No math module import in hot path"
+        },
+        {
+          "id": "5.4",
+          "task": "Update selftest",
+          "detail": "Weight symmetry test: int_weight(a,b,c,d) == int_weight(c,d,a,b).",
+          "acceptance": "All hashgrid selftests pass"
+        }
+      ]
+    },
+    {
+      "phase": 6,
+      "name": "pt_naive — Zero Pt Allocation in Loop",
+      "description": "Use pt_naive_fast approach: int accumulation, Pt only at output.",
+      "files_modified": ["src/spec-kit/methods/pt_naive.py"],
+      "files_created": [],
+      "tasks": [
+        {
+          "id": "6.1",
+          "task": "Rewrite pt_naive to use int accumulation",
+          "detail": "Inner loop: acc += PT.product(A[i][k].P, B[k][j].P). No geo_mul/geo_add. No Pt creation.",
+          "acceptance": "Same output as before, 10× fewer allocations"
+        },
+        {
+          "id": "6.2",
+          "task": "Keep pt_naive_fast as-is (already optimal)",
+          "detail": "pt_naive_fast already uses int accumulation. Just verify it uses PT.product not a*b.",
+          "acceptance": "pt_naive_fast uses PT.product for lookup"
+        },
+        {
+          "id": "6.3",
+          "task": "Run correctness tests",
+          "detail": "Verify pt_naive and pt_naive_fast both match torch baseline.",
+          "acceptance": "Both pass test_all_methods_match"
+        }
+      ]
+    },
+    {
+      "phase": 7,
+      "name": "geoformer — Integrate Pure Lookup",
+      "description": "Update GeometricBlock.forward to use integer-only hashgrid attention.",
+      "files_modified": ["src/geoformer.py"],
+      "files_created": [],
+      "tasks": [
+        {
+          "id": "7.1",
+          "task": "Update GeometricBlock.forward to use int attention",
+          "detail": "geometric_attention now returns int context (not float). Remove eps float param or convert to int.",
+          "acceptance": "Block forward produces same output"
+        },
+        {
+          "id": "7.2",
+          "task": "Replace float in HealthVector computation",
+          "detail": "E_assoc computation uses integer ratio: assoc_check * 10000 // denom instead of float division.",
+          "acceptance": "HealthVector channels still < 0.35 threshold"
+        },
+        {
+          "id": "7.3",
+          "task": "Run geoformer selftest",
+          "detail": "All 6 selftests pass with integer-only math.",
+          "acceptance": "All assertions pass"
+        }
+      ]
+    },
+    {
+      "phase": 8,
+      "name": "Purity Test Suite",
+      "description": "New tests that verify ZERO arithmetic in hot paths.",
+      "files_modified": [],
+      "files_created": ["src/spec-kit/tests/test_purity.py"],
+      "tasks": [
+        {
+          "id": "8.1",
+          "task": "Create test_purity.py",
+          "detail": "AST-scan each hot-path function. Assert: no float literals, no math.sqrt, no math.isqrt, no ** operator, no / (only //).",
+          "acceptance": "Test fails if any dirty pattern found"
+        },
+        {
+          "id": "8.2",
+          "task": "Test sd_matmul purity",
+          "detail": "Verify sd_product uses PT.p_from_sd, not formula. Verify no float in sd_matmul.",
+          "acceptance": "test_sd_matmul_purity passes"
+        },
+        {
+          "id": "8.3",
+          "task": "Test geo_resonant purity",
+          "detail": "Verify no float weight, no math.isqrt, no float context.",
+          "acceptance": "test_geo_resonant_purity passes"
+        },
+        {
+          "id": "8.4",
+          "task": "Test hashgrid purity",
+          "detail": "Verify geometric_weight returns int, no float in attention.",
+          "acceptance": "test_hashgrid_purity passes"
+        },
+        {
+          "id": "8.5",
+          "task": "Test pt_naive purity",
+          "detail": "Verify no Pt() creation in inner loop. Only int accumulation.",
+          "acceptance": "test_pt_naive_purity passes"
+        },
+        {
+          "id": "8.6",
+          "task": "Full cross-verify",
+          "detail": "All methods produce identical results before and after rewrite.",
+          "acceptance": "test_all_methods_match passes for all methods"
+        }
+      ]
+    },
+    {
+      "phase": 9,
+      "name": "Full Test Suite + Benchmark",
+      "description": "Run all tests, benchmark performance, verify no regressions.",
+      "files_modified": [],
+      "files_created": [],
+      "tasks": [
+        {
+          "id": "9.1",
+          "task": "Run tests/run_all.py",
+          "detail": "All 18 tests must pass.",
+          "acceptance": "18/18 passed, 0 failed"
+        },
+        {
+          "id": "9.2",
+          "task": "Run spec-kit correctness tests",
+          "detail": "test_correctness.py: all methods match torch.",
+          "acceptance": "All 5 sub-tests pass"
+        },
+        {
+          "id": "9.3",
+          "task": "Run purity tests",
+          "detail": "test_purity.py: all 6 sub-tests pass.",
+          "acceptance": "All 6 sub-tests pass"
+        },
+        {
+          "id": "9.4",
+          "task": "Benchmark comparison",
+          "detail": "Compare before/after: sd_matmul, geo_resonant, hashgrid attention. Measure speed and memory.",
+          "acceptance": "Performance not degraded > 2×"
+        },
+        {
+          "id": "9.5",
+          "task": "Update README and TEST_COVERAGE",
+          "detail": "Document pure-lookup achievement. Update gap status.",
+          "acceptance": "README reflects new architecture"
+        }
+      ]
+    }
+  ],
+
+  "dependencies": [
+    "Phase 1 must complete before Phase 3 (sd_matmul needs PT.p_from_sd)",
+    "Phase 2 must complete before Phase 4 (geo_resonant needs PT.proximity)",
+    "Phase 2 must complete before Phase 5 (hashgrid needs PT.int_weight)",
+    "Phases 3,4,5,6 can run in parallel after Phase 1+2",
+    "Phase 7 depends on Phase 4+5",
+    "Phase 8 depends on all previous phases",
+    "Phase 9 depends on Phase 8"
+  ],
+
+  "risk_mitigation": [
+    "Memory: _SP table = 2049×2049×4 bytes ≈ 16 MB. Acceptable.",
+    "Cache: pickle size increases from ~12 MB to ~28 MB. Still fast load.",
+    "Fallback: all lookup methods have formula fallback for out-of-range. No breakage.",
+    "Backward compat: old API unchanged. New methods are additive.",
+    "Tests: run full suite after each phase. Stop on failure."
+  ]
+}

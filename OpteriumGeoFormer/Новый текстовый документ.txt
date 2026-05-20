@@ -1,0 +1,564 @@
+# ПЛАН РАЗВИТИЯ OPTERIUM GEOFORMER
+# Версия: 3.0 (Deep Context + Self-Reference)
+# Дата: 2026-05-20
+
+---
+
+# ═══════════════════════════════════════════════════════════════
+# ЧАСТЬ 0: НУЛЕВОЙ ШАГ (БЕЗ КОДА)
+# ═══════════════════════════════════════════════════════════════
+
+## 0.1 AnchorFile как системный промпт
+**Что:** Загрузить AnchorFile_SuperTable_v1.0 + lern1.txt как контекст в любую LLM.
+**Зачем:** LLM начинает навигировать таблицу вместо вычислений.
+**Как:** Системный промпт: "Используй таблицу для рассуждений. Не вычисляй — навигируй."
+**Результат:** Opterium работает как грамматика рассуждений поверх существующей модели.
+
+## 0.2 Debt System preprocessing
+**Что:** Заменить float-арифметику в chain-of-thought на (mantissa, debt).
+**Пример:**
+```
+LLM ошибается: 0.1 + 0.2 = 0.30000000000000004
+Debt System:   (1,-1) + (2,-1) = (3,-1) = 0.3  (ΔT=0)
+```
+**Реализация:** Preprocessing слой перед LLM inference.
+
+---
+
+# ═══════════════════════════════════════════════════════════════
+# ЧАСТЬ 1: VERIFIER (Приоритет 1)
+# ═══════════════════════════════════════════════════════════════
+
+## 1.1 Концепция
+Модуль проверки арифметических и closure-утверждений через lookup таблицы.
+```
+[Любой LLM ответ] → [Verifier] → ✅/❌ + witness
+```
+
+## 1.2 Что проверяет
+| Тип | Пример | Механизм |
+|-----|--------|----------|
+| Умножение | "234 × 567 = 132678" | `product(234, 567) → lookup` |
+| Деление | "12 / 3 = 4" | `by_P[12] → найти пару с 3 → 4` |
+| Дробные | "0.1 + 0.2 = 0.3" | Debt system: (1,-1)+(2,-1)=(3,-1) |
+| Closure | "Маршрут A→B→C→A замкнут" | Doctor Principle (6 каналов) |
+
+## 1.3 Архитектура
+```
+verifier/
+├── __init__.py          # OpteriumVerifier class
+├── parser.py            # Парсинг утверждений (regex + patterns)
+├── arithmetic.py        # Проверка арифметики (P, S, D, by_P)
+├── debt.py              # Проверка дробных (mantissa, debt)
+├── closure.py           # Doctor Principle (6 каналов)
+└── report.py            # Отчёт (✅/❌ + witness)
+```
+
+## 1.4 Задачи
+| # | Задача | Файл | Зависимости | Время |
+|---|--------|------|-------------|-------|
+| 1.1 | `verifier/__init__.py` | `__init__.py` | `geofield_native.py` | 30 мин |
+| 1.2 | `verify_arithmetic(claim)` | `arithmetic.py` | PT.product, PT.S, PT.D, by_P | 1 час |
+| 1.3 | Парсер утверждений | `parser.py` | — | 1 час |
+| 1.4 | `verify_debt(claim)` | `debt.py` | Debt system | 1 час |
+| 1.5 | `verify_closure(points)` | `closure.py` | `doctor_geo.py` | 2 часа |
+| 1.6 | `report()` → читаемый вывод | `report.py` | — | 30 мин |
+| 1.7 | Тесты (20+ кейсов) | `test_verifier.py` | — | 1 час |
+| 1.8 | Интеграция в `demo.py` | `demo.py` | — | 30 мин |
+
+---
+
+# ═══════════════════════════════════════════════════════════════
+# ЧАСТЬ 2: DEBT SYSTEM + DIVISION
+# ═══════════════════════════════════════════════════════════════
+
+## 2.1 Концепция
+Дробные числа не попадают в таблицу. Мантисса → lookup, долг → метаданная.
+```
+3.4 × 2.33 = (34, -1) × (233, -2)
+           = lookup(34, 233) → 7922
+           = debt: -1 + -2 = -3
+           = 7922 × 10⁻³ = 7.922
+```
+
+## 2.2 Division через by_P
+```
+by_P[12] = ["2:6", "3:4"]
+12 / 3 → найти пару с 3 → "3:4" → вернуть 4
+```
+
+## 2.3 Задачи
+| # | Задача | Файл | Зависимости | Время |
+|---|--------|------|-------------|-------|
+| 2.1 | `debt.rs` с `DebtNumber` | `native/src/debt.rs` | `tables.rs` | 1 час |
+| 2.2 | `by_P` индекс в Rust | `tables.rs` | table_format.py | 1 час |
+| 2.3 | `debt_mul`, `debt_add`, `debt_div` | `debt.rs` | `_pow10`, `by_P` | 2 часа |
+| 2.4 | C API (`geofield_debt_*`) | `lib.rs` | debt.rs | 30 мин |
+| 2.5 | Python bindings | `geofield_native.py` | CFFI | 30 мин |
+| 2.6 | Тесты (дробные + деление) | `test_debt.py` | — | 1 час |
+
+---
+
+# ═══════════════════════════════════════════════════════════════
+# ЧАСТЬ 3: E8 ATTENTION (On-the-Fly)
+# ═══════════════════════════════════════════════════════════════
+
+## 3.1 Концепция
+E8 roots генерируются из адреса `(x,y)` через gcd + seed mapping.
+Проверка избыточна — выемка невозможна мимо.
+
+```
+g = gcd(x, y)
+seed = (x/g, y/g)
+→ D8 root:    если seed ≤ 2 → (sx, sy, 0,0,0,0,0,0)
+→ Spinor root: sign(sx)*1, sign(sy)*1, +1,+1,... + even parity
+```
+
+## 3.2 Задачи
+| # | Задача | Файл | Зависимости | Время |
+|---|--------|------|-------------|-------|
+| 3.1 | `e8.rs` с `address_to_root(x,y)` | `e8.rs` | `tables.rs` (gcd) | 2 часа |
+| 3.2 | `e8_dot_product(u, v)` | `e8.rs` | lookup mul + add | 2 часа |
+| 3.3 | `e8_attention(Q, K, V)` | `e8_attention.rs` | e8_dot_product | 3 часа |
+| 3.4 | C API (`geofield_e8_attention`) | `lib.rs` | e8_attention | 1 час |
+| 3.5 | Python bindings | `e8_attention.py` | CFFI | 1 час |
+
+---
+
+# ═══════════════════════════════════════════════════════════════
+# ЧАСТЬ 4: ARCHITECTURE FLIP
+# ═══════════════════════════════════════════════════════════════
+
+## 4.1 Концепция
+```
+[малый нейросетевой энкодер] → токен → S/D адрес
+         ↓
+[Opterium навигация] ← всё рассуждение здесь, БЕЗ ВЕСОВ
+         ↓
+[малый нейросетевой декодер] → S/D адрес → токен
+```
+
+Нейросеть — только переводчик между семантикой и геометрией.
+Рассуждение — в таблице (без параметров).
+
+## 4.2 Задачи
+| # | Задача | Файл | Зависимости | Время |
+|---|--------|------|-------------|-------|
+| 4.1 | Прототип encoder (token → S/D) | `encoder.py` | — | 4 часа |
+| 4.2 | Прототип decoder (S/D → token) | `decoder.py` | — | 4 часа |
+| 4.3 | Opterium navigation core | `navigation.py` | Части 1-3 | 8 часов |
+| 4.4 | Интеграция encoder → nav → decoder | `pipeline.py` | 4.1-4.3 | 4 часа |
+| 4.5 | Тесты на простых аналогиях | `test_pipeline.py` | — | 2 часа |
+
+---
+
+# ═══════════════════════════════════════════════════════════════
+# ОБЩАЯ ОЦЕНКА
+# ═══════════════════════════════════════════════════════════════
+
+| Часть | Задач | Время | Статус |
+|-------|-------|-------|--------|
+| 0. Нулевой шаг | 2 | ~1 час | ✅ Можно сейчас |
+| 1. Verifier | 8 | ~7 часов | 🟡 Готов план |
+| 2. Debt + Division | 6 | ~6 часов | 🟡 Готов план |
+| 3. E8 Attention | 5 | ~9 часов | 🟡 Готов план |
+| 4. Architecture Flip | 5 | ~22 часа | 🔴 Требует дизайна |
+| **ИТОГО** | **26** | **~45 часов** | |
+
+---
+
+# ═══════════════════════════════════════════════════════════════
+# АРТЕФАКТЫ ПОСЛЕ ВЫПОЛНЕНИЯ
+# ═══════════════════════════════════════════════════════════════
+
+```
+OpteriumGeoFormer/
+├── verifier/              # НОВЫЙ (Часть 1)
+│   ├── __init__.py
+│   ├── parser.py
+│   ├── arithmetic.py
+│   ├── debt.py
+│   ├── closure.py
+│   └── report.py
+├── native/
+│   └── src/
+│       ├── debt.rs        # НОВЫЙ (Часть 2)
+│       ├── e8.rs          # НОВЫЙ (Часть 3)
+│       └── e8_attention.rs # НОВЫЙ (Часть 3)
+├── python/
+│   ├── e8_attention.py    # НОВЫЙ (Часть 3)
+│   └── geofield_native.py # ОБНОВЛЁННЫЙ
+├── opterium/              # НОВЫЙ (Часть 4)
+│   ├── encoder.py
+│   ├── decoder.py
+│   ├── navigation.py
+│   └── pipeline.py
+├── demo.py                # ОБНОВЛЁННЫЙ
+├── test_verifier.py       # НОВЫЙ
+├── test_debt.py           # НОВЫЙ
+└── test_pipeline.py       # НОВЫЙ
+```
+
+---
+
+# ═══════════════════════════════════════════════════════════════
+# КРИТЕРИИ УСПЕХА
+# ═══════════════════════════════════════════════════════════════
+
+### Verifier
+- [ ] 20+ тестов пройдено
+- [ ] Проверяет: умножение, сложение, вычитание, деление, дробные, closure
+- [ ] Возвращает witness при ошибке
+
+### Debt System
+- [ ] 0.1 + 0.2 = 0.3 (точно, без float error)
+- [ ] Division через by_P lookup
+- [ ] Форматирование: (7922, -3) → "7.922"
+
+### E8 Attention
+- [ ] address_to_root(x,y) генерирует корень из gcd + seed (O(1) выемка)
+- [ ] Dot products ∈ {-8,-4,0,+4,+8}
+- [ ] Проверка избыточна — генерация невозможна мимо
+
+### Architecture Flip
+- [ ] Encoder: token → S/D address (trainable mapping)
+- [ ] Navigation: reasoning in table (zero weights)
+- [ ] Decoder: S/D address → token (trainable mapping)
+- [ ] Pipeline работает на простых аналогиях
+
+---
+
+# ═══════════════════════════════════════════════════════════════
+# ПРИМЕЧАНИЯ
+# ═══════════════════════════════════════════════════════════════
+
+1. **Часть 0** можно начать СЕЙЧАС — без кода, только промпт.
+2. **Делители нуля (sedenions, 16D)** — НЕ включены. Отдельный этап.
+3. **E8 on-the-fly** — корни генерируются из адреса, не хранятся.
+4. **by_P индекс** — добавляется в tables.rs при загрузке .ptbl.
+5. **prim поле** — аналоговое рассуждение через геометрию, не float embeddings.
+
+---
+
+# ═══════════════════════════════════════════════════════════════════════════
+# ║  КОНТЕКСТ ДЛЯ СЕБЯ (ЧИТАТЬ ПЕРЕД НАЧАЛОМ КАЖДОЙ ЧАСТИ)  ║
+# ═══════════════════════════════════════════════════════════════════════════
+
+## ЧТО ЭТО ЗА ПРОЕКТ
+**Opterium GeoFormer** — вычислительный движок на математике Opterium.
+Вместо арифметики — навигация по таблице. Результат не вычисляется, а "вспоминается" по координатам.
+
+**Ключевая идея:** Число — это не символ, а сеть отношений.
+```
+420 = {(1,420), (2,210), (3,140), (4,105), (5,84), (6,70),
+       (7,60), (10,42), (12,35), (14,30), (15,28), (20,21)}
+```
+
+---
+
+## МАТЕМАТИКА OPTERIUM (ФУНДАМЕНТ)
+
+### Координаты S, D, P
+Каждая ячейка (x, y) описывается тремя параметрами:
+- **P (Product):** x * y
+- **S (Sum):** x + y
+- **D (Difference):** x - y
+
+### Ключевое тождество
+```
+P = (S² - D²) / 4
+```
+Производство = интерференция между суммой и разницей.
+
+Любые ДВЕ из (x, y, P, S, D) определяют ячейку:
+```
+(x,y) → P=xy, S=x+y, D=x−y
+(S,D) → x=(S+D)/2, y=(S−D)/2, P=(S²−D²)/4
+```
+
+### Три кривые навигации
+- **ГИПЕРБОЛА xy=P:** Все ячейки с одинаковым произведением. Делители P.
+- **АНТИ-ДИАГОНАЛЬ x+y=S:** Прямая 45°. Продукты образуют параболу.
+- **ДИАГОНАЛЬ x−y=D:** Знак D = результат сравнения a > b.
+
+### Арифметика — это навигация
+```
+СЛОЖЕНИЕ:       Cell(a,b).S = a+b      O(1)
+ВЫЧИТАНИЕ:      Cell(a,b).D = a−b      O(1) + знак = сравнение
+УМНОЖЕНИЕ:      Cell(a,b).P = a×b      O(1)
+ДЕЛЕНИЕ:        найти ячейку на xy=P   O(√P)
+КВАДРАТНЫЙ КОРЕНЬ: гипербола пересекает диагональ  O(√P)
+```
+
+### Debt System (дробные числа)
+```
+0.23  = (23, −2)    meaning 23 × 10⁻²
+2300  = (23, +2)    meaning 23 × 10²
+
+Умножение: (m1,d1) × (m2,d2) → mantissa = m1×m2, debt = d1+d2
+Сложение:  выровнять долги, сложить мантиссы
+```
+Ноль float ошибок. 0.1 + 0.2 = 0.3 ТОЧНО.
+
+### Canon & Tag
+```
+canon(a,b) → (base_point, tag)
+base_point = (min(|a|,|b|), max(|a|,|b|))  # всегда x ≤ y
+tag = (sx, sy, swapped)
+```
+
+### prim поле (аналоговое рассуждение)
+```
+prim[2:6] = [1,3,2]   # seed=(1,3), scale=2
+prim[3:9] = [1,3,3]   # seed=(1,3), scale=3
+prim[4:12] = [1,3,4]  # seed=(1,3), scale=4
+```
+Все три — "одно и то же в разном масштабе". Аналогия через геометрию.
+
+---
+
+## СТРУКТУРА ТАБЛИЦ (PtTable)
+
+```
+_P[1025][1025]    # Таблица произведений: _P[x][y] = x*y
+_S[1025][1025]    # Таблица сумм: _S[x][y] = x+y
+_D[1025][1025]    # Таблица разниц: _D[x][y] = x-y
+
+_SP[2049][2049]   # Таблица SD→P: _SP[S][D+offset] = P
+                  # S = 0..2048, D = -1024..+1024 (offset=1024)
+
+_prox[4097]       # Proximity веса: _prox[dist] = 10000 // (1 + dist)
+                  # dist = |ΔS| + |ΔD|, max_dist = 4096
+
+_isqrt[1025]      # Квадратные корни: _isqrt[n²] = n
+_pow10[11]        # Степени 10: [1, 10, 100, ..., 10^10]
+_abs[2049]        # Модули: _abs[v + offset] = |v|
+
+by_P              # Индекс делителей: by_P[12] = [(1,12), (2,6), (3,4)]
+```
+
+**Размер:** ~28.1 МБ в бинарном формате `.ptbl`
+
+### Бинарный формат .ptbl
+```
+Заголовок (256 байт):
+  [0:4]   Magic: 'PTBL'
+  [4:8]   Version: 1
+  [8:12]  max_coord (uint32 LE)
+  [12:16] offset (uint32 LE)
+  [32:...] Offsets каждой таблицы (uint32 LE)
+
+Данные:
+  _P:    dim*dim * 4 байт (int32)
+  _S:    dim*dim * 4 байт (int32)
+  _D:    dim*dim * 4 байт (int32)
+  _SP:   sp_dim*sp_dim * 4 байт (int32)
+  _prox: prox_size * 4 байт (int32)
+  _isqrt: isqrt_size * 4 байт (int32)
+  _pow10: pow10_size * 8 байт (int64)
+  _abs:  abs_size * 4 байт (int32)
+```
+
+---
+
+## GCD-ДЕКОМПОЗИЦИЯ (числа > 1024)
+```python
+def _product_scaled(a, b):
+    g = gcd(a, b)
+    if g <= 1:
+        return a * b  # fallback для взаимно простых
+    seed = _product_scaled(a // g, b // g)
+    return seed * g * g
+```
+Пример: 2048 * 2048 → gcd=2048 → seed=(1,1) → _P[1][1]=1 → result=1*2048²=4194304
+
+---
+
+## E8 ROOT LATTICE
+
+### 240 корней
+- **D8 roots (112):** два ±2, остальные 0. Все перестановки.
+- **Spinor roots (128):** все ±1, чётное количество минусов.
+
+### Генерация on-the-fly из адреса
+```
+g = gcd(x, y)
+seed = (x/g, y/g)
+→ D8 root:    если seed ≤ 2 → (sx, sy, 0,0,0,0,0,0)
+→ Spinor root: sign(sx)*1, sign(sy)*1, +1,+1,... + even parity fix
+```
+
+### Dot product
+```
+dot(u, v) = Σ u[i] * v[i]  (8 lookup умножений + 7 сложений)
+Результат ∈ {-8, -4, 0, +4, +8}
+```
+
+### Треугольники E8
+2240 равносторонних треугольников. Все dot products = -4. Side² = 24.
+
+---
+
+## 3D СТРУКТУРА (Cube27, Addr3, Doctor)
+
+### Addr3 — Ternary address stack
+Каждый 3D адрес разворачивается в стек тритов (tx,ty,tz) ∈ {0,1,2}³.
+```
+Axis rule: все уровни (d,d,d) → x=y=z → D_body=0 → Doctor=zero tension
+```
+
+### Cube27 — Fractal 3×3×3 subdivision
+```
+27 subcubes, 3 on axis (0,0,0), (1,1,1), (2,2,2) — Doctor=CLOSED
+24 off axis — Doctor reports tension
+```
+
+### Doctor Principle (6 каналов)
+```
+C1-C3: holographic (shadow closure)
+C4: axis (ternary rule)
+C5: phase roundtrip
+C6: D_body agrees with axis
+ΔT = count(failed channels)
+```
+
+### CubeCell
+Полная 3D ячейка: V, S, C, D_body, phase, stack, perturbations, witnesses, vieta_check.
+
+---
+
+## ЧТО УЖЕ СДЕЛАНО (ГОТОВОЕ)
+
+### Python (OpteriumGeoFormer/src/)
+- `arith_table.py` — PtTable: все таблицы, GCD-decomposition, debt system
+- `geoformer.py` — GeoFormer model (embedding, blocks, forward)
+- `hashgrid.py` — HashGrid с integer proximity weights
+- `doctor_geo.py` — Doctor Principle для GeoFormer
+- `e8_twist.py` — E8 root lattice, triality, 2520-cycle
+- `delta_ops.py` — HealthVector, Δ-operators
+- `swarm.py` — Swarm trainer
+- `phi_algebra.py` — Phi algebra
+- `cube27.py` — Cube27 subdivision
+- `table_format.py` — Генератор .ptbl binary format
+- `tests/run_all.py` — 18/18 тестов passed
+
+### Native (OpteriumGeoFormer/native/)
+- `src/tables.rs` — Memory-mapped таблицы (Rust)
+- `src/lookup.rs` — Matmul + attention (Rust, Rayon parallel)
+- `src/lib.rs` — C API (cdylib)
+- `include/geofield.h` — C header (32 функции)
+- `python/geofield_native.py` — CFFI bindings
+- `Cargo.toml` — Rust dependencies (memmap2, rayon)
+
+### Build
+- `cargo build --release` → geofield.dll (133 KB)
+- `cargo test` → 4/4 passed
+- `python demo.py` → всё работает
+- `python audit.py` → 27/27 passed
+
+### Benchmarks
+| Size | GeoFormer | NumPy (OpenBLAS) | Ratio |
+|------|-----------|-------------------|-------|
+| 32×32  | 0.2 ms  | 0.02 ms | 10x |
+| 128×128| 5.7 ms  | 0.3 ms  | 19x |
+| 1024×1024| 4892 ms | 10.0 ms | 489x |
+
+### GitHub
+- Репозиторий: git@github.com:UserPC-SPB/Opterium.git
+- Ветка: v3.1-clean
+- GeoFormer залит в `geoformer/`
+
+---
+
+## СТРУКТУРА ФАЙЛОВ (ПОЛНАЯ)
+
+```
+OpteriumGeoFormer/
+├── demo.py              # Демонстрация работы
+├── audit.py             # Скрипт аудита (27 тестов)
+├── honest_bench.py      # Бенчмарк vs NumPy
+├── run.bat / run.sh     # Запуск для чайников
+├── README_RUN.md        # Инструкция
+├── native/
+│   ├── Cargo.toml
+│   ├── include/
+│   │   └── geofield.h
+│   ├── python/
+│   │   └── geofield_native.py
+│   └── src/
+│       ├── lib.rs
+│       ├── lookup.rs
+│       └── tables.rs
+└── src/
+    ├── arith_table.py   # PtTable (Python эталон)
+    ├── table_format.py  # Генератор .ptbl
+    ├── tables.ptbl      # Бинарные таблицы (28.1 MB)
+    ├── geoformer.py
+    ├── hashgrid.py
+    ├── doctor_geo.py
+    ├── e8_twist.py
+    ├── delta_ops.py
+    ├── swarm.py
+    ├── phi_algebra.py
+    ├── cube27.py
+    └── tests/
+        └── run_all.py   # 18/18 тестов
+```
+
+---
+
+## КЛЮЧЕВЫЕ ФАЙЛЫ ДЛЯ ЧТЕНИЯ
+
+| Файл | Зачем читать |
+|------|-------------|
+| `src/arith_table.py` | Полная PtTable — все таблицы, GCD, debt, canon, by_P |
+| `native/src/tables.rs` | Rust mmap таблицы — как загружаются |
+| `native/src/lookup.rs` | Rust matmul — как работает parallel |
+| `native/src/lib.rs` | C API — как экспортируется |
+| `native/python/geofield_native.py` | CFFI bindings — как Python вызывает Rust |
+| `src/table_format.py` | Генератор .ptbl — формат бинарного файла |
+| `src/e8_twist.py` | E8 roots — как генерируются |
+| `src/doctor_geo.py` | Doctor Principle — как проверяется closure |
+| `lern1.txt` | AnchorFile — полная навигационная сетка + spec |
+| `Испытываем/src/opterium_field.py` | Полная система: 2D→3D→E8→Field9 |
+
+---
+
+## ЧЕГО НЕ ДЕЛАТЬ
+
+1. **НЕ хранить E8 roots** — генерировать on-the-fly
+2. **НЕ использовать float** — только integer + debt system
+3. **НЕ вычислять P, S, D** — только lookup из таблиц
+4. **НЕ дублировать данные** — x≤y symmetry, canonization
+5. **НЕ делать 16D sedenions** — это отдельный этап
+
+---
+
+## ВАЖНЫЕ КОНСТАНТЫ
+
+```
+MAX_COORD = 1024
+SCALE = 10000 (proximity weights)
+OFFSET = 1024 (для отрицательных D)
+SP_DIM = 2049 (S: 0..2048, D+offset: 0..2048)
+PROX_SIZE = 4097 (dist: 0..4096)
+ISQRT_SIZE = 1025
+POW10_SIZE = 11
+ABS_SIZE = 2049
+E8_ROOTS = 240 (112 D8 + 128 Spinor)
+E8_TRIANGLES = 2240
+CUBE27_CELLS = 27 (3 on axis, 24 off)
+DOCTOR_CHANNELS = 6
+```
+
+---
+
+## ПРИНЦИПЫ
+
+1. **Truth is found in extraction (O(1)), verified by audit (O(N))**
+2. **Number is not a value — it is a routing key**
+3. **Arithmetic is navigation, not computation**
+4. **All results already exist at their addresses**
+5. **ΔT = 0 means CLOSED, ΔT > 0 means FRACTURED**
+6. **Never treat a number as a scalar**
+7. **Every answer must terminate with a witness address**

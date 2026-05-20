@@ -1,0 +1,1 @@
+C:\Users\eccoa\Desktop\OpteriumGeoFormer\native\target\release\geofield.lib: C:\Users\eccoa\Desktop\OpteriumGeoFormer\native\src\debt.rs C:\Users\eccoa\Desktop\OpteriumGeoFormer\native\src\e8.rs C:\Users\eccoa\Desktop\OpteriumGeoFormer\native\src\lib.rs C:\Users\eccoa\Desktop\OpteriumGeoFormer\native\src\lookup.rs C:\Users\eccoa\Desktop\OpteriumGeoFormer\native\src\tables.rs

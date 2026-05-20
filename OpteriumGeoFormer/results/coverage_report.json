@@ -1,0 +1,116 @@
+{
+  "summary": {
+    "total_functions": 120,
+    "documented": 120,
+    "missing": 0,
+    "phantom": 7,
+    "coverage_pct": 100.0,
+    "format_errors": 0,
+    "help_errors": 0,
+    "examples_passed": 35,
+    "examples_failed": 3,
+    "edge_passed": 39,
+    "edge_failed": 0,
+    "integrity_score": 97.6
+  },
+  "details": {
+    "coverage": {
+      "Cube27": {
+        "total": 7,
+        "documented": 7,
+        "missing": [],
+        "phantom": [],
+        "sig_issues": []
+      },
+      "HashGrid": {
+        "total": 7,
+        "documented": 7,
+        "missing": [],
+        "phantom": [],
+        "sig_issues": []
+      },
+      "Pt": {
+        "total": 18,
+        "documented": 18,
+        "missing": [],
+        "phantom": [
+          "Pt.__add__",
+          "Pt.__init__",
+          "Pt.__mul__"
+        ],
+        "sig_issues": []
+      },
+      "PtTable": {
+        "total": 21,
+        "documented": 21,
+        "missing": [],
+        "phantom": [],
+        "sig_issues": []
+      },
+      "delta_ops": {
+        "total": 13,
+        "documented": 13,
+        "missing": [],
+        "phantom": [
+          "HealthVector.critical",
+          "HealthVector.max_channel",
+          "HealthVector.ok",
+          "HealthVector.warn"
+        ],
+        "sig_issues": []
+      },
+      "doctor_geo": {
+        "total": 14,
+        "documented": 14,
+        "missing": [],
+        "phantom": [],
+        "sig_issues": []
+      },
+      "e8_twist": {
+        "total": 9,
+        "documented": 9,
+        "missing": [],
+        "phantom": [],
+        "sig_issues": []
+      },
+      "geoformer": {
+        "total": 17,
+        "documented": 17,
+        "missing": [],
+        "phantom": [],
+        "sig_issues": []
+      },
+      "phi_algebra": {
+        "total": 8,
+        "documented": 8,
+        "missing": [],
+        "phantom": [],
+        "sig_issues": []
+      },
+      "swarm": {
+        "total": 6,
+        "documented": 6,
+        "missing": [],
+        "phantom": [],
+        "sig_issues": []
+      }
+    },
+    "examples": {
+      "total_passed": 35,
+      "total_failed": 3,
+      "total_skipped": 220
+    },
+    "format_errors": [],
+    "help_errors": [],
+    "edge_results": {
+      "passed": 39,
+      "failed": 0,
+      "failures": []
+    },
+    "reproducibility": {
+      "spec_hash": "084d7c5cccdc447f669562b3934e5124",
+      "api_hash": "58a25b33363d7dd1b4303242ccbf7072",
+      "help_hash": "9eb1ffb893b483440a462f93febe8c8b"
+    }
+  }
+}
