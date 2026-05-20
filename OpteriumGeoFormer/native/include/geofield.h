@@ -275,6 +275,72 @@ void geofield_e8_attention(const int8_t* queries, uint32_t n_queries,
  */
 uint32_t geofield_e8_root_count(void);
 
+/* ── Generative 3D Cube ── */
+
+/**
+ * Opaque C representation of a 3D cube node.
+ */
+typedef struct {
+    int32_t x, y, z;
+    int64_t v;       // Volume: x*y*z
+    int32_t s;       // Sum: x+y+z
+    int64_t c;       // Planar: xy+xz+yz
+    int32_t d_body;  // Body difference: |x-y|+|y-z|+|x-z|
+    uint8_t phase;   // 3-bit octant
+    int64_t disc;    // Cubic discriminant
+} CCubeNode;
+
+/**
+ * Get or generate a cube node at address (x, y, z).
+ * out_node: pointer to receive the node data.
+ */
+void geofield_cube_get_node(GeoField* gf, int32_t x, int32_t y, int32_t z,
+                            CCubeNode* out_node);
+
+/**
+ * Get neighbors within radius via bucket spatial index.
+ * Returns malloc'd array of CCubeNode. Caller must free with geofield_cube_free().
+ * out_count: pointer to receive the number of neighbors.
+ */
+CCubeNode* geofield_cube_get_neighbors(GeoField* gf, int32_t x, int32_t y, int32_t z,
+                                       int32_t radius, int32_t* out_count);
+
+/**
+ * Compute tension between two nodes.
+ */
+int32_t geofield_cube_tension(GeoField* gf,
+                              int32_t ax, int32_t ay, int32_t az,
+                              int32_t bx, int32_t by, int32_t bz);
+
+/**
+ * Solve analogy A:B :: C:D in 3D.
+ * out_node: pointer to receive the result node D.
+ */
+void geofield_cube_analogy(GeoField* gf,
+                           int32_t ax, int32_t ay, int32_t az,
+                           int32_t bx, int32_t by, int32_t bz,
+                           int32_t cx, int32_t cy, int32_t cz,
+                           CCubeNode* out_node);
+
+/**
+ * Create or strengthen a morpho link between two nodes.
+ */
+void geofield_cube_morpho_link(GeoField* gf,
+                               int32_t sx, int32_t sy, int32_t sz,
+                               int32_t tx, int32_t ty, int32_t tz,
+                               double weight);
+
+/**
+ * Get cube statistics.
+ */
+void geofield_cube_stats(GeoField* gf, int32_t* out_cached, int32_t* out_buckets,
+                         int32_t* out_morpho, int64_t* out_address_space);
+
+/**
+ * Free malloc'd cube node array.
+ */
+void geofield_cube_free(void* ptr);
+
 #ifdef __cplusplus
 }
 #endif

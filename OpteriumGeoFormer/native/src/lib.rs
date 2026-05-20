@@ -7,6 +7,7 @@ mod tables;
 mod lookup;
 mod debt;
 mod e8;
+mod cube;
 
 use std::ffi::{CStr, CString};
 use std::os::raw::c_char;
@@ -16,12 +17,14 @@ use std::sync::Mutex;
 use tables::Tables;
 use lookup::Result as GeoResult;
 use debt::{DebtNumber, ByPIndex};
-use e8::{E8Root, address_to_root, generate_all_roots, e8_attention as e8_attn};
+use e8::{E8Root, address_to_root, e8_attention as e8_attn};
+use cube::{GenerativeCube, CubeNode};
 
 /// Opaque handle to GeoField.
 pub struct GeoField {
     tables: Tables,
     by_p: ByPIndex,
+    cube: Mutex<GenerativeCube>,
     last_error: Mutex<Option<String>>,
 }
 
@@ -48,9 +51,11 @@ pub extern "C" fn geofield_init(table_path: *const c_char) -> *mut GeoField {
         Ok(tables) => {
             let max_coord = tables.max_coord();
             let by_p = ByPIndex::build(max_coord);
+            let cube = GenerativeCube::new(max_coord as i32, 10);
             Box::into_raw(Box::new(GeoField {
                 tables,
                 by_p,
+                cube: Mutex::new(cube),
                 last_error: Mutex::new(None),
             }))
         }
@@ -494,4 +499,174 @@ pub extern "C" fn geofield_e8_attention(
 #[no_mangle]
 pub extern "C" fn geofield_e8_root_count() -> u32 {
     240
+}
+
+// ── Generative 3D Cube ──
+
+#[repr(C)]
+pub struct CCubeNode {
+    x: i32,
+    y: i32,
+    z: i32,
+    v: i64,
+    s: i32,
+    c: i64,
+    d_body: i32,
+    phase: u8,
+    disc: i64,
+}
+
+#[no_mangle]
+pub extern "C" fn geofield_cube_get_node(
+    gf: *mut GeoField,
+    x: i32,
+    y: i32,
+    z: i32,
+    out_node: *mut CCubeNode,
+) {
+    if gf.is_null() || out_node.is_null() {
+        return;
+    }
+    let cube = unsafe { &mut (*gf).cube.lock().unwrap() };
+    let node = cube.get_node(x, y, z);
+    unsafe {
+        (*out_node).x = node.x;
+        (*out_node).y = node.y;
+        (*out_node).z = node.z;
+        (*out_node).v = node.v;
+        (*out_node).s = node.s;
+        (*out_node).c = node.c;
+        (*out_node).d_body = node.d_body;
+        (*out_node).phase = node.phase;
+        (*out_node).disc = node.disc;
+    }
+}
+
+#[no_mangle]
+pub extern "C" fn geofield_cube_get_neighbors(
+    gf: *mut GeoField,
+    x: i32,
+    y: i32,
+    z: i32,
+    radius: i32,
+    out_count: *mut i32,
+) -> *mut CCubeNode {
+    if gf.is_null() || out_count.is_null() {
+        return std::ptr::null_mut();
+    }
+    let cube = unsafe { &mut (*gf).cube.lock().unwrap() };
+    let neighbors = cube.get_neighbors(x, y, z, radius);
+    let count = neighbors.len();
+    unsafe {
+        *out_count = count as i32;
+    }
+    if count == 0 {
+        return std::ptr::null_mut();
+    }
+    let out = unsafe { libc::malloc(count * std::mem::size_of::<CCubeNode>()) as *mut CCubeNode };
+    if out.is_null() {
+        return std::ptr::null_mut();
+    }
+    for (i, (_, node)) in neighbors.iter().enumerate() {
+        unsafe {
+            (*out.add(i)).x = node.x;
+            (*out.add(i)).y = node.y;
+            (*out.add(i)).z = node.z;
+            (*out.add(i)).v = node.v;
+            (*out.add(i)).s = node.s;
+            (*out.add(i)).c = node.c;
+            (*out.add(i)).d_body = node.d_body;
+            (*out.add(i)).phase = node.phase;
+            (*out.add(i)).disc = node.disc;
+        }
+    }
+    out
+}
+
+#[no_mangle]
+pub extern "C" fn geofield_cube_tension(
+    gf: *mut GeoField,
+    ax: i32, ay: i32, az: i32,
+    bx: i32, by: i32, bz: i32,
+) -> i32 {
+    if gf.is_null() {
+        return 0;
+    }
+    let cube = unsafe { &mut (*gf).cube.lock().unwrap() };
+    let a = cube.get_node(ax, ay, az);
+    let b = cube.get_node(bx, by, bz);
+    cube.tension(&a, &b)
+}
+
+#[no_mangle]
+pub extern "C" fn geofield_cube_analogy(
+    gf: *mut GeoField,
+    ax: i32, ay: i32, az: i32,
+    bx: i32, by: i32, bz: i32,
+    cx: i32, cy: i32, cz: i32,
+    out_node: *mut CCubeNode,
+) {
+    if gf.is_null() || out_node.is_null() {
+        return;
+    }
+    let cube = unsafe { &mut (*gf).cube.lock().unwrap() };
+    let a = cube.get_node(ax, ay, az);
+    let b = cube.get_node(bx, by, bz);
+    let c = cube.get_node(cx, cy, cz);
+    let d = cube.analogy_3d(&a, &b, &c);
+    unsafe {
+        (*out_node).x = d.x;
+        (*out_node).y = d.y;
+        (*out_node).z = d.z;
+        (*out_node).v = d.v;
+        (*out_node).s = d.s;
+        (*out_node).c = d.c;
+        (*out_node).d_body = d.d_body;
+        (*out_node).phase = d.phase;
+        (*out_node).disc = d.disc;
+    }
+}
+
+#[no_mangle]
+pub extern "C" fn geofield_cube_morpho_link(
+    gf: *mut GeoField,
+    sx: i32, sy: i32, sz: i32,
+    tx: i32, ty: i32, tz: i32,
+    weight: f64,
+) {
+    if gf.is_null() {
+        return;
+    }
+    let cube = unsafe { &mut (*gf).cube.lock().unwrap() };
+    let src = cube.get_node(sx, sy, sz);
+    let tgt = cube.get_node(tx, ty, tz);
+    cube.morpho_link(&src, &tgt, weight);
+}
+
+#[no_mangle]
+pub extern "C" fn geofield_cube_stats(
+    gf: *mut GeoField,
+    out_cached: *mut i32,
+    out_buckets: *mut i32,
+    out_morpho: *mut i32,
+    out_address_space: *mut i64,
+) {
+    if gf.is_null() || out_cached.is_null() || out_buckets.is_null() || out_morpho.is_null() || out_address_space.is_null() {
+        return;
+    }
+    let cube = unsafe { &(*gf).cube.lock().unwrap() };
+    let s = cube.stats();
+    unsafe {
+        *out_cached = s.cached_nodes as i32;
+        *out_buckets = s.buckets as i32;
+        *out_morpho = s.morpho_links as i32;
+        *out_address_space = s.address_space;
+    }
+}
+
+#[no_mangle]
+pub extern "C" fn geofield_cube_free(ptr: *mut std::ffi::c_void) {
+    if !ptr.is_null() {
+        unsafe { libc::free(ptr) };
+    }
 }

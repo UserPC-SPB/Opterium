@@ -1,0 +1,200 @@
+# ПЛАН: ПОЛНОЦЕННАЯ ВЕРСИЯ OPTERIUM GEOFORMER
+# Версия: 4.0 (Production)
+# Дата: 2026-05-20
+
+---
+
+# ═══════════════════════════════════════════════════════════════
+# ЧТО НАДО СДЕЛАТЬ (НЕ ПОКАЗАТЕЛЬНАЯ ВЕРСИЯ)
+# ═══════════════════════════════════════════════════════════════
+
+## ПРОБЛЕМА ТЕКУЩЕЙ ВЕРСИИ
+- Python прототипы (медленные)
+- Нет полной интеграции модулей
+- GenerativeCube — только Python
+- Нет Rust native для 3D куба
+- Нет E8 attention в pipeline
+- Нет Soul/RubikSoul в GeoFormer
+
+## ЦЕЛЬ
+Полноценный движок на Rust с Python bindings:
+- GenerativeCube (3D) — native Rust
+- Интеграция с GeoFormer таблицами
+- E8 attention в pipeline
+- RubikSoul (bias) в attention
+- Morpho-связи (живые, усиливаются)
+- Полные тесты (100+)
+
+---
+
+# ═══════════════════════════════════════════════════════════════
+# ЧАСТЬ 1: GENERATIVE CUBE — RUST NATIVE
+# ═══════════════════════════════════════════════════════════════
+
+## 1.1 cube.rs — Генеративный 3D куб
+- CubeNode: x, y, z, V, S, C, D_body, phase, disc
+- GenerativeCube: кэш, bucket index, morpho
+- O(1) генерация узла по адресу
+- Bucket spatial index для соседей
+
+## 1.2 C API — geofield_cube_*
+- geofield_cube_get_node(x, y, z) → CubeNode
+- geofield_cube_get_neighbors(x, y, z, radius) → список
+- geofield_cube_tension(a, b) → int
+- geofield_cube_analogy(A, B, C) → D
+- geofield_cube_morpho_link(src, tgt, weight)
+- geofield_cube_stats() → JSON
+
+## 1.3 Python bindings
+- CubeNode class
+- GenerativeCube class
+- Все методы через CFFI
+
+## 1.4 Тесты
+- 20+ тестов (генерация, соседи, tension, analogy, morpho, stats)
+
+---
+
+# ═══════════════════════════════════════════════════════════════
+# ЧАСТЬ 2: ИНТЕГРАЦИЯ С GEOFORMER
+# ═══════════════════════════════════════════════════════════════
+
+## 2.1 CubeNode → GeoFormer Cell
+- 3D адрес → 2D проекция (S, D)
+- V, S, C → P, S, D маппинг
+- Дискриминант → верификация
+
+## 2.2 E8 Attention + Cube
+- E8 roots из 3D адреса (x,y,z) → 8D root
+- Attention weights через E8 dot products
+- RubikSoul bias в attention
+
+## 2.3 Pipeline с кубом
+- Encoder: token → 3D адрес
+- Navigation: куб + GeoFormer таблицы
+- Decoder: 3D адрес → token
+
+---
+
+# ═══════════════════════════════════════════════════════════════
+# ЧАСТЬ 3: RUBIK SOUL — RUST
+# ═══════════════════════════════════════════════════════════════
+
+## 3.1 soul.rs
+- RubikSoul: 8 permutations
+- evolve(input_hash) → новый state
+- remap_phase(phase_3bit) → субъективная фаза
+- signature, displacement
+
+## 3.2 C API — geofield_soul_*
+- geofield_soul_new() → Soul handle
+- geofield_soul_evolve(soul, hash)
+- geofield_soul_remap_phase(soul, phase) → phase
+- geofield_soul_signature(soul) → int
+- geofield_soul_displacement(soul) → int
+
+## 3.3 Python bindings
+- RubikSoul class
+- Все методы через CFFI
+
+---
+
+# ═══════════════════════════════════════════════════════════════
+# ЧАСТЬ 4: MORPHO — ЖИВЫЕ СВЯЗИ
+# ═══════════════════════════════════════════════════════════════
+
+## 4.1 morpho.rs
+- MorphoGraph: узлы + рёбра
+- Усиление при повторной встрече
+- Tension-based pruning
+- Bucket spatial index
+
+## 4.2 C API — geofield_morpho_*
+- geofield_morpho_link(src, tgt, weight)
+- geofield_morpho_get_neighbors(node) → список
+- geofield_morpho_prune(threshold)
+- geofield_morpho_stats() → JSON
+
+## 4.3 Python bindings
+- MorphoGraph class
+- Все методы через CFFI
+
+---
+
+# ═══════════════════════════════════════════════════════════════
+# ЧАСТЬ 5: ПОЛНЫЙ PIPELINE
+# ═══════════════════════════════════════════════════════════════
+
+## 5.1 Полный pipeline
+- Encoder: token → 3D адрес (обучаемый)
+- Cube Navigation: 3D куб + GeoFormer таблицы
+- E8 Attention: attention weights через E8
+- RubikSoul: bias в attention
+- Morpho: живые связи
+- Decoder: 3D адрес → token (обучаемый)
+
+## 5.2 Тесты
+- 100+ тестов
+- Интеграционные тесты
+- Бенчмарки
+
+---
+
+# ═══════════════════════════════════════════════════════════════
+# ЧАСТЬ 6: БЕНЧМАРКИ И ОПТИМИЗАЦИЯ
+# ═══════════════════════════════════════════════════════════════
+
+## 6.1 Бенчмарки
+- GenerativeCube vs полный куб (память)
+- GenerativeCube vs GeoFormer 2D (скорость)
+- E8 attention vs hashgrid attention
+- Morpho vs static links
+
+## 6.2 Оптимизация
+- Rayon parallel для cube navigation
+- SIMD для E8 dot products
+- Cache-friendly bucket index
+- Memory-mapped morpho graph
+
+---
+
+# ═══════════════════════════════════════════════════════════════
+# ОБЩАЯ ОЦЕНКА
+# ═══════════════════════════════════════════════════════════════
+
+| Часть | Задач | Время | Статус |
+|-------|-------|-------|--------|
+| 1. GenerativeCube Rust | 4 | ~8 часов | 🟡 Начинаю |
+| 2. Интеграция | 3 | ~6 часов | 🔴 |
+| 3. RubikSoul Rust | 3 | ~4 часа | 🔴 |
+| 4. Morpho Rust | 3 | ~4 часа | 🔴 |
+| 5. Полный Pipeline | 2 | ~8 часов | 🔴 |
+| 6. Бенчмарки | 2 | ~4 часа | 🔴 |
+| **ИТОГО** | **17** | **~34 часа** | |
+
+---
+
+# ═══════════════════════════════════════════════════════════════
+# АРТЕФАКТЫ ПОСЛЕ ВЫПОЛНЕНИЯ
+# ═══════════════════════════════════════════════════════════════
+
+```
+native/src/
+├── lib.rs              # C API (обновлённый)
+├── tables.rs           # GeoFormer таблицы
+├── lookup.rs           # Matmul + attention
+├── debt.rs             # Debt System
+├── e8.rs               # E8 Root Lattice
+├── cube.rs             # НОВЫЙ: GenerativeCube
+├── soul.rs             # НОВЫЙ: RubikSoul
+└── morpho.rs           # НОВЫЙ: MorphoGraph
+
+native/include/geofield.h  # C API (обновлённый)
+native/python/geofield_native.py  # Python bindings (обновлённый)
+
+generative_cube.py      # Python прототип (для тестов)
+test_cube.py            # Тесты GenerativeCube
+test_soul.py            # Тесты RubikSoul
+test_morpho.py          # Тесты MorphoGraph
+test_full_pipeline.py   # Интеграционные тесты
+```

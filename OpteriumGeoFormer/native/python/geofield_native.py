@@ -76,6 +76,36 @@ ffi.cdef("""
                                const int8_t* keys, uint32_t n_keys,
                                const int8_t* values, int8_t* out_coords);
     uint32_t geofield_e8_root_count(void);
+
+    // Generative 3D Cube
+    typedef struct {
+        int32_t x, y, z;
+        int64_t v;
+        int32_t s;
+        int64_t c;
+        int32_t d_body;
+        uint8_t phase;
+        int64_t disc;
+    } CCubeNode;
+
+    void geofield_cube_get_node(GeoField* gf, int32_t x, int32_t y, int32_t z, CCubeNode* out_node);
+    CCubeNode* geofield_cube_get_neighbors(GeoField* gf, int32_t x, int32_t y, int32_t z,
+                                           int32_t radius, int32_t* out_count);
+    int32_t geofield_cube_tension(GeoField* gf,
+                                  int32_t ax, int32_t ay, int32_t az,
+                                  int32_t bx, int32_t by, int32_t bz);
+    void geofield_cube_analogy(GeoField* gf,
+                               int32_t ax, int32_t ay, int32_t az,
+                               int32_t bx, int32_t by, int32_t bz,
+                               int32_t cx, int32_t cy, int32_t cz,
+                               CCubeNode* out_node);
+    void geofield_cube_morpho_link(GeoField* gf,
+                                   int32_t sx, int32_t sy, int32_t sz,
+                                   int32_t tx, int32_t ty, int32_t tz,
+                                   double weight);
+    void geofield_cube_stats(GeoField* gf, int32_t* out_cached, int32_t* out_buckets,
+                             int32_t* out_morpho, int64_t* out_address_space);
+    void geofield_cube_free(void* ptr);
 """)
 
 # ── Загрузка библиотеки ──
@@ -233,3 +263,62 @@ class GeoField:
 
     def e8_root_count(self) -> int:
         return _lib.geofield_e8_root_count()
+
+    # ── Generative 3D Cube ──
+
+    def cube_get_node(self, x: int, y: int, z: int) -> dict:
+        out = ffi.new("CCubeNode*")
+        _lib.geofield_cube_get_node(self._ptr, x, y, z, out)
+        return {
+            'x': out.x, 'y': out.y, 'z': out.z,
+            'v': out.v, 's': out.s, 'c': out.c,
+            'd_body': out.d_body, 'phase': out.phase, 'disc': out.disc,
+        }
+
+    def cube_get_neighbors(self, x: int, y: int, z: int, radius: int) -> list:
+        out_count = ffi.new("int32_t*")
+        ptr = _lib.geofield_cube_get_neighbors(self._ptr, x, y, z, radius, out_count)
+        count = out_count[0]
+        if count == 0 or ptr == ffi.NULL:
+            return []
+        nodes = []
+        for i in range(count):
+            n = ptr[i]
+            nodes.append({
+                'x': n.x, 'y': n.y, 'z': n.z,
+                'v': n.v, 's': n.s, 'c': n.c,
+                'd_body': n.d_body, 'phase': n.phase, 'disc': n.disc,
+            })
+        _lib.geofield_cube_free(ptr)
+        return nodes
+
+    def cube_tension(self, ax: int, ay: int, az: int, bx: int, by: int, bz: int) -> int:
+        return _lib.geofield_cube_tension(self._ptr, ax, ay, az, bx, by, bz)
+
+    def cube_analogy(self, ax: int, ay: int, az: int,
+                     bx: int, by: int, bz: int,
+                     cx: int, cy: int, cz: int) -> dict:
+        out = ffi.new("CCubeNode*")
+        _lib.geofield_cube_analogy(self._ptr, ax, ay, az, bx, by, bz, cx, cy, cz, out)
+        return {
+            'x': out.x, 'y': out.y, 'z': out.z,
+            'v': out.v, 's': out.s, 'c': out.c,
+            'd_body': out.d_body, 'phase': out.phase, 'disc': out.disc,
+        }
+
+    def cube_morpho_link(self, sx: int, sy: int, sz: int,
+                         tx: int, ty: int, tz: int, weight: float):
+        _lib.geofield_cube_morpho_link(self._ptr, sx, sy, sz, tx, ty, tz, weight)
+
+    def cube_stats(self) -> dict:
+        out_cached = ffi.new("int32_t*")
+        out_buckets = ffi.new("int32_t*")
+        out_morpho = ffi.new("int32_t*")
+        out_addr = ffi.new("int64_t*")
+        _lib.geofield_cube_stats(self._ptr, out_cached, out_buckets, out_morpho, out_addr)
+        return {
+            'cached_nodes': out_cached[0],
+            'buckets': out_buckets[0],
+            'morpho_links': out_morpho[0],
+            'address_space': out_addr[0],
+        }

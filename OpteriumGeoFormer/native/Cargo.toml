@@ -10,6 +10,7 @@ name = "geofield"
 [dependencies]
 memmap2 = "0.9"
 rayon = "1.10"
+libc = "0.2"
 
 [features]
 embedded-tables = []
