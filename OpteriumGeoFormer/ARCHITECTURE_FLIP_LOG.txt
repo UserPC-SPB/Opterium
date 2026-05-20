@@ -1,0 +1,28 @@
+# ARCHITECTURE FLIP — IMPLEMENTATION LOG
+# Дата: 2026-05-20
+# Статус: В процессе
+
+## ЧАСТЬ 4: ARCHITECTURE FLIP
+
+### Концепция
+```
+[малый нейросетевой энкодер] → токен → S/D адрес
+         ↓
+[Opterium навигация] ← всё рассуждение здесь, БЕЗ ВЕСОВ
+         ↓
+[малый нейросетевой декодер] → S/D адрес → токен
+```
+
+### Файлы
+- `opterium/encoder.py` — token → S/D address
+- `opterium/decoder.py` — S/D address → token
+- `opterium/navigation.py` — reasoning in table (zero weights)
+- `opterium/pipeline.py` — encoder → nav → decoder
+- `test_pipeline.py` — тесты на аналогиях
+
+### Статус
+- [ ] encoder.py
+- [ ] decoder.py
+- [ ] navigation.py
+- [ ] pipeline.py
+- [ ] test_pipeline.py
