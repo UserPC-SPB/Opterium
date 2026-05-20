@@ -40,6 +40,10 @@ impl E8Root {
 /// Generate E8 root from address (x, y) via gcd + seed mapping.
 pub fn address_to_root(x: u32, y: u32) -> E8Root {
     let g = gcd(x, y);
+    if g == 0 {
+        // Handle zero address: return default root
+        return E8Root::new([0, 0, 0, 0, 0, 0, 0, 0]);
+    }
     let sx = (x / g) as i8;
     let sy = (y / g) as i8;
     

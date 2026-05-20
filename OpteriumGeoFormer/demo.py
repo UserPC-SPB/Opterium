@@ -169,9 +169,30 @@ def main():
     print(f"  witness(42): P={witness['witness']['P']}, S={witness['witness']['S']}, D={witness['witness']['D']}")
     print()
 
-    # 8. Benchmark
+    # 8. Generative 3D Cube
     print("─" * 40)
-    print("  8. Benchmark (16×16 matmul)")
+    print("  8. Generative 3D Cube (Rust)")
+    print("─" * 40)
+
+    n = gf.cube_get_node(10, 20, 30)
+    print(f"  get_node(10,20,30) = V={n['v']}, S={n['s']}, D_body={n['d_body']}")
+
+    neighbors = gf.cube_get_neighbors(10, 20, 30, radius=5)
+    print(f"  Neighbors (radius=5): {len(neighbors)}")
+
+    t = gf.cube_tension(10, 20, 30, 11, 21, 31)
+    print(f"  tension((10,20,30), (11,21,31)) = {t}")
+
+    d = gf.cube_analogy(1, 1, 1, 2, 2, 2, 3, 3, 3)
+    print(f"  analogy((1,1,1), (2,2,2), (3,3,3)) = ({d['x']},{d['y']},{d['z']})")
+
+    s = gf.cube_stats()
+    print(f"  Stats: {s['cached_nodes']} nodes, {s['address_space']:,} address space")
+    print()
+
+    # 9. Benchmark
+    print("─" * 40)
+    print("  9. Benchmark (16×16 matmul)")
     print("─" * 40)
 
     size = 16
@@ -203,7 +224,8 @@ def main():
   5. E8 Root Lattice — 240 roots on-the-fly
   6. Verifier — проверка арифметических утверждений
   7. Architecture Flip — encoder → nav → decoder
-  8. Benchmark — производительность
+  8. Generative 3D Cube — O(1) node generation, bucket index
+  9. Benchmark — производительность
 """)
 
 if __name__ == "__main__":
