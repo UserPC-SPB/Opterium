@@ -1,3 +1,4 @@
+All code was written using AI. I'm not a programmer, so errors are possible!
 # Cube v5 — MCP server
 
 **71 tools** for non-standard mathematics. Single executable — `cube_v5.exe`.
