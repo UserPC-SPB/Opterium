@@ -1567,7 +1567,7 @@ Full specifications: [geoformer/SPECS.md](geoformer/SPECS.md)
 
 ## navguard — AI-Native Project Navigator
 
-**navguard** is a zero-dependency Rust CLI that scans any project folder and produces a machine-readable map: file tree, line counts, token counts, symbol index, and a TernaryCycle health state (Triangle: [A,B,C]). It is designed specifically for AI consumption.
+**navguard** is a zero-dependency Rust CLI for **vibe coding** — it scans any project folder and produces a machine-readable map: file tree, line counts, token counts, symbol index, and a TernaryCycle health state (Triangle: [A,B,C]). Designed for AI consumption: the model reads the tree, finds symbols, and reads exact lines — never the full codebase.
 
 ### Why an AI Needs navguard
 
@@ -1577,6 +1577,8 @@ Without navguard, an AI must guess the project structure, parse every file into 
 - **Line / token counts** — how much context each file consumes
 - **Symbol index** (`navigator_deep2.md`) — every function/class/section with line numbers, enabling surgical `lines` reads instead of full-file loads
 - **Triangle state** — whether scan data is fresh (`[0,1,0]`), crashed (`[1,0,0]`), or stale (`[0,0,1]`)
+
+This is the core loop of **vibe coding**: scan (navguard) → read tree (navigator.md) → confirm consumption (set `[0,0,1]`) → find symbol (grep) → read lines (lines). The AI never loads the full codebase into its context window.
 
 ### Commands
 
@@ -1613,3 +1615,5 @@ The triangle states: `[1,0,0]` = navguard is scanning (data invalid), `[0,1,0]` 
 | `navguard/SOUL.md` | Full protocol documentation (English) |
 
 navguard is self-contained in the `navguard/` folder. Run `navguard --check` after cloning to generate navigator files for your local paths.
+
+**Vibe coding loop:** `navguard --check --brief` → read `navigator.md` → set `[0,0,1]` → `navguard grep <symbol>` → `navguard lines <file> <start> <end>` — the AI never loads the full codebase.

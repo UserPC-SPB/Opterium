@@ -1,6 +1,6 @@
 # navguard v4.1 — Project Navigator
 
-Scans a project folder and produces a machine-readable map: file tree, line/token counts, symbol index. Designed for AI consumption.
+Scans a project folder and produces a machine-readable map: file tree, line/token counts, symbol index. Designed for **vibe coding** — AI-assisted development where the model must navigate a codebase without loading every file into context.
 
 ## How It Works
 
@@ -70,3 +70,5 @@ B: rules|none         ← active rules
 ## Why
 
 Without navguard, an AI must guess the project structure or load entire files into context. With navguard, the AI reads a tiny tree file, finds symbols by name, and reads exactly the needed lines — no waste.
+
+This is the core loop of **vibe coding**: scan (navguard) → read tree (navigator.md) → find symbol (grep) → read lines (lines) — all without loading the full codebase into the model's context window.
