@@ -1596,11 +1596,14 @@ Without navguard, an AI must guess the project structure, parse every file into 
 
 ### How an AI Should Use It
 
-1. **Before any step:** `navguard --check --brief` (run from repo root, or use `navguard\navguard` if only the subdir copy exists). If triangle is not `[0,1,0]`, run `navguard --check`.
-2. **Read the tree** from `navigator.md` (small, fits in context).
-3. **Find code** via `navguard grep <function_name>` or `navguard extract <pattern>`.
-4. **Read code** via `navguard lines <file> <start> <end>` — never load whole files.
-5. **Confirm freshness:** set `Triangle: [0,0,1]` in `navigator.md` after reading.
+**Triangle protocol** (must be followed in order):
+
+1. **Check freshness:** `navguard --check --brief` (run from repo root). If output does **not** show `[0,1,0]`, run `navguard --check` first.
+2. **Read the tree** from `navigator.md` — small, fits in a single context window.
+3. **Confirm consumption:** modify `navigator.md` — change `[0,1,0]` to `[0,0,1]`. This signals that the AI has actually read the data. If this step is skipped, the next AI will see stale triangle and know the tree was never consumed.
+4. **Drill down** only as needed: `navguard grep <name>` to find a symbol, then `navguard lines <file> <start> <end>` to read exactly the needed lines. Never load whole files.
+
+The triangle states: `[1,0,0]` = navguard is scanning (data invalid), `[0,1,0]` = scan complete (ready to read), `[0,0,1]` = AI has read the data. If the triangle is not `[0,1,0]`, `navigator.md` must not be read.
 
 ### Files
 

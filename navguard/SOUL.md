@@ -12,12 +12,35 @@ navguard scans its **parent directory** (where the `.exe` lives). It writes thre
 | `navigator_deep.md` | File table only |
 | `navigator_deep2.md` | Symbol index: every function/class/section with line numbers |
 
-A **Triangle** `[A,B,C]` protects against crash corruption:
-- `[1,0,0]` (A) — scan started
-- `[0,1,0]` (B) — scan complete, data fresh
-- `[0,0,1]` (C) — data confirmed read
+A **Triangle** `[A,B,C]` enforces the read-before-use contract:
 
-Forward only: A → B → C → new cycle. No backward transitions.
+| State | Who sets it | Meaning |
+|-------|-------------|---------|
+| `[1,0,0]` | navguard (at scan start) | scan in progress, data invalid |
+| `[0,1,0]` | navguard (at scan end) | scan complete, data fresh, ready to read |
+| `[0,0,1]` | **AI must set this** (after reading) | data confirmed consumed |
+
+**Rules:**
+- navguard sets `[1,0,0]` in `navigator.md` when it begins scanning, `[0,1,0]` when it finishes.
+- The AI **must** read `navigator.md` completely, then edit its `Triangle:` field from `[0,1,0]` to `[0,0,1]`.
+- If the triangle is **not** `[0,1,0]`, reading `navigator.md` is forbidden — the data is stale or corrupt.
+- Forward only: `[1,0,0]` → `[0,1,0]` → `[0,0,1]` → new cycle. No backward transitions.
+
+This guarantees that the next AI can check the triangle and know whether the previous AI actually consumed the tree or merely triggered navguard and ignored the output.
+
+## File Hierarchy
+
+The three navigator files form a point-access chain:
+
+```
+navigator.md        ← file tree + line/token counts + triangle state
+    ↓
+navigator_deep.md   ← flat file table (path|lines|tokens)
+    ↓
+navigator_deep2.md  ← symbol index (function/class/section → line numbers)
+```
+
+The AI always starts at `navigator.md`, reads it fully, sets `[0,0,1]`, then drills into deeper files only for specific symbols. Never load the deep files into context unless you need their contents.
 
 ## Commands
 
