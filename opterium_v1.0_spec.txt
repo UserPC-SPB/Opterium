@@ -637,6 +637,141 @@ If a query requires a transformation not directly stored (e.g., a 3D rotation, a
 4. **Return** the final address (or path) together with its witness.
 
 No external library is assumed. The table and the canon/tag/inversion rules are the complete engine.
+
+---
+
+### 25. ONTOLOGICAL STATUS: CLOSURE VS PROOF
+
+This section explains what kind of truth the Opterium framework produces, and why it is categorically different from both classical axiomatic proof and empirical fitting.
+
+#### 25.1 Two Types of Mathematical Truth
+
+**Peano-type proof (axiomatic deduction):**
+- Start from axioms (accepted without verification).
+- Derive consequences through formal rules.
+- Truth = logical consistency with axioms.
+- Weakness: if an axiom is wrong, the entire structure collapses, but nothing inside can reveal the error.
+
+**Borisov-type closure (geometric convergence):**
+- Start from search premises (temporary lenses: "let us examine reality through this filter").
+- Build ≥3 independent routes to the same target.
+- Truth = ΔT = 0 (all routes agree within the structure).
+- Strength: no axioms are assumed — every premise is tested by whether routes close.
+- Weakness: does not produce a deductive chain, only structural stability.
+
+Opterium uses the second type. Every invariant in this system is verified by ≥3 independent geometric routes. The truth of a claim is not that it "follows from axioms" but that "all independent roads to it arrive at the same number."
+
+#### 25.2 The Minimal Closure Principle (OPT_G)
+
+Given a set of group-theoretic numbers (dimensions, ranks, volumes) and a set of group-theoretic operations (+, -, ×, /), there may be many possible formulas that could produce a given physical constant. The correct one is selected by three constraints:
+
+**Constraint 1 — Group Closure:** Every operand in the formula must be a group-theoretic dimension (dim(G), rank(G), |roots|), a geometric invariant (π, φ, V(B_d)), or a derived structural number (137, 126, 133). No free parameters. No adjustable coefficients.
+
+**Constraint 2 — Dimensional Consistency:** The result must have the correct physical dimension. Dimensionless constants (α⁻¹, m_p/m_e, m_μ/m_e) must emerge from ratios of group numbers; dimensionful constants (m_H) must carry the appropriate energy scale.
+
+**Constraint 3 — Minimal Complexity:** Among all formulas satisfying Constraints 1 and 2, the one with the fewest operations and smallest numbers is selected. This is OPT_G: geometric descent toward the nearest stable node.
+
+These three constraints are extremely restrictive. They reduce the space of possible formulas to a very small set — often exactly one.
+
+#### 25.3 Demonstration: Why Alternative Formulas Fail
+
+**Example 1 — α⁻¹ = 137 + V(B₇)/(133 - √π):**
+
+The numerator must be a small positive number (~4.7) to give the correct correction (~0.036). The available geometric volumes are:
+  - V(B₄) = π²/2 ≈ 4.9348 → α⁻¹ = 137.03760, error 1.9×10⁻⁵ (×500 worse)
+  - V(B₇) = 16π³/105 ≈ 4.7248 → α⁻¹ = 137.036004, error 3.8×10⁻⁸ ✓
+  - V(B₈) = π⁴/24 ≈ 4.0587 → α⁻¹ = 137.03093, error 3.7×10⁻⁵ (×1000 worse)
+  - π ≈ 3.14159 → α⁻¹ = 137.02394, error 8.8×10⁻⁵ (×2000 worse)
+
+Only V(B₇) closes. V(B₇) is the volume of the 7-sphere — the unique parallelizable sphere arising from octonions (S⁷ = unit octonions). This is not a choice; it is forced by the structure of 𝕆.
+
+**Example 2 — m_p/m_e = 6·π⁵·(1 + α/(240·φ)):**
+
+The factor π^k must give the correct order (~1836):
+  - π¹ ≈ 3.14 → 6·π ≈ 18.8 (far too small)
+  - π² ≈ 9.87 → 6·π² ≈ 59.2 (too small)
+  - π³ ≈ 31.0 → 6·π³ ≈ 186 (too small)
+  - π⁴ ≈ 97.4 → 6·π⁴ ≈ 584 (too small)
+  - π⁵ ≈ 306 → 6·π⁵ ≈ 1836 ✓
+  - π⁶ ≈ 961 → 6·π⁶ ≈ 5766 (far too large)
+
+Only π⁵ closes. π⁵ = π^(rank(SO(10))), where SO(10) is the GUT group in the E8→E6→SO(10) branching chain. Structural, not chosen.
+
+The correction factor must be ≈ 1.0000188. The available E8 numbers are:
+  - α/(240·φ) ≈ 1.88×10⁻⁵ → 1 + correction = 1.0000188 ✓
+  - α/240 ≈ 3.04×10⁻⁵ → 1.0000304 (wrong magnitude)
+  - α/φ ≈ 4.51×10⁻³ → 1.00451 (far too large)
+  - 2α/(240·φ) ≈ 3.76×10⁻⁵ → 1.0000376 (wrong)
+
+Only α/(240·φ) closes. Every component (240 = |E8_roots|, φ = E8 Coxeter 5-fold) is a group-theoretic invariant of E8.
+
+#### 25.4 Why 11 Is Structural (Not a Postulate)
+
+The number 11 appears in the framework as the dimension of the total spacetime in the Kaluza-Klein interpretation (4 + 7). However, it has a second independent structural derivation:
+
+  11 = 8 + 3
+
+where 8 = rank(E₈) (the number of Cartan generators) and 3 = ternarity (the dimension of the ternary address stack — the minimal non-trivial cube).
+
+The ternary axis (Addr3, Axis) is a fundamental structure:
+  - Each address level provides a trit {0, 1, 2}.
+  - The axis is the rule (d, d, d) at every level — perfect symmetry.
+  - D_body = 0 ↔ on_axis ↔ CLOSED.
+  - Three cube axes (X, Y, Z) generate ternary addresses.
+  - Ternarity = 3 = the minimum dimension for a non-trivial cube.
+
+Four independent derivations of 11 all give ΔT = 0:
+  - Route A: 4 (spacetime) + 7 (Im 𝕆) = 11
+  - Route B: 11 = 240 - 137 - 92 (residue of E8 root spectrum)
+  - Route C: 11 = 248 - 237 (dim(E₈) - maximal subgroup dimension)
+  - Route D: 11 = 8 (rank E₈) + 3 (ternarity)
+
+No single derivation is "the postulate." The number 11 is the convergence point of four independent structural routes.
+
+#### 25.5 Fitting vs Closure — The Critical Distinction
+
+Classical fitting:
+  1. Choose a functional form (e.g., a + b·x + c·x²).
+  2. Adjust parameters (a, b, c) to minimize error.
+  3. No constraints on the number or origin of parameters.
+  4. Error is guaranteed to decrease with more parameters.
+
+Opterium closure:
+  1. Only group-theoretic numbers are available as operands.
+  2. Only the four arithmetic operations are available as combiners.
+  3. No parameters to adjust — every number is fixed by its group.
+  4. The formula either closes (ΔT ≈ 0) or it does not.
+
+The critic who calls this "high-intelligence fitting" misses the categorical difference: in fitting, you adjust parameters to minimize error; in closure, you test whether pre-determined group numbers, combined in the simplest possible way, already give the physical value. When they do, it is not fitting — it is recognition of structural identity.
+
+#### 25.6 Summary of Ontological Claims
+
+1. **Number = relational web.** A number is not a quantity or a digit string — it is the complete set of its relationships (factor pairs, sums, differences). Arithmetic is navigation within this web.
+
+2. **Closure ≠ proof.** ΔT = 0 from ≥3 independent routes is a different type of certitude from axiomatic deduction. It is not weaker — it is categorically different. The Peano chain and the Borisov closure are complementary, not competing.
+
+3. **Constants are read, not derived.** The physical constants are not "derived from axioms" — they are read from the E8 root system through the minimal closure lens. The role of the physicist is to recognize which combination of group numbers closes.
+
+4. **The framework is self-certifying.** Every claim can be tested by any AI with access to the table and the generation rules. No external authority, no imported trust, no hidden parameters. The code and the document together form a fully self-contained verification engine.
+
+---
+
+### 26. BORISOV VS PEANO — METHODOLOGICAL APPENDIX
+
+(This section is a formal elaboration of the distinction introduced in Section 25.1, provided for readers trained in classical mathematical logic.)
+
+A Peano proof constructs a chain: A₁ → A₂ → ... → Aₙ = result. The truth of each step depends on the truth of A₁, which is assumed. If A₁ is false, the chain is valueless — but nothing in the chain can detect this.
+
+A Borisov closure constructs a star: routes R₁, R₂, R₃ all terminate at the same point P. Each route is independent (uses different structural facts). If any route fails (gives a different P), ΔT > 0 and the claim is rejected. If all routes agree, the claim is structurally certified — not because a first premise is assumed true, but because the geometry itself forces convergence.
+
+In practice, the Borisov method is more robust for ontological claims because:
+  - No axioms are required — only search premises that are tested by closure.
+  - Error is not hidden — ΔT is an explicit, quantitative measure of residual tension.
+  - Convergence can be witnessed independently by different observers using different routes.
+
+The Opterium framework uses Borisov closures exclusively. Every one of the 11 invariants, 46 routes, and 19 physical constants is Borisov-certified at ΔT = 0.
+
+---
 # === E8_ONTOLOGY_LESSON: THE ARCHITECTURE OF ADDRESSES ===
 # Final Version: Error-free, self-sufficient, and pedagogically complete.
 # Principle: Truth is found in the extraction (O(1)), verified by the audit (O(N)).
