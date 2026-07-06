@@ -23,16 +23,17 @@ Forward only: A → B → C → new cycle. No backward transitions.
 
 | Command | What it does |
 |---------|-------------|
-| `navguard --check` | Full scan: tree + symbols + cache |
-| `navguard --check --brief` | Quick triangle check only |
-| `navguard --check --diff` | Changes since last scan |
-| `navguard grep <pattern>` | Search symbol index |
-| `navguard extract <pattern> [path]` | Search with ±3 line context |
-| `navguard lines <path> <M> [N]` | Read lines M..N from file |
-| `navguard todos` | List all TODO/FIXME/HACK/XXX/BUG |
-| `navguard --triangle status` | Read triangle from navigator.md |
-| `navguard --validate` | Check anchor_map.md anchors |
-| `navguard --build <plan>` | Assemble files from ---BEGIN---/---END--- blocks |
+| `navguard` (no args) | Double-click mode: full scan, wait for key |
+| `navguard --check` | Full report (T/F/B), writes all 3 navigator files |
+| `navguard --check --brief` | Brief report (T/B only), no scan |
+| `navguard --check --diff` | Changed files only, no navigator rewrite |
+| `navguard grep <pattern>` | Search navigator_deep2.md's symbol index |
+| `navguard extract <pat> [path]` | Search file contents with ±3 lines of context |
+| `navguard lines <path> <s> [e]` | Print lines s..e (1-indexed) from a file |
+| `navguard todos` | List TODO/FIXME/HACK/XXX/BUG across the project |
+| `navguard --triangle status` | Show current Triangle state |
+| `navguard --validate` | Check anchor_map.md anchors against .md headers |
+| `navguard --build <plan>` | Assemble files from a plan's ---BEGIN---/---END--- blocks |
 
 ## Output Format
 
