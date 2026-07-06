@@ -1594,7 +1594,7 @@ Without navguard, an AI must guess the project structure, parse every file into 
 
 ### How an AI Should Use It
 
-1. **Before any step:** run `navguard --check --brief`. If triangle is not `[0,1,0]`, run `navguard --check`.
+1. **Before any step:** `cd navguard && navguard --check --brief`. If triangle is not `[0,1,0]`, run `navguard --check`.
 2. **Read the tree** from `navigator.md` (small, fits in context).
 3. **Find code** via `navguard grep <function_name>` or `navguard extract <pattern>`.
 4. **Read code** via `navguard lines <file> <start> <end>` — never load whole files.
@@ -1604,11 +1604,7 @@ Without navguard, an AI must guess the project structure, parse every file into 
 
 | File | Purpose |
 |------|---------|
-| `navguard.exe` | The scanner (Rust, ~1.5 MB, statically linked, zero dependencies) |
-| `SOUL.md` | Full protocol documentation (English) |
-| `navigator.md` | Generated: tree + file table + triangle state |
-| `navigator_deep.md` | Generated: file table only |
-| `navigator_deep2.md` | Generated: symbol index with line numbers |
-| `.navguard_cache.json` | Generated: SHA-256 cache for diff detection |
+| `navguard/navguard.exe` | The scanner (Rust, ~1.5 MB, statically linked, zero dependencies) |
+| `navguard/SOUL.md` | Full protocol documentation (English) |
 
-navguard is pre-generated. Run `navguard --check` after cloning to regenerate navigator files for your local paths.
+navguard is self-contained in the `navguard/` folder. Run `navguard --check` after cloning to generate navigator files for your local paths.
