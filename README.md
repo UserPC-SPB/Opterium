@@ -1562,3 +1562,53 @@ See [geoformer/README_RUN.md](geoformer/README_RUN.md) for step-by-step instruct
 
 ### Technical Passport
 Full specifications: [geoformer/SPECS.md](geoformer/SPECS.md)
+
+---
+
+## navguard — AI-Native Project Navigator
+
+**navguard** is a zero-dependency Rust CLI that scans any project folder and produces a machine-readable map: file tree, line counts, token counts, symbol index, and a TernaryCycle health state (Triangle: [A,B,C]). It is designed specifically for AI consumption.
+
+### Why an AI Needs navguard
+
+Without navguard, an AI must guess the project structure, parse every file into context, or rely on human-provided summaries that go stale. With navguard, the AI instantly knows:
+
+- **File tree** — what exists, where
+- **Line / token counts** — how much context each file consumes
+- **Symbol index** (`navigator_deep2.md`) — every function/class/section with line numbers, enabling surgical `lines` reads instead of full-file loads
+- **Triangle state** — whether scan data is fresh (`[0,1,0]`), crashed (`[1,0,0]`), or stale (`[0,0,1]`)
+
+### Commands
+
+| Command | Purpose |
+|---------|---------|
+| `navguard --check` | Full scan: tree + symbols + cache |
+| `navguard --check --brief` | Quick triangle check only |
+| `navguard grep <pattern>` | Search symbol index |
+| `navguard extract <pattern> [path]` | Search with ±3 line context |
+| `navguard lines <path> <M> [N]` | Read lines M..N (surgical, no full-file load) |
+| `navguard todos` | List all TODO/FIXME/HACK |
+| `navguard --triangle status` | Read current triangle state |
+| `navguard --validate` | Check anchor_map.md anchors |
+| `navguard --build <plan>` | Assemble files from a plan |
+
+### How an AI Should Use It
+
+1. **Before any step:** run `navguard --check --brief`. If triangle is not `[0,1,0]`, run `navguard --check`.
+2. **Read the tree** from `navigator.md` (small, fits in context).
+3. **Find code** via `navguard grep <function_name>` or `navguard extract <pattern>`.
+4. **Read code** via `navguard lines <file> <start> <end>` — never load whole files.
+5. **Confirm freshness:** set `Triangle: [0,0,1]` in `navigator.md` after reading.
+
+### Files
+
+| File | Purpose |
+|------|---------|
+| `navguard.exe` | The scanner (Rust, ~1.5 MB, statically linked, zero dependencies) |
+| `SOUL.md` | Full protocol documentation (English) |
+| `navigator.md` | Generated: tree + file table + triangle state |
+| `navigator_deep.md` | Generated: file table only |
+| `navigator_deep2.md` | Generated: symbol index with line numbers |
+| `.navguard_cache.json` | Generated: SHA-256 cache for diff detection |
+
+navguard is pre-generated. Run `navguard --check` after cloning to regenerate navigator files for your local paths.
