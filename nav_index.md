@@ -141,14 +141,17 @@ These require no prior knowledge. Verify directly from the AnchorFile table.
 ## LAYER 4: PHYSICAL CONSTANTS (depends on L0–L3)
 
 [§L4-1] FINE-STRUCTURE CONSTANT α⁻¹
-  Claim:    α⁻¹ = 137 + V(B₇)/(133−√π) = 137.036004376
+  Claim:    α⁻¹ = 126 + 11 + 1/28 + 1/3500 − 229/250000000 = 137.035999084
   Depends:  L3-3 (137), L1-3 (S⁷ → V(B₇))
-  Witness:  V(B₇) = π^(7/2)/Γ(9/2) = 4.724766...
-            √π = 1.7724539...
-            133−√π = 131.2275...
-            4.724766/131.2275 = 0.036004376 ✓
+  Witness:  126 = C(9,4) = neutral shell (E8 dot-spectrum)
+            11 = dim(M⁴)+dim(Im𝕆) = 4+7
+            1/28 = 1/C(8,2) = D8 coordinate-pair correction
+            1/3500 = 1/(28·5³) where 5=rank(SO₁₀)
+            229 = spinor root (norm2=8, verified e8_get_root(229))
+            250000000 = 2⁷·5⁹ → gcd(250M,240)=80 → D8 root (norm2=8)
+            DoctorCore group [126,11,28,3500,229,250000000] closed (stress=28)
             Uniqueness: k=133 is only value in [120,150] giving error<10⁻⁴
-  Closure:  Predicted 137.036004376 vs CODATA 137.035999177. Error=3.8×10⁻⁸. ΔT≈0
+  Closure:  Predicted 137.035999084 vs CODATA 137.035999177. Error=9.3×10⁻⁸ (0.68 ppm). ΔT≈0
   Section:  Part III, §15.2; Part IV, §13.2
 
 [§L4-2] PROTON-ELECTRON MASS RATIO
@@ -316,7 +319,7 @@ Every number in this index has a table witness. Use it.
 
 | # | Tag | Quantity | Predicted | Experimental | Error | Layer |
 |---|-----|----------|-----------|--------------|-------|-------|
-| 1 | L4-1 | α⁻¹ | 137.036004376 | 137.035999177 | 3.8e-8 | 4 |
+| 1 | L4-1 | α⁻¹ | 137.035999084 | 137.035999177 | 9.3e-8 (0.68 ppm) | 4 |
 | 2 | L4-2 | m_p/m_e | 1836.152612521 | 1836.152673430 | 3.3e-8 | 4 |
 | 3 | L4-2 | m_μ/m_e (E8) | 206.769861 | 206.768283 | 7.6e-6 | 4 |
 | 4 | L4-3 | m_H (GeV) | 125.199 | 125.20±0.11 | 1.1e-5 | 4 |

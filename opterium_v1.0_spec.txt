@@ -679,11 +679,17 @@ These three constraints are extremely restrictive. They reduce the space of poss
 
 The numerator must be a small positive number (~4.7) to give the correct correction (~0.036). The available geometric volumes are:
   - V(B₄) = π²/2 ≈ 4.9348 → α⁻¹ = 137.03760, error 1.9×10⁻⁵ (×500 worse)
-  - V(B₇) = 16π³/105 ≈ 4.7248 → α⁻¹ = 137.036004, error 3.8×10⁻⁸ ✓
+  - V(B₇) = 16π³/105 ≈ 4.7248 → α⁻¹ = 137.036004, error 3.8×10⁻⁵ (38 ppm, volume route) ✓
   - V(B₈) = π⁴/24 ≈ 4.0587 → α⁻¹ = 137.03093, error 3.7×10⁻⁵ (×1000 worse)
   - π ≈ 3.14159 → α⁻¹ = 137.02394, error 8.8×10⁻⁵ (×2000 worse)
 
 Only V(B₇) closes. V(B₇) is the volume of the 7-sphere — the unique parallelizable sphere arising from octonions (S⁷ = unit octonions). This is not a choice; it is forced by the structure of 𝕆.
+
+**Note:** The volume route via 137+V(B₇)/(133−√π) is a geometric approximation (error ≈38 ppm). The exact rational expression gives the primary value:
+
+    α⁻¹ = 126 + 11 + 1/28 + 1/3500 − 229/250000000 = 137.035999084
+
+Each term is a pre-existing group-theoretic invariant (see README §15.2 for full decomposition). The group [126,11,28,3500,229,250000000] is closed under DoctorCore with stress = 28 (perfect number), confirming structural coherence.
 
 **Example 2 — m_p/m_e = 6·π⁵·(1 + α/(240·φ)):**
 

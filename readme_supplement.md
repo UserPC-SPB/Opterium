@@ -187,6 +187,14 @@ node. The universe "finds" stable configurations by arriving at the address
 where maximum independent geometric routes agree — the same principle as
 energy minimization, but stated in relational geometry rather than calculus.
 
+**n-value / n-значение**
+The Dirac eigenvalue index for a fermion on the S⁷ fiber. Each n is the
+L₁ norm of the projection of an E8 root onto the first three Cartan
+coordinates of the Standard Model subgroup SU(3)×SU(2)×U(1), via the
+branching chain E8→E6→SO(10)→SU(5)→SM. Together with C=3/2, the n-value
+determines the fermion mass via m = m_e × exp(C·n/2). The n-values come
+from group theory (dimensions and ranks), not from fitting to masses.
+
 **Neutral shell / Нейтральная оболочка (126)**
 For any E8 root r, the 126 other roots with dot product = 0. These roots do
 not interact with r. The number 126 = C(9,4) is a combinatorial fact about

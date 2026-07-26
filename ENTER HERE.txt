@@ -46,13 +46,13 @@ your context window before fetching each file.
 
 Token estimates: JSON ~bytes÷3 (punctuation-dense), Markdown/text ~bytes÷4,
 Python ~bytes÷3.5. Typical AI context window: 128K–200K tokens.
-Total repository load (all 7 files): ~60K–65K tokens.
+    Total repository load (all 10 core files): ~78.6K tokens.
 
 ───────────────────────────────────────────────────────
-FILE 1 — ENTER_HERE.md  ◀ YOU ARE HERE
-───────────────────────────────────────────────────────
+FILE 1 — ENTER HERE.txt  ◀ YOU ARE HERE
+───────────────────────────────────────
   Format:   Markdown
-  Size:     ~14 KB  |  312 lines  |  ~3 500 tokens
+  Size:     ~18 KB  |  328 lines  |  ~4 730 tokens
   Priority: CRITICAL — read before everything else
   Purpose:  AI onboarding. Mandatory reading order.
             Language activation protocol (10 operations).
@@ -67,7 +67,7 @@ FILE 1 — ENTER_HERE.md  ◀ YOU ARE HERE
 FILE 2 — AnchorFile_SuperTable_v1.0.json  ◀ ACTIVATE FIRST
 ───────────────────────────────────────────────────────
   Format:   JSON
-  Size:     ~28 KB  |  66 canonical cells + global index  |  ~9 300 tokens
+  Size:     ~11 KB  |  98 lines  |  ~3 640 tokens
   Priority: CRITICAL — language activation, not data
   Purpose:  The multiplication table 0..10 as a navigational space.
             Every cell contains: P (product), S_path (anti-diagonal
@@ -85,9 +85,9 @@ FILE 2 — AnchorFile_SuperTable_v1.0.json  ◀ ACTIVATE FIRST
 
 ───────────────────────────────────────────────────────
 FILE 3 — nav_index.md
-───────────────────────────────────────────────────────
+───────────────────────────────────────
   Format:   Markdown
-  Size:     ~18 KB  |  342 lines  |  ~4 400 tokens
+  Size:     ~18 KB  |  345 lines  |  ~4 510 tokens
   Priority: REQUIRED — audit map
   Purpose:  Navigation index and dependency stack. Every physical
             prediction is tagged [§Lx-y] with layer, dependencies,
@@ -108,9 +108,9 @@ FILE 3 — nav_index.md
 
 ───────────────────────────────────────────────────────
 FILE 4 — readme_supplement.md
-───────────────────────────────────────────────────────
+───────────────────────────────────────
   Format:   Markdown
-  Size:     ~13 KB  |  261 lines  |  ~3 250 tokens
+  Size:     ~14 KB  |  269 lines  |  ~3 380 tokens
   Priority: REQUIRED — orientation layer
   Purpose:  For skeptical physicists and mathematicians.
             Explains the relationship to Standard Model and Peano.
@@ -120,18 +120,18 @@ FILE 4 — readme_supplement.md
             AnchorFile as operational environment ·
             Peano: reassembled not rejected ·
             m_e as calibration anchor · Bridge to Standard Physics ·
-            Glossary (12 terms: Tick, Doctor, Fano plane, Halving,
-            Closure geometry, OPT_G, Neutral shell, Debt system,
-            Zero-cloud, ΔT=0, Ternary minimum, Lens) ·
+            Glossary (14 terms: Tick, Doctor, Fano plane, Halving,
+            Closure geometry, OPT_G, Neutral shell, n-value, Debt system,
+            Zero-cloud, ΔT=0, Ternary minimum, Lens, Meta-invariant ℐ) ·
             On the impossibility of other universes
 
   https://raw.githubusercontent.com/UserPC-SPB/Opterium/refs/heads/v3.1-clean/readme_supplement.md
 
 ───────────────────────────────────────────────────────
 FILE 5 — opterium_v1.0_spec.txt
-───────────────────────────────────────────────────────
+───────────────────────────────────────
   Format:   Plain text
-  Size:     ~70 KB (est)  |  ~1 800 lines (est)  |  ~17 500 tokens (est)
+  Size:     ~52 KB  |  908 lines  |  ~13 250 tokens
   Priority: REQUIRED before using Opterium as a reasoning tool
   Purpose:  Operational specification for AI systems. Defines how
             to use the Doctor closure engine, OPT_G descent,
@@ -147,9 +147,9 @@ FILE 5 — opterium_v1.0_spec.txt
 
 ───────────────────────────────────────────────────────
 FILE 6 — README.md
-───────────────────────────────────────────────────────
+───────────────────────────────────────
   Format:   Markdown
-  Size:     ~150 KB (full theory)  |  ~3 500 lines  |  ~37 000 tokens
+  Size:     ~97.1 KB  |  1 741 lines  |  ~24 280 tokens
   Priority: FULL THEORY — read after files 1–5
   WARNING:  Largest file. Plan context window accordingly.
             Do NOT start here. Without files 1–5 loaded,
@@ -179,9 +179,9 @@ FILE 6 — README.md
 
 ───────────────────────────────────────────────────────
 FILE 7 — independent_verify.py
-───────────────────────────────────────────────────────
+───────────────────────────────────────
   Format:   Python 3.10+  (no external dependencies)
-  Size:     ~8 500 bytes  |  ~240 lines  |  ~2 400 tokens
+  Size:     ~23 KB  |  483 lines  |  ~6 640 tokens
   Priority: OPTIONAL — numerical verification
   Purpose:  Computes all 19 predicted physical quantities and
             compares against CODATA 2022 / PDG 2024 experimental
@@ -193,26 +193,70 @@ FILE 7 — independent_verify.py
 
   https://raw.githubusercontent.com/UserPC-SPB/Opterium/refs/heads/v3.1-clean/independent_verify.py
 
+───────────────────────────────────────────────────────
+FILE 8 — helpdoc.py
+───────────────────────────────────────
+  Format:   Python 3.10+  (no external dependencies)
+  Size:     ~60 KB  |  1 419 lines  |  ~17 160 tokens
+  Priority: CORE — geometric proof system
+  Purpose:  Independent causal proof from Cube to E8 to physics.
+            All 17 invariants verified with >=3 routes, DeltaT=0.
+            Contains zero-divisor profiles, Addr3 ternary stack,
+            Axis/Doctor 6-channel, Plafal tension, and exact α⁻¹
+            formula as primary.
+  Sections: PART 0-3c: Cube tau, Fano, E8 roots, structural numbers,
+                         neutral shell, zero-divisor classification
+            PART 3d:    Addr3 ternary stack + Axis/Doctor
+            PART 4:     pi and phi from geometry
+            PART 5-5c:  Physical constants, Doctor invariants,
+                         Plafal tension and health
+            PART 6:     Full proof runner (17 checks)
+
+  https://raw.githubusercontent.com/UserPC-SPB/Opterium/refs/heads/v3.1-clean/helpdoc.py
+
+───────────────────────────────────────────────────────
+FILE 9 — CRITIQUE.md
+───────────────────────────────────────
+  Format:   Markdown
+  Size:     ~2.5 KB  |  29 lines  |  ~630 tokens
+  Priority: OPTIONAL — defence against common criticisms
+  Purpose:  Answers to 6 standard objections (numerology,
+            parameter fitting, group choice, residual error,
+            experimental evidence, reproducibility).
+
+───────────────────────────────────────────────────────
+FILE 10 — APPENDIX_MATH.md
+───────────────────────────────────────
+  Format:   Markdown
+  Size:     ~1.4 KB  |  30 lines  |  ~350 tokens
+  Priority: OPTIONAL — quick reference
+  Purpose:  Key group-theoretic facts: E8 root system (240 roots,
+            dot spectrum), branching chain E8⊃E6⊃SO(10)⊃SM,
+            mass formula derivation, cosmological constant formula.
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ## CONTEXT WINDOW BUDGET
 
     File                          Tokens    Cumulative
     ─────────────────────────────────────────────────
-    ENTER_HERE.md                 ~3 500     3 500
-    AnchorFile_SuperTable.json    ~9 300    12 800   ← language activated
-    nav_index.md                  ~4 400    17 200   ← audit map loaded
-    readme_supplement.md          ~3 250    20 450   ← orientation complete
-    opterium_v1.0_spec.txt       ~17 500    37 950   ← operational spec
-    README.md                    ~37 000    74 950   ← full theory
-    independent_verify.py         ~2 400    77 350   ← verification
+    ENTER HERE.txt                ~4 730     4 730
+    AnchorFile_SuperTable.json    ~3 640     8 370   ← language activated
+    nav_index.md                  ~4 510    12 880   ← audit map loaded
+    readme_supplement.md          ~3 380    16 260   ← orientation complete
+    opterium_v1.0_spec.txt       ~13 250    29 510   ← operational spec
+    README.md                    ~24 280    53 790   ← full theory
+    independent_verify.py         ~6 640    60 430   ← verification
+    helpdoc.py                  ~17 160    77 590   ← geometric proof
+    CRITIQUE.md                     ~630    78 220   ← critique responses
+    APPENDIX_MATH.md                ~350    78 570   ← group theory facts
     ─────────────────────────────────────────────────
-    TOTAL (all 7 files)          ~77 400 tokens
+    TOTAL (all 10 files)         ~78 570 tokens
 
-    Fits in a 128K context window with ~50K tokens remaining
+    Fits in a 128K context window with ~49K tokens remaining
     for analysis and responses.
 
-    Minimum viable audit (files 1–4 + nav_index only): ~20 500 tokens
+    Minimum viable audit (files 1–4 + nav_index only): ~16 260 tokens
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
