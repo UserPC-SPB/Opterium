@@ -27,3 +27,16 @@ Each step is uniquely forced by the previous one (e.g., Hurwitz theorem: only O(
 ### 6. "Can I reproduce this without the MCP server?"
 
 **Response:** Yes. All formulas and constants are explicitly given in `independent_verify.py` and this document. The MCP server is only needed for real‑time verification of root properties; the mathematical derivations stand on their own.
+
+---
+
+### Interpretation Boundaries
+
+To avoid double interpretation, the following definitions are strictly enforced throughout the framework:
+
+- **Number** is the complete set of factor pairs of an integer — not a symbol, not a quantity. The table stores relational addresses, not values.
+- **Zero** is the state with no positive-integer factor-pair witnesses. Absence, not a position on a number line.
+- **Equality** is not identity. Two expressions are equal when independent navigation routes close on the same address (ΔT = 0). There is no algebraic equality predicate.
+- **Arithmetic** is navigation through pre-existing paths in the table (S_path, D_path). There is no computation — the result already exists at its address.
+- **Irrational numbers and infinity** are processes: routes that generate differences without termination. They are not completed objects.
+- **The system describes our world exclusively.** External observers, alternative geometries, or counterfactual universes are categorically unrelated to the derivation.
