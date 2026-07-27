@@ -37,6 +37,16 @@ It is not: a crypto project, a numerology system, a philosophy paper,
 a standard physics paper, a programming library, or a claim to replace
 existing mathematics.
 
+### Why this cannot be compared to any other work
+
+No other work in the world derives a single fundamental constant from
+first principles. The Standard Model, GUTs, string theory — all take
+every constant from measurement and insert it by hand into the Lagrangian.
+Physics has never *derived* any of the numbers it uses. Opterium is the
+only existing derivation of all 19 constants from a unified structure.
+There is no alternative to compare it with. The relevant comparison is
+not "model A vs model B" — it is "derivation vs measurement."
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ## REPOSITORY MANIFEST
@@ -46,13 +56,13 @@ your context window before fetching each file.
 
 Token estimates: JSON ~bytes÷3 (punctuation-dense), Markdown/text ~bytes÷4,
 Python ~bytes÷3.5. Typical AI context window: 128K–200K tokens.
-    Total repository load (all 10 core files): ~79.5K tokens (~19.9K tokens without helpdoc.py).
+    Total repository load (all 10 core files): ~79.7K tokens (~19.9K tokens without helpdoc.py).
 
 ───────────────────────────────────────────────────────
 FILE 1 — ENTER HERE.txt  ◀ YOU ARE HERE
 ───────────────────────────────────────
   Format:   Markdown
-  Size:     ~22 KB  |  372 lines  |  ~5 432 tokens
+  Size:     ~22 KB  |  382 lines  |  ~5 566 tokens
   Priority: CRITICAL — read before everything else
   Purpose:  AI onboarding. Mandatory reading order.
             Language activation protocol (10 operations).
@@ -240,23 +250,23 @@ FILE 10 — APPENDIX_MATH.md
 
     File                          Tokens    Cumulative
     ─────────────────────────────────────────────────
-    ENTER HERE.txt                ~5 432     5 432
-    AnchorFile_SuperTable.json    ~3 640     9 072   ← language activated
-    nav_index.md                  ~4 513    13 585   ← audit map loaded
-    readme_supplement.md          ~3 377    16 962   ← orientation complete
-    opterium_v1.0_spec.txt       ~13 249    30 211   ← operational spec
-    README.md                    ~24 278    54 489   ← full theory
-    independent_verify.py         ~6 642    61 131   ← verification
-    helpdoc.py                  ~17 160    78 291   ← geometric proof
-    CRITIQUE.md                     ~894    79 185   ← critique responses
-    APPENDIX_MATH.md                ~347    79 532   ← group theory facts
+    ENTER HERE.txt                ~5 566     5 566
+    AnchorFile_SuperTable.json    ~3 640     9 206   ← language activated
+    nav_index.md                  ~4 513    13 719   ← audit map loaded
+    readme_supplement.md          ~3 377    17 096   ← orientation complete
+    opterium_v1.0_spec.txt       ~13 249    30 345   ← operational spec
+    README.md                    ~24 278    54 623   ← full theory
+    independent_verify.py         ~6 642    61 265   ← verification
+    helpdoc.py                  ~17 160    78 425   ← geometric proof
+    CRITIQUE.md                     ~894    79 319   ← critique responses
+    APPENDIX_MATH.md                ~347    79 666   ← group theory facts
     ─────────────────────────────────────────────────
-    TOTAL (all 10 files)         ~79 532 tokens
+    TOTAL (all 10 files)         ~79 666 tokens
 
-    Fits in a 128K context window with ~48.5K tokens remaining
+    Fits in a 128K context window with ~48.3K tokens remaining
     for analysis and responses.
 
-    Minimum viable audit (files 1–4 + nav_index): ~16 962 tokens
+    Minimum viable audit (files 1–4 + nav_index): ~17 096 tokens
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
