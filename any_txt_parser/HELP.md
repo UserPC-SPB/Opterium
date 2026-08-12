@@ -1,52 +1,52 @@
-# any_txt_parser — полное руководство (HELP)
+# any_txt_parser — Complete Guide (HELP)
 
-Версия документа: 1.0.0 · Соответствует версии программы 1.0.0 (crate `any_txt_parser`, edition 2026, Rust)
+Document version: 1.0.0 · Matches program version 1.0.0 (crate `any_txt_parser`, edition 2026, Rust)
 
 ---
 
-## 1. Что это
+## 1. What It Is
 
-`any_txt_parser` — детерминированный CLI-экстрактор текста: из произвольных файлов
-(JSON, YAML, TOML, XML, HTML, Markdown, plain text) по YAML-шаблону извлекает данные
-и публикует их в **самоописываемый** Markdown-файл `log_any_txt.md`.
+`any_txt_parser` is a deterministic CLI text extractor: it extracts data from arbitrary files
+(JSON, YAML, TOML, XML, HTML, Markdown, plain text) according to a YAML template and publishes
+the results into a **self-describing** Markdown file `log_any_txt.md`.
 
-Программа создана для передачи данных «машине» (ИИ-ассистенту): вывод самодостаточен —
-содержит исходный шаблон, структуру блоков, анкоры, диаграммы статусов, индексы строк.
+The program is designed to pass data to a "machine" (AI assistant): the output is self-contained —
+it includes the original template, block structure, anchors, status diagrams, and line indexes.
 
-Пайплайн из двух фаз:
+Two-phase pipeline:
 
-1. **Фаза 1 — добыча**: discovery (поиск файлов) → decode (декодирование) → collect
-   (извлечение по правилам) — для каждого файла.
-2. **Фаза 2 — материализация**: materialize (группировка в блоки, split, dedup, сортировка,
-   лимиты) → render (сборка документа) → validate (внутренняя проверка) → publish
-   (атомарная запись: временный файл + перенос).
+1. **Phase 1 — Extraction**: discovery (file search) → decode (decoding) → collect
+   (extraction by rules) — for each file.
+2. **Phase 2 — Materialization**: materialize (grouping into blocks, split, dedup, sorting,
+   limits) → render (document assembly) → validate (internal check) → publish
+   (atomic write: temporary file + rename).
 
-Ключевые свойства:
+Key properties:
 
-- **Детерминированность**: один и тот же ввод даёт одинаковый вывод (кроме поля `Generation`
-  и временных меток).
-- **Self-describing**: вывод включает `## Effective Template` (YAML), `## Applied Template`,
+- **Determinism**: the same input produces the same output (except the `Generation`
+  field and timestamps).
+- **Self-describing**: output includes `## Effective Template` (YAML), `## Applied Template`,
   `## Result Semantics`, `## CLI Arguments`.
-- **Строгие контракты**: фиксированный заголовок `# any_txt_parser output`, маркер
-  `Triangle: [0,1,0]`, конец документа `End of any_txt_parser output`.
-- **Атомарная публикация**: файл вывода не портится при сбое; при ошибке запуска
-  существующий вывод не трогается, новый не создаётся.
-- **Ресурсные лимиты** на всех этапах, строгие exit-коды.
+- **Strict contracts**: fixed header `# any_txt_parser output`, marker
+  `Triangle: [0,1,0]`, end-of-document marker `End of any_txt_parser output`.
+- **Atomic publishing**: the output file is never corrupted on failure; on startup errors
+  the existing output is left untouched and no new one is created.
+- **Resource limits** at every stage, strict exit codes.
 
 ---
 
-## 2. Сборка и запуск
+## 2. Build & Run
 
 ```bash
-cargo build --release          # бинарь: target/release/any_txt_parser.exe
-cargo test                     # юнит-тесты (27) + интеграционные (9)
-cargo fmt --all                # форматирование
-cargo clippy --all-targets     # проверка стиля (только предупреждения)
+cargo build --release          # binary: target/release/any_txt_parser.exe
+cargo test                     # unit tests (27) + integration tests (9)
+cargo fmt --all                # formatting
+cargo clippy --all-targets     # lint check (warnings only)
 
-any_txt_parser --input <PATH> --template <FILE> --output <FILE> [опции]
+any_txt_parser --input <PATH> --template <FILE> --output <FILE> [options]
 ```
 
-Минимальный запуск (все три обязательные опции):
+Minimal run (all three required options):
 
 ```bash
 any_txt_parser -i data.json -t tpl.yml -o log_any_txt.md
@@ -54,140 +54,140 @@ any_txt_parser -i data.json -t tpl.yml -o log_any_txt.md
 
 ---
 
-## 3. CLI-аргументы
+## 3. CLI Arguments
 
-| Опция | Обязательная | Значение | По умолчанию |
+| Option | Required | Meaning | Default |
 |---|---|---|---|
-| `-i, --input PATH` | да | Файл, каталог или glob-паттерн (см. §6) | — |
-| `-t, --template FILE` | да | Путь к YAML-шаблону (см. §5) | — |
-| `-o, --output FILE` | да | Файл вывода; `log_any_txt.md` по договорённости | — |
-| `--format FMT` | нет | Принудительный формат: `json\|xml\|html\|markdown\|yaml\|toml\|text` (не `auto`) | из шаблона, иначе `auto` |
-| `--encoding ENC` | нет | `utf-8`, `utf-8-sig`, `utf-16le`, `utf-16` (=LE), `utf-16be`, `windows-1251`/`cp1251` | из шаблона, иначе `utf-8` |
-| `--dry-run` | нет | Только проверить шаблон/файлы, печатает план, ничего не публикует | выкл |
-| `-v, --verbose` | нет | Диагностика в stderr (версии, файлы, форматы, счётчики) | выкл |
-| `-q, --quiet` | нет | Подавить итоговое сообщение в stderr | выкл |
-| `--follow-symlinks` | нет | Обходить симлинки при discovery | выкл (симлинки пропускаются) |
-| `--hash` | нет | Вычислять sha256 каждого исходного файла, выводить в `## Files` | выкл |
-| `--max-file-size SIZE` | нет | Максимальный размер входного файла | 200 MiB |
-| `--max-memory SIZE` | нет | Бюджет декодированного текста (байты) | безлимит |
-| `--max-files N` | нет | Максимум найденных файлов | 5000 |
-| `--max-matches N` | нет | Лимит совпадений на правило (ресурсный, действует до трансформаций) | безлимит |
-| `--max-output-size SIZE` | нет | Максимальный итоговый документ (characters) | из шаблона |
-| `--max-block-chars N` | нет | Переопределяет `output.block.max_chars` (target = 7/8 от него) | 32000 |
+| `-i, --input PATH` | yes | File, directory, or glob pattern (see §6) | — |
+| `-t, --template FILE` | yes | Path to YAML template (see §5) | — |
+| `-o, --output FILE` | yes | Output file; `log_any_txt.md` by convention | — |
+| `--format FMT` | no | Forced format: `json\|xml\|html\|markdown\|yaml\|toml\|text` (not `auto`) | from template, else `auto` |
+| `--encoding ENC` | no | `utf-8`, `utf-8-sig`, `utf-16le`, `utf-16` (=LE), `utf-16be`, `windows-1251`/`cp1251` | from template, else `utf-8` |
+| `--dry-run` | no | Only validate template/files, prints a plan, publishes nothing | off |
+| `-v, --verbose` | no | Diagnostics to stderr (versions, files, formats, counters) | off |
+| `-q, --quiet` | no | Suppress the final stderr message | off |
+| `--follow-symlinks` | no | Traverse symlinks during discovery | off (symlinks skipped) |
+| `--hash` | no | Compute sha256 of each source file, output into `## Files` | off |
+| `--max-file-size SIZE` | no | Maximum input file size | 200 MiB |
+| `--max-memory SIZE` | no | Decoded text budget (bytes) | unlimited |
+| `--max-files N` | no | Maximum number of discovered files | 5000 |
+| `--max-matches N` | no | Match limit per rule (resource bound, applies before transforms) | unlimited |
+| `--max-output-size SIZE` | no | Maximum final document size (characters) | from template |
+| `--max-block-chars N` | no | Overrides `output.block.max_chars` (target = 7/8 of it) | 32000 |
 
-`SIZE` принимает суффиксы: `b`/`B`, `k`/`K`/`KiB`, `m`/`M`/`MiB`, `g`/`G`/`GiB` (в степенях 1024), либо голое число.
+`SIZE` accepts suffixes: `b`/`B`, `k`/`K`/`KiB`, `m`/`M`/`MiB`, `g`/`G`/`GiB` (powers of 1024), or a bare number.
 
-Приоритет параметров: **CLI → шаблон → дефолт**. CLI-переопределения фиксируются
-в выводе (`Format source: CLI override`, `Encoding source: CLI override`,
-в `## Effective Template` + `## CLI Arguments`).
+Parameter precedence: **CLI → template → default**. CLI overrides are recorded
+in the output (`Format source: CLI override`, `Encoding source: CLI override`,
+in `## Effective Template` + `## CLI Arguments`).
 
 ---
 
-## 4. Выходные коды (exit codes)
+## 4. Exit Codes
 
-| Код | Значение | Когда |
+| Code | Meaning | When |
 |---|---|---|
-| `0` | Success | Все файлы успешны, без ограничений |
-| `1` | PartialSuccess | Есть файлы со статусом `warning` (no matches, not applicable, truncation) или `error` |
-| `2` | InvalidTemplate | Шаблон не читается/не валиден (см. §5) |
-| `3` | InvalidInputOrCli | Нет входных файлов, неверный паттерн, нет `--output`, нет шаблона на диске |
-| `4` | OutputFailure | Внутренняя валидация документа или ошибка публикации |
-| `5` | InternalFatal | Внутренняя ошибка |
-| `6` | ResourceLimit | Превышен лимит ресурсов (файлы, размер, блоки, память) |
+| `0` | Success | All files successful, no limits hit |
+| `1` | PartialSuccess | Some files have status `warning` (no matches, not applicable, truncation) or `error` |
+| `2` | InvalidTemplate | Template cannot be read/parsed (see §5) |
+| `3` | InvalidInputOrCli | No input files, bad pattern, missing `--output`, template not on disk |
+| `4` | OutputFailure | Internal document validation or publish error |
+| `5` | InternalFatal | Internal error |
+| `6` | ResourceLimit | Resource limit exceeded (files, size, blocks, memory) |
 
-`--dry-run` всегда возвращает `0` (или `2`/`3` при ошибках до dry-run).
+`--dry-run` always returns `0` (or `2`/`3` for errors before dry-run).
 
 ---
 
-## 5. Шаблон (Template DSL, version: 1)
+## 5. Template (Template DSL, version: 1)
 
-Файл YAML. Полная схема:
+A YAML file. Full schema:
 
 ```yaml
-version: 1                     # обязательно; поддерживается только 1
-name: имя_шаблона              # обязательно, непустое
-input:                         # необязательно
+version: 1                     # required; only 1 is supported
+name: template_name            # required, non-empty
+input:                         # optional
   format: auto                 # json|xml|html|markdown|yaml|toml|text|auto
-  encoding: utf-8              # см. --encoding
-output:                        # необязательно
-  max_output_chars: 100000     # лимит символов всего документа
-  block:                       # разбиение на блоки (см. §8)
-    target_chars: 28000        # целевой размер блока (0 < target <= max)
-    max_chars: 32000           # жёсткий максимум блока; большие item'ы сплитятся
-document:                      # необязательно
-  sort: none                   # none|asc|desc — сортировка блоков документа
-  stable_deduplicate: false    # true: убрать дубликаты item'ов (сохраняется первый)
-  limit_total: 100000          # = output.max_output_chars (устаревший синоним)
-  split_blocks: true           # true: разбивать блоки по target/max (по умолчанию true)
-rules:                         # обязательно, >= 1 правило
-  - id: r1                     # обязательно, уникальные id
-    when:                      # необязательно
-      format: json             # применять правило только к этому формату
-    select:                    # обязательно, см. §7
+  encoding: utf-8              # see --encoding
+output:                        # optional
+  max_output_chars: 100000     # character limit for the whole document
+  block:                       # block splitting (see §8)
+    target_chars: 28000        # target block size (0 < target <= max)
+    max_chars: 32000           # hard block max; oversized items are split
+document:                      # optional
+  sort: none                   # none|asc|desc — document block sorting
+  stable_deduplicate: false    # true: remove duplicate items (first kept)
+  limit_total: 100000          # = output.max_output_chars (deprecated synonym)
+  split_blocks: true           # true: split blocks by target/max (default true)
+rules:                         # required, >= 1 rule
+  - id: r1                     # required, unique ids
+    when:                      # optional
+      format: json             # apply rule only to this format
+    select:                    # required, see §7
       type: jsonpath
       expression: "$.users[*].name"
-    context:                   # необязательно (только text-адаптер)
-      before: 1                # строк контекста ДО совпадения
-      after: 1                 # строк контекста ПОСЛЕ совпадения
-    output:                    # необязательно
-      key: имена               # ключ в выводе (по умолчанию = id правила)
+    context:                   # optional (text adapter only)
+      before: 1                # lines of context BEFORE the match
+      after: 1                 # lines of context AFTER the match
+    output:                    # optional
+      key: names               # output key (default = rule id)
     extract: text              # text|attr:NAME|inner_html|outer_html (§7.4)
-    transforms:                # по-элементно, порядок важен (§7.5)
+    transforms:                # per-item, order matters (§7.5)
       - trim
       - replace: {from: "a", to: "b"}
-    limits:                    # необязательно
-      max_items: 10            # максимум item'ов после трансформаций (лишние отбрасываются, засчитываются)
-      max_item_chars: 500      # обрезка каждого item'а по символам
+    limits:                    # optional
+      max_items: 10            # max items after transforms (extras dropped, counted)
+      max_item_chars: 500      # per-item character truncation
 ```
 
-Ошибки шаблона (код 2): неизвестные поля (`deny_unknown_fields` на всех секциях),
-дубликаты `id`, `target_chars > max_chars`, нулевые размеры блоков, пустые списки правил,
-неверная версия, некорректные селекторы/регулярки/трансформации.
+Template errors (code 2): unknown fields (`deny_unknown_fields` on all sections),
+duplicate `id`s, `target_chars > max_chars`, zero block sizes, empty rule lists,
+invalid version, bad selectors/regexes/transforms.
 
 ---
 
-## 6. Discovery — как ищутся входные файлы
+## 6. Discovery — How Input Files Are Found
 
-`--input` может быть:
+`--input` can be:
 
-- **файлом** — берётся он один;
-- **каталогом** — рекурсивный обход (глубина до 64), файлы сортируются по пути;
-- **glob-паттерном** — `*.json`, `data/*.txt`;
+- a **file** — that single file is taken;
+- a **directory** — recursive traversal (depth up to 64), files sorted by path;
+- a **glob pattern** — `*.json`, `data/*.txt`;
 
-  - с `**` — рекурсивный обход (`src/**/*.rs`), сопоставление относительно базы;
-  - без `**` — через `glob` (без учёта регистра, точечные файлы допускаются).
+  - with `**` — recursive traversal (`src/**/*.rs`), matching relative to the base;
+  - without `**` — via `glob` (case-insensitive, dotfiles allowed).
 
-Исключения из результатов:
+Exclusions from results:
 
-- выходной файл (`--output`) исключается всегда (по canonical path);
-- симлинки пропускаются, если не передан `--follow-symlinks`;
-- каталоги игнорируются (только файлы).
+- the output file (`--output`) is always excluded (by canonical path);
+- symlinks are skipped unless `--follow-symlinks` is passed;
+- directories are ignored (files only).
 
-Лимиты после discovery (код 6): `max_files` (по умолчанию 5000), `max_file_size`
-(по умолчанию 200 MiB) — проверяются по каждому файлу.
+Post-discovery limits (code 6): `max_files` (default 5000), `max_file_size`
+(default 200 MiB) — checked per file.
 
-Если найдено 0 файлов — код `3`.
+If 0 files are found — code `3`.
 
-**Автоопределение формата** (`format: auto`), по порядку:
+**Format auto-detection** (`format: auto`), in order:
 
-1. расширение файла (`.json`, `.xml`, `.html/.htm`, `.md/.markdown`, `.yaml/.yml`,
+1. file extension (`.json`, `.xml`, `.html/.htm`, `.md/.markdown`, `.yaml/.yml`,
    `.toml`, `.txt/.log` = text);
-2. снайфинг содержимого: `{`/`[` + валидный JSON → json; `<` + `<!doctype html`/`<html` → html;
-   `<` + валидный XML → xml; `key = value` (toml-парсится) → toml; `key: value` или `---` → yaml;
+2. content sniffing: `{`/`[` + valid JSON → json; `<` + `<!doctype html`/`<html` → html;
+   `<` + valid XML → xml; `key = value` (parses as toml) → toml; `key: value` or `---` → yaml;
 3. fallback: text.
 
-Кодировки: utf-8 (BOM автоматически снимается и фиксируется в `Encoding`), utf-8-sig,
-utf-16le/utf-16 (BOM учтён), utf-16be, windows-1251/cp1251.
+Encodings: utf-8 (BOM automatically stripped and recorded in `Encoding`), utf-8-sig,
+utf-16le/utf-16 (BOM honored), utf-16be, windows-1251/cp1251.
 
 ---
 
-## 7. Селекторы и адаптеры
+## 7. Selectors and Adapters
 
-Формат файла определяет **адаптер**, который задаёт, какие селекторы применимы.
-Правило, чей тип селектора неприменим к формату файла → статус `rule not applicable`,
-не считается ошибкой. `when.format` позволяет ограничить правило форматом.
+The file format defines an **adapter**, which determines which selectors are applicable.
+A rule whose selector type is not applicable to the file format gets status `rule not applicable`
+— it is not an error. `when.format` lets you restrict a rule to a format.
 
-| Формат (адаптер) | Доступные селекторы |
+| Format (adapter) | Available selectors |
 |---|---|
 | json | `jsonpath`, `path` |
 | yaml | `path` |
@@ -199,190 +199,190 @@ utf-16le/utf-16 (BOM учтён), utf-16be, windows-1251/cp1251.
 
 ### 7.1 jsonpath (JSON)
 
-Синтаксис:
+Syntax:
 
-- `$` — корень (необязательно); шаги: `.name`, `..name` (рекурсивный поиск),
-  `.*`, `..*`, `[N]`, `[N,M,...]`, `['имя']`/`["имя"]`, `[*]`;
-- фильтр: `[?(<выражение>)]`; сравнения `== != < <= > >=` над путями, строками,
-  числами, булевыми, null; связки `&&`, `||`; `@` = текущий узел, голый `@` = сам узел.
+- `$` — root (optional); steps: `.name`, `..name` (recursive search),
+  `.*`, `..*`, `[N]`, `[N,M,...]`, `['name']`/`["name"]`, `[*]`;
+- filter: `[?(<expression>)]`; comparisons `== != < <= > >=` over paths, strings,
+  numbers, booleans, null; combinators `&&`, `||`; `@` = current node, bare `@` = the node itself.
 
-Примеры:
+Examples:
 
 ```
-$.users[*].name            # имена всех пользователей
-$..title                   # все поля title на любой глубине
-$.orders[0].id             # id первого заказа
-$.items[0,2,4]             # элементы массива по индексам
-$.store.book[?(@.price < 10)]       # книги дешевле 10
+$.users[*].name            # names of all users
+$..title                   # all title fields at any depth
+$.orders[0].id             # id of the first order
+$.items[0,2,4]             # array items by index
+$.store.book[?(@.price < 10)]       # books cheaper than 10
 $.users[?(@.active == true && @.role == 'admin')]
 ```
 
 ### 7.2 path (yaml, toml, json)
 
-Упрощённый путь без JSP-логики: `$`/`.` разделяют ключи, `[N]` — индекс массива,
-`['k']`/`["k"]` — ключ с пробелами/спецсимволами, `[*]` — все элементы массива.
+A simplified path without JSONPath logic: `$`/`.` separate keys, `[N]` is an array index,
+`['k']`/`["k"]` is a key with spaces/special characters, `[*]` is all array items.
 
 ```
-$.settings.timeout        # эквивалентно settings.timeout
-$['log level']            # ключ с пробелом
-$.servers[0].host         # хост первого сервера
-$.list[*].value           # value у всех элементов list
+$.settings.timeout        # equivalent to settings.timeout
+$['log level']            # key with a space
+$.servers[0].host         # host of the first server
+$.list[*].value           # value of every list item
 ```
 
 ### 7.3 xpath (XML)
 
-Подмножество XPath:
+A subset of XPath:
 
-- `/root/a/b` — абсолютный путь, `//a` — поиск от корня; `/a//b` — потомки где угодно;
-- шаги: `имя`, `*` (любой элемент), `имя[N]` (1-индексный или 0), атрибут-предикаты
-  `имя[@attr]`, `имя[@attr="val"]`, текстовый предикат `имя[text="val"]`;
-- окончание: элемент (текст узла), `@attr` — атрибут, `text()` — текст узла.
+- `/root/a/b` — absolute path, `//a` — search from root; `/a//b` — descendants anywhere;
+- steps: `name`, `*` (any element), `name[N]` (1-indexed or 0), attribute predicates
+  `name[@attr]`, `name[@attr="val"]`, text predicate `name[text="val"]`;
+- terminals: element (node text), `@attr` — attribute, `text()` — node text.
 
-Примеры:
+Examples:
 
 ```
-/root/catalog/item/@id          # атрибуты id всех item
+/root/catalog/item/@id          # id attributes of all items
 /root/item[@type="book"]/title/text()
-/root/item[price > 100]/name    # сравнения в предикатах поддерживаются
-//item[1]                       # первый item где угодно
+/root/item[price > 100]/name    # comparisons in predicates are supported
+//item[1]                       # first item anywhere
 ```
 
-### 7.4 css и markdown (html / markdown)
+### 7.4 css and markdown (html / markdown)
 
-**css** — селекторы через `scraper` (стандартный CSS): `p`, `a[href]`, `div.card > h2`,
-`table tr td`, `#main .item:first-child` и т.п.
+**css** — selectors via `scraper` (standard CSS): `p`, `a[href]`, `div.card > h2`,
+`table tr td`, `#main .item:first-child`, etc.
 
-**markdown** — аргументы `node` (+ необязательный `pattern` regex по содержимому текста узла):
+**markdown** — argument `node` (+ optional `pattern` regex against node text content):
 
 ```yaml
-select: {type: markdown, node: heading}      # все заголовки
-select: {type: markdown, node: code_block, pattern: "^const"}   # блоки кода, начинающиеся с const
-select: {type: markdown, node: list_item}    # элементы списков
+select: {type: markdown, node: heading}      # all headings
+select: {type: markdown, node: code_block, pattern: "^const"}   # code blocks starting with const
+select: {type: markdown, node: list_item}    # list items
 ```
 
-Значения `node`: `heading`/`h`, `paragraph`/`p`, `list`, `list_item`/`item`/`li`,
+`node` values: `heading`/`h`, `paragraph`/`p`, `list`, `list_item`/`item`/`li`,
 `table`, `table_row`/`row`/`tr`, `table_cell`/`cell`/`td`, `code_block`/`code`,
-`blockquote`/`quote`, `link`, `image`/`img` (подчёркивания и дефисы в именах игнорируются).
+`blockquote`/`quote`, `link`, `image`/`img` (underscores and hyphens in names are ignored).
 
-### 7.5 text-селекторы
+### 7.5 text selectors
 
-Работают построчно (строки — массив по `\n`):
+Work line-by-line (lines are an array split by `\n`):
 
-| type | Семантика |
+| type | Semantics |
 |---|---|
-| `regex` | Строки с совпадением. Одна группа захвата `(…)` → в item попадает группа, иначе вся строка |
-| `contains` | Строка содержит подстроку `expression` |
-| `starts_with` | Строка начинается с `expression` |
-| `ends_with` | Строка заканчивается на `expression` |
-| `line` | Диапазон: `{type: line, from: 1, to: 5}` — 1-индексный, включая `to`; результат — один item из склеенных строк |
+| `regex` | Lines matching. One capture group `(…)` → the group is the item, otherwise the whole line |
+| `contains` | Line contains the `expression` substring |
+| `starts_with` | Line starts with `expression` |
+| `ends_with` | Line ends with `expression` |
+| `line` | Range: `{type: line, from: 1, to: 5}` — 1-indexed, inclusive of `to`; the result is a single item of joined lines |
 
-Для `regex/contains/starts_with/ends_with` работает `context.before/after`:
-в item добавляются соседние строки (с меткой контекста) — используется для логирования.
+`context.before/after` works for `regex/contains/starts_with/ends_with`:
+neighboring lines (with a context label) are added to the item — used for logging.
 
-Пример:
+Example:
 
 ```yaml
-select: {type: regex, expression: "^ERROR (.+)$"}     # одна группа -> текст ошибки
-select: {type: regex, expression: "ERROR"}            # без группы -> вся строка
+select: {type: regex, expression: "^ERROR (.+)$"}     # one group -> error text
+select: {type: regex, expression: "ERROR"}            # no group -> whole line
 select: {type: contains, expression: "TODO"}
 select: {type: line, from: 10, to: 20}
 ```
 
-### 7.6 extract — режим извлечения
+### 7.6 extract — extraction mode
 
-| Режим | Где применяется | Что извлекает |
+| Mode | Where applied | What it extracts |
 |---|---|---|
-| `text` (по умолчанию) | все | Текстовое содержимое |
-| `attr:NAME` | xml (`@attr`), html (css-элементы) | Значение атрибута |
-| `inner_html` | html | `inner_html()` элемента |
-| `outer_html` | html | `html()` элемента (пустые не выпадают) |
+| `text` (default) | all | Text content |
+| `attr:NAME` | xml (`@attr`), html (css elements) | Attribute value |
+| `inner_html` | html | `inner_html()` of the element |
+| `outer_html` | html | `html()` of the element (empty ones are not dropped) |
 
-### 7.7 transforms — постобработка (порядок важен)
+### 7.7 transforms — post-processing (order matters)
 
-**Item-трансформации** (применяются к каждому совпадению до других ограничений):
+**Item transforms** (applied to each match before other constraints):
 
-| Имя | Параметр | Действие |
+| Name | Parameter | Action |
 |---|---|---|
-| `trim` | — | Обрезать пробелы |
-| `normalize_whitespace` | — | Схлопнуть пробельные символы в один пробел, обрезать края |
-| `lowercase` / `uppercase` | — | Регистр |
-| `unescape` | — | `\n \t \r \" \' \\ \uXXXX` в реальные символы |
-| `truncate_chars` | `int` | Оставить N символов |
-| `truncate_lines` | `int` | Оставить N строк |
-| `replace` | `{from, to}` | Замена подстрок (все вхождения) |
-| `regex_replace` | `{from, to}` | regex-замена (`from` — паттерн) |
+| `trim` | — | Trim whitespace |
+| `normalize_whitespace` | — | Collapse whitespace characters into a single space, trim edges |
+| `lowercase` / `uppercase` | — | Case conversion |
+| `unescape` | — | `\n \t \r \" \' \\ \uXXXX` into real characters |
+| `truncate_chars` | `int` | Keep N characters |
+| `truncate_lines` | `int` | Keep N lines |
+| `replace` | `{from, to}` | Substring replacement (all occurrences) |
+| `regex_replace` | `{from, to}` | Regex replacement (`from` is a pattern) |
 
-**Result-трансформации** (применяются к списку item'ов правила):
+**Result transforms** (applied to the rule's item list):
 
-| Имя | Параметр | Действие |
+| Name | Parameter | Action |
 |---|---|---|
-| `drop_empty` | — | Удалить пустые (trim) item'ы |
-| `unique` | — | Убрать дубликаты (первое вхождение) |
-| `sort` | — | Сортировка по возрастанию |
-| `sort_desc` | — | По убыванию |
-| `limit_items` | `int` | Оставить N item'ов |
-| `join` | `string` | Склеить в один item через разделитель |
+| `drop_empty` | — | Remove empty (trimmed) items |
+| `unique` | — | Remove duplicates (first occurrence kept) |
+| `sort` | — | Sort ascending |
+| `sort_desc` | — | Sort descending |
+| `limit_items` | `int` | Keep N items |
+| `join` | `string` | Join into one item using a separator |
 
-### 7.8 limits правила
+### 7.8 rule limits
 
-- `max_items` — после всех трансформаций; лишние отбрасываются, счётчик попадает в
-  warning «N item(s) omitted after max_items limit».
-- `max_item_chars` — обрезка по символам ДО result-трансформаций; для каждого обрезанного
-  item'а выдаётся warning «item truncated N -> M chars», плюс итог «N item(s) truncated».
+- `max_items` — after all transforms; extras are dropped, the counter goes into
+  the warning «N item(s) omitted after max_items limit».
+- `max_item_chars` — per-character truncation BEFORE result transforms; for each truncated
+  item a warning «item truncated N -> M chars» is emitted, plus the total «N item(s) truncated».
 
-### 7.9 Статусы правила и файла
+### 7.9 Rule and file statuses
 
-Статус правила: `success` (есть item'ы) · `no matches found` (ничего не найдено) ·
-`rule not applicable` (селектор неприменим к формату) · `error`.
+Rule status: `success` (has items) · `no matches found` (nothing found) ·
+`rule not applicable` (selector not applicable to the format) · `error`.
 
-Статус файла: `success`; `warning` (любое правило no-match/not-applicable или truncation);
-`error` (ошибка парсинга файла или ошибка правила). Файл со статусом `error` даёт
-записи в `## Diagnostics`, блоков не производит.
+File status: `success`; `warning` (any rule no-match/not-applicable or truncation);
+`error` (file parse error or rule error). A file with status `error` produces
+entries in `## Diagnostics` and no blocks.
 
 ---
 
-## 8. Материализация и блоки
+## 8. Materialization and Blocks
 
-После сбора item'ов по всем файлам/правилам:
+After collecting items across all files/rules:
 
-1. **union по ключу**: item'ы всех правил с одинаковым `output.key` объединяются
-   (в порядке файлов, затем правил) в одну группу — одну «оболочку» (shell);
-2. **`document.sort`**: `asc`/`desc` сортирует блоки по тексту первого item'а;
-3. **`document.stable_deduplicate: true`**: внутри каждого блока убираются дубликаты
-   item'ов (строковое равенство, сохраняется первое вхождение) — применяется ко всему
-   документу с тем же принципом для пересекающихся ключей;
-4. **разбиение по размеру** (`split_blocks: true`, по умолчанию): блок растёт до
-   `target_chars`; если очередной item выходит за `max_chars` (с учётом заголовка блока
-   ≈220 симв.) — блок «сплитится» на части:
-   - родитель-блок с маркером `Parent block: continuation parts follow (N)`;
-   - части `Part: 1/N … N/N` с суффиксом ID `B0001-01`, `B0001-02`, …;
-   - один item, не влезающий даже в `max_chars` (за вычетом заголовка), режется
-     посимвольно до максимально допустимого размера.
-5. `output.max_output_chars` — глобальный лимит: при достижении дальнейшие блоки
-   отбрасываются с записью в `## Truncation`;
+1. **union by key**: items of all rules with the same `output.key` are merged
+   (in file order, then rule order) into one group — one "shell";
+2. **`document.sort`**: `asc`/`desc` sorts blocks by the text of the first item;
+3. **`document.stable_deduplicate: true`**: within each block, duplicate items are removed
+   (string equality, first occurrence kept) — applied to the whole document
+   with the same principle for overlapping keys;
+4. **size splitting** (`split_blocks: true`, default): a block grows up to
+   `target_chars`; if the next item exceeds `max_chars` (including the block header
+   ≈220 chars) — the block is "split" into parts:
+   - a parent block with marker `Parent block: continuation parts follow (N)`;
+   - parts `Part: 1/N … N/N` with ID suffix `B0001-01`, `B0001-02`, …;
+   - a single item that does not fit even into `max_chars` (minus the header) is cut
+     character-by-character down to the maximum allowed size.
+5. `output.max_output_chars` — global limit: when reached, further blocks
+   are dropped with a note in `## Truncation`;
 
-Про id блоков: первый блок `B0001`, дальше по возрастанию; части получают
-`BXXXX-NN`. Анкоры:
+About block ids: first block `B0001`, then ascending; parts get
+`BXXXX-NN`. Anchors:
 
 ```
 <!-- BLOCK: B0001 START -->
 <!-- BLOCK: B0001 END -->
 ```
 
-Блок включает:
+A block includes:
 
 ```
 ## Block: B0001
-Parent: B0001            # только у частей
-Part: 1/3                # только у частей
-Parent block: continuation parts follow (3)   # только у родителя-сплита
-Source: <путь файла>
+Parent: B0001            # parts only
+Part: 1/3                # parts only
+Parent block: continuation parts follow (3)   # split parent only
+Source: <file path>
 Format: json
 Format source: extension
 Rule: r1
-Output key: имена
-Status: success          # статус ПРАВИЛА (rule-level)
-File status: warning     # только если файл не success
+Output key: names
+Status: success          # RULE status (rule-level)
+File status: warning     # only if the file is not success
 Items: N
 Truncated: yes|no
 Split: yes|no
@@ -390,54 +390,54 @@ Split: yes|no
 ### Data
 
 - item 1
-- item 2 (многострочный — продолжения с отступом 4 пробела)
+- item 2 (multiline — continuations indented by 4 spaces)
 ```
 
-Поведение при пустых данных: `no matches found` / `rule not applicable` / `(error)` / `(no data)`.
+Behavior with empty data: `no matches found` / `rule not applicable` / `(error)` / `(no data)`.
 
-Секция `### Warnings` — предупреждения правила (omitted/truncated); `### Errors` — ошибки.
+The `### Warnings` section — rule warnings (omitted/truncated); `### Errors` — errors.
 
 ---
 
-## 9. Выходной документ (структура)
+## 9. Output Document (Structure)
 
 ```
 # any_txt_parser output
-Triangle: [0,1,0]                 # контракт «готово»
-Generation: 00000001              # инкремент от предыдущего запуска (8 цифр)
+Triangle: [0,1,0]                 # "done" contract
+Generation: 00000001              # incremented from the previous run (8 digits)
 Updated: <ISO-8601 UTC>
 
 Parser version: 1.0.0
 
-## Execution                        # метаданные запуска
+## Execution                        # run metadata
 ## Files                            # | Path | Size | Modified | Format | Status | Hash |
-## Diagnostics                      # только при ошибках файлов
-## Truncation                       # только при глобальных резах/отбрасываниях
-## Applied Template                 # человекочитаемое резюме шаблона
-## Effective Template               # YAML-блок с фактическими настройками (после CLI-оверрайдов)
-## Result Semantics                 # договорённости по чтению документа
-## CLI Arguments                    # сырые аргументы командной строки
+## Diagnostics                      # only for file errors
+## Truncation                       # only for global cuts/drops
+## Applied Template                 # human-readable template summary
+## Effective Template               # YAML block with actual settings (after CLI overrides)
+## Result Semantics                 # conventions for reading the document
+## CLI Arguments                    # raw command-line arguments
 ## Block Index                      # | Block | Source | Rule | Key | Items | Size | Start | End | Anc |
-### Block Anchors                   # список блоков с диапазонами строк
+### Block Anchors                   # list of blocks with line ranges
 ## Data Blocks
 <!-- BLOCK: B0001 START -->
 ## Block: B0001
 ...
 <!-- BLOCK: B0001 END -->
-End of any_txt_parser output       # обязательный финальный маркер
+End of any_txt_parser output       # mandatory final marker
 ```
 
-`start_line`/`end_line` блоков пересчитываются после рендера (с учётом prelude и индекса),
-каждый блок обязан иметь уникальные пары анкоров START/END (внутренняя валидация, код 4).
+Block `start_line`/`end_line` are recomputed after rendering (accounting for the prelude and index),
+each block must have unique START/END anchor pairs (internal validation, code 4).
 
-Как читать блок: `Source` + `Rule` + `Output key` идентифицируют происхождение;
-`Status` — полнота; диапазон `lines X–Y` из `Block Index` — где лежит блок в документе.
+How to read a block: `Source` + `Rule` + `Output key` identify the origin;
+`Status` — completeness; the `lines X–Y` range from `Block Index` — where the block sits in the document.
 
 ---
 
-## 10. Примеры
+## 10. Examples
 
-### 10.1 Простой текстовый файл
+### 10.1 Simple text file
 
 `input.txt`:
 ```
@@ -462,7 +462,7 @@ rules:
     output: {key: notes}
 ```
 
-### 10.2 JSON с фильтром и трансформациями
+### 10.2 JSON with filter and transforms
 
 `data.json`:
 ```json
@@ -488,16 +488,16 @@ rules:
     select: {type: jsonpath, expression: "$.users[*].tags[*]"}
     output: {key: tags}
     transforms:
-      - uppercase                  # item-трансформация (по каждому совпадению)
-      - trim                       # item-трансформация
-      - unique                     # result-трансформация (по списку совпадений)
-      - sort                       # result-трансформация
+      - uppercase                  # item transform (per match)
+      - trim                       # item transform
+      - unique                     # result transform (on the match list)
+      - sort                       # result transform
 ```
 
-Трансформации задаются одним списком — item- и result-трансформации
-распознаются автоматически по имени (см. §7.7) и применяются в порядке следования.
+Transforms are given as a single list — item and result transforms
+are recognized automatically by name (see §7.7) and applied in order.
 
-### 10.3 YAML через path
+### 10.3 YAML via path
 
 ```yaml
 version: 1
@@ -527,7 +527,7 @@ rules:
     output: {key: ports}
 ```
 
-### 10.5 XML с атрибутами
+### 10.5 XML with attributes
 
 ```yaml
 version: 1
@@ -545,7 +545,7 @@ rules:
     output: {key: first}
 ```
 
-### 10.6 html через css
+### 10.6 html via css
 
 ```yaml
 version: 1
@@ -584,7 +584,7 @@ rules:
     output: {key: items}
 ```
 
-### 10.8 Пакетный запуск по каталогу с лимитами и hash
+### 10.8 Batch run over a directory with limits and hash
 
 ```bash
 any_txt_parser \
@@ -597,40 +597,38 @@ any_txt_parser \
   --max-matches 2000
 ```
 
-### 10.9 Dry-run — проверка без публикации
+### 10.9 Dry-run — check without publishing
 
 ```bash
 any_txt_parser -i data.json -t tpl.yml -o log_any_txt.md --dry-run
-# печатает: Template: valid, effective format/encoding, список файлов,
-#           лимиты блоков, «Dry run: no output published.»
+# prints: Template: valid, effective format/encoding, file list,
+#         block limits, «Dry run: no output published.»
 ```
 
 ---
 
-## 11. Примечания для потребителя вывода (AI-контракт)
+## 11. Notes for the Output Consumer (AI Contract)
 
-- Читайте `## Effective Template` — это фактические настройки (включая CLI-оверрайды).
-- Статусы: `success` — данные полны; `warning` на уровне `File status` — правило не
-  применилось/ничего не нашло/обрезано, вывод может быть неполон; `error` — данные
-  отсутствуют.
-- `Generation` растёт при каждом успешном запуске — можно использовать как маркер
-  «новые данные».
-- Для повторного машинного чтения надёжнее всего искать блоки по анкорам
-  `<!-- BLOCK: B0001 START --> … END -->` и `## Block Index` (линии).
-- Многострочные item'ы: продолжение отступается 4 пробелами.
-- Итоговый документ всегда оканчивается строкой `End of any_txt_parser output`.
+- Read `## Effective Template` — it holds the actual settings (including CLI overrides).
+- Statuses: `success` — data is complete; `warning` at `File status` level — a rule did not
+  apply/found nothing/truncated, output may be incomplete; `error` — data is absent.
+- `Generation` increments on every successful run — usable as a "new data" marker.
+- For repeated machine reading, the most reliable approach is to find blocks by anchors
+  `<!-- BLOCK: B0001 START --> … END -->` and `## Block Index` (lines).
+- Multiline items: continuation is indented by 4 spaces.
+- The final document always ends with the line `End of any_txt_parser output`.
 
 ---
 
-## 12. Тесты и разработка
+## 12. Tests and Development
 
 ```bash
-cargo test              # 27 юнит + 9 интеграционных (tests/golden.rs)
+cargo test              # 27 unit + 9 integration (tests/golden.rs)
 cargo clippy --all-targets
 cargo fmt --all
 ```
 
-Интеграционные тесты (`tests/golden.rs`) гоняют полный пайплайн в temp-каталогах:
-самоописываемость, инкремент generation и детерминизм, split, лимит `--max-matches`,
-`--hash`, стабильный dedup, dry-run, код 2 на невалидном шаблоне, различение
+Integration tests (`tests/golden.rs`) run the full pipeline in temp directories:
+self-describing output, generation increment and determinism, split, `--max-matches` limit,
+`--hash`, stable dedup, dry-run, code 2 on an invalid template, distinguishing
 `no matches found` / `rule not applicable` / `error`.
