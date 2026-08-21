@@ -1697,10 +1697,10 @@ Without navguard, an AI must guess the project structure, parse every file into 
 
 - **File tree** — what exists, where
 - **Line / token counts** — how much context each file consumes
-- **Symbol index** (`navigator_deep2.md`) — every function/class/section with line numbers, enabling surgical `lines` reads instead of full-file loads
+- **Symbol index** (`navigator_deep2.md`) — every function/class/section with line numbers, so a file can be opened at exactly the right spot instead of loading it whole
 - **Triangle state** — whether scan data is fresh (`[0,1,0]`), crashed (`[1,0,0]`), or stale (`[0,0,1]`)
 
-This is the core loop of **vibe coding**: scan (navguard) → read tree (navigator.md) → confirm consumption (set `[0,0,1]`) → find symbol (grep) → read lines (lines). The AI never loads the full codebase into its context window.
+This is the core loop of **vibe coding**: scan (navguard) → read tree (navigator.md) → confirm consumption (set `[0,0,1]`) → look up the symbol in `navigator_deep2.md` → open the source file at exactly those line numbers. The AI never loads the full codebase into its context window.
 
 ### Commands
 
@@ -1708,24 +1708,18 @@ This is the core loop of **vibe coding**: scan (navguard) → read tree (navigat
 |---------|---------|
 | `navguard` (no args) | Double-click mode: full scan, wait for key |
 | `navguard --check` | Full report (T/F/B), writes all 3 navigator files |
-| `navguard --check --brief` | Brief report (T/B only), no scan |
-| `navguard --check --diff` | Changed files only, no navigator rewrite |
-| `navguard grep <pattern>` | Search navigator_deep2.md's symbol index |
-| `navguard extract <pat> [path]` | Search file contents with ±3 lines of context |
-| `navguard lines <path> <s> [e]` | Print lines s..e (1-indexed) from a file |
-| `navguard todos` | List TODO/FIXME/HACK/XXX/BUG across the project |
-| `navguard --triangle status` | Show current Triangle state |
-| `navguard --validate` | Check anchor_map.md anchors against .md headers |
-| `navguard --build <plan>` | Assemble files from a plan's ---BEGIN---/---END--- blocks |
+| `navguard --version` | Prints the version (`navguard v0.1.0`) |
+
+Symbol lookup and line reads are done by the AI itself: `navigator_deep2.md` maps every symbol to its line numbers, so the AI opens the file at those lines directly — no extra commands needed.
 
 ### How an AI Should Use It
 
 **Triangle protocol** (must be followed in order):
 
-1. **Check freshness:** `navguard --check --brief` (run from repo root). If output does **not** show `[0,1,0]`, run `navguard --check` first.
+1. **Scan / check freshness:** run `navguard --check` from the folder where the exe lives (the project root). The report line `T: 0,1,0` means the scan just finished and the data is fresh. If the Triangle in `navigator.md` is **not** `[0,1,0]`, do not trust it — run `--check` again.
 2. **Read the tree** from `navigator.md` — small, fits in a single context window.
 3. **Confirm consumption:** modify `navigator.md` — change `[0,1,0]` to `[0,0,1]`. This signals that the AI has actually read the data. If this step is skipped, the next AI will see stale triangle and know the tree was never consumed.
-4. **Drill down** only as needed: `navguard grep <name>` to find a symbol, then `navguard lines <file> <start> <end>` to read exactly the needed lines. Never load whole files.
+4. **Drill down** only as needed: open `navigator_deep.md` at the file's `(deep L{N})` anchor for its line/token stats, then take the symbol's line range from `navigator_deep2.md` and read exactly those lines of the source file. Never load whole files.
 
 The triangle states: `[1,0,0]` = navguard is scanning (data invalid), `[0,1,0]` = scan complete (ready to read), `[0,0,1]` = AI has read the data. If the triangle is not `[0,1,0]`, `navigator.md` must not be read.
 
@@ -1739,4 +1733,4 @@ The triangle states: `[1,0,0]` = navguard is scanning (data invalid), `[0,1,0]` 
 
 Both tools are self-contained in the `parsers_for_AI/` folder: copy them into your project root and follow the workflow in `help_full_parser.md`. Run `navguard --check` after cloning to generate navigator files for your local paths.
 
-**Vibe coding loop:** `navguard --check --brief` → read `navigator.md` → set `[0,0,1]` → `navguard grep <symbol>` → `navguard lines <file> <start> <end>` — the AI never loads the full codebase.
+**Vibe coding loop:** `navguard --check` → read `navigator.md` → set `[0,0,1]` → look up the symbol's line range in `navigator_deep2.md` → open the source file at exactly those lines — the AI never loads the full codebase.
