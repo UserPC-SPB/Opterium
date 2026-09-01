@@ -1780,6 +1780,7 @@ methodology and certificate format.
 
 > **⚠️ Standard caveat, stated plainly.** This tool implements Borisov's
 > speculative geometry "Opterium". It is an experimental, unorthodox framework:
-> computations are self-consistent under its own axioms and verified tables,
-> but it is **NOT established peer-reviewed mathematics**. Certificates certify
+> computations are grounded solelyin explicitly justified, derived definitions —
+> no postulates or axioms are admitted, but it is **NOT established peer-reviewed
+> mathematics**. Certificates certify
 > internal closure of the system, not acceptance by the scientific community.

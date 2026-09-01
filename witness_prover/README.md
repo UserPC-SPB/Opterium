@@ -14,7 +14,9 @@ Lean proof is trustworthy **only if every axiom is true**. Garbage axioms →
 valid-looking but meaningless proofs (the formal system cannot detect that
 the foundations are false).
 
-**This prover** does not trust axioms, and does not even trust the engine.
+**This prover** trusts no axioms — none exist here: Opterium forbids
+introducing anything unjustified or merely postulated — and it does not even
+trust the engine.
 A claim is certified only when:
 
 1. several **independent witness routes** (different computation paths to
@@ -22,8 +24,8 @@ A claim is certified only when:
 2. a **kernel routine re-derives the claim from first principles** using
    only exact standard-library arithmetic, never reading engine output.
 
-So the certificate is a **reproducible computation record**, not an axiom
-chain. Any third party can re-run the kernels and get bit-identical
+So the certificate is a **reproducible computation record**, not a
+chain of unexamined postulates (Opterium admits none at all). Any third party can re-run the kernels and get bit-identical
 verdicts — including on a machine that has never seen the engine.
 
 ## Repository layout
@@ -93,7 +95,8 @@ python witness_prover/prover_top.py --run-all --no-engine   # offline, reproduci
 ```
 
 > This tool implements Borisov's speculative geometry "Opterium". It is an
-> experimental, unorthodox framework: computations are self-consistent
-> under its own axioms and verified tables, but it is **NOT established
+> experimental, unorthodox framework: computations are grounded solely in
+> explicitly justified, derived definitions — no postulates or axioms are
+> admitted, but it is **NOT established
 > peer-reviewed mathematics**. Certificates certify internal closure of the
 > system, not acceptance by the scientific community.

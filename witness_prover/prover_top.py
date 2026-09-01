@@ -1,4 +1,4 @@
-# =====================================================================
+﻿# =====================================================================
 # witness_prover: machine-checkable proof-by-witness certificates
 # for the Opterium model (Borisov's speculative geometry).
 #
@@ -8,9 +8,12 @@
 #   python prover_top.py --cert T-decimal --json
 #
 # What this is NOT:
-#   - NOT a Lean-style proof term. Lean creates proofs by deduction inside
-#     a formal system with axioms; if an axiom is wrong, Lean still
-#     produces "valid" derivations (garbage in, garbage out).
+#   - NOT a Lean-style proof term. Lean derives proofs by deduction from an
+#     explicitly adopted axiom system; if an axiom is wrong, Lean still
+#     produces "valid" derivations (garbage in, garbage out). Opterium
+#     admits no axioms or postulates: introducing anything unjustified or
+#     merely postulated is forbidden вЂ” every premise must be justified and
+#     re-verified, never accepted on faith.
 #   - NOT a runtime self-assertion ("verified: true" from the engine).
 #
 # What this IS:
@@ -20,12 +23,11 @@
 #   The certificate only certifies what the kernel actually re-derived
 #   independently of the engine.  Verdict = "CERTIFIED" only if every
 #   witness route AND the kernel re-computation agree exactly (tau=0).
-#
-# Because the kernel recomputes from definitions (not from server output),
-# the certificate is checkable offline, by any third party, with a handful
-# of standard-library routines.  In that sense the certificate is stronger
-# than a Lean proof term: it carries reproducible computation, not a
-# chain of accepted axioms.
+# Because the kernel recomputes from justified, derived definitions (not from
+# server output),the certificate is checkable offline, by any third party,
+# with a handful of standard-library routines.  In that sense the certificate
+# is stronger than a Lean proof term:it carries reproducible computation, not
+# a chain of unexamined postulates —and Opterium admits none at all.
 #
 # =====================================================================
 """Emit proof-by-witness certificates for Opterium invariants.
@@ -53,9 +55,10 @@ CUBE_DEF_PATHS = [
 DISCLAIMER = (
     "This certificate implements Borisov's speculative geometry \"Opterium\"."
     " It is an experimental, unorthodox framework: computations are "
-    "self-consistent under its own axioms and verified tables, but it is "
-    "NOT established peer-reviewed mathematics. Treat certificates as "
-    "internal to this system."
+    "grounded solely in explicitly justified, derived definitions вЂ” no "
+    "postulates or axioms are admitted вЂ” but it is NOT established "
+    "peer-reviewed mathematics. Treat certificates as internal to this "
+    "system."
 )
 
 
