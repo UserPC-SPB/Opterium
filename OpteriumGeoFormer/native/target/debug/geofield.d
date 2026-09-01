@@ -1,1 +1,0 @@
-C:\Users\eccoa\Desktop\OpteriumGeoFormer\native\target\debug\geofield.lib: C:\Users\eccoa\Desktop\OpteriumGeoFormer\native\src\lib.rs C:\Users\eccoa\Desktop\OpteriumGeoFormer\native\src\lookup.rs C:\Users\eccoa\Desktop\OpteriumGeoFormer\native\src\tables.rs
