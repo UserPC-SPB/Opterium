@@ -1734,3 +1734,52 @@ The triangle states: `[1,0,0]` = navguard is scanning (data invalid), `[0,1,0]` 
 Both tools are self-contained in the `parsers_for_AI/` folder: copy them into your project root and follow the workflow in `help_full_parser.md`. Run `navguard --check` after cloning to generate navigator files for your local paths.
 
 **Vibe coding loop:** `navguard --check` → read `navigator.md` → set `[0,0,1]` → look up the symbol's line range in `navigator_deep2.md` → open the source file at exactly those lines — the AI never loads the full codebase.
+
+---
+
+## witness_prover — Machine-Checkable Proof-by-Witness Certificates
+
+**`witness_prover/`** turns the §2 definition of proof — *closure of multiple
+independent routes on the same address, with zero residual tension, certified
+by an explicit verification procedure* — into concrete, machine-readable
+certificate files. This is **not** a Lean-style proof term, and it is **stricter**.
+
+Lean derives proofs *inside a formal system of axioms*: a Lean proof is only as
+trustworthy as its axioms. **This prover trusts neither axioms nor the engine.**
+A claim is certified (`CERTIFIED`) only when:
+
+1. **several independent witness routes** — different computation paths to the
+   same address — all close exactly (`tau = 0`); and
+2. a **kernel routine re-derives the claim from first principles** using only
+   exact standard-library arithmetic, never reading engine output.
+
+The result is a **reproducible computation record** (a JSON certificate with
+per-route SHA-256 hashes and a closure verdict), not an axiom chain. Any third
+party can re-run the kernels offline and get bit-identical verdicts.
+
+```bash
+python witness_prover/prover_top.py --list
+python witness_prover/prover_top.py --cert T-e8-spectrum
+python witness_prover/prover_top.py --run-all          # writes certificates/*.cert.json
+python witness_prover/prover_top.py --run-all --no-engine   # offline, reproducible
+```
+
+The optional native engine (`mcp_server.exe`, e.g. `D:\cube_v5_native\mcp_server\`
+or `$CUBE_V5_EXE`) is used only to attach the engine's **live witness** as extra
+supporting material; the verdict is **never** decided by the engine, only by the
+kernel.
+
+Certified theorems currently include: the Pythagorean identity `τ=(x+y)²−4xy−(x−y)²=0`;
+E8 240 roots = 112 D8 + 128 spinor with ‖r‖²=8; the dot spectrum
+`{−8:1,−4:56,0:126,+4:56,+8:1}`; exact decimals `0.1+0.2=0.3`; `3¹⁰⁰`;
+`(1+i)¹⁰⁰=−2⁵⁰` and `|3+4i|=5`; E8 tunnels `(0,6,31)` (2240 total); and the
+Doctor layer's countable invariants (14 channels, OK@≥10, closed@≥7).
+
+See [witness_prover/README.md](witness_prover/README.md) for the full
+methodology and certificate format.
+
+> **⚠️ Standard caveat, stated plainly.** This tool implements Borisov's
+> speculative geometry "Opterium". It is an experimental, unorthodox framework:
+> computations are self-consistent under its own axioms and verified tables,
+> but it is **NOT established peer-reviewed mathematics**. Certificates certify
+> internal closure of the system, not acceptance by the scientific community.

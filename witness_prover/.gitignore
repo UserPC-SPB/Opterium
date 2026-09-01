@@ -1,0 +1,4 @@
+# Regenerated on demand by `python prover_top.py --run-all`
+certificates/
+__pycache__/
+*.pyc
