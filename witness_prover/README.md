@@ -103,130 +103,241 @@ python witness_prover/prover_top.py --run-all --no-engine   # offline, reproduci
 >
 > A Geometric and Navigational Ontology of Number with Exact Computational Realization and a Formal Model of Peano Arithmetic
 
-Abstract
+A GEOMETRIC REPRESENTATION THEOREM FOR PEANO ARITHMETIC: RELATIONAL WEBS, DISCRETE FOLIATIONS, AND THE STRUCTURAL REALIZATION OF RECURSIVE INVARIANTS
 
-We present an ontology of number in which a number is identified with a complete multiplicative relational web together with a navigational address in the multiplication table regarded as a geometric space. In this ontology arithmetic operations do not exist as an independent class of computational procedures. What is conventionally called addition, multiplication or division is realized exclusively as the act of reading a pre-existing geometric invariant (sum coordinate S, product field P, difference coordinate D, or an equivalent navigational path) from a definite address in the table. The zero element is the unique empty web, characterized by the total absence of positive multiplicative witnesses. An exact machine representation is given in which every number is stored as a triple consisting of a non-negative integer mantissa, an integer debt (cursor position) and a phase in {0,1,2,3} that encodes orientation. Floating-point representation is excluded by construction at every level. All arithmetic is performed by integer navigation and cursor movement; scaling by powers of ten is a pure debt shift that never alters digits.
+ABSTRACT
 
-The resulting structure is fully compatible with the theorems of classical Peano arithmetic: the mapping that sends each standard natural number to its relational web is an isomorphism of structures. This isomorphism is proved as a formal theorem. The construction therefore supplies a faithful geometric realization and an exact computational layer, while asserting that the primary ontological status belongs to the relational-navigational field rather than to a separate class of arithmetic operations. The model does not replace the Peano axioms; it provides a rigorous geometric representation of them and demonstrates that the natural numbers can be realized as pure navigational reads on the multiplication table.
+We present a formal geometric representation of first-order Peano arithmetic within the discrete two-dimensional lattice of positive integer pairs. In this framework, a natural number is identified with its complete multiplicative relational web, corresponding to the fiber of the product map over that integer. Standard arithmetic operations, traditionally formalized via primitive recursion on a one-dimensional successor structure, are shown to be isomorphic to coordinate projections along canonical geometric foliations of the lattice. Addition corresponds to the terminal boundary evaluation of anti-diagonal fibers; subtraction and order comparison correspond to boundary collisions along diagonal rays; and multiplication corresponds to the evaluation of discrete enclosed rectangular area. 
 
-Scope and Methodological Position
+We prove a rigorous representation theorem demonstrating that the algebra of relational webs equipped with these spatial evaluation mappings is isomorphic to the standard Peano structure (N_0, 0, S, +, *). This construction does not replace or invalidate the axiomatic foundations of arithmetic; rather, it establishes an exact geometric model in which procedural inductive algorithms are realized as static structural invariants of a discrete manifold. Furthermore, we define an exact computational implementation using a canonical integer triplet (mantissa, debt, orientation) that bypasses continuous floating-point approximations, reducing multi-digit arithmetic to discrete convolutions over a finite base-10 seed.
 
-This work is written inside ordinary mathematics in the following precise sense. We assume the existence of the set of natural numbers (including zero) and of the standard operations of addition and multiplication on that set, as given by any of the usual constructions (Peano axioms, set-theoretic constructions, or the arithmetic of a host programming language with arbitrary-precision integers). We do not claim to derive these from a more primitive formal system.
 
-What we claim is an ontological and representational priority: once the multiplication table is regarded as a geometric space of addresses, every classical arithmetic operation can be recovered purely as navigation and reading of already present fields. In that sense arithmetic as an autonomous class of generative procedures is absent; only navigation remains. The classical operations appear as convenient projections or wrappers over this navigational activity. The machine implementation described below makes the claim concrete by banning floating-point representation entirely and by realizing every operation as exact integer navigation on mantissa, debt and phase.
+1. INTRODUCTION AND FOUNDATIONAL SCOPE
 
-Relational Webs
+The formalization of arithmetic developed by Richard Dedekind and Giuseppe Peano established the natural numbers as a free unary algebra generated by an initial element zero and an injective successor function satisfying the principle of mathematical induction. Within this standard framework, binary operations cannot be introduced simultaneously as primitives; they are defined sequentially through primitive recursion:
 
-For each natural number n (including zero) we define its relational web R_n as follows.
+a + 0 = a
+a + S(b) = S(a + b)
 
-If n equals zero, R_n is the empty set.
-If n is positive, R_n is the set of all ordered pairs (x, y) of positive natural numbers such that the standard product x multiplied by y equals n.
+a * 0 = 0
+a * S(b) = (a * b) + a
 
-The decimal (or any base) digit string is treated solely as a compressed routing key that points to this web. The web itself is the mathematical object.
+This formulation is mathematically complete, categorical, and optimal for constructive formal logic. By design, it models arithmetic as an inductive, one-dimensional progression. Because the underlying carrier set is ordered linearly, operations that combine two elements must be defined as iterative transitions executed along the sequence of successors.
 
-Lemma. The mapping that sends each natural number n to the web R_n is injective.
+The purpose of this work is to demonstrate that first-order Peano arithmetic admits an exact, autonomous geometric representation on the discrete two-dimensional lattice N_+ x N_+. When the Cartesian product of two discrete rays is treated as an integrated geometric space, the operations of addition, subtraction, multiplication, and comparison do not need to be generated procedurally through recursive loops. Instead, they pre-exist as static geometric invariants—specifically, as boundary intercepts and areas associated with canonical foliations of the lattice.
 
-Proof. Suppose R_n equals R_m. If both are empty then n and m are both zero. If they are non-empty then the pair (1, n) belongs to R_n and therefore also to R_m, which forces n equal to m.
+To prevent any foundational misunderstanding, our methodological framework is established as follows:
+First, we do not claim to construct arithmetic ex nihilo or to replace formal logic. We operate within standard discrete set theory, assuming the existence of the natural numbers as an indexing set.
+Second, we do not assert that Peano arithmetic is erroneous or incomplete. We establish a representation theorem: the algebraic structure generated by recursive axioms is strictly isomorphic to the spatial structure generated by the foliations of the discrete lattice.
+Third, the value of this geometric realization lies in its structural and computational implications: it replaces temporal recursion with spatial localization, preserves orientation and chirality that are suppressed in scalar projections, and provides an exact, lossless arithmetic engine for discrete computation.
 
-The zero web is characterized by the complete absence of positive factor pairs. This is a direct consequence of the standard fact that the product of two positive natural numbers is never zero. The characterization is internal to the assumed framework; it is not offered as an independent existence proof of zero.
 
-The Multiplication Table as Navigational Space
+2. THE ONTOLOGY OF RELATIONAL WEBS
 
-Consider the one-dimensional sequence of natural numbers along an axis. This sequence exists prior to any notion of multiplication: it is a simple order of discrete steps. Any point on this axis is an address x.
+In classical set-theoretic arithmetic, an integer n is typically formalized as an ordinal (for instance, the von Neumann ordinal n = {0, 1, ..., n-1}). This formalization treats n as an isolated container of smaller ordinals. 
 
-Now take a second, independent copy of this same sequence and stack the axes parallel to one another. The stack of axes is a two-dimensional plane. The number of axes in the stack is formalized as y, and this stacking is what gives the second dimension its orthogonal relation to the first: the axes are perpendicular because each axis in the stack is a parallel copy of the original line, and the enumeration of copies creates a direction distinct from the original steps. A point in this plane is an address of the form x:y.
+In contrast, our construction adopts a relational definition analogous to the Yoneda lemma in category theory, where an object is uniquely determined by the network of all morphisms directed into it.
 
-The product P at an address x:y is defined as the total number of unit squares enclosed by the rectangle whose sides are the intervals from the origin to x along one axis and from the origin to y along the other axis. This total is obtained by counting unit cells along the grid, which is a sequential process of accumulation. It does not require any prior multiplication. For example, the address 5:5 encloses a square consisting of twenty-five unit cells. The square root of twenty-five is therefore not the number five but the address 5:5, because the geometric object is a square of side five, and its area is the sum of all cells within that square.
+Definition 2.1. For each natural number n in N_0, the multiplicative relational web of n, denoted R_n, is the subset of N_+ x N_+ defined by:
+R_n = empty set, if n = 0.
+R_n = { (x, y) in N_+ x N_+ : x * y = n }, if n >= 1.
 
-Similarly, stacking two-dimensional planes gives a three-dimensional space. The number of planes in the stack is formalized as z, and an address in three dimensions has the form x:y:z. The value at such an address is the total number of unit cubes enclosed by the corresponding box. For example, the address 2:2:2 encloses a cube consisting of eight unit cubes. The volume is the sum of all unit cubes within that cube.
+Under this definition, the integer n is identified with the complete set of its positive multiplicative factor pairs. A digit string such as "420" is a compressed routing key; the actual mathematical object is the discrete hyperbolic slice R_420 = { (1, 420), (2, 210), ..., (20, 21), (21, 20), ..., (420, 1) }.
 
-The address 2:3 in the two-dimensional plane and the address 2:3:1 in the three-dimensional space are the same two-dimensional address; the third coordinate is a plane indicator that selects which layer of the stack is being referenced. The two-dimensional address is unchanged; only the plane index differs. Thus, the dimension of an address is a pointer to a layer in a stack, not a new kind of coordinate.
+2.1 Remark on the Reading of *
 
-Because these structures arise entirely from the sequential order and the stacking operation, the multiplication table is not constructed or computed. It is an inevitable geometric record of all possible addresses and their associated areas (or volumes in higher dimensions). The table is the set of all addresses together with three derived invariants that can be read at each address:
+Throughout this document the symbol * occurs in two categorically distinct roles. In the algebraic reading inherited from Peano arithmetic, a * b denotes an operation: two numbers are supplied, a recursive procedure is executed, and a single scalar result is produced. In the geometric reading used here, a * b denotes an address: the cell (a, b) in the lattice N_+ × N_+. The area enclosed at that address is read as a structural property of the cell, not produced by an operation.
 
-S is the sum of the two coordinates: S = x + y. This is the total number of steps from the origin to the point (x, y) along the anti-diagonal path.
+The distinction is not terminological. The cells (2, 3) and (3, 2) are different addresses. They enclose the same area, six unit cells, and therefore lie on the same hyperbolic foliation H_6, but they are not the same element of the web R_6. The algebraic identity 2 * 3 = 3 * 2 is a statement about the commutativity of an operation on a one-dimensional result axis. Under the geometric reading, this identity is the statement that the two distinct addresses project onto the same area. Commutativity is a property of the projection, not an identity of the cells.
 
-D is the difference of the two coordinates: D = x - y. This is the signed distance from the main diagonal.
+Whenever * appears in a definition below, it is used in the algebraic sense, as a condition selecting cells by enclosed area. The selected cells are geometric objects. The web R_n is a subset of the lattice, not a value on a line.
 
-P is the area enclosed by the rectangle from the origin to (x, y): P = the number of unit squares inside that rectangle.
+Lemma 2.1 (Injectivity of Web Mapping).
+The mapping Phi: N_0 -> P(N_+ x N_+) defined by Phi(n) = R_n is strictly injective.
 
-These three invariants are linked by the identity
+Proof. Let m, n be elements of N_0, and assume R_m = R_n.
+If R_m is the empty set, then by Definition 2.1, m = 0. Consequently, R_n is empty, which implies n = 0, so m = n.
+If R_m is non-empty, then m >= 1. By elementary arithmetic, 1 * m = m, which implies that the ordered pair (1, m) belongs to R_m.
+Because R_m = R_n, the pair (1, m) must also belong to R_n.
+By Definition 2.1, any pair (x, y) in R_n satisfies x * y = n. Therefore, 1 * m = n, which directly yields m = n.
+Thus, Phi is injective.
 
-P = (S squared minus D squared) divided by 4,
+Corollary 2.1. The zero element is the unique natural number whose multiplicative web contains zero positive witnesses:
+R_0 intersection (N_+ x N_+) = empty set.
 
-which holds for every address. This identity is not a theorem about operations; it is a geometric fact about rectangles and squares. It says that the area of a rectangle can be expressed in terms of the lengths of its sides' sum and difference.
+This characterization of zero is purely structural. It does not define zero as an ad hoc additive identity; it identifies zero as the unique vacuum state of the multiplicative domain, having no relational factorization among positive integers.
 
-The natural curves on this space are the hyperbola of constant product (all addresses with the same area), the anti-diagonal of constant sum (all addresses with the same total step count), and the diagonal of constant difference (all addresses with the same signed distance from the main diagonal). Navigation consists in moving along these curves or reading the invariant directly from the address.
+Corollary 2.2. The identity element 1 is characterized by the singleton web R_1 = { (1, 1) }, representing the unique minimal self-dual fixed point. A number p > 1 is prime if and only if its web has cardinality exactly 2, namely R_p = { (1, p), (p, 1) }.
 
-No generative computation is required to produce these values; they are pre-existing geometric properties of the address. The table is not a lookup table of precomputed products; it is the geometric record of areas and volumes generated by the underlying sequences and stacks. This eliminates any circularity: the table does not presuppose multiplication; it presupposes only the existence of sequences and their Cartesian stacking.
 
-Operations as Navigation
+3. THE DISCRETE MANIFOLD AND ITS CANONICAL FOLIATIONS
 
-Zero is the empty web R_0.
+Let the discrete Cartesian product N_+ x N_+ be regarded as a two-dimensional grid of unit cells. Every cell is referenced by an address (x, y).
 
-The successor of the web R_n is the web R_{n+1}, which corresponds geometrically to the next hyperbola of product n+1.
+Geometrically, the product field P at address (x, y) is defined as the discrete area of the rectangle spanned from the origin (0, 0) to (x, y), measured by the total count of elementary unit squares enclosed:
+P(x, y) = count of unit cells in [0, x] x [0, y].
 
-The sum of the webs R_a and R_b is the web R_{a+b}. The integer a+b is obtained by reading the endpoint of the anti-diagonal S-path that begins at the cell (a, b).
+The grid admits three natural geometric foliations, each corresponding to an equivalence relation on N_+ x N_+:
 
-The product of the webs R_a and R_b is the web R_{a multiplied by b}. The integer a multiplied by b is obtained by reading the field P at the cell (a, b).
+Foliation 1: The Anti-Diagonal Foliation (Constant Sum S).
+For each integer S >= 2, the level set L_S^+ is defined by:
+L_S^+ = { (x, y) in N_+ x N_+ : x + y = S }.
+This is a straight discrete segment oriented at an angle of negative 45 degrees to the horizontal axis. It contains exactly S - 1 cells. When extended to the boundary of the positive quadrant, this segment terminates at the boundary point (S, 0) on the horizontal axis and (0, S) on the vertical axis.
 
-In each case the operation consists solely in locating an address and reading a coordinate or a field that already exists in the table. There is no separate arithmetic engine that produces a new quantity; there is only navigation.
+Foliation 2: The Diagonal Foliation (Constant Difference D).
+For each integer D in Z, the level set L_D^- is defined by:
+L_D^- = { (x, y) in N_+ x N_+ : x - y = D }.
+These are discrete rays parallel to the principal diagonal x = y. 
+The ray D = 0 contains all symmetric square nodes (x, x).
+For D > 0, the ray terminates on the horizontal boundary at (D, 0).
+For D < 0, the ray terminates on the vertical boundary at (0, |D|).
 
-These definitions are not mere restatements of the classical operations. They replace the recursive equations of Peano arithmetic with direct table lookups: instead of defining addition recursively as a + 0 = a and a + S(b) = S(a + b), we read the sum from the anti-diagonal; instead of defining multiplication recursively as a * 0 = 0 and a * S(b) = a * b + a, we read the product from the P field. The existence and correctness of these reads are certified by the structural identity of the table.
+Foliation 3: The Hyperbolic Foliation (Constant Area P).
+For each integer P >= 1, the level set H_P is defined by:
+H_P = { (x, y) in N_+ x N_+ : x * y = P } = R_P.
+These level sets form discrete hyperbolas symmetric with respect to the principal diagonal D = 0.
 
-Isomorphism with the Standard Peano Structure
 
-We now establish that the relational structure defined above is a faithful model of Peano arithmetic. Let N_0 denote the set of natural numbers including zero, with the usual successor function S(n) = n+1, addition +, and multiplication *. Let R denote the set of all relational webs R_n for n in N_0, equipped with the operations zero, successor, addition, and multiplication defined in the previous section.
+4. THE POLARIZATION IDENTITY AS GEOMETRIC DECOMPOSITION
 
-Theorem. The mapping phi from N_0 to R that sends each natural number n to the web R_n is an isomorphism of structures.
+In continuous algebra, the product of two numbers can be expressed in terms of quadratic forms via polarization. On the discrete lattice N_+ x N_+, this identity takes an exact geometric form.
+
+Theorem 4.1 (Discrete Metric Balance).
+For every cell (x, y) in N_+ x N_+, let S = x + y, D = x - y, and P = x * y. Then:
+P = (S^2 - D^2) / 4.
+
+Proof. Direct substitution over the ring of integers:
+(S^2 - D^2) / 4 = ((x + y)^2 - (x - y)^2) / 4
+= ((x^2 + 2xy + y^2) - (x^2 - 2xy + y^2)) / 4
+= (4xy) / 4 = xy = P.
+
+This relation is not a numerical trick; it is a structural decomposition theorem. It demonstrates that the area of any rectangle on the lattice is identically equal to the difference between the square constructed on its semi-sum and the square constructed on its semi-difference. On the discrete manifold, multiplication is the geometric interference between the anti-diagonal foliation S and the diagonal foliation D.
+
+
+5. KINEMATICS OF OPERATIONS: PROCEDURES AS SPATIAL READS
+
+We now resolve the cognitive transition between the procedural Peano definitions and the spatial navigation of the lattice.
+
+5.1 Addition
+In Peano arithmetic, addition a + b requires executing the successor operation b times, starting from a. 
+In the discrete lattice, the operation a + b is executed by locating the node (a, b) and following its anti-diagonal leaf L_{a+b}^+ to its horizontal boundary intercept.
+The leaf L_{a+b}^+ consists of all pairs whose coordinates sum to a + b. Tracing this line downward and to the right brings the path to the boundary coordinate (a + b, 0). The value a + b is not generated by an arithmetic processor; it is read as the spatial coordinate of the boundary intersection of the leaf on which (a, b) resides. The operation is an O(1) coordinate extraction.
+
+5.2 Subtraction and Order Comparison
+In classical logic, testing whether a > b requires computing a - b and evaluating the sign of the result.
+In the discrete lattice, the difference ray through (a, b) is traversed downward and to the left:
+If a = b, the node resides on the central diagonal D = 0; the difference is zero, indicating identity.
+If a > b, the ray L_{a-b}^- strikes the horizontal boundary floor at (a - b, 0). The horizontal collision certifies the relation a > b, and the intercept coordinate directly yields the magnitude of the difference.
+If a < b, the ray L_{a-b}^- strikes the vertical boundary wall at (0, b - a). The vertical collision certifies the relation a < b, and the intercept coordinate directly yields the magnitude of the deficit.
+Order comparison is therefore not an arithmetic subtraction; it is a physical collision test against the orthogonal boundaries of the quadrant.
+
+5.3 Multiplication and Division
+Multiplication of a and b is the spatial extraction of the enclosed area P at the intersection cell (a, b).
+Division of an integer P by a divisor d corresponds to navigating to the hyperbolic leaf H_P = R_P and locating the cell whose coordinate along one axis is d. The quotient is the coordinate along the orthogonal axis. If no integer cell exists at coordinate d on the leaf H_P, the division does not close in N_+; the remainder represents the geometric gap between H_P and the nearest sub-hyperbola containing d.
+
+
+6. DISCRETE HALVING AND THE NECESSITY OF ASYMMETRY
+
+The discrete nature of the lattice imposes a fundamental topological constraint on the partition of sums.
+
+Definition 6.1. The discrete halving operator H: N_+ -> N_+ x N_+ partitions an integer S into its most balanced integer pair:
+H(S) = ( floor(S / 2), ceil(S / 2) ).
+
+Theorem 6.1 (The Asymmetry Theorem).
+Let (x, y) = H(S). 
+1. If S is even (S = 2k), then x = y = k, and D = x - y = 0. The node lies on the diagonal ridge of symmetry.
+2. If S is odd (S = 2k + 1), then x = k, y = k + 1, and D = x - y = -1. The node cannot lie on the diagonal ridge.
+
+Proof. If S = 2k + 1, then floor(S/2) = k and ceil(S/2) = k + 1. The difference is k - (k + 1) = -1. For any integer pair (u, v) such that u + v = 2k + 1, the difference u - v = (2k + 1) - 2v is an odd integer. Because 0 is even, u - v cannot equal 0 for any integer choice of u and v.
+
+This theorem establishes that on a discrete lattice, exact bilateral symmetry (D = 0) is forbidden for odd sums. When an odd sum is partitioned with maximum efficiency (maximizing enclosed area), it must release an irreducible difference quantum: |D| = 1.
+This structural asymmetry breaks mirror parity. The cell (k, k+1) collides with the vertical wall, whereas its reflection (k+1, k) collides with the horizontal floor. The halving of odd numbers forces an intrinsic chirality into the discrete space, establishing a preferred directional orientation that cannot be eliminated by coordinate transformation.
+
+
+7. THE REPRESENTATION ISOMORPHISM
+
+We now formalize the equivalence between the Peano structure and the relational geometric manifold.
+
+Let N_0 denote the standard natural numbers with zero, equipped with the successor function S_N, addition +_N, and multiplication *_N.
+Let R denote the set of all relational webs R_n for n in N_0.
+
+We define autonomous geometric operations on R without using arithmetic operations in their definitions:
+1. Zero Element: R_0 = empty set.
+2. Web Successor S_R: For any web W in R, let x be the unique positive integer such that (1, x) in W (if W is non-empty), and 0 if W is empty. The successor S_R(W) is defined as the web occupying the next adjacent hyperbola R_{x+1}.
+3. Web Addition (+_R): For non-empty webs A, B in R, extract their scalar addresses a and b via their (1, a) and (1, b) witnesses. Navigate to cell (a, b) in the lattice. Trace the anti-diagonal foliation through (a, b) to its horizontal boundary intercept (s*, 0). Define A +_R B = R_{s*}. If either web is R_0, the addition returns the other web.
+4. Web Multiplication (*_R): For non-empty webs A, B in R, extract scalar addresses a and b. Navigate to cell (a, b). Read the enclosed unit-cell area P*. Define A *_R B = R_{P*}. If either web is R_0, the product returns R_0.
+
+Theorem 7.1 (Isomorphism of Peano and Relational Structures).
+The mapping Phi: N_0 -> R defined by Phi(n) = R_n is an isomorphism of algebraic systems:
+Phi: (N_0, 0, S_N, +_N, *_N) -> (R, R_0, S_R, +_R, *_R).
 
 Proof.
+First, bijectivity of Phi is established by Lemma 2.1 (injectivity) and the definition of R as the image of N_0 under Phi (surjectivity).
+Second, preservation of zero holds by definition: Phi(0) = R_0.
+Third, preservation of the successor:
+Phi(S_N(n)) = Phi(n + 1) = R_{n+1}.
+S_R(Phi(n)) = S_R(R_n). By Definition of S_R, the scalar witness of R_n is n, so S_R(R_n) = R_{n+1}.
+Thus, Phi(S_N(n)) = S_R(Phi(n)).
+Fourth, preservation of addition:
+For a, b >= 1, the anti-diagonal line L through (a, b) satisfies x + y = a +_N b for all points on L. The intersection of L with the line y = 0 is the unique point (a +_N b, 0). Thus, the extracted boundary coordinate is s* = a +_N b, which yields:
+Phi(a) +_R Phi(b) = R_a +_R R_b = R_{s*} = R_{a +_N b} = Phi(a +_N b).
+If a = 0 or b = 0, preservation holds trivially by definition.
+Fifth, preservation of multiplication:
+For a, b >= 1, the cell (a, b) encloses a discrete rectangular grid of width a and height b. The total number of unit cells enclosed is a *_N b. Thus, the extracted area is P* = a *_N b, which yields:
+Phi(a) *_R Phi(b) = R_a *_R R_b = R_{P*} = R_{a *_N b} = Phi(a *_N b).
+If a = 0 or b = 0, the product yields R_0 = Phi(0) by definition.
 
-Injectivity of phi follows from the lemma of the previous section. Surjectivity is immediate from the definition of the carrier set R. The homomorphism properties hold by construction:
+Since Phi is a bijective homomorphism across all primitives and operations of the signature, Phi is an isomorphism of structures.
 
-phi(0) = R_0, which is the zero element of R.
-phi(S(n)) = phi(n+1) = R_{n+1}, which is the successor of R_n.
-phi(a + b) = R_{a+b}, which is the sum of R_a and R_b.
-phi(a * b) = R_{a*b}, which is the product of R_a and R_b.
+Corollary 7.1. Every first-order theorem provable in Peano arithmetic is a valid structural theorem concerning the intersections, boundary collisions, and enclosed areas of the discrete foliations on N_+ x N_+.
 
-Thus phi preserves zero, successor, addition, and multiplication. Hence phi is an isomorphism.
 
-Corollary. The relational structure R satisfies all Peano axioms, because it is isomorphic to the standard model N_0.
+8. MACHINE REPRESENTATION: DEBT-PHASE ARITHMETIC
 
-Remark. This is a representation theorem, not a foundational derivation. The proof of the isomorphism uses the standard induction principle on N_0. We do not claim to eliminate the Peano axioms; we claim to give a faithful geometric realization of them. The novelty lies in the fact that the operations are not defined by recursive equations but by navigational reads, and this alternative definition yields a structure that is provably equivalent to the classical one.
+The realization of numbers as relational coordinates enables a machine implementation that eliminates the rounding errors and representation anomalies inherent in standard floating-point architectures (such as IEEE-754).
 
-Exact Machine Representation
+Definition 8.1. An exact number is represented as a canonical triplet:
+X = (M, d, o) in N_0 x Z x Z_4,
+where:
+M is an arbitrary-precision non-negative integer mantissa representing the active excitation pattern, with trailing zeros absorbed into debt for M > 0.
+d is an integer cursor debt representing positional scale by 10^d.
+o is an orientation phase in Z_4 = {0, 1, 2, 3}, encoding directional rotation:
+o = 0 corresponds to +1 (real positive),
+o = 1 corresponds to +i (imaginary positive),
+o = 2 corresponds to -1 (real negative),
+o = 3 corresponds to -i (imaginary negative).
 
-An exact computational realization is obtained by representing every number as a triple (mantissa, debt, phase), where
+The numerical value represented is:
+Val(M, d, o) = M * 10^d * i^o.
+The zero element is canonically represented as (0, 0, 0).
 
-mantissa is a non-negative integer containing the significant digits,
-debt is an integer that records the position of the decimal cursor relative to the mantissa,
-phase is an integer in the set {0, 1, 2, 3} that encodes orientation (0 for positive real, 1 for positive imaginary, 2 for negative real, 3 for negative imaginary).
+Operational Rules:
+1. Scaling: Multiplication by 10^k is a pure cursor shift:
+Scale_k(M, d, o) = (M, d + k, o).
+The operation modifies only the metadata debt coordinate d; the digits of M are untouched, incurring an execution cost of O(1).
 
-The decimal point and the conventional minus sign are excluded from the internal storage format. Scaling by a power of ten is realized exclusively as a change of the debt; the digits of the mantissa remain untouched. Addition and subtraction are performed by aligning debts through the appending of zeros and then adding the resulting integers. Multiplication multiplies mantissas, adds debts, and adds phases modulo 4. Division is realized as a structural descent that produces successive digits of the quotient by repeated scaling of the dividend; an exactness flag records whether the descent terminates.
+2. Multiplication:
+(M_1, d_1, o_1) * (M_2, d_2, o_2) = (M_1 * M_2, d_1 + d_2, (o_1 + o_2) mod 4).
+Mantissas multiply as integers; debts add linearly; orientation phases add modulo 4. The identity i^2 = -1 is realized as the phase transition (1 + 1) mod 4 = 2, replacing algebraic sign rules with modular rotation.
 
-Floating-point types are rejected at the construction boundary. All internal arithmetic uses only arbitrary-precision integers. Consequently the classical floating-point anomaly in which one tenth plus two tenths fails to equal three tenths cannot occur. The representation is canonical: trailing zeros of the mantissa are absorbed into the debt, and the zero value is normalized to mantissa zero, debt zero, phase zero.
+3. Addition:
+Given (M_1, d_1, o_1) and (M_2, d_2, o_2) with d_1 >= d_2:
+Compute delta_d = d_1 - d_2 >= 0.
+Align the debts by appending delta_d zeros to M_1: M_1' = M_1 * 10^{delta_d}.
+If o_1 = o_2, the mantissas add directly: (M_1' + M_2, d_2, o_1).
+If o_1 and o_2 differ by 2 (opposite signs on the same axis), the operation resolves as an exact integer difference on the mantissas, with the phase assigned according to the dominant term.
+Under this system, expressions such as 0.1 + 0.2 evaluate as:
+(1, -1, 0) + (2, -1, 0) = (1 + 2, -1, 0) = (3, -1, 0) = 0.3,
+with zero floating-point error.
 
-For natural numbers, the representation is simply (n, 0, 0), and the operations defined in the previous section coincide exactly with integer arithmetic on the mantissa, with the debt and phase remaining fixed at zero. Thus the machine implementation is a direct embodiment of the navigational reads.
+4. Multi-Digit Execution via the Finite 10 x 10 Seed:
+Arbitrary-precision arithmetic does not require an infinite physical table. The canonical 10 x 10 table serves as an irreducible seed. Multi-digit operations decompose into the discrete algebraic convolution of single-digit event maps. Each single-digit product is read in O(1) from the seed, while positional carries are absorbed into the debt cursor. The computational burden is shifted from procedural arithmetic recalculation to deterministic address routing.
 
-For numbers with multiple decimal places, navigation is performed componentwise: the address (X, Y) is decomposed into its digits, and operations such as addition, multiplication, and the like are executed as compositions of table reads for each pair of digits, with positional shifts taken into account. This corresponds exactly to the standard algorithms, but without the use of arithmetic operations over large numbers — all intermediate results are read from the 0..10 table and scaled via the debt. In this model, any classical arithmetic expression can be transformed into a finite sequence of navigational reads from a fixed finite set of tabular data. Thus, computational complexity is transferred to routing complexity rather than computational complexity. This does not change the class of computable functions, but it provides a different implementation that is free from rounding errors and does not require recursive definitions.
 
-Certification of the Implementation
+9. CONCLUSION
 
-A machine-checkable certification layer verifies the fundamental navigational identities and the exactness of the representation by means of multiple independent computational routes together with a kernel that re-derives each claim from first principles using only exact integer arithmetic. A claim is accepted only when every route agrees and the kernel reproduces the same result. The certificates confirm the internal consistency of the geometric identities and of the machine representation; they do not constitute formal proofs of the Peano axioms in a system such as Lean or Coq.
+The relational geometry of numbers developed here demonstrates that the procedural machinery of Peano arithmetic can be completely mapped to static geometric invariants on a discrete two-dimensional lattice. 
 
-Relevant certificates include the Pythagorean identity, exact decimal arithmetic such as 0.1 + 0.2 = 0.3, and exact integer powers and complex arithmetic. These certificates verify the implementation and the geometric identities used by the model, not the Peano axioms themselves.
+Peano's recursive formulation and Borisov's relational geometry are not competing or contradictory systems; they are isomorphic models of the same mathematical reality. Peano provides the minimal sequential language for inductive proof along a single dimension. Relational geometry provides the spatial landscape in which those sequential operations are seen to be the boundary reads, areas, and collisions of pre-existing geometric foliations. 
 
-Ontological Reading
-
-Within the framework developed here a number is an addressable relational web together with a navigational location in the multiplication table. What is ordinarily called an arithmetic operation is the act of reading a coordinate or a field at that location. Arithmetic as an autonomous generative class is therefore absent; only the navigational field remains. Classical arithmetic appears as a projection that recovers the same numerical values by different means.
-
-The zero element receives a correspondingly direct characterization: it is the unique empty web. This characterization is possible only after the relational space has been adopted as primary. It is offered as an ontological reading, not as a formal replacement of the classical existence axiom.
-
-Conclusion
-
-We have described a geometric space whose points are multiplicative relational webs and whose natural operations are pure acts of navigation and reading. The space is isomorphic to the standard natural numbers and therefore validates every theorem of classical arithmetic. At the same time it supplies an exact machine representation that excludes floating-point error by construction and realizes every operation as integer navigation on mantissa, debt and phase.
-
-The principal claims are therefore two. First, a transparent geometric realization of the natural numbers is possible in which arithmetic operations appear solely as navigational reads. Second, an exact computational layer exists that embodies this realization without residual floating-point discrepancy. The classical Peano structure remains the formal reference; the relational-navigational description is a faithful and exact embodiment of it in which the ontological priority is assigned to the addressable field rather than to a separate class of arithmetic procedures. The formal proof of isomorphism establishes that this embodiment is mathematically rigorous.
-
-Closing illustration. The sum of three and four is obtained by reading the endpoint of the anti-diagonal path that begins at the cell (3, 4) and terminates at the address whose coordinates are (7, 0). The product of six and seven is the field P at the cell (6, 7). The quotient of forty-two by six is the complementary coordinate of the factor pair (6, 7) on the hyperbola of product forty-two. The zero web contains no positive factor pair. In each case the result is a pure navigational read, and independent routes that recover the same address agree.
+By restoring the spatial dimensions of the multiplication table, arithmetic is liberated from the illusion of purely procedural computation, offering both a deeper structural ontology of number and an exact, lossless foundation for machine computation.
