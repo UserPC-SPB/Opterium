@@ -1727,11 +1727,11 @@ The triangle states: `[1,0,0]` = navguard is scanning (data invalid), `[0,1,0]` 
 
 | File | Purpose |
 |------|---------|
-| `parsers_for_AI/navguard.exe` | The scanner (Rust, ~1.5 MB, statically linked, zero dependencies) |
-| `parsers_for_AI/any_txt_parser.exe` | Rule-based text extractor v1.0.2 (statically linked, zero dependencies) |
-| `parsers_for_AI/help_full_parser.md` | Combined field guide covering both tools — the only doc you need |
+| `software/parsers_for_AI/navguard.exe` | The scanner (Rust, ~1.5 MB, statically linked, zero dependencies) |
+| `software/parsers_for_AI/any_txt_parser.exe` | Rule-based text extractor v1.0.2 (statically linked, zero dependencies) |
+| `software/parsers_for_AI/help_full_parser.md` | Combined field guide covering both tools — the only doc you need |
 
-Both tools are self-contained in the `parsers_for_AI/` folder: copy them into your project root and follow the workflow in `help_full_parser.md`. Run `navguard --check` after cloning to generate navigator files for your local paths.
+Both tools are self-contained in the `software/parsers_for_AI/` folder: copy them into your project root and follow the workflow in `help_full_parser.md`. Run `navguard --check` after cloning to generate navigator files for your local paths.
 
 **Vibe coding loop:** `navguard --check` → read `navigator.md` → set `[0,0,1]` → look up the symbol's line range in `navigator_deep2.md` → open the source file at exactly those lines — the AI never loads the full codebase.
 
