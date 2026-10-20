@@ -1,0 +1,198 @@
+{
+  "passport": {
+    "tree_generation": "2026-10-01T12:00:00Z",
+    "path": "/electronics/audio/speakers/bang-olufsen-beosound-explore",
+    "anchor": "[a82]",
+    "kind": "entity",
+    "updated_at": "2026-10-01T10:00:00Z",
+    "filters": [
+      {
+        "name": "brand",
+        "type": "string",
+        "ops": [
+          "eq",
+          "in",
+          "prefix"
+        ],
+        "enum": [
+          "ASUS",
+          "Acer",
+          "Amazon",
+          "Apple",
+          "Audio-Technica",
+          "Bang & Olufsen",
+          "Beats",
+          "Beyerdynamic",
+          "Bose",
+          "Dell",
+          "Google",
+          "HP",
+          "JBL",
+          "Jabra",
+          "Lenovo",
+          "Marshall",
+          "Microsoft",
+          "Razer",
+          "Sennheiser",
+          "Sonos",
+          "Sony",
+          "Soundcore",
+          "Technics",
+          "Ultimate Ears"
+        ]
+      },
+      {
+        "name": "price",
+        "type": "number",
+        "ops": [
+          "eq",
+          "lt",
+          "lte",
+          "gt",
+          "gte"
+        ],
+        "unit": "USD",
+        "min": 49,
+        "max": 3395
+      },
+      {
+        "name": "feature",
+        "type": "string",
+        "ops": [
+          "eq",
+          "in",
+          "contains",
+          "contains_all",
+          "contains_any"
+        ],
+        "enum": [
+          "2-in-1",
+          "anc",
+          "bluetooth",
+          "business",
+          "creator",
+          "foldable",
+          "gaming",
+          "light",
+          "mic",
+          "portable",
+          "smart",
+          "sport",
+          "stereo",
+          "studio",
+          "thin",
+          "touchscreen",
+          "waterproof",
+          "wifi",
+          "wireless"
+        ]
+      }
+    ],
+    "aggregations": {
+      "supported": false,
+      "metrics": [],
+      "group_by": [],
+      "min_group_size_default": 5
+    },
+    "slices": [
+      {
+        "name": "summary",
+        "tokens": 39,
+        "bytes": 155,
+        "generation": "V1:ae7af7a3",
+        "generated_at": "2026-10-01T10:00:00Z",
+        "dynamic": false,
+        "provenance": "publisher",
+        "default": true
+      },
+      {
+        "name": "specs",
+        "tokens": 25,
+        "bytes": 99,
+        "generation": "V1:51e4215d",
+        "generated_at": "2026-10-01T10:00:00Z",
+        "dynamic": false,
+        "provenance": "publisher"
+      },
+      {
+        "name": "reviews",
+        "tokens": 18,
+        "bytes": 72,
+        "generation": "V1:527e525f",
+        "generated_at": "2026-10-01T10:00:00Z",
+        "dynamic": false,
+        "provenance": "user_generated",
+        "moderated": true
+      },
+      {
+        "name": "logistics",
+        "tokens": 19,
+        "bytes": 73,
+        "generation": "V1:6e046c73",
+        "generated_at": "2026-10-01T10:00:00Z",
+        "dynamic": true,
+        "provenance": "publisher",
+        "price": 0.0005,
+        "currency": "USD",
+        "unit": "call",
+        "degradation": {
+          "mode": "stale_fallback",
+          "max_staleness_seconds": 900
+        }
+      }
+    ],
+    "quality": 0.98,
+    "official": true,
+    "attribution": "required",
+    "license": "CC-BY-4.0"
+  },
+  "slices": {
+    "summary": {
+      "fields": {
+        "brand": "Bang & Olufsen",
+        "model": "Beosound Explore",
+        "price": 191.04,
+        "currency": "USD",
+        "feature": [
+          "smart",
+          "stereo",
+          "wifi"
+        ],
+        "rating": 4.1,
+        "stock": 2
+      }
+    },
+    "specs": {
+      "fields": {
+        "driver_mm": 87,
+        "power": "20W",
+        "connectivity": [
+          "bluetooth",
+          "aux",
+          "wifi"
+        ],
+        "weight_g": 2600
+      }
+    },
+    "reviews": {
+      "fields": {
+        "rating": 4.1,
+        "count": 1971,
+        "histogram": [
+          1036,
+          468,
+          214,
+          156,
+          97
+        ]
+      }
+    },
+    "logistics": {
+      "fields": {
+        "in_stock": true,
+        "ships_from": "Memphis, TN",
+        "delivery_days": 2
+      }
+    }
+  }
+}

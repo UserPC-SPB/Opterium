@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentdatacircuit.org/schemas/v0.1/problem.schema.json",
+  "type": "object",
+  "required": ["type", "title", "status"],
+  "properties": {
+    "type": {
+      "type": "string",
+      "pattern": "^https://agentdatacircuit\\.org/errors/(INVALID_BODY|FILTER_INVALID|INVALID_AGGREGATION|INVALID_AGGREGATION_TARGET|PATH_INVALID|CURSOR_INVALID|ANCHOR_INVALID|AUTH_REQUIRED|BUDGET_EXCEEDED|FORBIDDEN|ANCHOR_NOT_FOUND|SLICE_NOT_FOUND|GENERATION_STALE|ANCHOR_MOVED|ANCHOR_EXPIRED|CURSOR_EXPIRED|PAYLOAD_TOO_LARGE|UNSUPPORTED_MEDIA_TYPE|AGGREGATION_TOO_BROAD|RATE_LIMIT|INTERNAL_ERROR|NOT_IMPLEMENTED|BAD_GATEWAY|HYDRATION_FAILED|BACKEND_TIMEOUT|DEGRADATION_BILLING_VIOLATION)$"
+    },
+    "title": { "type": "string" },
+    "status": { "type": "integer", "minimum": 100, "maximum": 599 },
+    "detail": { "type": "string" },
+    "instance": { "type": "string" },
+    "tree_generation": { "type": "string", "minLength": 1 },
+    "retryable": { "type": "boolean" },
+    "retry_after": { "type": ["integer", "null"], "minimum": 0 },
+    "request_id": { "type": "string" },
+    "code": { "type": "string", "enum": ["INVALID_BODY", "FILTER_INVALID", "INVALID_AGGREGATION", "INVALID_AGGREGATION_TARGET", "PATH_INVALID", "CURSOR_INVALID", "ANCHOR_INVALID", "AUTH_REQUIRED", "BUDGET_EXCEEDED", "FORBIDDEN", "ANCHOR_NOT_FOUND", "SLICE_NOT_FOUND", "GENERATION_STALE", "ANCHOR_MOVED", "ANCHOR_EXPIRED", "CURSOR_EXPIRED", "PAYLOAD_TOO_LARGE", "UNSUPPORTED_MEDIA_TYPE", "AGGREGATION_TOO_BROAD", "RATE_LIMIT", "INTERNAL_ERROR", "NOT_IMPLEMENTED", "BAD_GATEWAY", "HYDRATION_FAILED", "BACKEND_TIMEOUT", "DEGRADATION_BILLING_VIOLATION"] },
+    "error": {
+      "type": "object",
+      "properties": {
+        "code": { "type": "string", "enum": ["INVALID_BODY", "FILTER_INVALID", "INVALID_AGGREGATION", "INVALID_AGGREGATION_TARGET", "PATH_INVALID", "CURSOR_INVALID", "ANCHOR_INVALID", "AUTH_REQUIRED", "BUDGET_EXCEEDED", "FORBIDDEN", "ANCHOR_NOT_FOUND", "SLICE_NOT_FOUND", "GENERATION_STALE", "ANCHOR_MOVED", "ANCHOR_EXPIRED", "CURSOR_EXPIRED", "PAYLOAD_TOO_LARGE", "UNSUPPORTED_MEDIA_TYPE", "AGGREGATION_TOO_BROAD", "RATE_LIMIT", "INTERNAL_ERROR", "NOT_IMPLEMENTED", "BAD_GATEWAY", "HYDRATION_FAILED", "BACKEND_TIMEOUT", "DEGRADATION_BILLING_VIOLATION"] },
+        "retryable": { "type": "boolean" }
+      }
+    },
+    "details": {
+      "type": "object",
+      "properties": {
+        "replaced_by": { "type": "string" },
+        "path": { "type": "string" },
+        "unknown_fields": { "type": "array", "items": { "type": "string" } },
+        "allowed": { "type": "array", "items": { "type": "string" } },
+        "unsupported_ops": { "type": "array", "items": { "type": "string" } },
+        "estimated_groups": { "type": "integer", "minimum": 0 },
+        "privacy_floor": { "type": "integer", "minimum": 0 },
+        "current_balance": { "type": "number", "minimum": 0 },
+        "required_balance": { "type": "number", "minimum": 0 }
+      }
+    }
+  }
+}

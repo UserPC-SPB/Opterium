@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentdatacircuit.org/schemas/v0.1/manifest.schema.json",
+  "type": "object",
+  "required": ["adc", "root", "tree_generation", "tokenizer"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "adc": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+$" },
+    "adc_min": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+$" },
+    "root": { "type": "string" },
+    "namespace": { "type": "string" },
+    "tree_generation": { "type": "string", "minLength": 1 },
+    "tokenizer": {
+      "anyOf": [
+        { "type": "string", "enum": ["cl100k_base", "o200k_base", "utf8_bytes_div_4"] },
+        { "type": "string", "pattern": "^https?://" }
+      ]
+    },
+    "conformance": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "enum": ["core", "search", "dynamic", "commerce", "trust"] }
+    },
+    "endpoints": {
+      "type": "object",
+      "properties": {
+        "orient": { "type": "string" },
+        "tree": { "type": "string" },
+        "passport": { "type": "string" },
+        "fetch": { "type": "string" },
+        "estimate": { "type": "string" },
+        "aggregate": { "type": "string" },
+        "search": { "type": "string" },
+        "grep": { "type": "string" },
+        "verify": { "type": "string" }
+      }
+    },
+    "policy": {
+      "type": "object",
+      "properties": {
+        "agents": { "type": "string", "enum": ["welcome", "restricted", "closed"] },
+        "license": { "type": "string" },
+        "attribution": { "type": "string", "enum": ["required", "requested", "none"] },
+        "provenance_disclosure": { "type": "boolean" },
+        "rate_limit": {
+          "type": "object",
+          "properties": {
+            "requests_per_minute": { "type": "integer", "minimum": 0 },
+            "burst": { "type": "integer", "minimum": 0 }
+          }
+        }
+      }
+    },
+    "auth": {
+      "type": "object",
+      "properties": {
+        "required": { "type": "boolean" },
+        "schemes": { "type": "array", "items": { "type": "string" } },
+        "realm": { "type": "string" }
+      }
+    },
+    "defaults": {
+      "type": "object",
+      "properties": {
+        "lang": { "type": "string" },
+        "currency": { "type": "string", "pattern": "^[A-Z]{3}$" },
+        "page_size": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "limits": {
+      "type": "object",
+      "properties": {
+        "max_limit": { "type": "integer", "minimum": 0 },
+        "max_depth": { "type": "integer", "minimum": 0 },
+        "max_tree_nodes": { "type": "integer", "minimum": 0 },
+        "max_aggregate_groups": { "type": "integer", "minimum": 0 },
+        "max_aggregate_group_by": { "type": "integer", "minimum": 0 },
+        "max_post_bytes": { "type": "integer", "minimum": 0 },
+        "max_filter_conditions": { "type": "integer", "minimum": 0 },
+        "max_filter_depth": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "rate_limits": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "scope": { "type": "string" },
+          "requests": { "type": "integer", "minimum": 0 },
+          "window": { "type": "string" },
+          "burst": { "type": "integer", "minimum": 0 },
+          "weights": {
+            "type": "object",
+            "additionalProperties": { "type": "integer", "minimum": 0 }
+          }
+        }
+      }
+    },
+    "features": {
+      "type": "object",
+      "properties": {
+        "post_fetch": { "type": "boolean" },
+        "fields": { "type": "boolean" },
+        "estimate": { "type": "boolean" },
+        "ndjson_streaming": { "type": "boolean" },
+        "grep_regex": { "type": "boolean" },
+        "aggregate": {
+          "type": "object",
+          "properties": {
+            "metrics": { "type": "array", "items": { "type": "string" } },
+            "group_by": { "type": "array", "items": { "type": "string" } }
+          }
+        }
+      }
+    },
+    "trust": {
+      "type": "object",
+      "properties": {
+        "algorithm": { "type": "string", "enum": ["ES256", "ES384", "EdDSA"] },
+        "jwks_uri": { "type": "string" },
+        "sla": {
+          "type": "object",
+          "properties": {
+            "max_dynamic_latency_ms": { "type": "integer", "minimum": 0 },
+            "fallback_allowed": { "type": "boolean" }
+          }
+        }
+      }
+    },
+    "updated_at": { "type": "string", "format": "date-time" }
+  }
+}

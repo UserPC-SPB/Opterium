@@ -1,0 +1,376 @@
+{
+  "passport": {
+    "tree_generation": "2026-10-01T12:00:00Z",
+    "path": "/electronics/audio/speakers",
+    "anchor": "[a79]",
+    "kind": "collection",
+    "count": 16,
+    "list_item_tokens": 49,
+    "list_item_bytes": 194,
+    "list_item_tokens_p95": 56,
+    "updated_at": "2026-10-01T10:00:00Z",
+    "filters": [
+      {
+        "name": "brand",
+        "type": "string",
+        "ops": [
+          "eq",
+          "in",
+          "prefix"
+        ],
+        "enum": [
+          "ASUS",
+          "Acer",
+          "Amazon",
+          "Apple",
+          "Audio-Technica",
+          "Bang & Olufsen",
+          "Beats",
+          "Beyerdynamic",
+          "Bose",
+          "Dell",
+          "Google",
+          "HP",
+          "JBL",
+          "Jabra",
+          "Lenovo",
+          "Marshall",
+          "Microsoft",
+          "Razer",
+          "Sennheiser",
+          "Sonos",
+          "Sony",
+          "Soundcore",
+          "Technics",
+          "Ultimate Ears"
+        ]
+      },
+      {
+        "name": "price",
+        "type": "number",
+        "ops": [
+          "eq",
+          "lt",
+          "lte",
+          "gt",
+          "gte"
+        ],
+        "unit": "USD",
+        "min": 49,
+        "max": 3395
+      },
+      {
+        "name": "feature",
+        "type": "string",
+        "ops": [
+          "eq",
+          "in",
+          "contains",
+          "contains_all",
+          "contains_any"
+        ],
+        "enum": [
+          "2-in-1",
+          "anc",
+          "bluetooth",
+          "business",
+          "creator",
+          "foldable",
+          "gaming",
+          "light",
+          "mic",
+          "portable",
+          "smart",
+          "sport",
+          "stereo",
+          "studio",
+          "thin",
+          "touchscreen",
+          "waterproof",
+          "wifi",
+          "wireless"
+        ]
+      }
+    ],
+    "aggregations": {
+      "supported": true,
+      "metrics": [
+        "count()",
+        "sum(price)",
+        "avg(price)",
+        "min(price)",
+        "max(price)",
+        "p50(price)",
+        "p95(price)"
+      ],
+      "group_by": [
+        "brand",
+        "feature"
+      ],
+      "min_group_size_default": 5
+    },
+    "slices": [
+      {
+        "name": "summary",
+        "tokens": 783,
+        "bytes": 3130,
+        "generation": "V1:6d9c5fab",
+        "generated_at": "2026-10-01T10:00:00Z",
+        "dynamic": false,
+        "provenance": "publisher",
+        "default": true
+      }
+    ],
+    "quality": 0.98,
+    "official": true,
+    "attribution": "required",
+    "license": "CC-BY-4.0"
+  },
+  "slices": {
+    "summary": {
+      "items": [
+        {
+          "path": "/electronics/audio/speakers/amazon-echo-5th-gen",
+          "fields": {
+            "brand": "Amazon",
+            "model": "Echo 5th Gen",
+            "price": 101.97,
+            "currency": "USD",
+            "feature": [
+              "bluetooth",
+              "waterproof"
+            ],
+            "rating": 4.4,
+            "stock": 48
+          }
+        },
+        {
+          "path": "/electronics/audio/speakers/apple-homepod-mini",
+          "fields": {
+            "brand": "Apple",
+            "model": "HomePod mini",
+            "price": 102.96,
+            "currency": "USD",
+            "feature": [
+              "portable",
+              "stereo"
+            ],
+            "rating": 4.3,
+            "stock": 51
+          }
+        },
+        {
+          "path": "/electronics/audio/speakers/bang-olufsen-beosound-explore",
+          "fields": {
+            "brand": "Bang & Olufsen",
+            "model": "Beosound Explore",
+            "price": 191.04,
+            "currency": "USD",
+            "feature": [
+              "smart",
+              "stereo",
+              "wifi"
+            ],
+            "rating": 4.1,
+            "stock": 2
+          }
+        },
+        {
+          "path": "/electronics/audio/speakers/bose-soundlink-flex",
+          "fields": {
+            "brand": "Bose",
+            "model": "SoundLink Flex",
+            "price": 151.98,
+            "currency": "USD",
+            "feature": [
+              "bluetooth",
+              "portable",
+              "stereo"
+            ],
+            "rating": 3.9,
+            "stock": 34
+          }
+        },
+        {
+          "path": "/electronics/audio/speakers/bose-soundlink-max",
+          "fields": {
+            "brand": "Bose",
+            "model": "SoundLink Max",
+            "price": 414.96,
+            "currency": "USD",
+            "feature": [
+              "bluetooth",
+              "smart",
+              "stereo"
+            ],
+            "rating": 4.1,
+            "stock": 22
+          }
+        },
+        {
+          "path": "/electronics/audio/speakers/google-nest-audio",
+          "fields": {
+            "brand": "Google",
+            "model": "Nest Audio",
+            "price": 95.04,
+            "currency": "USD",
+            "feature": [
+              "bluetooth",
+              "portable"
+            ],
+            "rating": 4.4,
+            "stock": 20
+          }
+        },
+        {
+          "path": "/electronics/audio/speakers/jbl-charge-5",
+          "fields": {
+            "brand": "JBL",
+            "model": "Charge 5",
+            "price": 180.79,
+            "currency": "USD",
+            "feature": [
+              "bluetooth",
+              "smart"
+            ],
+            "rating": 3.8,
+            "stock": 23
+          }
+        },
+        {
+          "path": "/electronics/audio/speakers/jbl-flip-6",
+          "fields": {
+            "brand": "JBL",
+            "model": "Flip 6",
+            "price": 134.16,
+            "currency": "USD",
+            "feature": [
+              "smart"
+            ],
+            "rating": 4.0,
+            "stock": 55
+          }
+        },
+        {
+          "path": "/electronics/audio/speakers/jbl-xtreme-4",
+          "fields": {
+            "brand": "JBL",
+            "model": "Xtreme 4",
+            "price": 349.0,
+            "currency": "USD",
+            "feature": [
+              "wifi"
+            ],
+            "rating": 3.9,
+            "stock": 51
+          }
+        },
+        {
+          "path": "/electronics/audio/speakers/marshall-acton-iii",
+          "fields": {
+            "brand": "Marshall",
+            "model": "Acton III",
+            "price": 281.79,
+            "currency": "USD",
+            "feature": [
+              "smart"
+            ],
+            "rating": 4.1,
+            "stock": 13
+          }
+        },
+        {
+          "path": "/electronics/audio/speakers/marshall-stanmore-ii",
+          "fields": {
+            "brand": "Marshall",
+            "model": "Stanmore II",
+            "price": 394.16,
+            "currency": "USD",
+            "feature": [
+              "portable",
+              "waterproof"
+            ],
+            "rating": 4.5,
+            "stock": 29
+          }
+        },
+        {
+          "path": "/electronics/audio/speakers/sonos-move-2",
+          "fields": {
+            "brand": "Sonos",
+            "model": "Move 2",
+            "price": 391.02,
+            "currency": "USD",
+            "feature": [
+              "waterproof",
+              "wifi"
+            ],
+            "rating": 4.4,
+            "stock": 23
+          }
+        },
+        {
+          "path": "/electronics/audio/speakers/sonos-one-sl",
+          "fields": {
+            "brand": "Sonos",
+            "model": "One SL",
+            "price": 206.96,
+            "currency": "USD",
+            "feature": [
+              "portable"
+            ],
+            "rating": 4.3,
+            "stock": 52
+          }
+        },
+        {
+          "path": "/electronics/audio/speakers/sonos-roam-2",
+          "fields": {
+            "brand": "Sonos",
+            "model": "Roam 2",
+            "price": 182.58,
+            "currency": "USD",
+            "feature": [
+              "bluetooth",
+              "smart",
+              "waterproof"
+            ],
+            "rating": 4.3,
+            "stock": 15
+          }
+        },
+        {
+          "path": "/electronics/audio/speakers/ultimate-ears-boom-4",
+          "fields": {
+            "brand": "Ultimate Ears",
+            "model": "BOOM 4",
+            "price": 171.84,
+            "currency": "USD",
+            "feature": [
+              "portable",
+              "smart",
+              "waterproof"
+            ],
+            "rating": 4.1,
+            "stock": 13
+          }
+        },
+        {
+          "path": "/electronics/audio/speakers/ultimate-ears-megaboom-3",
+          "fields": {
+            "brand": "Ultimate Ears",
+            "model": "MEGABOOM 3",
+            "price": 199.0,
+            "currency": "USD",
+            "feature": [
+              "bluetooth",
+              "stereo"
+            ],
+            "rating": 3.9,
+            "stock": 35
+          }
+        }
+      ]
+    }
+  }
+}

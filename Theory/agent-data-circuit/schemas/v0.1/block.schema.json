@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentdatacircuit.org/schemas/v0.1/block.schema.json",
+  "type": "object",
+  "required": ["tree_generation", "anchor", "path", "generation", "usage"],
+  "properties": {
+    "tree_generation": { "type": "string", "minLength": 1 },
+    "anchor": { "$ref": "#/$defs/anchor" },
+    "path": { "$ref": "#/$defs/path" },
+    "slice": { "type": "string" },
+    "generation": { "type": "string", "minLength": 1 },
+    "hydration": { "$ref": "#/$defs/hydration" },
+    "fields": { "type": "object" },
+    "usage": { "$ref": "#/$defs/usage" },
+    "partial": { "type": "boolean" },
+    "projection": { "type": "string" },
+    "signature": { "type": "string" }
+  },
+  "$defs": {
+    "anchor": {
+      "type": "string",
+      "pattern": "^\\[a[0-9]+\\](?:-[1-9][0-9]*)?(?:/[A-Za-z0-9._-]+)*$"
+    },
+    "path": {
+      "type": "string",
+      "pattern": "^(/|/[^/]+(?:/[^/]+)*)$",
+      "not": { "pattern": "(^|/)\\.\\.(/|$)" }
+    },
+    "money": {
+      "type": "object",
+      "required": ["amount"],
+      "properties": {
+        "amount": { "type": "number", "minimum": 0 },
+        "currency": { "type": "string", "pattern": "^[A-Z]{3}$" },
+        "unit": { "type": "string" }
+      }
+    },
+    "usage": {
+      "type": "object",
+      "required": ["tokens", "items"],
+      "properties": {
+        "tokens": { "type": "integer", "minimum": 0 },
+        "bytes": { "type": "integer", "minimum": 0 },
+        "items": { "type": "integer", "minimum": 0 },
+        "cost": { "$ref": "#/$defs/money" }
+      }
+    },
+    "hydrationEntry": {
+      "type": "object",
+      "required": ["status"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "live",
+            "cached",
+            "stale_fallback",
+            "degraded_partial",
+            "synthetic_stub"
+          ]
+        },
+        "hydrated_at": { "type": "string", "format": "date-time" },
+        "staleness_seconds": { "type": "integer", "minimum": 0 },
+        "max_staleness_seconds": { "type": "integer", "minimum": 0 },
+        "failure_reason": { "type": "string" },
+        "revalidation_required": { "type": "boolean" }
+      }
+    },
+    "hydration": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/$defs/hydrationEntry" }
+    }
+  }
+}

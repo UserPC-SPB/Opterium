@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install jsonschema pytest
+      - name: Example dataset is reproducible
+        run: python examples/ecommerce/generate.py --check
+      - name: Schemas parse as JSON
+        run: |
+          for f in schemas/v0.1/*.json; do
+            python -m json.tool "$f" > /dev/null
+          done
+      - name: Validator accepts the bundled example
+        run: python reference/validator/adc.py validate examples/ecommerce
+      - name: Pytest suite
+        run: python -m pytest tests -q
+
+  lint-ascii:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: No codepoint above 127 in .py/.json/.yml
+        run: |
+          python -c "
+          import pathlib
+          bad = []
+          for p in pathlib.Path('.').rglob('*'):
+              if not p.is_file() or '.git' in p.parts:
+                  continue
+              if p.suffix not in ('.py', '.json', '.yml'):
+                  continue
+              if any(b > 127 for b in p.read_bytes()):
+                  bad.append(str(p))
+          print(*bad, sep=chr(10))
+          raise SystemExit(1 if bad else 0)
+          "

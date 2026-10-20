@@ -1,5 +1,2 @@
 # local agent workspace (pipeline relay artifacts)
 /_relay/
-
-# standalone nested theory repo (plain clone, not a submodule)
-/Theory/agent-data-circuit/

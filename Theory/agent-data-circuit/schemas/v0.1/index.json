@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentdatacircuit.org/schemas/v0.1/index.json",
+  "manifest.schema.json": "https://agentdatacircuit.org/schemas/v0.1/manifest.schema.json",
+  "tree.schema.json": "https://agentdatacircuit.org/schemas/v0.1/tree.schema.json",
+  "passport.schema.json": "https://agentdatacircuit.org/schemas/v0.1/passport.schema.json",
+  "block.schema.json": "https://agentdatacircuit.org/schemas/v0.1/block.schema.json",
+  "fetch-request.schema.json": "https://agentdatacircuit.org/schemas/v0.1/fetch-request.schema.json",
+  "fetch-response.schema.json": "https://agentdatacircuit.org/schemas/v0.1/fetch-response.schema.json",
+  "aggregate-request.schema.json": "https://agentdatacircuit.org/schemas/v0.1/aggregate-request.schema.json",
+  "aggregate-response.schema.json": "https://agentdatacircuit.org/schemas/v0.1/aggregate-response.schema.json",
+  "problem.schema.json": "https://agentdatacircuit.org/schemas/v0.1/problem.schema.json"
+}

@@ -1,0 +1,101 @@
+{
+  "adc": "0.1",
+  "adc_min": "0.1",
+  "root": "http://127.0.0.1:8080",
+  "namespace": "com.example",
+  "tree_generation": "2026-10-01T12:00:00Z",
+  "tokenizer": "utf8_bytes_div_4",
+  "conformance": [
+    "core",
+    "dynamic",
+    "commerce"
+  ],
+  "endpoints": {
+    "orient": "/adc/orient",
+    "tree": "/adc/tree",
+    "passport": "/adc/passport",
+    "fetch": "/adc/fetch",
+    "estimate": "/adc/estimate",
+    "aggregate": "/adc/aggregate"
+  },
+  "policy": {
+    "agents": "welcome",
+    "license": "CC-BY-4.0",
+    "attribution": "required",
+    "provenance_disclosure": true,
+    "rate_limit": {
+      "requests_per_minute": 120,
+      "burst": 30
+    }
+  },
+  "auth": {
+    "required": false,
+    "schemes": [
+      "bearer"
+    ],
+    "realm": "example"
+  },
+  "defaults": {
+    "lang": "en",
+    "currency": "USD",
+    "page_size": 20
+  },
+  "limits": {
+    "max_limit": 200,
+    "max_depth": 4,
+    "max_tree_nodes": 500,
+    "max_aggregate_groups": 1000,
+    "max_aggregate_group_by": 3,
+    "max_post_bytes": 65536,
+    "max_filter_conditions": 32,
+    "max_filter_depth": 4
+  },
+  "rate_limits": [
+    {
+      "scope": "anonymous",
+      "requests": 60,
+      "window": "PT1M",
+      "burst": 10,
+      "weights": {
+        "orient": 1,
+        "tree": 1,
+        "passport": 1,
+        "fetch": 1,
+        "estimate": 1,
+        "aggregate": 5,
+        "post_fetch": 2
+      }
+    }
+  ],
+  "features": {
+    "post_fetch": true,
+    "fields": true,
+    "estimate": true,
+    "ndjson_streaming": false,
+    "grep_regex": false,
+    "aggregate": {
+      "metrics": [
+        "count()",
+        "sum(price)",
+        "avg(price)",
+        "min(price)",
+        "max(price)",
+        "p50(price)",
+        "p95(price)"
+      ],
+      "group_by": [
+        "brand",
+        "feature"
+      ]
+    }
+  },
+  "trust": {
+    "algorithm": "ES256",
+    "jwks_uri": "/.well-known/jwks.json",
+    "sla": {
+      "max_dynamic_latency_ms": 450,
+      "fallback_allowed": true
+    }
+  },
+  "updated_at": "2026-10-01T12:00:00Z"
+}

@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentdatacircuit.org/schemas/v0.1/passport.schema.json",
+  "type": "object",
+  "required": ["tree_generation"],
+  "allOf": [
+    {
+      "if": {
+        "type": "object",
+        "required": ["kind"],
+        "properties": { "kind": { "const": "collection" } }
+      },
+      "then": { "required": ["count"] }
+    }
+  ],
+  "properties": {
+    "tree_generation": { "type": "string", "minLength": 1 },
+    "path": { "$ref": "#/$defs/path" },
+    "anchor": { "$ref": "#/$defs/anchor" },
+    "kind": { "type": "string", "enum": ["collection", "entity", "document"] },
+    "count": { "type": "integer", "minimum": 0 },
+    "list_item_tokens": { "type": "integer", "minimum": 0 },
+    "list_item_bytes": { "type": "integer", "minimum": 0 },
+    "list_item_tokens_p95": { "type": "integer", "minimum": 0 },
+    "updated_at": { "type": "string", "format": "date-time" },
+    "filters": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/filterDescriptor" }
+    },
+    "aggregations": { "$ref": "#/$defs/aggregations" },
+    "slices": { "type": "array", "items": { "$ref": "#/$defs/slice" } },
+    "quality": { "type": "number" },
+    "official": { "type": "boolean" },
+    "attribution": { "type": "string", "enum": ["required", "requested", "none"] },
+    "license": { "type": "string" }
+  },
+  "$defs": {
+    "anchor": {
+      "type": "string",
+      "pattern": "^\\[a[0-9]+\\](?:-[1-9][0-9]*)?(?:/[A-Za-z0-9._-]+)*$"
+    },
+    "path": {
+      "type": "string",
+      "pattern": "^(/|/[^/]+(?:/[^/]+)*)$",
+      "not": { "pattern": "(^|/)\\.\\.(/|$)" }
+    },
+    "filterOp": {
+      "type": "string",
+      "enum": [
+        "eq",
+        "neq",
+        "lt",
+        "lte",
+        "gt",
+        "gte",
+        "in",
+        "nin",
+        "contains",
+        "contains_all",
+        "contains_any",
+        "contains_none",
+        "prefix",
+        "exists"
+      ]
+    },
+    "filterDescriptor": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["name", "type", "ops"],
+          "properties": {
+            "name": { "type": "string", "minLength": 1 },
+            "type": {
+              "type": "string",
+              "enum": ["string", "number", "boolean", "date", "enum"]
+            },
+            "ops": {
+              "type": "array",
+              "minItems": 1,
+              "items": { "$ref": "#/$defs/filterOp" }
+            },
+            "enum": { "type": "array" },
+            "unit": { "type": "string" },
+            "min": { "type": "number" },
+            "max": { "type": "number" }
+          }
+        },
+        { "type": "string", "minLength": 1 }
+      ]
+    },
+    "aggregations": {
+      "type": "object",
+      "required": ["supported", "metrics", "group_by", "min_group_size_default"],
+      "properties": {
+        "supported": { "type": "boolean" },
+        "metrics": { "type": "array", "items": { "type": "string" } },
+        "group_by": { "type": "array", "items": { "type": "string" } },
+        "min_group_size_default": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "degradation": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": ["stale_fallback", "partial_omit", "fail_closed"]
+        },
+        "max_staleness_seconds": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "slice": {
+      "type": "object",
+      "required": ["name", "tokens", "generation"],
+      "allOf": [
+        {
+          "if": { "type": "object", "required": ["price"] },
+          "then": { "required": ["currency"] }
+        }
+      ],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "tokens": { "type": "integer", "minimum": 0 },
+        "bytes": { "type": "integer", "minimum": 0 },
+        "generation": { "type": "string", "minLength": 1 },
+        "generated_at": { "type": "string", "format": "date-time" },
+        "dynamic": { "type": "boolean" },
+        "price": { "type": "number", "minimum": 0 },
+        "currency": { "type": "string", "pattern": "^[A-Z]{3}$" },
+        "unit": { "type": "string" },
+        "degradation": { "$ref": "#/$defs/degradation" },
+        "provenance": {
+          "type": "string",
+          "enum": ["publisher", "user_generated", "third_party"]
+        },
+        "moderated": { "type": "boolean" },
+        "default": { "type": "boolean" }
+      }
+    }
+  }
+}

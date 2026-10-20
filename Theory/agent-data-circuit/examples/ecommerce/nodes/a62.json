@@ -1,0 +1,200 @@
+{
+  "passport": {
+    "tree_generation": "2026-10-01T12:00:00Z",
+    "path": "/electronics/audio/headphones/marshall-mode-ii",
+    "anchor": "[a62]",
+    "kind": "entity",
+    "updated_at": "2026-10-01T10:00:00Z",
+    "filters": [
+      {
+        "name": "brand",
+        "type": "string",
+        "ops": [
+          "eq",
+          "in",
+          "prefix"
+        ],
+        "enum": [
+          "ASUS",
+          "Acer",
+          "Amazon",
+          "Apple",
+          "Audio-Technica",
+          "Bang & Olufsen",
+          "Beats",
+          "Beyerdynamic",
+          "Bose",
+          "Dell",
+          "Google",
+          "HP",
+          "JBL",
+          "Jabra",
+          "Lenovo",
+          "Marshall",
+          "Microsoft",
+          "Razer",
+          "Sennheiser",
+          "Sonos",
+          "Sony",
+          "Soundcore",
+          "Technics",
+          "Ultimate Ears"
+        ]
+      },
+      {
+        "name": "price",
+        "type": "number",
+        "ops": [
+          "eq",
+          "lt",
+          "lte",
+          "gt",
+          "gte"
+        ],
+        "unit": "USD",
+        "min": 49,
+        "max": 3395
+      },
+      {
+        "name": "feature",
+        "type": "string",
+        "ops": [
+          "eq",
+          "in",
+          "contains",
+          "contains_all",
+          "contains_any"
+        ],
+        "enum": [
+          "2-in-1",
+          "anc",
+          "bluetooth",
+          "business",
+          "creator",
+          "foldable",
+          "gaming",
+          "light",
+          "mic",
+          "portable",
+          "smart",
+          "sport",
+          "stereo",
+          "studio",
+          "thin",
+          "touchscreen",
+          "waterproof",
+          "wifi",
+          "wireless"
+        ]
+      }
+    ],
+    "aggregations": {
+      "supported": false,
+      "metrics": [],
+      "group_by": [],
+      "min_group_size_default": 5
+    },
+    "slices": [
+      {
+        "name": "summary",
+        "tokens": 41,
+        "bytes": 162,
+        "generation": "V1:8dfd7ac6",
+        "generated_at": "2026-10-01T10:00:00Z",
+        "dynamic": false,
+        "provenance": "publisher",
+        "default": true
+      },
+      {
+        "name": "specs",
+        "tokens": 23,
+        "bytes": 91,
+        "generation": "V1:cd13865f",
+        "generated_at": "2026-10-01T10:00:00Z",
+        "dynamic": false,
+        "provenance": "publisher"
+      },
+      {
+        "name": "reviews",
+        "tokens": 18,
+        "bytes": 72,
+        "generation": "V1:74e443a4",
+        "generated_at": "2026-10-01T10:00:00Z",
+        "dynamic": false,
+        "provenance": "user_generated",
+        "moderated": true
+      },
+      {
+        "name": "logistics",
+        "tokens": 20,
+        "bytes": 78,
+        "generation": "V1:0e80edc7",
+        "generated_at": "2026-10-01T10:00:00Z",
+        "dynamic": true,
+        "provenance": "publisher",
+        "price": 0.0005,
+        "currency": "USD",
+        "unit": "call",
+        "degradation": {
+          "mode": "stale_fallback",
+          "max_staleness_seconds": 900
+        }
+      }
+    ],
+    "quality": 0.98,
+    "official": true,
+    "attribution": "required",
+    "license": "CC-BY-4.0"
+  },
+  "slices": {
+    "summary": {
+      "fields": {
+        "brand": "Marshall",
+        "model": "Mode II",
+        "price": 184.37,
+        "currency": "USD",
+        "feature": [
+          "anc",
+          "bluetooth",
+          "sport",
+          "studio",
+          "wireless"
+        ],
+        "rating": 4.1,
+        "stock": 7
+      }
+    },
+    "specs": {
+      "fields": {
+        "anc": true,
+        "battery_life": "26 hours",
+        "weight_g": 8,
+        "codec": [
+          "sbc",
+          "aac",
+          "aptx"
+        ]
+      }
+    },
+    "reviews": {
+      "fields": {
+        "rating": 4.1,
+        "count": 2683,
+        "histogram": [
+          1514,
+          342,
+          428,
+          342,
+          57
+        ]
+      }
+    },
+    "logistics": {
+      "fields": {
+        "in_stock": true,
+        "ships_from": "Flower Mound, TX",
+        "delivery_days": 6
+      }
+    }
+  }
+}

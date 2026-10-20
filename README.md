@@ -7,7 +7,7 @@ Opterium is a repository containing a number ontology and theory equipped with m
 | Path | What it is | Entry point |
 |---|---|---|
 | `Theory/ontology_of_number/` | The number ontology: theory, reading guide, claims index | [`README.md`](Theory/ontology_of_number/README.md) — compact reading guide (start here) |
-| `Theory/agent-data-circuit/` | STANDALONE nested repository (upstream: github.com/UserPC-SPB/agent-data-circuit) | its own README inside |
+| `Theory/agent-data-circuit/` | Agent Data Circuit (ADC): publisher-side protocol proposal — manifest, schemas, reference server, MCP bridge | [`AI-ENTRY.md`](Theory/agent-data-circuit/AI-ENTRY.md) — cold entry; [`README.md`](Theory/agent-data-circuit/README.md) |
 | `software/parsers_for_AI/` | Unified parser `any_txt_parser.exe` (CLI + MCP server) | [`software/README.md`](software/README.md) |
 | `software/witness_prover/` | Proof-by-witness certificate prover | [`software/README.md`](software/README.md) |
 | `README.md` | This router | — |
@@ -17,7 +17,8 @@ Opterium is a repository containing a number ontology and theory equipped with m
 1. This file — repository map and context budget.
 2. [`Theory/ontology_of_number/README.md`](Theory/ontology_of_number/README.md) — compact reading guide: surface path (one file) or deep path (protocol order).
 3. [`Theory/ontology_of_number/nav_index.md`](Theory/ontology_of_number/nav_index.md) — claims index: every claim with witness and closure.
-4. The documents themselves, chosen by the context budget below.
+4. [`Theory/agent-data-circuit/AI-ENTRY.md`](Theory/agent-data-circuit/AI-ENTRY.md) — ADC protocol cold entry (only if your task is about data circuits).
+5. The documents themselves, chosen by the context budget below.
 
 Convention: **every folder has its own README with a `For AI agents` section — read it before the folder's content.** No surprises by design.
 
@@ -31,6 +32,9 @@ Internally audited 2026-10-21: 34 structural findings, all fixed in the same rou
 
 | path | lines | ~tokens |
 |---|---|---|
+| `Theory/agent-data-circuit/AI-ENTRY.md` | 254 | ~2 600 |
+| `Theory/agent-data-circuit/README.md` | 281 | ~3 000 |
+| `Theory/agent-data-circuit/SPEC.md` | 1182 | ~12 500 |
 | `Theory/ontology_of_number/APPENDIX_MATH.md` | 30 | ~350 |
 | `Theory/ontology_of_number/AnchorFile_SuperTable_v1.0.json` | 98 | ~2 600 |
 | `Theory/ontology_of_number/Borisov_K_theory.md` | 1777 | ~22 550 |
@@ -56,7 +60,7 @@ Internally audited 2026-10-21: 34 structural findings, all fixed in the same rou
 
 ### No surprises
 
-- `Theory/agent-data-circuit/` is a standalone nested git repository, not part of this history.
+- `Theory/agent-data-circuit/` is a snapshot of github.com/UserPC-SPB/agent-data-circuit (master `ab939aa`); its own LICENSE-CODE / LICENSE-DOCS apply inside.
 - `_relay/` at repo root is a local agent workspace, gitignored; it may be absent.
 - Text files are UTF-8 (many with BOM). Branch: `v3.1-clean`.
 - The parser is one unified executable: `software/parsers_for_AI/any_txt_parser.exe` (CLI + MCP); navguard.exe was merged into it and no longer exists as a file.

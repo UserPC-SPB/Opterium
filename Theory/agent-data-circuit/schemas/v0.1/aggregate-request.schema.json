@@ -1,0 +1,168 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentdatacircuit.org/schemas/v0.1/aggregate-request.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["metrics"],
+  "oneOf": [
+    { "required": ["anchor"], "not": { "required": ["path"] } },
+    { "required": ["path"], "not": { "required": ["anchor"] } }
+  ],
+  "properties": {
+    "anchor": { "$ref": "#/$defs/anchor" },
+    "path": { "$ref": "#/$defs/path" },
+    "tree_generation": { "type": "string", "minLength": 1 },
+    "filter": { "$ref": "#/$defs/filter" },
+    "metrics": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/metric" }
+    },
+    "group_by": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "pattern": "^[A-Za-z0-9_.]+$" }
+    },
+    "having": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/havingCondition" }
+    },
+    "order_by": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "pattern": "^-?[A-Za-z0-9_.]+$" }
+    },
+    "limit": { "type": "integer", "minimum": 1 },
+    "cursor": { "type": ["string", "null"] },
+    "min_group_size": { "type": "integer", "minimum": 0 },
+    "max_staleness": { "type": "integer", "minimum": 0 },
+    "approximate": { "type": "boolean" }
+  },
+  "$defs": {
+    "anchor": {
+      "type": "string",
+      "pattern": "^\\[a[0-9]+\\](?:-[1-9][0-9]*)?(?:/[A-Za-z0-9._-]+)*$"
+    },
+    "path": {
+      "type": "string",
+      "pattern": "^(/|/[^/]+(?:/[^/]+)*)$",
+      "not": { "pattern": "(^|/)\\.\\.(/|$)" }
+    },
+    "metricExpr": {
+      "type": "string",
+      "pattern": "^(count|sum|avg|min|max|distinct|p50|p90|p95|p99|median)\\([A-Za-z0-9_.]*\\)(:[A-Za-z0-9_]+)?$"
+    },
+    "metric": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["expr"],
+          "additionalProperties": false,
+          "properties": {
+            "expr": { "$ref": "#/$defs/metricExpr" },
+            "alias": { "type": "string", "pattern": "^[A-Za-z0-9_]+$" }
+          }
+        },
+        { "$ref": "#/$defs/metricExpr" }
+      ]
+    },
+    "havingCondition": {
+      "type": "object",
+      "required": ["alias", "op", "value"],
+      "additionalProperties": false,
+      "properties": {
+        "alias": { "type": "string", "minLength": 1 },
+        "op": {
+          "type": "string",
+          "enum": ["eq", "neq", "lt", "lte", "gt", "gte"]
+        },
+        "value": { "type": ["string", "number", "boolean", "null"] }
+      }
+    },
+    "scalar": { "type": ["string", "number", "boolean", "null"] },
+    "scalarList": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": ["string", "number", "boolean", "null"] }
+    },
+    "scalarOrList": {
+      "anyOf": [
+        { "$ref": "#/$defs/scalar" },
+        { "$ref": "#/$defs/scalarList" }
+      ]
+    },
+    "condition": {
+      "oneOf": [
+        { "$ref": "#/$defs/scalar" },
+        {
+          "type": "object",
+          "minProperties": 1,
+          "maxProperties": 1,
+          "additionalProperties": false,
+          "properties": {
+            "eq": { "$ref": "#/$defs/scalar" },
+            "neq": { "$ref": "#/$defs/scalar" },
+            "lt": { "$ref": "#/$defs/scalar" },
+            "lte": { "$ref": "#/$defs/scalar" },
+            "gt": { "$ref": "#/$defs/scalar" },
+            "gte": { "$ref": "#/$defs/scalar" },
+            "in": { "$ref": "#/$defs/scalarList" },
+            "nin": { "$ref": "#/$defs/scalarList" },
+            "contains": { "$ref": "#/$defs/scalarOrList" },
+            "contains_all": { "$ref": "#/$defs/scalarList" },
+            "contains_any": { "$ref": "#/$defs/scalarList" },
+            "contains_none": { "$ref": "#/$defs/scalarList" },
+            "prefix": { "type": "string" },
+            "exists": { "type": "boolean" }
+          }
+        }
+      ]
+    },
+    "fieldCondition": {
+      "type": "object",
+      "minProperties": 1,
+      "maxProperties": 1,
+      "additionalProperties": false,
+      "patternProperties": {
+        "^[A-Za-z0-9_.]+$": { "$ref": "#/$defs/condition" }
+      }
+    },
+    "filter": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["and"],
+          "additionalProperties": false,
+          "properties": {
+            "and": {
+              "type": "array",
+              "minItems": 1,
+              "items": { "$ref": "#/$defs/filter" }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": ["or"],
+          "additionalProperties": false,
+          "properties": {
+            "or": {
+              "type": "array",
+              "minItems": 1,
+              "items": { "$ref": "#/$defs/filter" }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": ["not"],
+          "additionalProperties": false,
+          "properties": {
+            "not": { "$ref": "#/$defs/filter" }
+          }
+        },
+        { "$ref": "#/$defs/fieldCondition" }
+      ]
+    }
+  }
+}

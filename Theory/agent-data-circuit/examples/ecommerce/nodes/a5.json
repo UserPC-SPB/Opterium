@@ -1,0 +1,195 @@
+{
+  "passport": {
+    "tree_generation": "2026-10-01T12:00:00Z",
+    "path": "/computers/laptops/acer-swift-3",
+    "anchor": "[a5]",
+    "kind": "entity",
+    "updated_at": "2026-10-01T10:00:00Z",
+    "filters": [
+      {
+        "name": "brand",
+        "type": "string",
+        "ops": [
+          "eq",
+          "in",
+          "prefix"
+        ],
+        "enum": [
+          "ASUS",
+          "Acer",
+          "Amazon",
+          "Apple",
+          "Audio-Technica",
+          "Bang & Olufsen",
+          "Beats",
+          "Beyerdynamic",
+          "Bose",
+          "Dell",
+          "Google",
+          "HP",
+          "JBL",
+          "Jabra",
+          "Lenovo",
+          "Marshall",
+          "Microsoft",
+          "Razer",
+          "Sennheiser",
+          "Sonos",
+          "Sony",
+          "Soundcore",
+          "Technics",
+          "Ultimate Ears"
+        ]
+      },
+      {
+        "name": "price",
+        "type": "number",
+        "ops": [
+          "eq",
+          "lt",
+          "lte",
+          "gt",
+          "gte"
+        ],
+        "unit": "USD",
+        "min": 49,
+        "max": 3395
+      },
+      {
+        "name": "feature",
+        "type": "string",
+        "ops": [
+          "eq",
+          "in",
+          "contains",
+          "contains_all",
+          "contains_any"
+        ],
+        "enum": [
+          "2-in-1",
+          "anc",
+          "bluetooth",
+          "business",
+          "creator",
+          "foldable",
+          "gaming",
+          "light",
+          "mic",
+          "portable",
+          "smart",
+          "sport",
+          "stereo",
+          "studio",
+          "thin",
+          "touchscreen",
+          "waterproof",
+          "wifi",
+          "wireless"
+        ]
+      }
+    ],
+    "aggregations": {
+      "supported": false,
+      "metrics": [],
+      "group_by": [],
+      "min_group_size_default": 5
+    },
+    "slices": [
+      {
+        "name": "summary",
+        "tokens": 37,
+        "bytes": 145,
+        "generation": "V1:a795d779",
+        "generated_at": "2026-10-01T10:00:00Z",
+        "dynamic": false,
+        "provenance": "publisher",
+        "default": true
+      },
+      {
+        "name": "specs",
+        "tokens": 32,
+        "bytes": 126,
+        "generation": "V1:7ce11115",
+        "generated_at": "2026-10-01T10:00:00Z",
+        "dynamic": false,
+        "provenance": "publisher"
+      },
+      {
+        "name": "reviews",
+        "tokens": 17,
+        "bytes": 68,
+        "generation": "V1:45cc09eb",
+        "generated_at": "2026-10-01T10:00:00Z",
+        "dynamic": false,
+        "provenance": "user_generated",
+        "moderated": true
+      },
+      {
+        "name": "logistics",
+        "tokens": 19,
+        "bytes": 75,
+        "generation": "V1:f481fff1",
+        "generated_at": "2026-10-01T10:00:00Z",
+        "dynamic": true,
+        "provenance": "publisher",
+        "price": 0.0005,
+        "currency": "USD",
+        "unit": "call",
+        "degradation": {
+          "mode": "stale_fallback",
+          "max_staleness_seconds": 900
+        }
+      }
+    ],
+    "quality": 0.98,
+    "official": true,
+    "attribution": "required",
+    "license": "CC-BY-4.0"
+  },
+  "slices": {
+    "summary": {
+      "fields": {
+        "brand": "Acer",
+        "model": "Swift 3",
+        "price": 778.96,
+        "currency": "USD",
+        "feature": [
+          "business",
+          "thin",
+          "touchscreen"
+        ],
+        "rating": 4.1,
+        "stock": 18
+      }
+    },
+    "specs": {
+      "fields": {
+        "cpu": "Intel Core Ultra 7 155H",
+        "ram_gb": 16,
+        "storage": "512GB SSD",
+        "display": "14.0 inch 2240x1400",
+        "weight_g": 1264
+      }
+    },
+    "reviews": {
+      "fields": {
+        "rating": 4.1,
+        "count": 466,
+        "histogram": [
+          257,
+          102,
+          37,
+          43,
+          27
+        ]
+      }
+    },
+    "logistics": {
+      "fields": {
+        "in_stock": true,
+        "ships_from": "Allentown, PA",
+        "delivery_days": 5
+      }
+    }
+  }
+}

@@ -1,0 +1,195 @@
+{
+  "passport": {
+    "tree_generation": "2026-10-01T12:00:00Z",
+    "path": "/computers/laptops/hp-pavilion-plus-14",
+    "anchor": "[a19]",
+    "kind": "entity",
+    "updated_at": "2026-10-01T10:00:00Z",
+    "filters": [
+      {
+        "name": "brand",
+        "type": "string",
+        "ops": [
+          "eq",
+          "in",
+          "prefix"
+        ],
+        "enum": [
+          "ASUS",
+          "Acer",
+          "Amazon",
+          "Apple",
+          "Audio-Technica",
+          "Bang & Olufsen",
+          "Beats",
+          "Beyerdynamic",
+          "Bose",
+          "Dell",
+          "Google",
+          "HP",
+          "JBL",
+          "Jabra",
+          "Lenovo",
+          "Marshall",
+          "Microsoft",
+          "Razer",
+          "Sennheiser",
+          "Sonos",
+          "Sony",
+          "Soundcore",
+          "Technics",
+          "Ultimate Ears"
+        ]
+      },
+      {
+        "name": "price",
+        "type": "number",
+        "ops": [
+          "eq",
+          "lt",
+          "lte",
+          "gt",
+          "gte"
+        ],
+        "unit": "USD",
+        "min": 49,
+        "max": 3395
+      },
+      {
+        "name": "feature",
+        "type": "string",
+        "ops": [
+          "eq",
+          "in",
+          "contains",
+          "contains_all",
+          "contains_any"
+        ],
+        "enum": [
+          "2-in-1",
+          "anc",
+          "bluetooth",
+          "business",
+          "creator",
+          "foldable",
+          "gaming",
+          "light",
+          "mic",
+          "portable",
+          "smart",
+          "sport",
+          "stereo",
+          "studio",
+          "thin",
+          "touchscreen",
+          "waterproof",
+          "wifi",
+          "wireless"
+        ]
+      }
+    ],
+    "aggregations": {
+      "supported": false,
+      "metrics": [],
+      "group_by": [],
+      "min_group_size_default": 5
+    },
+    "slices": [
+      {
+        "name": "summary",
+        "tokens": 38,
+        "bytes": 152,
+        "generation": "V1:f825cad4",
+        "generated_at": "2026-10-01T10:00:00Z",
+        "dynamic": false,
+        "provenance": "publisher",
+        "default": true
+      },
+      {
+        "name": "specs",
+        "tokens": 30,
+        "bytes": 119,
+        "generation": "V1:c4166e2a",
+        "generated_at": "2026-10-01T10:00:00Z",
+        "dynamic": false,
+        "provenance": "publisher"
+      },
+      {
+        "name": "reviews",
+        "tokens": 18,
+        "bytes": 72,
+        "generation": "V1:0234afac",
+        "generated_at": "2026-10-01T10:00:00Z",
+        "dynamic": false,
+        "provenance": "user_generated",
+        "moderated": true
+      },
+      {
+        "name": "logistics",
+        "tokens": 19,
+        "bytes": 75,
+        "generation": "V1:fa15f5c6",
+        "generated_at": "2026-10-01T10:00:00Z",
+        "dynamic": true,
+        "provenance": "publisher",
+        "price": 0.0005,
+        "currency": "USD",
+        "unit": "call",
+        "degradation": {
+          "mode": "stale_fallback",
+          "max_staleness_seconds": 900
+        }
+      }
+    ],
+    "quality": 0.98,
+    "official": true,
+    "attribution": "required",
+    "license": "CC-BY-4.0"
+  },
+  "slices": {
+    "summary": {
+      "fields": {
+        "brand": "HP",
+        "model": "Pavilion Plus 14",
+        "price": 959.04,
+        "currency": "USD",
+        "feature": [
+          "business",
+          "thin",
+          "touchscreen"
+        ],
+        "rating": 4.2,
+        "stock": 26
+      }
+    },
+    "specs": {
+      "fields": {
+        "cpu": "AMD Ryzen 7 7840U",
+        "ram_gb": 8,
+        "storage": "512GB SSD",
+        "display": "14.0 inch 2240x1400",
+        "weight_g": 1490
+      }
+    },
+    "reviews": {
+      "fields": {
+        "rating": 4.2,
+        "count": 2402,
+        "histogram": [
+          1242,
+          633,
+          343,
+          79,
+          105
+        ]
+      }
+    },
+    "logistics": {
+      "fields": {
+        "in_stock": true,
+        "ships_from": "Allentown, PA",
+        "delivery_days": 4
+      }
+    }
+  }
+}

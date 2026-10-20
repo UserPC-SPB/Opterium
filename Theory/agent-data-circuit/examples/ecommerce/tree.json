@@ -1,0 +1,772 @@
+{
+  "tree_generation": "2026-10-01T12:00:00Z",
+  "nodes": [
+    {
+      "name": "/",
+      "path": "/",
+      "anchor": "[a1]",
+      "kind": "collection",
+      "has_children": true,
+      "count": 2,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "computers",
+      "path": "/computers",
+      "anchor": "[a2]",
+      "kind": "collection",
+      "has_children": true,
+      "count": 1,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "laptops",
+      "path": "/computers/laptops",
+      "anchor": "[a3]",
+      "kind": "collection",
+      "has_children": true,
+      "count": 24,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "acer-nitro-v-15",
+      "path": "/computers/laptops/acer-nitro-v-15",
+      "anchor": "[a4]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "acer-swift-3",
+      "path": "/computers/laptops/acer-swift-3",
+      "anchor": "[a5]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "apple-macbook-air-13-m3",
+      "path": "/computers/laptops/apple-macbook-air-13-m3",
+      "anchor": "[a6]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "apple-macbook-air-15-m3",
+      "path": "/computers/laptops/apple-macbook-air-15-m3",
+      "anchor": "[a7]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "apple-macbook-pro-14-m3-pro",
+      "path": "/computers/laptops/apple-macbook-pro-14-m3-pro",
+      "anchor": "[a8]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "apple-macbook-pro-16-m3-max",
+      "path": "/computers/laptops/apple-macbook-pro-16-m3-max",
+      "anchor": "[a9]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "asus-proart-studiobook-16",
+      "path": "/computers/laptops/asus-proart-studiobook-16",
+      "anchor": "[a10]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "asus-rog-zephyrus-g14",
+      "path": "/computers/laptops/asus-rog-zephyrus-g14",
+      "anchor": "[a11]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "asus-vivobook-15",
+      "path": "/computers/laptops/asus-vivobook-15",
+      "anchor": "[a12]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "asus-zenbook-14",
+      "path": "/computers/laptops/asus-zenbook-14",
+      "anchor": "[a13]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "dell-inspiron-14-plus",
+      "path": "/computers/laptops/dell-inspiron-14-plus",
+      "anchor": "[a14]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "dell-xps-13",
+      "path": "/computers/laptops/dell-xps-13",
+      "anchor": "[a15]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "dell-xps-15",
+      "path": "/computers/laptops/dell-xps-15",
+      "anchor": "[a16]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "dell-xps-16",
+      "path": "/computers/laptops/dell-xps-16",
+      "anchor": "[a17]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "hp-elitebook-840-g10",
+      "path": "/computers/laptops/hp-elitebook-840-g10",
+      "anchor": "[a18]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "hp-pavilion-plus-14",
+      "path": "/computers/laptops/hp-pavilion-plus-14",
+      "anchor": "[a19]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "hp-spectre-x360-14",
+      "path": "/computers/laptops/hp-spectre-x360-14",
+      "anchor": "[a20]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "lenovo-ideapad-slim-3",
+      "path": "/computers/laptops/lenovo-ideapad-slim-3",
+      "anchor": "[a21]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "lenovo-thinkpad-t14-gen-4",
+      "path": "/computers/laptops/lenovo-thinkpad-t14-gen-4",
+      "anchor": "[a22]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "lenovo-thinkpad-x1-carbon-gen-11",
+      "path": "/computers/laptops/lenovo-thinkpad-x1-carbon-gen-11",
+      "anchor": "[a23]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "lenovo-yoga-9i",
+      "path": "/computers/laptops/lenovo-yoga-9i",
+      "anchor": "[a24]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "microsoft-surface-laptop-5",
+      "path": "/computers/laptops/microsoft-surface-laptop-5",
+      "anchor": "[a25]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "microsoft-surface-laptop-studio-2",
+      "path": "/computers/laptops/microsoft-surface-laptop-studio-2",
+      "anchor": "[a26]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "razer-blade-14",
+      "path": "/computers/laptops/razer-blade-14",
+      "anchor": "[a27]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "electronics",
+      "path": "/electronics",
+      "anchor": "[a28]",
+      "kind": "collection",
+      "has_children": true,
+      "count": 1,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "audio",
+      "path": "/electronics/audio",
+      "anchor": "[a29]",
+      "kind": "collection",
+      "has_children": true,
+      "count": 2,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "headphones",
+      "path": "/electronics/audio/headphones",
+      "anchor": "[a30]",
+      "kind": "collection",
+      "has_children": true,
+      "count": 48,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "apple-airpods-3",
+      "path": "/electronics/audio/headphones/apple-airpods-3",
+      "anchor": "[a31]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "apple-airpods-4",
+      "path": "/electronics/audio/headphones/apple-airpods-4",
+      "anchor": "[a32]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "apple-airpods-max",
+      "path": "/electronics/audio/headphones/apple-airpods-max",
+      "anchor": "[a33]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "apple-airpods-pro-2",
+      "path": "/electronics/audio/headphones/apple-airpods-pro-2",
+      "anchor": "[a34]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "audio-technica-ath-anc900bt",
+      "path": "/electronics/audio/headphones/audio-technica-ath-anc900bt",
+      "anchor": "[a35]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "audio-technica-ath-m40x",
+      "path": "/electronics/audio/headphones/audio-technica-ath-m40x",
+      "anchor": "[a36]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "audio-technica-ath-m50x",
+      "path": "/electronics/audio/headphones/audio-technica-ath-m50x",
+      "anchor": "[a37]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "audio-technica-ath-sr30bt",
+      "path": "/electronics/audio/headphones/audio-technica-ath-sr30bt",
+      "anchor": "[a38]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "beats-fit-pro",
+      "path": "/electronics/audio/headphones/beats-fit-pro",
+      "anchor": "[a39]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "beats-powerbeats-pro",
+      "path": "/electronics/audio/headphones/beats-powerbeats-pro",
+      "anchor": "[a40]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "beats-solo3-wireless",
+      "path": "/electronics/audio/headphones/beats-solo3-wireless",
+      "anchor": "[a41]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "beats-studio-pro",
+      "path": "/electronics/audio/headphones/beats-studio-pro",
+      "anchor": "[a42]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "beyerdynamic-dt-700-pro-x",
+      "path": "/electronics/audio/headphones/beyerdynamic-dt-700-pro-x",
+      "anchor": "[a43]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "beyerdynamic-dt-770-pro",
+      "path": "/electronics/audio/headphones/beyerdynamic-dt-770-pro",
+      "anchor": "[a44]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "beyerdynamic-dt-900-pro-x",
+      "path": "/electronics/audio/headphones/beyerdynamic-dt-900-pro-x",
+      "anchor": "[a45]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "beyerdynamic-dt-990-pro",
+      "path": "/electronics/audio/headphones/beyerdynamic-dt-990-pro",
+      "anchor": "[a46]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "bose-noise-cancelling-700",
+      "path": "/electronics/audio/headphones/bose-noise-cancelling-700",
+      "anchor": "[a47]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "bose-quietcomfort-45",
+      "path": "/electronics/audio/headphones/bose-quietcomfort-45",
+      "anchor": "[a48]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "bose-quietcomfort-earbuds-ii",
+      "path": "/electronics/audio/headphones/bose-quietcomfort-earbuds-ii",
+      "anchor": "[a49]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "bose-quietcomfort-ultra-headphones",
+      "path": "/electronics/audio/headphones/bose-quietcomfort-ultra-headphones",
+      "anchor": "[a50]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "bose-sport-earbuds",
+      "path": "/electronics/audio/headphones/bose-sport-earbuds",
+      "anchor": "[a51]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "jabra-elite-10",
+      "path": "/electronics/audio/headphones/jabra-elite-10",
+      "anchor": "[a52]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "jabra-elite-4-active",
+      "path": "/electronics/audio/headphones/jabra-elite-4-active",
+      "anchor": "[a53]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "jabra-elite-85t",
+      "path": "/electronics/audio/headphones/jabra-elite-85t",
+      "anchor": "[a54]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "jabra-evolve2-65",
+      "path": "/electronics/audio/headphones/jabra-evolve2-65",
+      "anchor": "[a55]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "jbl-live-660nc",
+      "path": "/electronics/audio/headphones/jbl-live-660nc",
+      "anchor": "[a56]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "jbl-live-pro-2",
+      "path": "/electronics/audio/headphones/jbl-live-pro-2",
+      "anchor": "[a57]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "jbl-tune-520bt",
+      "path": "/electronics/audio/headphones/jbl-tune-520bt",
+      "anchor": "[a58]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "jbl-tune-770nc",
+      "path": "/electronics/audio/headphones/jbl-tune-770nc",
+      "anchor": "[a59]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "jbl-vibe-beam",
+      "path": "/electronics/audio/headphones/jbl-vibe-beam",
+      "anchor": "[a60]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "marshall-major-iv",
+      "path": "/electronics/audio/headphones/marshall-major-iv",
+      "anchor": "[a61]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "marshall-mode-ii",
+      "path": "/electronics/audio/headphones/marshall-mode-ii",
+      "anchor": "[a62]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "marshall-monitor-ii-anc",
+      "path": "/electronics/audio/headphones/marshall-monitor-ii-anc",
+      "anchor": "[a63]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "sennheiser-hd-560s",
+      "path": "/electronics/audio/headphones/sennheiser-hd-560s",
+      "anchor": "[a64]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "sennheiser-hd-660s2",
+      "path": "/electronics/audio/headphones/sennheiser-hd-660s2",
+      "anchor": "[a65]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "sennheiser-ie-600",
+      "path": "/electronics/audio/headphones/sennheiser-ie-600",
+      "anchor": "[a66]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "sennheiser-momentum-4",
+      "path": "/electronics/audio/headphones/sennheiser-momentum-4",
+      "anchor": "[a67]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "sennheiser-momentum-true-wireless-4",
+      "path": "/electronics/audio/headphones/sennheiser-momentum-true-wireless-4",
+      "anchor": "[a68]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "sony-wf-1000xm5",
+      "path": "/electronics/audio/headphones/sony-wf-1000xm5",
+      "anchor": "[a69]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "sony-wf-c700n",
+      "path": "/electronics/audio/headphones/sony-wf-c700n",
+      "anchor": "[a70]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "sony-wh-1000xm4",
+      "path": "/electronics/audio/headphones/sony-wh-1000xm4",
+      "anchor": "[a71]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "sony-wh-1000xm5",
+      "path": "/electronics/audio/headphones/sony-wh-1000xm5",
+      "anchor": "[a72]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "sony-wh-ch520",
+      "path": "/electronics/audio/headphones/sony-wh-ch520",
+      "anchor": "[a73]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "sony-wh-ch720n",
+      "path": "/electronics/audio/headphones/sony-wh-ch720n",
+      "anchor": "[a74]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "soundcore-liberty-4-nc",
+      "path": "/electronics/audio/headphones/soundcore-liberty-4-nc",
+      "anchor": "[a75]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "soundcore-life-q30",
+      "path": "/electronics/audio/headphones/soundcore-life-q30",
+      "anchor": "[a76]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "soundcore-space-one",
+      "path": "/electronics/audio/headphones/soundcore-space-one",
+      "anchor": "[a77]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "technics-eah-a80",
+      "path": "/electronics/audio/headphones/technics-eah-a80",
+      "anchor": "[a78]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "speakers",
+      "path": "/electronics/audio/speakers",
+      "anchor": "[a79]",
+      "kind": "collection",
+      "has_children": true,
+      "count": 16,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "amazon-echo-5th-gen",
+      "path": "/electronics/audio/speakers/amazon-echo-5th-gen",
+      "anchor": "[a80]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "apple-homepod-mini",
+      "path": "/electronics/audio/speakers/apple-homepod-mini",
+      "anchor": "[a81]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "bang-olufsen-beosound-explore",
+      "path": "/electronics/audio/speakers/bang-olufsen-beosound-explore",
+      "anchor": "[a82]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "bose-soundlink-flex",
+      "path": "/electronics/audio/speakers/bose-soundlink-flex",
+      "anchor": "[a83]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "bose-soundlink-max",
+      "path": "/electronics/audio/speakers/bose-soundlink-max",
+      "anchor": "[a84]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "google-nest-audio",
+      "path": "/electronics/audio/speakers/google-nest-audio",
+      "anchor": "[a85]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "jbl-charge-5",
+      "path": "/electronics/audio/speakers/jbl-charge-5",
+      "anchor": "[a86]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "jbl-flip-6",
+      "path": "/electronics/audio/speakers/jbl-flip-6",
+      "anchor": "[a87]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "jbl-xtreme-4",
+      "path": "/electronics/audio/speakers/jbl-xtreme-4",
+      "anchor": "[a88]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "marshall-acton-iii",
+      "path": "/electronics/audio/speakers/marshall-acton-iii",
+      "anchor": "[a89]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "marshall-stanmore-ii",
+      "path": "/electronics/audio/speakers/marshall-stanmore-ii",
+      "anchor": "[a90]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "sonos-move-2",
+      "path": "/electronics/audio/speakers/sonos-move-2",
+      "anchor": "[a91]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "sonos-one-sl",
+      "path": "/electronics/audio/speakers/sonos-one-sl",
+      "anchor": "[a92]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "sonos-roam-2",
+      "path": "/electronics/audio/speakers/sonos-roam-2",
+      "anchor": "[a93]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "ultimate-ears-boom-4",
+      "path": "/electronics/audio/speakers/ultimate-ears-boom-4",
+      "anchor": "[a94]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    },
+    {
+      "name": "ultimate-ears-megaboom-3",
+      "path": "/electronics/audio/speakers/ultimate-ears-megaboom-3",
+      "anchor": "[a95]",
+      "kind": "entity",
+      "has_children": false,
+      "updated_at": "2026-10-01T10:00:00Z"
+    }
+  ]
+}

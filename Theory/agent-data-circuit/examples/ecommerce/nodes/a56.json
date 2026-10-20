@@ -1,0 +1,201 @@
+{
+  "passport": {
+    "tree_generation": "2026-10-01T12:00:00Z",
+    "path": "/electronics/audio/headphones/jbl-live-660nc",
+    "anchor": "[a56]",
+    "kind": "entity",
+    "updated_at": "2026-10-01T10:00:00Z",
+    "filters": [
+      {
+        "name": "brand",
+        "type": "string",
+        "ops": [
+          "eq",
+          "in",
+          "prefix"
+        ],
+        "enum": [
+          "ASUS",
+          "Acer",
+          "Amazon",
+          "Apple",
+          "Audio-Technica",
+          "Bang & Olufsen",
+          "Beats",
+          "Beyerdynamic",
+          "Bose",
+          "Dell",
+          "Google",
+          "HP",
+          "JBL",
+          "Jabra",
+          "Lenovo",
+          "Marshall",
+          "Microsoft",
+          "Razer",
+          "Sennheiser",
+          "Sonos",
+          "Sony",
+          "Soundcore",
+          "Technics",
+          "Ultimate Ears"
+        ]
+      },
+      {
+        "name": "price",
+        "type": "number",
+        "ops": [
+          "eq",
+          "lt",
+          "lte",
+          "gt",
+          "gte"
+        ],
+        "unit": "USD",
+        "min": 49,
+        "max": 3395
+      },
+      {
+        "name": "feature",
+        "type": "string",
+        "ops": [
+          "eq",
+          "in",
+          "contains",
+          "contains_all",
+          "contains_any"
+        ],
+        "enum": [
+          "2-in-1",
+          "anc",
+          "bluetooth",
+          "business",
+          "creator",
+          "foldable",
+          "gaming",
+          "light",
+          "mic",
+          "portable",
+          "smart",
+          "sport",
+          "stereo",
+          "studio",
+          "thin",
+          "touchscreen",
+          "waterproof",
+          "wifi",
+          "wireless"
+        ]
+      }
+    ],
+    "aggregations": {
+      "supported": false,
+      "metrics": [],
+      "group_by": [],
+      "min_group_size_default": 5
+    },
+    "slices": [
+      {
+        "name": "summary",
+        "tokens": 43,
+        "bytes": 170,
+        "generation": "V1:ea87ab08",
+        "generated_at": "2026-10-01T10:00:00Z",
+        "dynamic": false,
+        "provenance": "publisher",
+        "default": true
+      },
+      {
+        "name": "specs",
+        "tokens": 24,
+        "bytes": 93,
+        "generation": "V1:fdbbc25a",
+        "generated_at": "2026-10-01T10:00:00Z",
+        "dynamic": false,
+        "provenance": "publisher"
+      },
+      {
+        "name": "reviews",
+        "tokens": 18,
+        "bytes": 72,
+        "generation": "V1:252e8492",
+        "generated_at": "2026-10-01T10:00:00Z",
+        "dynamic": false,
+        "provenance": "user_generated",
+        "moderated": true
+      },
+      {
+        "name": "logistics",
+        "tokens": 19,
+        "bytes": 73,
+        "generation": "V1:352bd5a9",
+        "generated_at": "2026-10-01T10:00:00Z",
+        "dynamic": true,
+        "provenance": "publisher",
+        "price": 0.0005,
+        "currency": "USD",
+        "unit": "call",
+        "degradation": {
+          "mode": "stale_fallback",
+          "max_staleness_seconds": 900
+        }
+      }
+    ],
+    "quality": 0.98,
+    "official": true,
+    "attribution": "required",
+    "license": "CC-BY-4.0"
+  },
+  "slices": {
+    "summary": {
+      "fields": {
+        "brand": "JBL",
+        "model": "Live 660NC",
+        "price": 130.29,
+        "currency": "USD",
+        "feature": [
+          "anc",
+          "bluetooth",
+          "foldable",
+          "gaming",
+          "mic",
+          "wireless"
+        ],
+        "rating": 4.3,
+        "stock": 38
+      }
+    },
+    "specs": {
+      "fields": {
+        "anc": true,
+        "battery_life": "34 hours",
+        "weight_g": 364,
+        "codec": [
+          "sbc",
+          "aac",
+          "aptx"
+        ]
+      }
+    },
+    "reviews": {
+      "fields": {
+        "rating": 4.3,
+        "count": 2744,
+        "histogram": [
+          1743,
+          511,
+          266,
+          81,
+          143
+        ]
+      }
+    },
+    "logistics": {
+      "fields": {
+        "in_stock": true,
+        "ships_from": "Memphis, TN",
+        "delivery_days": 3
+      }
+    }
+  }
+}

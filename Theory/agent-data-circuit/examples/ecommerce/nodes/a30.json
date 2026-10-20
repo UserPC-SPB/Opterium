@@ -1,0 +1,916 @@
+{
+  "passport": {
+    "tree_generation": "2026-10-01T12:00:00Z",
+    "path": "/electronics/audio/headphones",
+    "anchor": "[a30]",
+    "kind": "collection",
+    "count": 48,
+    "list_item_tokens": 52,
+    "list_item_bytes": 208,
+    "list_item_tokens_p95": 59,
+    "updated_at": "2026-10-01T10:00:00Z",
+    "filters": [
+      {
+        "name": "brand",
+        "type": "string",
+        "ops": [
+          "eq",
+          "in",
+          "prefix"
+        ],
+        "enum": [
+          "ASUS",
+          "Acer",
+          "Amazon",
+          "Apple",
+          "Audio-Technica",
+          "Bang & Olufsen",
+          "Beats",
+          "Beyerdynamic",
+          "Bose",
+          "Dell",
+          "Google",
+          "HP",
+          "JBL",
+          "Jabra",
+          "Lenovo",
+          "Marshall",
+          "Microsoft",
+          "Razer",
+          "Sennheiser",
+          "Sonos",
+          "Sony",
+          "Soundcore",
+          "Technics",
+          "Ultimate Ears"
+        ]
+      },
+      {
+        "name": "price",
+        "type": "number",
+        "ops": [
+          "eq",
+          "lt",
+          "lte",
+          "gt",
+          "gte"
+        ],
+        "unit": "USD",
+        "min": 49,
+        "max": 3395
+      },
+      {
+        "name": "feature",
+        "type": "string",
+        "ops": [
+          "eq",
+          "in",
+          "contains",
+          "contains_all",
+          "contains_any"
+        ],
+        "enum": [
+          "2-in-1",
+          "anc",
+          "bluetooth",
+          "business",
+          "creator",
+          "foldable",
+          "gaming",
+          "light",
+          "mic",
+          "portable",
+          "smart",
+          "sport",
+          "stereo",
+          "studio",
+          "thin",
+          "touchscreen",
+          "waterproof",
+          "wifi",
+          "wireless"
+        ]
+      }
+    ],
+    "aggregations": {
+      "supported": true,
+      "metrics": [
+        "count()",
+        "sum(price)",
+        "avg(price)",
+        "min(price)",
+        "max(price)",
+        "p50(price)",
+        "p95(price)"
+      ],
+      "group_by": [
+        "brand",
+        "feature"
+      ],
+      "min_group_size_default": 5
+    },
+    "slices": [
+      {
+        "name": "summary",
+        "tokens": 2505,
+        "bytes": 10020,
+        "generation": "V1:04e13a60",
+        "generated_at": "2026-10-01T10:00:00Z",
+        "dynamic": false,
+        "provenance": "publisher",
+        "default": true
+      }
+    ],
+    "quality": 0.98,
+    "official": true,
+    "attribution": "required",
+    "license": "CC-BY-4.0"
+  },
+  "slices": {
+    "summary": {
+      "items": [
+        {
+          "path": "/electronics/audio/headphones/apple-airpods-3",
+          "fields": {
+            "brand": "Apple",
+            "model": "AirPods 3",
+            "price": 175.42,
+            "currency": "USD",
+            "feature": [
+              "anc",
+              "wireless"
+            ],
+            "rating": 4.3,
+            "stock": 25
+          }
+        },
+        {
+          "path": "/electronics/audio/headphones/apple-airpods-4",
+          "fields": {
+            "brand": "Apple",
+            "model": "AirPods 4",
+            "price": 132.87,
+            "currency": "USD",
+            "feature": [
+              "anc",
+              "wireless"
+            ],
+            "rating": 4.2,
+            "stock": 34
+          }
+        },
+        {
+          "path": "/electronics/audio/headphones/apple-airpods-max",
+          "fields": {
+            "brand": "Apple",
+            "model": "AirPods Max",
+            "price": 570.96,
+            "currency": "USD",
+            "feature": [
+              "anc",
+              "gaming",
+              "mic",
+              "sport",
+              "wireless"
+            ],
+            "rating": 4.4,
+            "stock": 19
+          }
+        },
+        {
+          "path": "/electronics/audio/headphones/apple-airpods-pro-2",
+          "fields": {
+            "brand": "Apple",
+            "model": "AirPods Pro 2",
+            "price": 239.04,
+            "currency": "USD",
+            "feature": [
+              "anc",
+              "gaming",
+              "wireless"
+            ],
+            "rating": 4.4,
+            "stock": 9
+          }
+        },
+        {
+          "path": "/electronics/audio/headphones/audio-technica-ath-anc900bt",
+          "fields": {
+            "brand": "Audio-Technica",
+            "model": "ATH-ANC900BT",
+            "price": 206.96,
+            "currency": "USD",
+            "feature": [
+              "anc",
+              "gaming",
+              "wireless"
+            ],
+            "rating": 4.2,
+            "stock": 11
+          }
+        },
+        {
+          "path": "/electronics/audio/headphones/audio-technica-ath-m40x",
+          "fields": {
+            "brand": "Audio-Technica",
+            "model": "ATH-M40x",
+            "price": 95.04,
+            "currency": "USD",
+            "feature": [
+              "mic",
+              "sport"
+            ],
+            "rating": 4.3,
+            "stock": 32
+          }
+        },
+        {
+          "path": "/electronics/audio/headphones/audio-technica-ath-m50x",
+          "fields": {
+            "brand": "Audio-Technica",
+            "model": "ATH-M50x",
+            "price": 174.07,
+            "currency": "USD",
+            "feature": [
+              "foldable"
+            ],
+            "rating": 4.2,
+            "stock": 36
+          }
+        },
+        {
+          "path": "/electronics/audio/headphones/audio-technica-ath-sr30bt",
+          "fields": {
+            "brand": "Audio-Technica",
+            "model": "ATH-SR30BT",
+            "price": 117.81,
+            "currency": "USD",
+            "feature": [
+              "anc",
+              "gaming",
+              "sport",
+              "studio",
+              "wireless"
+            ],
+            "rating": 3.9,
+            "stock": 13
+          }
+        },
+        {
+          "path": "/electronics/audio/headphones/beats-fit-pro",
+          "fields": {
+            "brand": "Beats",
+            "model": "Fit Pro",
+            "price": 204.97,
+            "currency": "USD",
+            "feature": [
+              "anc",
+              "wireless"
+            ],
+            "rating": 4.0,
+            "stock": 17
+          }
+        },
+        {
+          "path": "/electronics/audio/headphones/beats-powerbeats-pro",
+          "fields": {
+            "brand": "Beats",
+            "model": "Powerbeats Pro",
+            "price": 258.96,
+            "currency": "USD",
+            "feature": [
+              "anc",
+              "gaming",
+              "wireless"
+            ],
+            "rating": 4.2,
+            "stock": 5
+          }
+        },
+        {
+          "path": "/electronics/audio/headphones/beats-solo3-wireless",
+          "fields": {
+            "brand": "Beats",
+            "model": "Solo3 Wireless",
+            "price": 206.96,
+            "currency": "USD",
+            "feature": [
+              "anc",
+              "bluetooth",
+              "foldable",
+              "sport",
+              "wireless"
+            ],
+            "rating": 4.2,
+            "stock": 31
+          }
+        },
+        {
+          "path": "/electronics/audio/headphones/beats-studio-pro",
+          "fields": {
+            "brand": "Beats",
+            "model": "Studio Pro",
+            "price": 355.98,
+            "currency": "USD",
+            "feature": [
+              "anc",
+              "gaming",
+              "studio",
+              "wireless"
+            ],
+            "rating": 4.2,
+            "stock": 5
+          }
+        },
+        {
+          "path": "/electronics/audio/headphones/beyerdynamic-dt-700-pro-x",
+          "fields": {
+            "brand": "Beyerdynamic",
+            "model": "DT 700 Pro X",
+            "price": 248.64,
+            "currency": "USD",
+            "feature": [
+              "sport",
+              "studio"
+            ],
+            "rating": 4.1,
+            "stock": 42
+          }
+        },
+        {
+          "path": "/electronics/audio/headphones/beyerdynamic-dt-770-pro",
+          "fields": {
+            "brand": "Beyerdynamic",
+            "model": "DT 770 Pro",
+            "price": 154.23,
+            "currency": "USD",
+            "feature": [
+              "studio"
+            ],
+            "rating": 3.8,
+            "stock": 31
+          }
+        },
+        {
+          "path": "/electronics/audio/headphones/beyerdynamic-dt-900-pro-x",
+          "fields": {
+            "brand": "Beyerdynamic",
+            "model": "DT 900 Pro X",
+            "price": 248.64,
+            "currency": "USD",
+            "feature": [
+              "gaming",
+              "studio"
+            ],
+            "rating": 4.2,
+            "stock": 8
+          }
+        },
+        {
+          "path": "/electronics/audio/headphones/beyerdynamic-dt-990-pro",
+          "fields": {
+            "brand": "Beyerdynamic",
+            "model": "DT 990 Pro",
+            "price": 155.82,
+            "currency": "USD",
+            "feature": [
+              "mic"
+            ],
+            "rating": 4.2,
+            "stock": 13
+          }
+        },
+        {
+          "path": "/electronics/audio/headphones/bose-noise-cancelling-700",
+          "fields": {
+            "brand": "Bose",
+            "model": "Noise Cancelling 700",
+            "price": 277.07,
+            "currency": "USD",
+            "feature": [
+              "anc",
+              "wireless"
+            ],
+            "rating": 4.0,
+            "stock": 36
+          }
+        },
+        {
+          "path": "/electronics/audio/headphones/bose-quietcomfort-45",
+          "fields": {
+            "brand": "Bose",
+            "model": "QuietComfort 45",
+            "price": 276.21,
+            "currency": "USD",
+            "feature": [
+              "anc",
+              "gaming",
+              "mic",
+              "wireless"
+            ],
+            "rating": 4.3,
+            "stock": 1
+          }
+        },
+        {
+          "path": "/electronics/audio/headphones/bose-quietcomfort-earbuds-ii",
+          "fields": {
+            "brand": "Bose",
+            "model": "QuietComfort Earbuds II",
+            "price": 249.0,
+            "currency": "USD",
+            "feature": [
+              "anc",
+              "bluetooth",
+              "foldable",
+              "wireless"
+            ],
+            "rating": 4.2,
+            "stock": 9
+          }
+        },
+        {
+          "path": "/electronics/audio/headphones/bose-quietcomfort-ultra-headphones",
+          "fields": {
+            "brand": "Bose",
+            "model": "QuietComfort Ultra Headphones",
+            "price": 441.87,
+            "currency": "USD",
+            "feature": [
+              "anc",
+              "foldable",
+              "gaming",
+              "sport",
+              "wireless"
+            ],
+            "rating": 4.5,
+            "stock": 49
+          }
+        },
+        {
+          "path": "/electronics/audio/headphones/bose-sport-earbuds",
+          "fields": {
+            "brand": "Bose",
+            "model": "Sport Earbuds",
+            "price": 150.49,
+            "currency": "USD",
+            "feature": [
+              "anc",
+              "foldable",
+              "mic",
+              "wireless"
+            ],
+            "rating": 3.9,
+            "stock": 51
+          }
+        },
+        {
+          "path": "/electronics/audio/headphones/jabra-elite-10",
+          "fields": {
+            "brand": "Jabra",
+            "model": "Elite 10",
+            "price": 251.49,
+            "currency": "USD",
+            "feature": [
+              "anc",
+              "studio",
+              "wireless"
+            ],
+            "rating": 4.2,
+            "stock": 36
+          }
+        },
+        {
+          "path": "/electronics/audio/headphones/jabra-elite-4-active",
+          "fields": {
+            "brand": "Jabra",
+            "model": "Elite 4 Active",
+            "price": 95.04,
+            "currency": "USD",
+            "feature": [
+              "anc",
+              "gaming",
+              "mic",
+              "sport",
+              "studio",
+              "wireless"
+            ],
+            "rating": 4.5,
+            "stock": 24
+          }
+        },
+        {
+          "path": "/electronics/audio/headphones/jabra-elite-85t",
+          "fields": {
+            "brand": "Jabra",
+            "model": "Elite 85t",
+            "price": 173.63,
+            "currency": "USD",
+            "feature": [
+              "anc",
+              "gaming",
+              "mic",
+              "wireless"
+            ],
+            "rating": 4.1,
+            "stock": 28
+          }
+        },
+        {
+          "path": "/electronics/audio/headphones/jabra-evolve2-65",
+          "fields": {
+            "brand": "Jabra",
+            "model": "Evolve2 65",
+            "price": 191.04,
+            "currency": "USD",
+            "feature": [
+              "anc",
+              "foldable",
+              "studio",
+              "wireless"
+            ],
+            "rating": 4.5,
+            "stock": 29
+          }
+        },
+        {
+          "path": "/electronics/audio/headphones/jbl-live-660nc",
+          "fields": {
+            "brand": "JBL",
+            "model": "Live 660NC",
+            "price": 130.29,
+            "currency": "USD",
+            "feature": [
+              "anc",
+              "bluetooth",
+              "foldable",
+              "gaming",
+              "mic",
+              "wireless"
+            ],
+            "rating": 4.3,
+            "stock": 38
+          }
+        },
+        {
+          "path": "/electronics/audio/headphones/jbl-live-pro-2",
+          "fields": {
+            "brand": "JBL",
+            "model": "Live Pro 2",
+            "price": 143.04,
+            "currency": "USD",
+            "feature": [
+              "anc",
+              "gaming",
+              "sport",
+              "studio",
+              "wireless"
+            ],
+            "rating": 4.0,
+            "stock": 13
+          }
+        },
+        {
+          "path": "/electronics/audio/headphones/jbl-tune-520bt",
+          "fields": {
+            "brand": "JBL",
+            "model": "Tune 520BT",
+            "price": 49.0,
+            "currency": "USD",
+            "feature": [
+              "foldable",
+              "studio",
+              "wireless"
+            ],
+            "rating": 4.3,
+            "stock": 31
+          }
+        },
+        {
+          "path": "/electronics/audio/headphones/jbl-tune-770nc",
+          "fields": {
+            "brand": "JBL",
+            "model": "Tune 770NC",
+            "price": 131.58,
+            "currency": "USD",
+            "feature": [
+              "anc",
+              "sport",
+              "wireless"
+            ],
+            "rating": 4.0,
+            "stock": 51
+          }
+        },
+        {
+          "path": "/electronics/audio/headphones/jbl-vibe-beam",
+          "fields": {
+            "brand": "JBL",
+            "model": "Vibe Beam",
+            "price": 76.63,
+            "currency": "USD",
+            "feature": [
+              "wireless"
+            ],
+            "rating": 4.1,
+            "stock": 16
+          }
+        },
+        {
+          "path": "/electronics/audio/headphones/marshall-major-iv",
+          "fields": {
+            "brand": "Marshall",
+            "model": "Major IV",
+            "price": 147.51,
+            "currency": "USD",
+            "feature": [
+              "anc",
+              "gaming",
+              "studio",
+              "wireless"
+            ],
+            "rating": 4.2,
+            "stock": 23
+          }
+        },
+        {
+          "path": "/electronics/audio/headphones/marshall-mode-ii",
+          "fields": {
+            "brand": "Marshall",
+            "model": "Mode II",
+            "price": 184.37,
+            "currency": "USD",
+            "feature": [
+              "anc",
+              "bluetooth",
+              "sport",
+              "studio",
+              "wireless"
+            ],
+            "rating": 4.1,
+            "stock": 7
+          }
+        },
+        {
+          "path": "/electronics/audio/headphones/marshall-monitor-ii-anc",
+          "fields": {
+            "brand": "Marshall",
+            "model": "Monitor II ANC",
+            "price": 251.49,
+            "currency": "USD",
+            "feature": [
+              "anc",
+              "gaming",
+              "studio",
+              "wireless"
+            ],
+            "rating": 4.2,
+            "stock": 16
+          }
+        },
+        {
+          "path": "/electronics/audio/headphones/sennheiser-hd-560s",
+          "fields": {
+            "brand": "Sennheiser",
+            "model": "HD 560S",
+            "price": 199.0,
+            "currency": "USD",
+            "feature": [
+              "bluetooth"
+            ],
+            "rating": 4.3,
+            "stock": 13
+          }
+        },
+        {
+          "path": "/electronics/audio/headphones/sennheiser-hd-660s2",
+          "fields": {
+            "brand": "Sennheiser",
+            "model": "HD 660S2",
+            "price": 518.96,
+            "currency": "USD",
+            "feature": [
+              "sport"
+            ],
+            "rating": 4.4,
+            "stock": 11
+          }
+        },
+        {
+          "path": "/electronics/audio/headphones/sennheiser-ie-600",
+          "fields": {
+            "brand": "Sennheiser",
+            "model": "IE 600",
+            "price": 518.96,
+            "currency": "USD",
+            "feature": [
+              "gaming",
+              "mic",
+              "studio"
+            ],
+            "rating": 4.2,
+            "stock": 53
+          }
+        },
+        {
+          "path": "/electronics/audio/headphones/sennheiser-momentum-4",
+          "fields": {
+            "brand": "Sennheiser",
+            "model": "Momentum 4",
+            "price": 290.03,
+            "currency": "USD",
+            "feature": [
+              "anc",
+              "gaming",
+              "studio",
+              "wireless"
+            ],
+            "rating": 4.0,
+            "stock": 16
+          }
+        },
+        {
+          "path": "/electronics/audio/headphones/sennheiser-momentum-true-wireless-4",
+          "fields": {
+            "brand": "Sennheiser",
+            "model": "Momentum True Wireless 4",
+            "price": 293.02,
+            "currency": "USD",
+            "feature": [
+              "anc",
+              "studio",
+              "wireless"
+            ],
+            "rating": 4.3,
+            "stock": 8
+          }
+        },
+        {
+          "path": "/electronics/audio/headphones/sony-wf-1000xm5",
+          "fields": {
+            "brand": "Sony",
+            "model": "WF-1000XM5",
+            "price": 245.52,
+            "currency": "USD",
+            "feature": [
+              "anc",
+              "bluetooth",
+              "foldable",
+              "sport",
+              "wireless"
+            ],
+            "rating": 4.0,
+            "stock": 37
+          }
+        },
+        {
+          "path": "/electronics/audio/headphones/sony-wf-c700n",
+          "fields": {
+            "brand": "Sony",
+            "model": "WF-C700N",
+            "price": 115.64,
+            "currency": "USD",
+            "feature": [
+              "anc",
+              "studio",
+              "wireless"
+            ],
+            "rating": 4.3,
+            "stock": 33
+          }
+        },
+        {
+          "path": "/electronics/audio/headphones/sony-wh-1000xm4",
+          "fields": {
+            "brand": "Sony",
+            "model": "WH-1000XM4",
+            "price": 286.34,
+            "currency": "USD",
+            "feature": [
+              "anc",
+              "foldable",
+              "wireless"
+            ],
+            "rating": 3.8,
+            "stock": 0
+          }
+        },
+        {
+          "path": "/electronics/audio/headphones/sony-wh-1000xm5",
+          "fields": {
+            "brand": "Sony",
+            "model": "WH-1000XM5",
+            "price": 382.08,
+            "currency": "USD",
+            "feature": [
+              "anc",
+              "sport",
+              "wireless"
+            ],
+            "rating": 4.0,
+            "stock": 42
+          }
+        },
+        {
+          "path": "/electronics/audio/headphones/sony-wh-ch520",
+          "fields": {
+            "brand": "Sony",
+            "model": "WH-CH520",
+            "price": 75.66,
+            "currency": "USD",
+            "feature": [
+              "gaming",
+              "mic",
+              "wireless"
+            ],
+            "rating": 4.4,
+            "stock": 48
+          }
+        },
+        {
+          "path": "/electronics/audio/headphones/sony-wh-ch720n",
+          "fields": {
+            "brand": "Sony",
+            "model": "WH-CH720N",
+            "price": 122.72,
+            "currency": "USD",
+            "feature": [
+              "anc",
+              "bluetooth",
+              "studio",
+              "wireless"
+            ],
+            "rating": 4.3,
+            "stock": 17
+          }
+        },
+        {
+          "path": "/electronics/audio/headphones/soundcore-liberty-4-nc",
+          "fields": {
+            "brand": "Soundcore",
+            "model": "Liberty 4 NC",
+            "price": 101.97,
+            "currency": "USD",
+            "feature": [
+              "anc",
+              "gaming",
+              "wireless"
+            ],
+            "rating": 4.0,
+            "stock": 42
+          }
+        },
+        {
+          "path": "/electronics/audio/headphones/soundcore-life-q30",
+          "fields": {
+            "brand": "Soundcore",
+            "model": "Life Q30",
+            "price": 78.21,
+            "currency": "USD",
+            "feature": [
+              "sport",
+              "studio",
+              "wireless"
+            ],
+            "rating": 4.4,
+            "stock": 15
+          }
+        },
+        {
+          "path": "/electronics/audio/headphones/soundcore-space-one",
+          "fields": {
+            "brand": "Soundcore",
+            "model": "Space One",
+            "price": 102.96,
+            "currency": "USD",
+            "feature": [
+              "anc",
+              "mic",
+              "wireless"
+            ],
+            "rating": 4.3,
+            "stock": 32
+          }
+        },
+        {
+          "path": "/electronics/audio/headphones/technics-eah-a80",
+          "fields": {
+            "brand": "Technics",
+            "model": "EAH-A80",
+            "price": 193.03,
+            "currency": "USD",
+            "feature": [
+              "anc",
+              "bluetooth",
+              "foldable",
+              "sport",
+              "wireless"
+            ],
+            "rating": 4.4,
+            "stock": 5
+          }
+        }
+      ]
+    }
+  }
+}

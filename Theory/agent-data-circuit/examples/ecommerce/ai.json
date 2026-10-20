@@ -1,0 +1,12 @@
+{
+  "ai": "1.0",
+  "vars": {
+    "c1": "/computers",
+    "c2": "/computers/laptops",
+    "e1": "/electronics",
+    "h1": "/electronics/audio/headphones",
+    "s1": "/electronics/audio/speakers",
+    "p1": "/electronics/audio/headphones/sony-wh-1000xm5"
+  },
+  "keys": ["text", "meta", "price", "stock"]
+}

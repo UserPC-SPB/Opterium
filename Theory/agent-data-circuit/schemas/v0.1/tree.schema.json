@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentdatacircuit.org/schemas/v0.1/tree.schema.json",
+  "type": "object",
+  "required": ["tree_generation", "nodes"],
+  "properties": {
+    "tree_generation": { "type": "string", "minLength": 1 },
+    "path": { "$ref": "#/$defs/path" },
+    "anchor": { "$ref": "#/$defs/anchor" },
+    "nodes": { "type": "array", "items": { "$ref": "#/$defs/node" } },
+    "cursor": { "type": ["string", "null"] },
+    "truncated": { "type": "boolean" }
+  },
+  "$defs": {
+    "anchor": {
+      "type": "string",
+      "pattern": "^\\[a[0-9]+\\](?:-[1-9][0-9]*)?(?:/[A-Za-z0-9._-]+)*$"
+    },
+    "path": {
+      "type": "string",
+      "pattern": "^(/|/[^/]+(?:/[^/]+)*)$",
+      "not": { "pattern": "(^|/)\\.\\.(/|$)" }
+    },
+    "node": {
+      "type": "object",
+      "required": ["name", "anchor", "kind"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "path": { "$ref": "#/$defs/path" },
+        "anchor": { "$ref": "#/$defs/anchor" },
+        "kind": { "type": "string", "enum": ["collection", "entity", "document"] },
+        "has_children": { "type": "boolean" },
+        "count": { "type": "integer", "minimum": 0 },
+        "updated_at": { "type": "string", "format": "date-time" }
+      }
+    }
+  }
+}

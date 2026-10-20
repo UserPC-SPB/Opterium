@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentdatacircuit.org/schemas/v0.1/aggregate-response.schema.json",
+  "type": "object",
+  "required": ["tree_generation", "generation", "computed_at"],
+  "allOf": [
+    {
+      "if": { "type": "object", "required": ["group_by"] },
+      "then": { "required": ["groups"] },
+      "else": { "required": ["values"], "not": { "required": ["groups"] } }
+    }
+  ],
+  "properties": {
+    "tree_generation": { "type": "string", "minLength": 1 },
+    "anchor": { "$ref": "#/$defs/anchor" },
+    "group_by": { "type": "array", "items": { "type": "string" } },
+    "metrics": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/metric" }
+    },
+    "groups": { "type": "array", "items": { "$ref": "#/$defs/group" } },
+    "values": { "$ref": "#/$defs/valueMap" },
+    "totals": { "$ref": "#/$defs/valueMap" },
+    "totals_visible_only": { "type": "boolean" },
+    "cursor": { "type": ["string", "null"] },
+    "truncated": { "type": "boolean" },
+    "approximate": { "type": "boolean" },
+    "suppressed_groups": { "type": "integer", "minimum": 0 },
+    "partial": { "type": "boolean" },
+    "coverage": { "type": "number", "minimum": 0 },
+    "computed_at": { "type": "string", "format": "date-time" },
+    "generation": { "type": "string", "minLength": 1 },
+    "usage": { "$ref": "#/$defs/usage" }
+  },
+  "$defs": {
+    "anchor": {
+      "type": "string",
+      "pattern": "^\\[a[0-9]+\\](?:-[1-9][0-9]*)?(?:/[A-Za-z0-9._-]+)*$"
+    },
+    "metricExpr": {
+      "type": "string",
+      "pattern": "^(count|sum|avg|min|max|distinct|p50|p90|p95|p99|median)\\([A-Za-z0-9_.]*\\)(:[A-Za-z0-9_]+)?$"
+    },
+    "metric": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["expr"],
+          "properties": {
+            "expr": { "$ref": "#/$defs/metricExpr" },
+            "alias": { "type": "string", "pattern": "^[A-Za-z0-9_]+$" }
+          }
+        },
+        { "$ref": "#/$defs/metricExpr" }
+      ]
+    },
+    "valueMap": {
+      "type": "object",
+      "additionalProperties": { "type": ["number", "null"] }
+    },
+    "group": {
+      "type": "object",
+      "required": ["key", "values"],
+      "properties": {
+        "key": { "type": "object" },
+        "values": { "$ref": "#/$defs/valueMap" },
+        "metric_suppressed": { "type": "boolean" }
+      }
+    },
+    "money": {
+      "type": "object",
+      "required": ["amount"],
+      "properties": {
+        "amount": { "type": "number", "minimum": 0 },
+        "currency": { "type": "string", "pattern": "^[A-Z]{3}$" },
+        "unit": { "type": "string" }
+      }
+    },
+    "usage": {
+      "type": "object",
+      "required": ["tokens", "items"],
+      "properties": {
+        "tokens": { "type": "integer", "minimum": 0 },
+        "bytes": { "type": "integer", "minimum": 0 },
+        "items": { "type": "integer", "minimum": 0 },
+        "cost": { "$ref": "#/$defs/money" }
+      }
+    }
+  }
+}

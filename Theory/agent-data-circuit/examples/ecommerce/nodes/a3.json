@@ -1,0 +1,496 @@
+{
+  "passport": {
+    "tree_generation": "2026-10-01T12:00:00Z",
+    "path": "/computers/laptops",
+    "anchor": "[a3]",
+    "kind": "collection",
+    "count": 24,
+    "list_item_tokens": 48,
+    "list_item_bytes": 191,
+    "list_item_tokens_p95": 52,
+    "updated_at": "2026-10-01T10:00:00Z",
+    "filters": [
+      {
+        "name": "brand",
+        "type": "string",
+        "ops": [
+          "eq",
+          "in",
+          "prefix"
+        ],
+        "enum": [
+          "ASUS",
+          "Acer",
+          "Amazon",
+          "Apple",
+          "Audio-Technica",
+          "Bang & Olufsen",
+          "Beats",
+          "Beyerdynamic",
+          "Bose",
+          "Dell",
+          "Google",
+          "HP",
+          "JBL",
+          "Jabra",
+          "Lenovo",
+          "Marshall",
+          "Microsoft",
+          "Razer",
+          "Sennheiser",
+          "Sonos",
+          "Sony",
+          "Soundcore",
+          "Technics",
+          "Ultimate Ears"
+        ]
+      },
+      {
+        "name": "price",
+        "type": "number",
+        "ops": [
+          "eq",
+          "lt",
+          "lte",
+          "gt",
+          "gte"
+        ],
+        "unit": "USD",
+        "min": 49,
+        "max": 3395
+      },
+      {
+        "name": "feature",
+        "type": "string",
+        "ops": [
+          "eq",
+          "in",
+          "contains",
+          "contains_all",
+          "contains_any"
+        ],
+        "enum": [
+          "2-in-1",
+          "anc",
+          "bluetooth",
+          "business",
+          "creator",
+          "foldable",
+          "gaming",
+          "light",
+          "mic",
+          "portable",
+          "smart",
+          "sport",
+          "stereo",
+          "studio",
+          "thin",
+          "touchscreen",
+          "waterproof",
+          "wifi",
+          "wireless"
+        ]
+      }
+    ],
+    "aggregations": {
+      "supported": true,
+      "metrics": [
+        "count()",
+        "sum(price)",
+        "avg(price)",
+        "min(price)",
+        "max(price)",
+        "p50(price)",
+        "p95(price)"
+      ],
+      "group_by": [
+        "brand",
+        "feature"
+      ],
+      "min_group_size_default": 5
+    },
+    "slices": [
+      {
+        "name": "summary",
+        "tokens": 1151,
+        "bytes": 4603,
+        "generation": "V1:70afff05",
+        "generated_at": "2026-10-01T10:00:00Z",
+        "dynamic": false,
+        "provenance": "publisher",
+        "default": true
+      }
+    ],
+    "quality": 0.98,
+    "official": true,
+    "attribution": "required",
+    "license": "CC-BY-4.0"
+  },
+  "slices": {
+    "summary": {
+      "items": [
+        {
+          "path": "/computers/laptops/acer-nitro-v-15",
+          "fields": {
+            "brand": "Acer",
+            "model": "Nitro V 15",
+            "price": 907.99,
+            "currency": "USD",
+            "feature": [
+              "2-in-1",
+              "thin"
+            ],
+            "rating": 4.5,
+            "stock": 50
+          }
+        },
+        {
+          "path": "/computers/laptops/acer-swift-3",
+          "fields": {
+            "brand": "Acer",
+            "model": "Swift 3",
+            "price": 778.96,
+            "currency": "USD",
+            "feature": [
+              "business",
+              "thin",
+              "touchscreen"
+            ],
+            "rating": 4.1,
+            "stock": 18
+          }
+        },
+        {
+          "path": "/computers/laptops/apple-macbook-air-13-m3",
+          "fields": {
+            "brand": "Apple",
+            "model": "MacBook Air 13 M3",
+            "price": 1120.98,
+            "currency": "USD",
+            "feature": [
+              "2-in-1"
+            ],
+            "rating": 4.3,
+            "stock": 35
+          }
+        },
+        {
+          "path": "/computers/laptops/apple-macbook-air-15-m3",
+          "fields": {
+            "brand": "Apple",
+            "model": "MacBook Air 15 M3",
+            "price": 1247.04,
+            "currency": "USD",
+            "feature": [
+              "2-in-1",
+              "business",
+              "gaming"
+            ],
+            "rating": 4.1,
+            "stock": 14
+          }
+        },
+        {
+          "path": "/computers/laptops/apple-macbook-pro-14-m3-pro",
+          "fields": {
+            "brand": "Apple",
+            "model": "MacBook Pro 14 M3 Pro",
+            "price": 1979.01,
+            "currency": "USD",
+            "feature": [
+              "touchscreen"
+            ],
+            "rating": 4.2,
+            "stock": 52
+          }
+        },
+        {
+          "path": "/computers/laptops/apple-macbook-pro-16-m3-max",
+          "fields": {
+            "brand": "Apple",
+            "model": "MacBook Pro 16 M3 Max",
+            "price": 3394.03,
+            "currency": "USD",
+            "feature": [
+              "2-in-1",
+              "gaming"
+            ],
+            "rating": 4.2,
+            "stock": 34
+          }
+        },
+        {
+          "path": "/computers/laptops/asus-proart-studiobook-16",
+          "fields": {
+            "brand": "ASUS",
+            "model": "ProArt Studiobook 16",
+            "price": 2474.01,
+            "currency": "USD",
+            "feature": [
+              "business",
+              "thin"
+            ],
+            "rating": 4.1,
+            "stock": 3
+          }
+        },
+        {
+          "path": "/computers/laptops/asus-rog-zephyrus-g14",
+          "fields": {
+            "brand": "ASUS",
+            "model": "ROG Zephyrus G14",
+            "price": 1631.04,
+            "currency": "USD",
+            "feature": [
+              "creator",
+              "thin",
+              "touchscreen"
+            ],
+            "rating": 4.2,
+            "stock": 26
+          }
+        },
+        {
+          "path": "/computers/laptops/asus-vivobook-15",
+          "fields": {
+            "brand": "ASUS",
+            "model": "VivoBook 15",
+            "price": 649.0,
+            "currency": "USD",
+            "feature": [
+              "2-in-1",
+              "gaming"
+            ],
+            "rating": 4.1,
+            "stock": 33
+          }
+        },
+        {
+          "path": "/computers/laptops/asus-zenbook-14",
+          "fields": {
+            "brand": "ASUS",
+            "model": "ZenBook 14",
+            "price": 959.04,
+            "currency": "USD",
+            "feature": [
+              "gaming",
+              "light"
+            ],
+            "rating": 4.3,
+            "stock": 58
+          }
+        },
+        {
+          "path": "/computers/laptops/dell-inspiron-14-plus",
+          "fields": {
+            "brand": "Dell",
+            "model": "Inspiron 14 Plus",
+            "price": 907.99,
+            "currency": "USD",
+            "feature": [
+              "creator",
+              "gaming",
+              "thin"
+            ],
+            "rating": 4.1,
+            "stock": 23
+          }
+        },
+        {
+          "path": "/computers/laptops/dell-xps-13",
+          "fields": {
+            "brand": "Dell",
+            "model": "XPS 13",
+            "price": 1350.96,
+            "currency": "USD",
+            "feature": [
+              "gaming",
+              "thin",
+              "touchscreen"
+            ],
+            "rating": 4.3,
+            "stock": 2
+          }
+        },
+        {
+          "path": "/computers/laptops/dell-xps-15",
+          "fields": {
+            "brand": "Dell",
+            "model": "XPS 15",
+            "price": 1799.0,
+            "currency": "USD",
+            "feature": [
+              "business",
+              "thin"
+            ],
+            "rating": 4.4,
+            "stock": 56
+          }
+        },
+        {
+          "path": "/computers/laptops/dell-xps-16",
+          "fields": {
+            "brand": "Dell",
+            "model": "XPS 16",
+            "price": 2303.04,
+            "currency": "USD",
+            "feature": [
+              "gaming",
+              "light",
+              "thin",
+              "touchscreen"
+            ],
+            "rating": 4.5,
+            "stock": 50
+          }
+        },
+        {
+          "path": "/computers/laptops/hp-elitebook-840-g10",
+          "fields": {
+            "brand": "HP",
+            "model": "EliteBook 840 G10",
+            "price": 1646.97,
+            "currency": "USD",
+            "feature": [
+              "gaming",
+              "thin",
+              "touchscreen"
+            ],
+            "rating": 4.3,
+            "stock": 15
+          }
+        },
+        {
+          "path": "/computers/laptops/hp-pavilion-plus-14",
+          "fields": {
+            "brand": "HP",
+            "model": "Pavilion Plus 14",
+            "price": 959.04,
+            "currency": "USD",
+            "feature": [
+              "business",
+              "thin",
+              "touchscreen"
+            ],
+            "rating": 4.2,
+            "stock": 26
+          }
+        },
+        {
+          "path": "/computers/laptops/hp-spectre-x360-14",
+          "fields": {
+            "brand": "HP",
+            "model": "Spectre x360 14",
+            "price": 1391.04,
+            "currency": "USD",
+            "feature": [
+              "business"
+            ],
+            "rating": 4.5,
+            "stock": 10
+          }
+        },
+        {
+          "path": "/computers/laptops/lenovo-ideapad-slim-3",
+          "fields": {
+            "brand": "Lenovo",
+            "model": "IdeaPad Slim 3",
+            "price": 668.47,
+            "currency": "USD",
+            "feature": [
+              "gaming",
+              "thin"
+            ],
+            "rating": 4.1,
+            "stock": 36
+          }
+        },
+        {
+          "path": "/computers/laptops/lenovo-thinkpad-t14-gen-4",
+          "fields": {
+            "brand": "Lenovo",
+            "model": "ThinkPad T14 Gen 4",
+            "price": 1357.03,
+            "currency": "USD",
+            "feature": [
+              "creator"
+            ],
+            "rating": 4.1,
+            "stock": 44
+          }
+        },
+        {
+          "path": "/computers/laptops/lenovo-thinkpad-x1-carbon-gen-11",
+          "fields": {
+            "brand": "Lenovo",
+            "model": "ThinkPad X1 Carbon Gen 11",
+            "price": 1812.02,
+            "currency": "USD",
+            "feature": [
+              "gaming"
+            ],
+            "rating": 4.4,
+            "stock": 0
+          }
+        },
+        {
+          "path": "/computers/laptops/lenovo-yoga-9i",
+          "fields": {
+            "brand": "Lenovo",
+            "model": "Yoga 9i",
+            "price": 1543.97,
+            "currency": "USD",
+            "feature": [
+              "light",
+              "touchscreen"
+            ],
+            "rating": 4.5,
+            "stock": 37
+          }
+        },
+        {
+          "path": "/computers/laptops/microsoft-surface-laptop-5",
+          "fields": {
+            "brand": "Microsoft",
+            "model": "Surface Laptop 5",
+            "price": 1337.97,
+            "currency": "USD",
+            "feature": [
+              "creator"
+            ],
+            "rating": 4.2,
+            "stock": 5
+          }
+        },
+        {
+          "path": "/computers/laptops/microsoft-surface-laptop-studio-2",
+          "fields": {
+            "brand": "Microsoft",
+            "model": "Surface Laptop Studio 2",
+            "price": 2119.99,
+            "currency": "USD",
+            "feature": [
+              "touchscreen"
+            ],
+            "rating": 4.0,
+            "stock": 24
+          }
+        },
+        {
+          "path": "/computers/laptops/razer-blade-14",
+          "fields": {
+            "brand": "Razer",
+            "model": "Blade 14",
+            "price": 2177.01,
+            "currency": "USD",
+            "feature": [
+              "2-in-1"
+            ],
+            "rating": 4.4,
+            "stock": 10
+          }
+        }
+      ]
+    }
+  }
+}
