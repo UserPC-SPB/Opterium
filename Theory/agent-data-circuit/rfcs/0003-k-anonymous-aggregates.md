@@ -7,12 +7,12 @@
 
 ## Problem
 `aggregate` exists so agents stop downloading whole catalogs
-([SPEC.md 6.9](SPEC.md#69-aggregate--commerce-tier)), but server-side reduction concentrates
+([SPEC.md 6.9](../SPEC.md#69-aggregate--commerce-tier)), but server-side reduction concentrates
 individual records into small groups: narrow the filter to one buyer and `avg(price)` is that
 buyer's price. Even a suppressed group leaks through the envelope around it -
-`Value_suppressed = Totals - sum(Visible)` ([SPEC.md 8.5](SPEC.md#85-privacy-invariants-for-totals)).
-ADC 0.1 has rules ([SPEC.md 8.4](SPEC.md#84-privacy-in-aggregates-k-anonymity),
-[SECURITY.md 4](SECURITY.md#4-privacy-for-aggregates)) but leaves real ambiguity:
+`Value_suppressed = Totals - sum(Visible)` ([SPEC.md 8.5](../SPEC.md#85-privacy-invariants-for-totals)).
+ADC 0.1 has rules ([SPEC.md 8.4](../SPEC.md#84-privacy-in-aggregates-k-anonymity),
+[SECURITY.md 4](../SECURITY.md#4-privacy-for-aggregates)) but leaves real ambiguity:
 1. What `min_group_size` floors, and what happens when a request tries to lower it.
 2. Whether `totals` after suppression is a convenience or a leak, and what `coverage` and
    `partial` mean - a naive `coverage` re-derives the suppressed mass by itself.
@@ -25,17 +25,17 @@ ADC 0.1 has rules ([SPEC.md 8.4](SPEC.md#84-privacy-in-aggregates-k-anonymity),
 ### D1. `min_group_size` is a publisher-enforced floor
 The passport declares `aggregations.min_group_size_default` (k). A request MAY raise
 `min_group_size`; a request below the floor MUST be rejected with `400 FILTER_INVALID` and
-`details.privacy_floor` ([SPEC.md 8.5](SPEC.md#85-privacy-invariants-for-totals)). The floor
-is evaluated at step 6 of [SPEC.md 6.10](SPEC.md#610-validation-order-normative-for-all-methods),
+`details.privacy_floor` ([SPEC.md 8.5](../SPEC.md#85-privacy-invariants-for-totals)). The floor
+is evaluated at step 6 of [SPEC.md 6.10](../SPEC.md#610-validation-order-normative-for-all-methods),
 before execution and before billing, so a violating query costs the caller nothing but the request.
 ### D2. Suppression rule
 For every group G with `0 < count(G) < min_group_size`: G is omitted from `groups`, and
 `suppressed_groups` increments once per suppressed group
-([SPEC.md 8.4](SPEC.md#84-privacy-in-aggregates-k-anonymity)). Extremum masking: when
+([SPEC.md 8.4](../SPEC.md#84-privacy-in-aggregates-k-anonymity)). Extremum masking: when
 `count(G) < 2 x min_group_size`, exact `min`/`max` over G MUST NOT be emitted; the alias is
 set to `null` and the same `values` object carries `"metric_suppressed": true`.
 Ungrouped aggregates are one group of all matched records (reading of
-[SPEC.md 6.9.4](SPEC.md#694-response), which is silent here): if
+[SPEC.md 6.9.4](../SPEC.md#694-response), which is silent here): if
 `0 < matched_count < min_group_size`, the server MUST return `"values": {}` with
 `"suppressed_groups": 1`, `"partial": true`, and no `totals`, rather than a single-record
 average. `reference/adc/aggregate.py` already returns this shape; this RFC generalizes it to privacy.
@@ -43,7 +43,7 @@ average. `reference/adc/aggregate.py` already returns this shape; this RFC gener
 ### D3. Totals: recompute over visible groups, or omit
 When `suppressed_groups > 0`, exactly one of: recompute `totals` from the visible groups
 only and set `"totals_visible_only": true`, or omit `totals` entirely. Folding suppressed
-rows into `totals` is forbidden ([SPEC.md 6.9.4](SPEC.md#694-response)). When
+rows into `totals` is forbidden ([SPEC.md 6.9.4](../SPEC.md#694-response)). When
 `suppressed_groups == 0`, `totals_visible_only` MUST be `false` and totals are honest
 population totals. The flag exists so an agent can never mistake a partial sum for a full
 one without reading a boolean.
@@ -56,12 +56,12 @@ one without reading a boolean.
   `coverage` yields `matched_count = sum(visible_counts) / coverage`, re-deriving the
   suppressed record mass - differencing by another name. When nothing was suppressed,
   `coverage` MAY be present: collection cardinality is already disclosed by passport `count`
-  ([SPEC.md 6.3](SPEC.md#63-passport-get-adcpassport)), so it adds no new secret.
+  ([SPEC.md 6.3](../SPEC.md#63-passport-get-adcpassport)), so it adds no new secret.
 
 ### D5. `approximate: false` is a hard contract
 If exact computation is impossible (cardinality bound, backend failure), the server MUST
 fail with `422 AGGREGATION_TOO_BROAD` or `503 HYDRATION_FAILED` and MUST NOT return
-`approximate: true` ([SPEC.md 6.9.4](SPEC.md#694-response)). The response `approximate`
+`approximate: true` ([SPEC.md 6.9.4](../SPEC.md#694-response)). The response `approximate`
 field MUST echo the mode actually used: a 200 carrying `approximate: true` for a request
 that set `false` is a conformance violation, and the agent MUST discard that response
 rather than consume it.
@@ -73,7 +73,7 @@ suppressed groups exactly as `totals` would have. Available mitigations are part
 breadth, `min_group_size` is enforced per request. Not available: per-session query
 accounting (would require per-client server state, which P7 forbids), differential-privacy
 noise, or any proof that a publisher suppressed at all
-([SECURITY.md 4](SECURITY.md#4-privacy-for-aggregates) admits this). **ADC 0.1 does not
+([SECURITY.md 4](../SECURITY.md#4-privacy-for-aggregates) admits this). **ADC 0.1 does not
 fully close differencing.** Agents must not read k-anonymity as an anonymity guarantee;
 publishers needing one must add their own session policy or refuse `aggregate` entirely.
 
@@ -92,7 +92,7 @@ in D6 as a known non-goal.
 
 ## Consequences (positive)
 - Small groups cannot be named by the response; the F.2 vector
-  ([CONFORMANCE.md F.2](CONFORMANCE.md#f2-k-anonymity-differencing)) passes by construction.
+  ([CONFORMANCE.md F.2](../CONFORMANCE.md#f2-k-anonymity-differencing)) passes by construction.
 - `totals_visible_only` makes the one safe recomputation machine-detectable.
 - Omitting `coverage` under suppression closes the side channel the naive definition would
   open, without losing anything when suppression is zero.
@@ -112,7 +112,7 @@ in D6 as a known non-goal.
 - D4 changes `coverage` from "present in the example response" to "conditionally present";
   agents MUST treat absence as "not computable without leaking", not as an error.
 - Compliance is unverifiable: no cryptographic proof of suppression exists in ADC, so
-  privacy rests on publisher honesty ([SECURITY.md 4](SECURITY.md#4-privacy-for-aggregates)).
+  privacy rests on publisher honesty ([SECURITY.md 4](../SECURITY.md#4-privacy-for-aggregates)).
 
 ## Test vectors
 ```json
@@ -154,7 +154,7 @@ in D6 as a known non-goal.
 ```
 
 ## References
-- SPEC.md [6.3](SPEC.md#63-passport-get-adcpassport), [6.9.4](SPEC.md#694-response), [8.4](SPEC.md#84-privacy-in-aggregates-k-anonymity), [8.5](SPEC.md#85-privacy-invariants-for-totals), [6.10](SPEC.md#610-validation-order-normative-for-all-methods)
-- [CONFORMANCE.md F.2](CONFORMANCE.md#f2-k-anonymity-differencing), [F.6](CONFORMANCE.md#f6-aggregate-privacy)
-- [SECURITY.md 4](SECURITY.md#4-privacy-for-aggregates), `reference/adc/aggregate.py` (suppression, totals, coverage)
-- [rfcs/0002-token-accounting.md](rfcs/0002-token-accounting.md)
+- SPEC.md [6.3](../SPEC.md#63-passport-get-adcpassport), [6.9.4](../SPEC.md#694-response), [8.4](../SPEC.md#84-privacy-in-aggregates-k-anonymity), [8.5](../SPEC.md#85-privacy-invariants-for-totals), [6.10](../SPEC.md#610-validation-order-normative-for-all-methods)
+- [CONFORMANCE.md F.2](../CONFORMANCE.md#f2-k-anonymity-differencing), [F.6](../CONFORMANCE.md#f6-aggregate-privacy)
+- [SECURITY.md 4](../SECURITY.md#4-privacy-for-aggregates), `reference/adc/aggregate.py` (suppression, totals, coverage)
+- [rfcs/0002-token-accounting.md](0002-token-accounting.md)

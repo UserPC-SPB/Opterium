@@ -1766,7 +1766,7 @@ E8 240 roots = 112 D8 + 128 spinor with ‖r‖²=8; the dot spectrum
 `(1+i)¹⁰⁰=−2⁵⁰` and `|3+4i|=5`; E8 tunnels `(0,6,31)` (2240 total); and the
 Doctor layer's countable invariants (14 channels, OK@≥10, closed@≥7).
 
-See [software/witness_prover/README.md](software/witness_prover/README.md) for the full
+See [software/witness_prover/README.md](../../software/witness_prover/README.md) for the full
 methodology and certificate format.
 
 > **⚠️ Standard caveat, stated plainly.** This tool implements Borisov's

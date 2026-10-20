@@ -7,7 +7,7 @@
 
 ## Problem
 Dynamic slices hydrate live backends on demand
-([SPEC.md 7.2](SPEC.md#72-dynamic-slice-hydration)), and live backends fail. When they do, a
+([SPEC.md 7.2](../SPEC.md#72-dynamic-slice-hydration)), and live backends fail. When they do, a
 publisher has three bad options: serve stale data silently (P13 forbids presenting stale data
 as live), serve nothing and lose the whole circuit (P10 forbids backend failure from
 invalidating static slices), or serve stale data and charge a live hydration fee that never
@@ -15,31 +15,31 @@ happened (P14 forbids charging dynamic fees on degraded responses).
 Without a contract the failure modes are worse than the outage: an agent books inventory from
 a `stale_fallback` price, or a publisher bills a hydration fee over 10-minute-old data, and
 the payload says nothing about which happened. Agents also lack a rule for when degraded data
-may be read versus refused ([SPEC.md 7.3.3](SPEC.md#733-agent-transactional-safety)) and lack
+may be read versus refused ([SPEC.md 7.3.3](../SPEC.md#733-agent-transactional-safety)) and lack
 an enforcement hook if the publisher charges anyway
-([SPEC.md 7.3.4](SPEC.md#734-billing-invariants-for-degraded-responses)).
+([SPEC.md 7.3.4](../SPEC.md#734-billing-invariants-for-degraded-responses)).
 
 ## Decision
 ### D1. Three declared modes, executed on failure
 Each dynamic slice declares `degradation: { mode, max_staleness_seconds }` in the passport
-([SPEC.md 6.3](SPEC.md#63-passport-get-adcpassport)). On dependency failure, timeout, or SLA
-breach ([SPEC.md 7.3](SPEC.md#73-degradation-semantics)):
+([SPEC.md 6.3](../SPEC.md#63-passport-get-adcpassport)). On dependency failure, timeout, or SLA
+breach ([SPEC.md 7.3](../SPEC.md#73-degradation-semantics)):
 - **`stale_fallback`** - HTTP 200 with the most recent cached representation, allowed only
   while `staleness_seconds <= max_staleness_seconds`. The `hydration` object MUST declare
   `status: "stale_fallback"`, `hydrated_at`, `staleness_seconds`, `failure_reason`, and
   `revalidation_required: true`. Beyond the budget the publisher MUST use `fail_closed` or
-  `partial_omit` ([SPEC.md 6.4.3](SPEC.md#643-per-slice-hydration)).
+  `partial_omit` ([SPEC.md 6.4.3](../SPEC.md#643-per-slice-hydration)).
 - **`partial_omit`** - HTTP 200, every static slice intact, the dynamic slice's data omitted,
   `hydration[slice].status = "degraded_partial"`.
 - **`fail_closed`** - HTTP 503 with `HYDRATION_FAILED` and a `Retry-After` header
-  ([SPEC.md 6.12](SPEC.md#612-errors-rfc-9457-problem-details)); mandatory when the slice is
+  ([SPEC.md 6.12](../SPEC.md#612-errors-rfc-9457-problem-details)); mandatory when the slice is
   critical or the staleness budget is exceeded.
 No fourth option: synthesizing plausible values under any status outside the declared
 vocabulary is a P13 violation.
 
 ### D2. Hydration vocabulary and agent treatment
 `hydration.status` vocabulary: `live`, `cached`, `stale_fallback`, `degraded_partial`,
-`synthetic_stub` ([SPEC.md 7.3.2](SPEC.md#732-the-hydration-object)).
+`synthetic_stub` ([SPEC.md 7.3.2](../SPEC.md#732-the-hydration-object)).
 - `live` and `cached` are non-degraded: data is current within its generation and the
   transactional gate is not engaged.
 - `stale_fallback` and `degraded_partial` are degraded (D3).
@@ -52,8 +52,8 @@ vocabulary is a P13 violation.
 ### D3. Transactional gate
 An agent MUST NOT initiate a write, payment, binding reservation, or any external side
 effect on data whose hydration is `stale_fallback`, `degraded_partial`, or `synthetic_stub`
-([SPEC.md 7.3.3](SPEC.md#733-agent-transactional-safety),
-[agent-runtime/AGENT-RUNTIME.md 7](agent-runtime/AGENT-RUNTIME.md#7-degradation-handling)).
+([SPEC.md 7.3.3](../SPEC.md#733-agent-transactional-safety),
+[agent-runtime/AGENT-RUNTIME.md 7](../agent-runtime/AGENT-RUNTIME.md#7-degradation-handling)).
 Required instead: re-request with a precondition (an If-Match-style guard on the slice
 `generation`) or wait for a `live` cycle before acting. Read-only informational use of
 `stale_fallback` is allowed provided the agent discloses the staleness age to its consumer (A6).
@@ -62,7 +62,7 @@ Required instead: re-request with a precondition (an If-Match-style guard on the
 For any response where `hydration.status` is `stale_fallback`, `degraded_partial`, or
 `synthetic_stub`:
 - The publisher MUST set `ADC-Cost-Amount: 0.0` and `usage.cost.amount: 0.0`
-  ([SPEC.md 7.3.4](SPEC.md#734-billing-invariants-for-degraded-responses)).
+  ([SPEC.md 7.3.4](../SPEC.md#734-billing-invariants-for-degraded-responses)).
 - The agent MUST reject any non-zero charge with `DEGRADATION_BILLING_VIOLATION` and refuse
   to reconcile it. The code is agent-local: `reference/adc/errors.py` gives it status 0, and
   publishers MUST NOT emit it over HTTP.
@@ -82,7 +82,7 @@ static slices and unaffected dynamic slices must survive. `fail_closed` stays th
 for critical slices and blown staleness budgets, not the default.
 **C. Charge a discounted fee on degraded responses instead of zero.** Rejected: it creates a
 standing incentive to declare failure (cheaper serving) or hide it (higher revenue), and
-[NON-GOALS.md](NON-GOALS.md) rules out the settlement machinery that could enforce refunds.
+[NON-GOALS.md](../NON-GOALS.md) rules out the settlement machinery that could enforce refunds.
 Zeroing the charge at the response is enforceable by the only party that can act
 unilaterally: the agent, at D4.
 **D. Publisher-initiated refund/dispute flow.** Rejected for 0.1: it needs an identity and
@@ -110,10 +110,10 @@ wire channel to report it with.
 - Agents must carry age-disclosure and precondition machinery for A6 and D3 - complexity
   read-only agents pay even when they never transact.
 - `fail_closed` during an outage produces 503 storms; correctness depends on agents honouring
-  `Retry-After` ([SPEC.md 6.11](SPEC.md#611-rate-limiting)).
+  `Retry-After` ([SPEC.md 6.11](../SPEC.md#611-rate-limiting)).
 
 ## Test vectors
-Note: the illustrative hydration example in [SPEC.md 6.4.3](SPEC.md#643-per-slice-hydration)
+Note: the illustrative hydration example in [SPEC.md 6.4.3](../SPEC.md#643-per-slice-hydration)
 shows `staleness_seconds: 1023` against `max_staleness_seconds: 900` while labelling the
 status `stale_fallback`, which the normative sentence below it forbids. The vectors below use
 a compliant pair and add an explicit violation case.
@@ -153,8 +153,8 @@ a compliant pair and add an explicit violation case.
 ```
 
 ## References
-- SPEC.md [7.3](SPEC.md#73-degradation-semantics), [7.3.2](SPEC.md#732-the-hydration-object), [7.3.3](SPEC.md#733-agent-transactional-safety), [7.3.4](SPEC.md#734-billing-invariants-for-degraded-responses)
-- SPEC.md [6.4.3](SPEC.md#643-per-slice-hydration), [6.4.6](SPEC.md#646-billing-and-caching-invariants), [9.2](SPEC.md#92-agent-budget-state-machine-with-concurrency)
-- [agent-runtime/AGENT-RUNTIME.md 7](agent-runtime/AGENT-RUNTIME.md#7-degradation-handling), [CONFORMANCE.md F.8](CONFORMANCE.md#f8-hydration-degradation-and-billing), [ECONOMICS.md 5](ECONOMICS.md#5-micro-billing)
+- SPEC.md [7.3](../SPEC.md#73-degradation-semantics), [7.3.2](../SPEC.md#732-the-hydration-object), [7.3.3](../SPEC.md#733-agent-transactional-safety), [7.3.4](../SPEC.md#734-billing-invariants-for-degraded-responses)
+- SPEC.md [6.4.3](../SPEC.md#643-per-slice-hydration), [6.4.6](../SPEC.md#646-billing-and-caching-invariants), [9.2](../SPEC.md#92-agent-budget-state-machine-with-concurrency)
+- [agent-runtime/AGENT-RUNTIME.md 7](../agent-runtime/AGENT-RUNTIME.md#7-degradation-handling), [CONFORMANCE.md F.8](../CONFORMANCE.md#f8-hydration-degradation-and-billing), [ECONOMICS.md 5](../ECONOMICS.md#5-micro-billing)
 - `reference/adc/errors.py` (`DEGRADATION_BILLING_VIOLATION`, status 0)
-- [rfcs/0001-stateless-anchors.md](rfcs/0001-stateless-anchors.md), [rfcs/0002-token-accounting.md](rfcs/0002-token-accounting.md)
+- [rfcs/0001-stateless-anchors.md](0001-stateless-anchors.md), [rfcs/0002-token-accounting.md](0002-token-accounting.md)

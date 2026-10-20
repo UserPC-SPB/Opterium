@@ -17,9 +17,9 @@ This section defines a relational ontology where arithmetic is navigation throug
 | `opterium_v1.0_spec.txt` | Technical specification document for the Opterium system version 1.0. | ~12 850 |
 | `outside_AI_opinion.md` | External AI descriptive opinion providing surface-level theory understanding. | ~3 850 |
 | `readme_supplement.md` | Supplementary details extending the main README documentation. | ~3 250 |
-| `README.md` | Compact reading guide and mandatory onboarding protocol for the repository. | — |
+| `README.md` | Compact reading guide and mandatory onboarding protocol for the repository. | ~1 000 |
 
-Total: ~73 850 tokens for everything.
+Total: ~73 850 tokens for everything (table rows, including this guide).
 
 ## Reading paths
 

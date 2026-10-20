@@ -8,13 +8,13 @@
 ## Problem
 ADC declares costs in tokens everywhere: passport `list_item_tokens` and `list_item_tokens_p95`,
 slice `tokens`, `estimate.estimated_tokens`, `usage.tokens`
-([SPEC.md 4.2](SPEC.md#42-manifest)). A token count is meaningless without the algorithm that
+([SPEC.md 4.2](../SPEC.md#42-manifest)). A token count is meaningless without the algorithm that
 produced it: the same bytes count near 1 token per 4 bytes under one tokenizer and near 1 per
 byte (or worse) under another, so two parties computing "cost" with different vocabularies are
 adding incompatible units.
 The damage is concrete. The budget FSM admits a request iff `c_tokens <= B_token_rem` where
 `c_tokens = slice.tokens + (limit x list_item_tokens_p95)`
-([SPEC.md 9.2](SPEC.md#92-agent-budget-state-machine-with-concurrency)). If the publisher
+([SPEC.md 9.2](../SPEC.md#92-agent-budget-state-machine-with-concurrency)). If the publisher
 counts with `o200k_base` and the agent budgets with `cl100k_base`, the scalar `B_token_rem`
 mixes units and admission becomes arithmetic nonsense; reconciliation
 (`B_token_rem += c_tokens_projected - usage.tokens`) then reports phantom overruns or hides
@@ -25,19 +25,19 @@ algorithm you declared", so an honest mistake and cost laundering look identical
 ## Decision
 ### D1. One tokenizer per circuit, declared in the manifest
 The manifest field `tokenizer` is the single tokenizer for the whole circuit; `orient` echoes
-it ([SPEC.md 6.1](SPEC.md#61-orient-getadcorient)). Every `tokens`, `estimated_tokens`,
+it ([SPEC.md 6.1](../SPEC.md#61-orient-get-adcorient)). Every `tokens`, `estimated_tokens`,
 `list_item_tokens`, `list_item_tokens_p95`, and `usage.tokens` field MUST be computed with it
-([SPEC.md 4.2](SPEC.md#42-manifest), SPEC.md 1). Per-slice, per-endpoint, and
+([SPEC.md 4.2](../SPEC.md#42-manifest), SPEC.md 1). Per-slice, per-endpoint, and
 request-selected tokenizers are forbidden: budget arithmetic compares these numbers across
 requests against one scalar budget, and estimate-to-usage equality
-([CONFORMANCE.md F.12](CONFORMANCE.md#f12-tokenizer)) is checkable only inside one unit system.
+([CONFORMANCE.md F.12](../CONFORMANCE.md#f12-tokenizer)) is checkable only inside one unit system.
 
 ### D2. Vocabulary
 - `cl100k_base` - OpenAI GPT-4 family; normative reference tokenizer.
 - `o200k_base` - OpenAI GPT-4o family.
 - `utf8_bytes_div_4` - reference definition, computable by anyone with no dependencies:
   `tokens = ceil(bytes / 4)` where `bytes` is the UTF-8 byte length of the serialized text
-  ([reference/adc/tokens.py](reference/adc/tokens.py)).
+  ([reference/adc/tokens.py](../reference/adc/tokens.py)).
 - `<absolute-uri>` - escape hatch for a custom tokenizer with a publicly documented
   algorithm; a URI most agents cannot evaluate, so its counts are structurally unverifiable (D4).
 The bundled example circuit uses `utf8_bytes_div_4` precisely because the reference
@@ -46,19 +46,19 @@ implementation can verify it byte-for-byte.
 ### D3. Disagreement between publisher and agent
 1. **The wire wins for reconciliation.** The agent MUST budget, admit, and reconcile against
    the publisher's declared numbers; it MUST NOT recompute with its own tokenizer and
-   substitute them ([SPEC.md 6.4.7](SPEC.md#647-usage-and-reconciliation)).
+   substitute them ([SPEC.md 6.4.7](../SPEC.md#647-usage-and-reconciliation)).
 2. **Unevaluable tokenizer demotes confidence.** If the agent cannot run the declared
    tokenizer (missing `tiktoken`, custom URI), every count from that origin is locally
    unverifiable: never admitted as exact, always subject to the safety margin (D4), with
    `bytes` as the cross-check floor - `bytes` is tokenizer-independent and always comparable.
 3. **Deterministic mismatches mark the origin non-conforming.** Under `utf8_bytes_div_4`,
    `usage.tokens` MUST equal `ceil(bytes / 4)`; under exact confidence, `estimated_tokens`
-   MUST equal `usage.tokens` ([CONFORMANCE.md F.12](CONFORMANCE.md#f12-tokenizer)). Either is
+   MUST equal `usage.tokens` ([CONFORMANCE.md F.12](../CONFORMANCE.md#f12-tokenizer)). Either is
    plain integer arithmetic; the agent flags the origin for the session and treats its future
    estimates as `sample`. ADC 0.1 defines no wire error for this (see limits).
 
 ### D4. `confidence: exact | bounded | sample`, and the conservatism rule
-`estimate` reports `confidence` ([SPEC.md 6.5](SPEC.md#65-estimate-getadcestimate)); agents
+`estimate` reports `confidence` ([SPEC.md 6.5](../SPEC.md#65-estimate-get-adcestimate)); agents
 MUST treat non-exact estimates conservatively. This RFC pins the vocabulary:
 - **`exact`** - `estimated_tokens` will equal `usage.tokens` for the same unmodified request.
   Allowed only when the count is deterministic, the tokenizer is exactly evaluable
@@ -90,9 +90,9 @@ member handling leaves the door open later.
 
 ## Consequences (positive)
 - The budget FSM operates in one unit; admission and reconciliation are arithmetic an
-  auditor can re-run ([ECONOMICS.md 3](ECONOMICS.md#3-agent-budget-state-machine)).
+  auditor can re-run ([ECONOMICS.md 3](../ECONOMICS.md#3-agent-budget-state-machine)).
 - `utf8_bytes_div_4` gives every implementation a zero-dependency conformance oracle
-  ([CONFORMANCE.md F.12](CONFORMANCE.md#f12-tokenizer)).
+  ([CONFORMANCE.md F.12](../CONFORMANCE.md#f12-tokenizer)).
 - Disagreement is detectable client-side: identity and exact-confidence checks are integer
   comparisons, not opinions.
 - `confidence` becomes an actionable contract instead of an adjective.
@@ -102,7 +102,7 @@ member handling leaves the door open later.
   agents must apply margin rather than trust (`reference/adc/tokens.py` flags this itself).
 - `utf8_bytes_div_4` guarantees internal consistency, not real model cost: on CJK or
   symbol-dense text it mispredicts GPT-style counts badly; cross-vendor comparability stays
-  open ([ECONOMICS.md 7](ECONOMICS.md#7-tokenizer-caveat)).
+  open ([ECONOMICS.md 7](../ECONOMICS.md#7-tokenizer-caveat)).
 - A publisher counting with a different algorithm is caught only post hoc, only by agents
   that reconcile, and has no wire error to be reported with (D3.3) - a 0.1 gap.
 - `<absolute-uri>` tokenizers are third-party-unverifiable by construction: ADC defines no
@@ -147,7 +147,7 @@ member handling leaves the door open later.
 ```
 
 ## References
-- SPEC.md [4.2](SPEC.md#42-manifest), [6.4.7](SPEC.md#647-usage-and-reconciliation), [6.5](SPEC.md#65-estimate-getadcestimate), [9.2](SPEC.md#92-agent-budget-state-machine-with-concurrency)
-- [CONFORMANCE.md F.12](CONFORMANCE.md#f12-tokenizer), [ECONOMICS.md 7](ECONOMICS.md#7-tokenizer-caveat)
+- SPEC.md [4.2](../SPEC.md#42-manifest), [6.4.7](../SPEC.md#647-usage-and-reconciliation), [6.5](../SPEC.md#65-estimate-get-adcestimate), [9.2](../SPEC.md#92-agent-budget-state-machine-with-concurrency)
+- [CONFORMANCE.md F.12](../CONFORMANCE.md#f12-tokenizer), [ECONOMICS.md 7](../ECONOMICS.md#7-tokenizer-caveat)
 - `reference/adc/tokens.py` (identity tokenizer, honest fallback)
-- [rfcs/0003-k-anonymous-aggregates.md](rfcs/0003-k-anonymous-aggregates.md), [rfcs/0004-degradation-contract.md](rfcs/0004-degradation-contract.md)
+- [rfcs/0003-k-anonymous-aggregates.md](0003-k-anonymous-aggregates.md), [rfcs/0004-degradation-contract.md](0004-degradation-contract.md)

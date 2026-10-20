@@ -275,6 +275,13 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). This is a v0.1 draft: the fastest way to
 help is to build a conforming implementation in another language and try to pass
 the vectors in [CONFORMANCE.md](CONFORMANCE.md).
 
+## For AI agents
+
+- **Cold entry:** [AI-ENTRY.md](AI-ENTRY.md) (informative design note). Normative spec: [SPEC.md](SPEC.md); conformance vectors: [CONFORMANCE.md](CONFORMANCE.md); security: [SECURITY.md](SECURITY.md); rationale: [RATIONALE.md](RATIONALE.md).
+- **Structure:** `schemas/` (JSON Schemas), `reference/` (Python reference server + validator + MCP bridge), `examples/ecommerce/`, `tests/` (conformance vectors), `tools/`, `rfcs/`.
+- **Budget:** this README ~3 250 tokens; `AI-ENTRY.md` ~2 600; `SPEC.md` ~12 500; `CONFORMANCE.md` ~2 500; `SECURITY.md` ~2 350.
+- **Gotchas:** DRAFT, no production implementations; docs are CC BY 4.0 ([LICENSE-DOCS](LICENSE-DOCS)), code/schemas Apache-2.0 ([LICENSE-CODE](LICENSE-CODE)); the reference server is Python 3.11+ stdlib-only and is started from this folder with `python -m reference.adc.server examples/ecommerce`; links under `rfcs/` were rebased to `../` and their `SPEC.md` anchors corrected in this snapshot.
+
 ## License
 
 - Specification and documentation: **CC BY 4.0** ([LICENSE-DOCS](LICENSE-DOCS)).

@@ -6,15 +6,15 @@
 - Requires: ADC 0.1
 
 ## Problem
-[SPEC.md 5.3.1](SPEC.md#531-idempotent-issuance) defines anchor issuance as a pure function
+[SPEC.md 5.3.1](../SPEC.md#531-idempotent-issuance) defines anchor issuance as a pure function
 `anchor(tree_generation, path) -> [aN]`: the same path yields the same anchor across `tree`,
 `passport`, and `fetch`. P6 promises anchors map 1:1 to paths "for the life of a tree
-generation". [SPEC.md 5.3.3](SPEC.md#533-lifecycle) then promises a grace period
+generation". [SPEC.md 5.3.3](../SPEC.md#533-lifecycle) then promises a grace period
 (RECOMMENDED >= 7 days) answered with `409 ANCHOR_MOVED`. The three demands collide at
 restructuring time:
 1. Never bumping `tree_generation` keeps old anchors resolving to wrong or deleted nodes;
-   cache keys ([SPEC.md 7.1](SPEC.md#71-freshness-generations)) and cursor binding
-   ([SPEC.md 6.4.4](SPEC.md#644-pagination)) depend on generation changes and rot too.
+   cache keys ([SPEC.md 7.1](../SPEC.md#71-freshness-generations)) and cursor binding
+   ([SPEC.md 6.4.4](../SPEC.md#644-pagination)) depend on generation changes and rot too.
 2. Bumping and forgetting is legal but hostile: every stored anchor dies at once and the
    agent learns nothing about where the node went.
 3. A durable `anchor -> path` row per node makes issuance stateful: replicas or
@@ -29,11 +29,11 @@ Within a generation, `[aN]` is computed from `(tree_generation, path)` alone; th
 assigns anchors by lexicographic rank of the canonical path (`reference/adc/anchors.py`,
 `AnchorTable.from_paths`). Implementations MUST preserve replica-independent derivation,
 agreement of `tree`, `passport`, and `fetch` on every path
-([SPEC.md 5.3.1](SPEC.md#531-idempotent-issuance)), and full recomputability from the path
+([SPEC.md 5.3.1](../SPEC.md#531-idempotent-issuance)), and full recomputability from the path
 set, so no issuance state exists to lose.
 ### D2. Restructuring changes the generation, never the mapping
 `tree_generation` MUST change whenever issuance output would change for any path, and MAY
-stay constant across content-only updates ([SPEC.md 5.5](SPEC.md#55-tree-generation)).
+stay constant across content-only updates ([SPEC.md 5.5](../SPEC.md#55-tree-generation)).
 Stability across restructuring is therefore (a) strict stability within a generation (P6)
 plus (b) explicit migration across generations (D4). A publisher that restructures without
 bumping the generation is non-conforming.
@@ -52,7 +52,7 @@ bumping the generation is non-conforming.
 - `404 ANCHOR_NOT_FOUND` stays uniform: never distinguish "never existed" from "not
   authorized" (SPEC.md 5.3.3, SPEC.md 8.3).
 
-Ordering clarification (reading of [SPEC.md 6.10](SPEC.md#610-validation-order-normative-for-all-methods)):
+Ordering clarification (reading of [SPEC.md 6.10](../SPEC.md#610-validation-order-normative-for-all-methods)):
 resolution is step 5, generation pre-validation step 7; read literally, a stale-generation
 request could fail 404/410 at step 5 first, making `409 GENERATION_STALE` unreachable for
 unknown anchors. Resolved here: an anchor has no meaning outside a generation, so when
@@ -68,13 +68,13 @@ period answer `409 ANCHOR_MOVED` with `details.replaced_by` and `details.path`; 
 or on deletion, answer `410 ANCHOR_EXPIRED`. The grace period is RECOMMENDED, not REQUIRED,
 so publishers MAY answer 410 immediately and agents MUST handle both. The alias map is the
 only permitted memory: bounded by removed nodes, never per-client, mandatory to expire, no
-secrets ([SECURITY.md 5](SECURITY.md#5-anchor-security)). Issuance never reads it (D1); only
+secrets ([SECURITY.md 5](../SECURITY.md#5-anchor-security)). Issuance never reads it (D1); only
 retirement does.
 
 ### D5. Agent-side obligations
 - On a new `ADC-Tree-Generation`, invalidate the local anchor table
-  ([SPEC.md 5.3](SPEC.md#53-anchors-generations-lifecycle)).
-- Send `tree_generation` on POST `fetch` ([SPEC.md 6.4.5](SPEC.md#645-heavy-filter-fetch-post-adcfetch))
+  ([SPEC.md 5.3](../SPEC.md#53-anchors-generations-lifecycle)).
+- Send `tree_generation` on POST `fetch` ([SPEC.md 6.4.5](../SPEC.md#645-heavy-filter-fetch-post-adcfetch))
   so a stale context yields the retryable 409 instead of a wrong answer.
 - Tokens are unique only within a generation (SPEC.md 1) and rank issuance makes reuse
   systematic: `[a7]` in G+1 may be a different path than `[a7]` in G. Fetch responses echo
@@ -95,7 +95,7 @@ the hash, so restructuring stability is unsolved; the token embeds a path preima
 fixes `anchor-id = "a" 1*DIGIT`.
 
 **C. Never increment `tree_generation`.** Rejected: contradicts
-[SPEC.md 5.3](SPEC.md#53-anchors-generations-lifecycle), disables generation-keyed cache and
+[SPEC.md 5.3](../SPEC.md#53-anchors-generations-lifecycle), disables generation-keyed cache and
 cursor invalidation, leaves deleted nodes addressable forever.
 
 **D. Standalone migration document (`/.well-known/adc-anchors.json`).** Deferred: duplicates
@@ -105,7 +105,7 @@ grace mappings outgrow an error body.
 ## Consequences (positive)
 - `tree` and `passport` are reproducible from (generation, path set): static hosting,
   replicas, edge caching with `ETag: W"<tree_generation>"`
-  ([SPEC.md 6.1](SPEC.md#61-orient-getadcorient)).
+  ([SPEC.md 6.1](../SPEC.md#61-orient-get-adcorient)).
 - The retryable split maps onto the budget FSM: 409 -> release, refresh, retry; 410 ->
   re-plan, no retry.
 - Migration needs no permanent issuance state, only an expiring alias map.
@@ -158,7 +158,7 @@ Response bodies are asserted as field subsets; error bodies are `application/pro
 ```
 
 ## References
-- SPEC.md [5.3](SPEC.md#53-anchors-generations-lifecycle), [5.3.1](SPEC.md#531-idempotent-issuance), [5.3.3](SPEC.md#533-lifecycle), [5.5](SPEC.md#55-tree-generation)
-- SPEC.md [6.10](SPEC.md#610-validation-order-normative-for-all-methods), [CONFORMANCE.md F.4](CONFORMANCE.md#f4-generation-invalidation)
-- [SECURITY.md 5](SECURITY.md#5-anchor-security), [agent-runtime/AGENT-RUNTIME.md 3.3](agent-runtime/AGENT-RUNTIME.md#33-generation-invalidation)
+- SPEC.md [5.3](../SPEC.md#53-anchors-generations-lifecycle), [5.3.1](../SPEC.md#531-idempotent-issuance), [5.3.3](../SPEC.md#533-lifecycle), [5.5](../SPEC.md#55-tree-generation)
+- SPEC.md [6.10](../SPEC.md#610-validation-order-normative-for-all-methods), [CONFORMANCE.md F.4](../CONFORMANCE.md#f4-generation-invalidation)
+- [SECURITY.md 5](../SECURITY.md#5-anchor-security), [agent-runtime/AGENT-RUNTIME.md 3.3](../agent-runtime/AGENT-RUNTIME.md#33-generation-invalidation)
 - `reference/adc/anchors.py` (rank-based issuance, `AnchorTable`)

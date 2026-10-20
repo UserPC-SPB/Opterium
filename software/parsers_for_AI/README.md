@@ -23,6 +23,13 @@ Under the hood there are two separate modules behind one command line:
 the **parser** (extraction) and **navguard** (project navigation). The AI picks
 the tool and builds its own instruction from short keys.
 
+## For AI agents
+
+- **Structure:** this README → `HELP.md` (CLI/template reference) → `FULL_GUIDE.md` (long guide) → `docs/help/` (built-in help sources). Code: `src/` (parser) and `crates/navguard/` (navigation); fixtures: `tests/snapshots/`.
+- **Entry points:** `any_txt_parser.exe help`; MCP server: `any_txt_parser.exe mcp --root <dir>` (10 tools + 2 resources).
+- **Budget:** `HELP.md` ~5 050 tokens; `FULL_GUIDE.md` ~7 950; `CHANGELOG.md` ~10 800. Prefer `help <topic>` over the full guide.
+- **Gotchas:** Windows x64 executable; navigation is confined to `--root`; `nav --patch` is the only write command; `tests/snapshots/` contains intentionally broken fixtures; exit codes are listed below.
+
 ## Give it to an AI
 
 **Any agent that can run commands** — tell it:
