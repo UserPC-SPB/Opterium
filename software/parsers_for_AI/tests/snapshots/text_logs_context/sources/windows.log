@@ -1,0 +1,3 @@
+WARN  2026-10-18T10:00:00Z disk usage 91%
+ERROR 2026-10-18T10:00:02Z backup failed request_id=c0ffee
+INFO  2026-10-18T10:00:03Z backup retried in 30 ms

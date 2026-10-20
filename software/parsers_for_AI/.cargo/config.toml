@@ -1,0 +1,7 @@
+# Portable build: statically link the MSVC C runtime so the produced exe has
+# no dependency on the Visual C++ Redistributable (VCRUNTIME140.dll) and runs
+# on a bare Windows 10/11 install without any prerequisites.
+# /Brepro: the linker writes a content hash instead of the build time into the
+# PE headers, so rebuilding the same sources gives the same bytes.
+[target.x86_64-pc-windows-msvc]
+rustflags = ["-C", "target-feature=+crt-static", "-C", "link-arg=/Brepro"]

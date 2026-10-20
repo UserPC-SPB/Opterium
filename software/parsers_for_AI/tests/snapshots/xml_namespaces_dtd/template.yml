@@ -1,0 +1,30 @@
+# XML: attributes and predicates, the root default namespace, a prefix
+# declared on the root, internal DTD entities, and every extract mode.
+# Questionable behavior frozen here: inner_html/outer_html quote the source,
+# so `&vendor;` stays unexpanded although the DTD is not in the output, and
+# Applied Template does not mention the extract mode of any rule.
+version: 1
+name: book_catalog
+rules:
+  - id: book_titles
+    select: {type: xpath, expression: "//item[@type='book']/title/text()"}
+  - id: item_ids
+    select: {type: xpath, expression: "/catalog/item/@id"}
+  - id: creators
+    select: {type: xpath, expression: "//dc:creator/text()"}
+  - id: currencies
+    select: {type: xpath, expression: "//price"}
+    extract: "attr:currency"
+  - id: languages
+    select: {type: xpath, expression: "//item"}
+    extract: "attr:xml:lang"
+  - id: note_inner
+    select: {type: xpath, expression: "//note"}
+    extract: inner_html
+  - id: second_item
+    select: {type: xpath, expression: "/catalog/item[2]"}
+    extract: outer_html
+  - id: footer_text
+    select: {type: xpath, expression: "/catalog/footer/text()"}
+  - id: catalog_version
+    select: {type: xpath, expression: "/catalog/@version"}

@@ -1,0 +1,14 @@
+# Absolute paths (see args.txt): -i, -t and -o name the case directory, so
+# Input, Output, Template source, the Files table, block Source lines, the
+# Block Index and CLI Arguments all start with it. The runner replaces it by
+# <CASE> and recounts the sizes the document reports about itself, so the
+# snapshot does not depend on where the temp directory is.
+version: 1
+name: absolute_paths
+rules:
+  - id: order_ids
+    when: {format: json}
+    select: {type: jsonpath, expression: "$.orders[*].id"}
+  - id: warnings
+    when: {format: text}
+    select: {type: contains, expression: "WARN"}

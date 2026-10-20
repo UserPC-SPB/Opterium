@@ -1,0 +1,3 @@
+# Overrides input.format: json from the template.
+--format
+text

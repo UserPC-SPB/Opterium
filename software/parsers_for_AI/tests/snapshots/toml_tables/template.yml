@@ -1,0 +1,24 @@
+# TOML: `[table].key` paths, dotted tables, quoted keys, arrays of tables,
+# inline tables, datetimes and floats.
+# Tables keep the source key order, like JSON and YAML subtrees (1.2.0):
+# `db_pool` is {"min":2,"max":16} and `$.servers.*.role` walks
+# [servers.beta] before [servers.alpha]: "replica", "primary".
+version: 1
+name: service_config
+rules:
+  - id: title
+    select: {type: path, expression: "title"}
+  - id: db_host
+    select: {type: path, expression: "[database].host"}
+  - id: db_pool
+    select: {type: path, expression: "[database].pool"}
+  - id: alpha_ip
+    select: {type: path, expression: "[servers.alpha].ip"}
+  - id: server_roles
+    select: {type: path, expression: "$.servers.*.role"}
+  - id: budget_2024
+    select: {type: path, expression: "[\"2024\"].budget"}
+  - id: product_names
+    select: {type: path, expression: "products[*].name"}
+  - id: released
+    select: {type: path, expression: "released"}

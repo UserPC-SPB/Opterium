@@ -1,0 +1,7 @@
+# One of three JSON files does not parse: it is an error in Files and
+# Diagnostics, the others publish their data, exit code 1.
+version: 1
+name: active_users
+rules:
+  - id: active_names
+    select: {type: jsonpath, expression: "$.users[?(@.active == true)].name"}

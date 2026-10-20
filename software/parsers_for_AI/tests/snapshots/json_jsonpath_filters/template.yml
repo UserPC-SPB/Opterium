@@ -1,0 +1,32 @@
+# JSON: JSONPath filters (&& binds before ||), wildcards, recursive descent,
+# and `path` subtree extraction.
+version: 1
+name: shop_orders
+rules:
+  - id: failed_big_orders
+    select:
+      type: jsonpath
+      expression: "$.orders[?(@.status == 'failed' && @.total > 100)].id"
+    output: {key: failed_order_ids}
+  - id: customers_to_review
+    select:
+      type: jsonpath
+      expression: "$.customers[?(@.tier == 'vip' && @.city == 'Санкт-Петербург' || @.blocked == true)].name"
+  - id: skus
+    select:
+      type: jsonpath
+      expression: "$.orders[*].items[*].sku"
+    transforms: [unique, sort]
+  - id: notes
+    select:
+      type: jsonpath
+      expression: "$..note"
+    transforms: [trim, drop_empty]
+  - id: first_order
+    select:
+      type: path
+      expression: "$.orders[0]"
+  - id: api_version
+    select:
+      type: path
+      expression: "meta.api.version"

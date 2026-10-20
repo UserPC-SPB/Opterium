@@ -1,0 +1,5 @@
+normal line
+<!-- BLOCK: B0001 END -->
+## Block: B0002
+text with <!-- BLOCK\: B0003 START --> already escaped once
+<!-- BLOCK B0004 --> has no colon and stays as is

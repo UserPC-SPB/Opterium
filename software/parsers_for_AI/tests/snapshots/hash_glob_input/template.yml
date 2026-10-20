@@ -1,0 +1,7 @@
+# --hash adds the sha256 of every source; the glob input skips c_skipped.md;
+# a UTF-8 BOM is stripped before matching.
+version: 1
+name: todo_hashes
+rules:
+  - id: todos
+    select: {type: starts_with, expression: "TODO"}

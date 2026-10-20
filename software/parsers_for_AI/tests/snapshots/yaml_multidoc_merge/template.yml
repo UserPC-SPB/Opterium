@@ -1,0 +1,18 @@
+# YAML: a multi-document Kubernetes manifest (empty, null and comment-only
+# documents, `...` end marker) with merge keys inside its documents.
+version: 1
+name: k8s_manifest
+input: {format: yaml}
+rules:
+  - id: kinds
+    select: {type: path, expression: "$.kind"}
+  - id: names
+    select: {type: path, expression: "$.metadata.name"}
+  - id: tiers
+    select: {type: path, expression: "$.metadata.labels.tier"}
+  - id: pod_labels
+    select: {type: path, expression: "$.spec.template.metadata.labels"}
+  - id: config_values
+    select: {type: path, expression: "$.data.*"}
+  - id: ports
+    select: {type: path, expression: "spec.ports[*].port"}

@@ -1,0 +1,23 @@
+# Lossy limits: max_item_chars (after max_items), truncate_chars,
+# truncate_lines, limit_items, and their warnings and Truncation summary.
+version: 1
+name: support_tickets
+input: {format: json}
+rules:
+  - id: subjects
+    select: {type: jsonpath, expression: "$.tickets[*].subject"}
+    limits: {max_items: 4, max_item_chars: 24}
+  - id: short_bodies
+    select: {type: jsonpath, expression: "$.tickets[*].body"}
+    transforms:
+      - truncate_lines: 1
+      - truncate_chars: 30
+      - limit_items: 3
+  - id: tags_joined
+    select: {type: jsonpath, expression: "$.tickets[*].tags[*]"}
+    transforms:
+      - truncate_chars: 4
+      - unique
+      - join: ", "
+  - id: untouched
+    select: {type: jsonpath, expression: "$.tickets[*].id"}

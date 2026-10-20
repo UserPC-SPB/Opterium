@@ -1,0 +1,19 @@
+# Text: line selectors with context on logs with LF, CRLF and lone-CR
+# (classic Mac) line endings.
+# Every line break (LF, CRLF, lone CR) ends a line (1.2.0): classic_mac.log
+# has three lines like the others, and no CR reaches the document.
+version: 1
+name: service_logs
+rules:
+  - id: errors_with_context
+    select: {type: contains, expression: "ERROR"}
+    context: {before: 1, after: 1}
+  - id: request_ids
+    select: {type: regex, expression: "request_id=([0-9a-f]+)"}
+    transforms: [unique]
+  - id: warnings
+    select: {type: starts_with, expression: "WARN"}
+  - id: timings
+    select: {type: ends_with, expression: " ms"}
+  - id: head
+    select: {type: line, from: 1, to: 2}

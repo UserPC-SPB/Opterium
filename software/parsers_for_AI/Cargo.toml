@@ -1,0 +1,43 @@
+[package]
+name = "any_txt_parser"
+version = "1.5.0"
+edition = "2024"
+description = "Exact data extraction and project navigation for AI agents: one portable exe with CLI commands, an MCP server and built-in help"
+license = "MIT"
+
+[[bin]]
+name = "any_txt_parser"
+path = "src/main.rs"
+
+[lib]
+name = "any_txt_parser"
+path = "src/lib.rs"
+
+[dependencies]
+clap = { version = "4", features = ["derive"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = { version = "1", features = ["preserve_order"] }
+serde_yaml = "0.9"
+# Tables and attributes keep their source order (indexmap).
+toml = { version = "0.8", features = ["preserve_order"] }
+roxmltree = "0.20"
+scraper = { version = "0.21", features = ["deterministic"] }
+pulldown-cmark = "0.12"
+regex = "1"
+glob = "0.3"
+walkdir = "2"
+encoding_rs = "0.8"
+chrono = { version = "0.4", features = ["clock"] }
+sha2 = "0.10"
+navguard = { path = "crates/navguard" }
+
+[workspace]
+members = ["crates/navguard"]
+
+[target.'cfg(windows)'.dependencies]
+windows-sys = { version = "0.59", features = ["Win32_Storage_FileSystem", "Win32_Foundation"] }
+
+[profile.release]
+codegen-units = 1
+lto = true
+strip = true

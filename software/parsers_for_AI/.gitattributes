@@ -1,0 +1,14 @@
+# One line ending everywhere: text files are stored and checked out with LF
+# whatever core.autocrlf says, so the working tree, `git archive` and the
+# source zip agree on every machine (rustfmt writes LF as well).
+* text=auto eol=lf
+# cmd.exe misreads labels and `goto` in batch files with bare LF.
+*.bat text eol=crlf
+*.cmd text eol=crlf
+# Snapshot cases are compared byte for byte: sources keep CRLF, a lone CR,
+# BOMs and invalid UTF-8 on purpose, and expected.md must match exactly.
+tests/snapshots/** -text
+# HELP.md holds a raw CR in its "Metadata values" bullet; with `text` set the
+# bytes stay exactly as committed.
+docs/help/*.md text eol=lf
+HELP.md text eol=lf

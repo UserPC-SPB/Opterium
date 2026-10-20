@@ -1,0 +1,7 @@
+# <CASE> is the absolute path of the temporary case directory.
+-i
+<CASE>/sources
+-t
+<CASE>/template.yml
+-o
+<CASE>/out.md

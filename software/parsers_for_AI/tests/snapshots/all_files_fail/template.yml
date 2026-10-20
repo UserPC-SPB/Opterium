@@ -1,0 +1,12 @@
+# Every file fails (truncated JSON, mismatched XML tags, invalid UTF-8):
+# the run status is failure and the exit code 3, but the document is still
+# published with the errors, as HELP.md ("Exit codes") describes.
+version: 1
+name: users_everywhere
+rules:
+  - id: json_users
+    when: {format: json}
+    select: {type: jsonpath, expression: "$.users[*]"}
+  - id: xml_users
+    when: {format: xml}
+    select: {type: xpath, expression: "//user/text()"}

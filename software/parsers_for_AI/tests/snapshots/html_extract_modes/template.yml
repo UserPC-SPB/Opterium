@@ -1,0 +1,27 @@
+# HTML: rendered text (inline markup joins, blocks and <br> end lines,
+# scripts and <noscript> are skipped), attributes, inner and outer markup.
+version: 1
+name: product_page
+rules:
+  - id: title
+    select: {type: css, expression: "title"}
+  - id: headings
+    select: {type: css, expression: "h1, h2"}
+  - id: nav_links
+    select: {type: css, expression: "nav a[href]"}
+    extract: "attr:href"
+  - id: nav_texts
+    select: {type: css, expression: "nav a"}
+  - id: lead_outer
+    select: {type: css, expression: "article > p.lead"}
+    extract: outer_html
+  - id: note_inner
+    select: {type: css, expression: ".note"}
+    extract: inner_html
+  - id: price_rows
+    select: {type: css, expression: "table.prices tr"}
+  - id: image_alts
+    select: {type: css, expression: "img"}
+    extract: "attr:alt"
+  - id: article_text
+    select: {type: css, expression: "article"}

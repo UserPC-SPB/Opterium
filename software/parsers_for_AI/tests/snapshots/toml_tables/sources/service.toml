@@ -1,0 +1,27 @@
+# Order service configuration
+title = "Сервис заказов"
+released = 2026-10-01T12:00:00Z
+
+[database]
+host = "db.internal"
+port = 5432
+pool = { min = 2, max = 16 }
+
+[servers.beta]
+ip = "10.0.0.2"
+role = "replica"
+
+[servers.alpha]
+ip = "10.0.0.1"
+role = "primary"
+
+["2024"]
+budget = 1.5e6
+
+[[products]]
+name = "Молоток"
+sku = 738594937
+
+[[products]]
+name = "Гвоздь"
+sku = 284758393

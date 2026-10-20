@@ -1,0 +1,18 @@
+version: 1
+name: error_lines
+input:
+  format: text
+rules:
+  - id: errors
+    select:
+      type: contains
+      expression: 'ERROR'
+    context:
+      before: 1
+      after: 1
+    output:
+      key: errors
+    transforms: [trim]
+    limits:
+      max_items: 100
+      max_item_chars: 1000
