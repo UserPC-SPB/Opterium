@@ -78,7 +78,7 @@ rules:
 
     let doc = std::fs::read_to_string(dir.join("log_any_txt.md")).unwrap();
 
-    // fixed header contract (спец. 13, 15, 16, 40)
+    // fixed header contract (spec 13, 15, 16, 40)
     assert!(doc.starts_with("# any_txt_parser output\n"));
     assert!(doc.contains("Triangle: [0,1,0]"));
     assert!(doc.contains("Generation: 00000001"));
@@ -93,13 +93,13 @@ rules:
     assert!(doc.contains("## Data Blocks"));
     assert!(doc.ends_with("End of any_txt_parser output\n"));
 
-    // Applied Template содержит правила и лимиты (спец. 10)
+    // Applied Template carries the rules and limits (spec 10)
     assert!(doc.contains("### Rule: user_messages"));
     assert!(doc.contains("Selector type: jsonpath"));
     assert!(doc.contains("- max_items: 100"));
     assert!(doc.contains("- max_item_chars: 4000"));
 
-    // Block anchor contract (спец. 23-25, 64)
+    // Block anchor contract (spec 23-25, 64)
     assert!(doc.contains("<!-- BLOCK: B0001 START -->"));
     assert!(doc.contains("<!-- BLOCK: B0001 END -->"));
     assert!(doc.contains("## Block: B0001"));
@@ -115,11 +115,11 @@ rules:
     assert_eq!(blocks.len(), 1);
     assert_eq!(support::data_items(&blocks[0]), vec!["hi", "bye", "hi"]);
 
-    // index содержит line ranges (спец. 28, 60-61)
+    // index carries line ranges (spec 28, 60-61)
     support::assert_index_lines(&doc);
     support::assert_total_characters(&doc);
 
-    // block index выше data blocks
+    // block index comes before the data blocks
     let idx_pos = doc.find("## Block Index").unwrap();
     let data_pos = doc.find("## Data Blocks").unwrap();
     assert!(idx_pos < data_pos);
@@ -184,7 +184,7 @@ rules:
     run::run(&c).unwrap();
     let doc = std::fs::read_to_string(dir.join("log_any_txt.md")).unwrap();
 
-    // no matches found (спец. 37) vs rule not applicable (спец. 69)
+    // no matches found (spec 37) vs rule not applicable (spec 69)
     assert!(doc.contains("no matches found"));
     assert!(doc.contains("rule not applicable"));
     assert!(doc.contains("Block: B0001"));
@@ -224,7 +224,7 @@ rules:
     run::run(&c).unwrap();
     let doc = std::fs::read_to_string(dir.join("log_any_txt.md")).unwrap();
 
-    // split: yes + parts (спец. 33-34)
+    // split: yes + parts (spec 33-34)
     assert!(doc.contains("Split: yes"));
     assert!(doc.contains("Parent: B0001"));
     assert!(doc.contains("Part: 1/"));
@@ -296,7 +296,7 @@ fn hash_flag_embeds_sha256() {
 
     run::run(&c).unwrap();
     let doc = std::fs::read_to_string(dir.join("log_any_txt.md")).unwrap();
-    // sha256("x\n") известен
+    // sha256("x\n") is known
     assert!(doc.contains("## Files"));
     assert!(doc.contains("in.txt | 2 |"));
     assert!(doc.contains("73cb3858a687a8494ca3323053016282f3dad39d42cf62ca4e79dda2aac7d9ac"));

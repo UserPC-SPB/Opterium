@@ -128,7 +128,7 @@ pub const CHUNK_SIZE: usize = 4096;
 pub fn quick_check(file_path: &Path, cached: &FileCache) -> bool {
     let content = match fs::read(file_path) {
         Ok(c) => c,
-        Err(_) => return false, // файл удалён
+        Err(_) => return false, // file deleted
     };
 
     cached.chunk_size == 0
@@ -519,14 +519,14 @@ mod cache_fresh_tests {
     }
 }
 
-/// Проверяет все файлы из кэша через quick_check.
-/// Возвращает список изменённых файлов. Пустой = ничего не изменилось.
+/// Checks every cached file via quick_check.
+/// Returns the list of changed files. Empty means nothing changed.
 pub fn check_tree(root: &str, cache: &NavguardCache) -> Vec<String> {
     let mut changed = Vec::new();
     for (rel_path, cached) in &cache.files {
         let full_path = Path::new(root).join(rel_path);
         if !full_path.exists() {
-            changed.push(rel_path.clone()); // удалён — тоже «изменился»
+            changed.push(rel_path.clone()); // deleted counts as "changed" too
             continue;
         }
         if quick_check(&full_path, cached) {
@@ -566,8 +566,8 @@ pub fn is_cache_fresh(root: &str, cache: &NavguardCache, exclude: &[String]) -> 
     compute_current_merkle_root(root, exclude) == cache.merkle_root
 }
 
-/// Быстрая проверка по времени: если кэш не старше timeout_sec.
-/// Если cache.updated == 0, всегда возвращает false.
+/// Quick time-based check: whether the cache is at most timeout_sec old.
+/// If cache.updated == 0, always returns false.
 pub fn is_cache_age_fresh(cache: &NavguardCache, timeout_sec: u64) -> bool {
     if cache.updated == 0 {
         return false;
@@ -673,7 +673,7 @@ mod quick_check_tests {
         let d = temp_dir();
         let data = vec![0xAB; 10000];
         let p = make_file(d.path(), "f.txt", &data);
-        // Меняем first 4KB
+        // Change the first 4KB
         let mut modified = data.clone();
         modified[0] = 0xCD;
         make_file(d.path(), "f.txt", &modified);
@@ -686,7 +686,7 @@ mod quick_check_tests {
         let d = temp_dir();
         let data = vec![0xAB; 10000];
         let p = make_file(d.path(), "f.txt", &data);
-        // Меняем last 4KB
+        // Change the last 4KB
         let mut modified = data.clone();
         let last_idx = modified.len() - 1;
         modified[last_idx] = 0xCD;
@@ -726,7 +726,7 @@ mod quick_check_tests {
         let d = temp_dir();
         let data = vec![0xAB; 5000];
         make_file(d.path(), "f.txt", &data);
-        // Создаём кэш вручную
+        // Build the cache manually
         let mut cache = NavguardCache {
             updated: 0,
             files: HashMap::new(),
@@ -752,7 +752,7 @@ mod quick_check_tests {
             symbols_version: 0,
         };
         cache.files.insert("f.txt".to_string(), cache_for(&data));
-        // Меняем файл
+        // Change the file
         make_file(d.path(), "f.txt", &vec![0xCD; 5000]);
         let changed = check_tree(d.path().to_str().unwrap(), &cache);
         assert_eq!(changed.len(), 1, "one changed file");

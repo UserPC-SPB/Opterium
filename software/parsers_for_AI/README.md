@@ -91,7 +91,7 @@ it on: `-i examples/example.log -t examples/errors.yml -o report.md`.
   (`// TODO`, `todo: x`, `@todo`), no longer words like `todos` or
   `todo_hits`; `--loose` (MCP `loose: true`) keeps the old substring match.
 
-The full history (Russian) is `CHANGELOG.md` in the source repository.
+The full history is in `CHANGELOG.md` in the source repository.
 
 ## Exit codes
 
