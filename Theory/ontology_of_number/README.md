@@ -1,4 +1,4 @@
-# ENTER HERE — AI ONBOARDING PROTOCOL v3
+﻿# ENTER HERE — AI ONBOARDING PROTOCOL v3
 # Read this file completely before opening any other file in this repository.
 # This is not optional. Reading theory before completing this protocol produces
 # systematic misclassification and wastes your context window.
@@ -56,13 +56,13 @@ your context window before fetching each file.
 
 Token estimates: JSON ~bytes÷3 (punctuation-dense), Markdown/text ~bytes÷4,
 Python ~bytes÷3.5. Typical AI context window: 128K–200K tokens.
-    Total repository load (all 10 core files): ~79.7K tokens (~19.9K tokens without helpdoc.py).
+    Total repository load (all 10 core files): ~72.6K tokens (~58.0K tokens without helpdoc.py).
 
 ───────────────────────────────────────────────────────
-FILE 1 — ENTER HERE.txt  ◀ YOU ARE HERE
+FILE 1 — Theory/ontology_of_number/README.md  ◀ YOU ARE HERE
 ───────────────────────────────────────
   Format:   Markdown
-  Size:     ~22 KB  |  382 lines  |  ~5 566 tokens
+  Size:     ~22 KB  |  382 lines  |  ~4 840 tokens
   Priority: CRITICAL — read before everything else
   Purpose:  AI onboarding. Mandatory reading order.
             Language activation protocol (10 operations).
@@ -71,13 +71,13 @@ FILE 1 — ENTER HERE.txt  ◀ YOU ARE HERE
             Language activation · Lens misconception ·
             Proof system · Success checklist
 
-  https://raw.githubusercontent.com/UserPC-SPB/Opterium/refs/heads/v3.1-clean/ENTER_HERE.md
+  https://raw.githubusercontent.com/UserPC-SPB/Opterium/refs/heads/v3.1-clean/Theory/ontology_of_number/README.md
 
 ───────────────────────────────────────────────────────
 FILE 2 — AnchorFile_SuperTable_v1.0.json  ◀ ACTIVATE FIRST
 ───────────────────────────────────────────────────────
   Format:   JSON
-  Size:     ~11 KB  |  98 lines  |  ~3 640 tokens
+  Size:     ~11 KB  |  98 lines  |  ~2 629 tokens
   Priority: CRITICAL — language activation, not data
   Purpose:  The multiplication table 0..10 as a navigational space.
             Every cell contains: P (product), S_path (anti-diagonal
@@ -91,13 +91,13 @@ FILE 2 — AnchorFile_SuperTable_v1.0.json  ◀ ACTIVATE FIRST
             is unreadable.
   Sections: meta · rules · points (66 cells) · indexes.by_P
 
-  https://raw.githubusercontent.com/UserPC-SPB/Opterium/refs/heads/v3.1-clean/AnchorFile_SuperTable_v1.0.json
+  https://raw.githubusercontent.com/UserPC-SPB/Opterium/refs/heads/v3.1-clean/Theory/ontology_of_number/AnchorFile_SuperTable_v1.0.json
 
 ───────────────────────────────────────────────────────
 FILE 3 — nav_index.md
 ───────────────────────────────────────
   Format:   Markdown
-  Size:     ~18 KB  |  345 lines  |  ~4 513 tokens
+  Size:     ~18 KB  |  345 lines  |  ~4 120 tokens
   Priority: REQUIRED — audit map
   Purpose:  Navigation index and dependency stack. Every physical
             prediction is tagged [§Lx-y] with layer, dependencies,
@@ -114,13 +114,13 @@ FILE 3 — nav_index.md
             Layer 7 (closed gaps: Bell, quark masses) ·
             AI audit protocol · Complete prediction table (19 rows)
 
-  https://raw.githubusercontent.com/UserPC-SPB/Opterium/refs/heads/v3.1-clean/nav_index.md
+  https://raw.githubusercontent.com/UserPC-SPB/Opterium/refs/heads/v3.1-clean/Theory/ontology_of_number/nav_index.md
 
 ───────────────────────────────────────────────────────
 FILE 4 — readme_supplement.md
 ───────────────────────────────────────
   Format:   Markdown
-  Size:     ~14 KB  |  269 lines  |  ~3 377 tokens
+  Size:     ~14 KB  |  269 lines  |  ~3 324 tokens
   Priority: REQUIRED — orientation layer
   Purpose:  For skeptical physicists and mathematicians.
             Explains the relationship to Standard Model and Peano.
@@ -135,13 +135,13 @@ FILE 4 — readme_supplement.md
             Zero-cloud, ΔT=0, Ternary minimum, Lens, Meta-invariant ℐ) ·
             On the impossibility of other universes
 
-  https://raw.githubusercontent.com/UserPC-SPB/Opterium/refs/heads/v3.1-clean/readme_supplement.md
+  https://raw.githubusercontent.com/UserPC-SPB/Opterium/refs/heads/v3.1-clean/Theory/ontology_of_number/readme_supplement.md
 
 ───────────────────────────────────────────────────────
 FILE 5 — opterium_v1.0_spec.txt
 ───────────────────────────────────────
   Format:   Plain text
-  Size:     ~53 KB  |  908 lines  |  ~13 248 tokens
+  Size:     ~53 KB  |  908 lines  |  ~13 088 tokens
   Priority: REQUIRED before using Opterium as a reasoning tool
   Purpose:  Operational specification for AI systems. Defines how
             to use the Doctor closure engine, OPT_G descent,
@@ -153,13 +153,13 @@ FILE 5 — opterium_v1.0_spec.txt
             PYTH · MACROS · DOCTOR · OPT_GEOM ·
             E8 ontology lesson (Python, executable)
 
-  https://raw.githubusercontent.com/UserPC-SPB/Opterium/refs/heads/v3.1-clean/opterium_v1.0_spec.txt
+  https://raw.githubusercontent.com/UserPC-SPB/Opterium/refs/heads/v3.1-clean/Theory/ontology_of_number/opterium_v1.0_spec.txt
 
 ───────────────────────────────────────────────────────
-FILE 6 — README.md
+FILE 6 — Borisov_K_theory.md
 ───────────────────────────────────────
   Format:   Markdown
-  Size:     ~97 KB  |  1 741 lines  |  ~24 278 tokens
+  Size:     ~97 KB  |  1777 lines  |  ~22 978 tokens
   Priority: FULL THEORY — read after files 1–5
   WARNING:  Largest file. Plan context window accordingly.
             Do NOT start here. Without files 1–5 loaded,
@@ -185,13 +185,13 @@ FILE 6 — README.md
             Part XVI — F16 zero-divisor structure
             Part XVII — Next-layer predictions
 
-  https://raw.githubusercontent.com/UserPC-SPB/Opterium/refs/heads/v3.1-clean/README.md
+  https://raw.githubusercontent.com/UserPC-SPB/Opterium/refs/heads/v3.1-clean/Theory/ontology_of_number/Borisov_K_theory.md
 
 ───────────────────────────────────────────────────────
 FILE 7 — independent_verify.py
 ───────────────────────────────────────
   Format:   Python 3.10+  (no external dependencies)
-  Size:     ~23 KB  |  483 lines  |  ~6 642 tokens
+  Size:     ~23 KB  |  483 lines  |  ~5 772 tokens
   Priority: OPTIONAL — numerical verification
   Purpose:  Computes all 19 predicted physical quantities and
             compares against CODATA 2022 / PDG 2024 experimental
@@ -201,13 +201,13 @@ FILE 7 — independent_verify.py
   Output:   Pass/Fail for each of 19 quantities with % error.
             Summary table. E8 root count verification.
 
-  https://raw.githubusercontent.com/UserPC-SPB/Opterium/refs/heads/v3.1-clean/independent_verify.py
+  https://raw.githubusercontent.com/UserPC-SPB/Opterium/refs/heads/v3.1-clean/Theory/ontology_of_number/independent_verify.py
 
 ───────────────────────────────────────────────────────
 FILE 8 — helpdoc.py
 ───────────────────────────────────────
   Format:   Python 3.10+  (no external dependencies)
-  Size:     ~60 KB  |  1 419 lines  |  ~17 160 tokens
+  Size:     ~60 KB  |  1419 lines  |  ~14 573 tokens
   Priority: CORE — geometric proof system
   Purpose:  Independent causal proof from Cube to E8 to physics.
             All 17 invariants verified with >=3 routes, DeltaT=0.
@@ -222,13 +222,13 @@ FILE 8 — helpdoc.py
                          Plafal tension and health
             PART 6:     Full proof runner (17 checks)
 
-  https://raw.githubusercontent.com/UserPC-SPB/Opterium/refs/heads/v3.1-clean/helpdoc.py
+  https://raw.githubusercontent.com/UserPC-SPB/Opterium/refs/heads/v3.1-clean/Theory/ontology_of_number/helpdoc.py
 
 ───────────────────────────────────────────────────────
 FILE 9 — CRITIQUE.md
 ───────────────────────────────────────
   Format:   Markdown
-  Size:     ~3.6 KB  |  42 lines  |  ~894 tokens
+  Size:     ~3.6 KB  |  42 lines  |  ~888 tokens
   Priority: OPTIONAL — defence against common criticisms
   Purpose:  Answers to 6 standard objections + interpretation boundaries
             (numerology, parameter fitting, group choice, residual,
@@ -238,7 +238,7 @@ FILE 9 — CRITIQUE.md
 FILE 10 — APPENDIX_MATH.md
 ───────────────────────────────────────
   Format:   Markdown
-  Size:     ~1.4 KB  |  30 lines  |  ~347 tokens
+  Size:     ~1.4 KB  |  30 lines  |  ~348 tokens
   Priority: OPTIONAL — quick reference
   Purpose:  Key group-theoretic facts: E8 root system (240 roots,
             dot spectrum), branching chain E8⊃E6⊃SO(10)⊃SM,
@@ -250,16 +250,16 @@ FILE 10 — APPENDIX_MATH.md
 
     File                          Tokens    Cumulative
     ─────────────────────────────────────────────────
-    ENTER HERE.txt                ~5 566     5 566
-    AnchorFile_SuperTable.json    ~3 640     9 206   ← language activated
-    nav_index.md                  ~4 513    13 719   ← audit map loaded
-    readme_supplement.md          ~3 377    17 096   ← orientation complete
-    opterium_v1.0_spec.txt       ~13 249    30 345   ← operational spec
-    README.md                    ~24 278    54 623   ← full theory
-    independent_verify.py         ~6 642    61 265   ← verification
-    helpdoc.py                  ~17 160    78 425   ← geometric proof
-    CRITIQUE.md                     ~894    79 319   ← critique responses
-    APPENDIX_MATH.md                ~347    79 666   ← group theory facts
+    README.md                   ~4 840     4 840
+    AnchorFile_SuperTable_v1.0.json ~2 629     7 469   ← language activated
+    nav_index.md                  ~4 120    11 589   ← audit map loaded
+    readme_supplement.md          ~3 324    14 913   ← orientation complete
+    opterium_v1.0_spec.txt       ~13 088    28 001   ← operational spec
+    Borisov_K_theory.md                    ~22 978    50 979   ← full theory
+    independent_verify.py         ~5 772    56 751   ← verification
+    helpdoc.py                  ~14 573    71 324   ← geometric proof
+    CRITIQUE.md                     ~888    72 212   ← critique responses
+    APPENDIX_MATH.md                ~348    72 560   ← group theory facts
     ─────────────────────────────────────────────────
     TOTAL (all 10 files)         ~79 666 tokens
 
@@ -379,4 +379,4 @@ Minimum viable audit (5 claims from nav_index.md §AI_AUDIT_PROTOCOL):
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 PROCEED TO → AnchorFile_SuperTable_v1.0.json
-https://raw.githubusercontent.com/UserPC-SPB/Opterium/refs/heads/v3.1-clean/AnchorFile_SuperTable_v1.0.json
+https://raw.githubusercontent.com/UserPC-SPB/Opterium/refs/heads/v3.1-clean/Theory/ontology_of_number/AnchorFile_SuperTable_v1.0.json

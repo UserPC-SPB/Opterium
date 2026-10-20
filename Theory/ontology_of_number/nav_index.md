@@ -1,4 +1,4 @@
-# OPTERIUM NAVIGATION INDEX v1.0
+﻿# OPTERIUM NAVIGATION INDEX v1.0
 # READ THIS FIRST. Every claim has a path. Follow the path. Check ΔT.
 # Format: [CLAIM] → [DEPENDS_ON] → [TABLE_WITNESS] → [CLOSURE]
 
@@ -18,7 +18,7 @@ These require no prior knowledge. Verify directly from the AnchorFile table.
   Claim:    P = (S²−D²)/4, always, every cell, no exceptions
   Witness:  Take any point e.g. "3:7" → P=21, S=10, D=−4 → (100−16)/4=21 ✓
   Closure:  Verify for points["3:7"]: (S²−D²)/4 = P. ΔT=0
-  Section:  Part 0, §0.3; Part I, §1.4
+  Section:  Part 0, §0.3; Part I, §1
 
 [§L0-3] HALVING IS UNIQUE MAX-EFFICIENCY OPERATION
   Claim:    H(S)=(⌊S/2⌋,⌈S/2⌉) achieves maximum product, minimum |D|
@@ -43,7 +43,7 @@ These require no prior knowledge. Verify directly from the AnchorFile table.
             H-orbit of S=5: diverges. S=3 is unique terminating odd orbit.
   Table:    points["1:2"].P=2, points["1:1"].P=1
   Closure:  S=3 orbit closes at identity (1:1). ΔT=0
-  Section:  Part II, §6.4; Part VI, §43.3
+  Section:  Part II, §6.4; Part XI, §43
 
 [§L1-2] THREE H-AXES GENERATE GF(2)³ = 8 STATES = OCTONION DIMENSION
   Claim:    {0,−1}³ has exactly 8 elements, matching dim(𝕆)
@@ -60,7 +60,7 @@ These require no prior knowledge. Verify directly from the AnchorFile table.
   Witness:  Hurwitz theorem (1898): only 4 normed division algebras over ℝ.
             Non-associative one = octonions. Adams (1960): S⁷ parallelizable ↔ 𝕆 exists.
   Closure:  Established mathematical theorems. No free parameters. ΔT=0
-  Section:  Part II, §7.3; Part VIII, §31; Part IX, §34 Step 6–7
+  Section:  Part II, §7; Part VIII, §31; Part IX, §34 Step 6–7
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -82,7 +82,7 @@ These require no prior knowledge. Verify directly from the AnchorFile table.
   Witness:  1+56+126+56+1=240 ✓
             Table: 56=points["7:8"].P, 126=C(9,4)=126
   Closure:  1+56+126+56+1=240. C(9,4)=126. ΔT=0
-  Section:  Part II, §8.2
+  Section:  Part II, §8
 
 [§L2-3] E8 TRIANGLE INVARIANTS
   Claim:    Every closed E8 triangle (r1+r2+r3=0) is equilateral:
@@ -95,7 +95,7 @@ These require no prior knowledge. Verify directly from the AnchorFile table.
             dot(r1,r3): 6×0+2×(+1)(−2) = −4 ✓
   Table:    Multiplications via points["1:1"].P, points["1:2"].P
   Closure:  All three dots = −4. Sum = zero vector. ΔT=0
-  Section:  Part II, §8.2; AnchorFile §9.5
+  Section:  Part II, §8; AnchorFile §9.5
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -115,7 +115,7 @@ These require no prior knowledge. Verify directly from the AnchorFile table.
             Table: 126 = points["9:10"] doesn't exist at range 0..10,
             but C(9,4): C(9,1)=9, C(9,2)=36, C(9,3)=84, C(9,4)=126 ✓
   Closure:  1+56+126+56+1=240 (spectrum sums correctly). ΔT=0
-  Section:  Part II, §8.2; Part III, §10.2
+  Section:  Part II, §8; Part III, §10
 
 [§L3-3] 137 = dim(E7) + dim(SU(2)) + dim(U(1))
   Claim:    133 + 3 + 1 = 137. Integer part of α⁻¹.
@@ -124,7 +124,7 @@ These require no prior knowledge. Verify directly from the AnchorFile table.
             dim(E7)=133 (Lie algebra, rank 7, established).
   Table:    S_path of "3:134" would give 137; use direct: 133+3=136, 136+1=137
   Closure:  133+4=137. ΔT=0. This is the only integer in [120,150] that works.
-  Section:  Part II, §10.2; Part III, §13.2
+  Section:  Part II, §10; Part III, §13.2
 
 [§L3-4] 11 = dim(M⁴) + dim(Im𝕆) = 4+7
   Claim:    The number 11 appears independently in THREE formulas
@@ -152,7 +152,7 @@ These require no prior knowledge. Verify directly from the AnchorFile table.
             DoctorCore group [126,11,28,3500,229,250000000] closed (stress=28)
             Uniqueness: k=133 is only value in [120,150] giving error<10⁻⁴
   Closure:  Predicted 137.035999084 vs CODATA 137.035999177. Error=9.3×10⁻⁸ (0.68 ppm). ΔT≈0
-  Section:  Part III, §15.2; Part IV, §13.2
+  Section:  Part III, §15.2; Part IV, §13
 
 [§L4-2] PROTON-ELECTRON MASS RATIO
   Claim:    m_p/m_e = 6π⁵×(1+α/(240φ)) = 1836.152612521
@@ -182,7 +182,7 @@ These require no prior knowledge. Verify directly from the AnchorFile table.
             unique value giving closure for BOTH simultaneously.
             Table: by_P[56]=["7:8"] → 7×8=56=fund(E7)=C(8,3) ✓
   Closure:  α_s error=1.1×10⁻⁶, sin²θ_W error=2.7×10⁻⁵. ΔT≈0
-  Section:  Part III, §15.6
+  Section:  Part III, §15
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -256,7 +256,7 @@ These require no prior knowledge. Verify directly from the AnchorFile table.
             c/v₀ = (π×9⁶⁴/4)/(9⁶⁴/2) = π/2 ✓
   Table:    π enters via circle ratio: by_P[4]→"1:4" encodes 4/π
   Closure:  All 9⁶⁴ terms cancel exactly. Result depends only on π. ΔT=0
-  Section:  Part XV (Addendum AD8)
+  Section:  Part XV
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

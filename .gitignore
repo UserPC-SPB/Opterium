@@ -1,5 +1,5 @@
-.navguard_cache.json
-navigator.md
-navigator_deep.md
-navigator_deep2.md
-/navguard.exe
+# local agent workspace (pipeline relay artifacts)
+/_relay/
+
+# standalone nested theory repo (plain clone, not a submodule)
+/Theory/agent-data-circuit/
