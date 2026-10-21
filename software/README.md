@@ -6,9 +6,10 @@ Programs kept in this repository, apart from the theory files in `Theory/`.
 
 - Path: `parsers_for_AI/`
 - A Rust workspace (edition 2024) for exact data extraction and project navigation for AI agents.
-- Contains the `any_txt_parser` crate (v1.5.0) and the `navguard` crate (v0.1.0).
+- Ships as one executable, `any_txt_parser.exe` (v1.5.0).
+- The workspace has two crates: `any_txt_parser` (v1.5.0, binary + library) and `navguard` (v0.1.0, library); `navguard` is compiled into the same executable — there is no separate `navguard.exe`.
 - Key subfolders: `crates`, `docs`, `examples`, `scripts`, `src`, `tests`.
-- Executable: `parsers_for_AI/any_txt_parser.exe` (6.4 MB).
+- Binary: 6.4 MB, Windows x64, no installer or runtime.
 - Works standalone via CLI (`-i input -t <template.yml> -o <log.md>`) and as an MCP server.
 
 ## witness_prover
@@ -31,7 +32,7 @@ Programs kept in this repository, apart from the theory files in `Theory/`.
 
 | path | lines | ~tokens |
 |---|---|---|
-| `software/README.md` | 53 | ~650 |
+| `software/README.md` | 54 | ~700 |
 | `software/parsers_for_AI/README.md` | 143 | ~2 050 |
 | `software/parsers_for_AI/HELP.md` | 238 | ~5 050 |
 | `software/parsers_for_AI/FULL_GUIDE.md` | 626 | ~7 950 |
@@ -45,7 +46,7 @@ Programs kept in this repository, apart from the theory files in `Theory/`.
 3. Proof work: `software/witness_prover/README.md`.
 
 ### No-surprises / gotchas
-- `parsers_for_AI/any_txt_parser.exe` is the unified parser; `navguard.exe` no longer exists as it was merged.
+- `parsers_for_AI/any_txt_parser.exe` is the only executable; navguard is compiled into it, so there is no `navguard.exe`.
 - The parser binary is Windows x64; MCP clients must pass `--root`.
 - Text files are UTF-8, many with BOM.
 - Branch is `v3.1-clean`.

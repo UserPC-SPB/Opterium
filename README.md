@@ -47,7 +47,7 @@ Internally audited 2026-10-21: structure, links, token budgets, and AI metadata 
 | `Theory/ontology_of_number/opterium_v1.0_spec.txt` | 908 | ~12 850 |
 | `Theory/ontology_of_number/outside_AI_opinion.md` | 104 | ~3 850 |
 | `Theory/ontology_of_number/readme_supplement.md` | 269 | ~3 250 |
-| `software/README.md` | 53 | ~650 |
+| `software/README.md` | 54 | ~700 |
 | `software/parsers_for_AI/README.md` | 143 | ~2 050 |
 | `software/parsers_for_AI/any_txt_parser.exe` | 0 | ~1 610 750 |
 | `software/witness_prover/README.md` | 114 | ~1 450 |
@@ -66,4 +66,4 @@ Parser reference docs are budgeted in `software/README.md` (`HELP.md` ~5 050, `F
 - `Theory/agent-data-circuit/` is a snapshot of github.com/UserPC-SPB/agent-data-circuit (master `ab939aa`) with local link fixes in `rfcs/` and an added `For AI agents` section; its own `LICENSE-CODE` / `LICENSE-DOCS` apply inside. No nested `.git`.
 - `_relay/` at repo root is a local agent workspace, gitignored; it may be absent.
 - Text files are UTF-8 (many with BOM). Branch: `v3.1-clean`.
-- The parser is one unified executable: `software/parsers_for_AI/any_txt_parser.exe` (CLI + MCP); navguard.exe was merged into it and no longer exists as a file.
+- The parser is one unified executable: `software/parsers_for_AI/any_txt_parser.exe` (CLI + MCP); navguard is compiled into it, so there is no separate `navguard.exe`.
