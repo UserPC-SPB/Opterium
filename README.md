@@ -24,7 +24,7 @@ Convention: **every section folder has its own README with a `For AI agents` sec
 
 ## Verification
 
-Internally audited 2026-10-21: structure, links, token budgets, and AI metadata checked; all findings fixed.
+Internally audited 2026-10-21: structure, links, token budgets, artifact/reference claims, and AI metadata checked; all findings fixed.
 
 ## For AI agents
 
@@ -49,12 +49,11 @@ Internally audited 2026-10-21: structure, links, token budgets, and AI metadata 
 | `Theory/ontology_of_number/readme_supplement.md` | 269 | ~3 250 |
 | `software/README.md` | 54 | ~700 |
 | `software/parsers_for_AI/README.md` | 143 | ~2 050 |
-| `software/parsers_for_AI/any_txt_parser.exe` | 0 | ~1 610 750 |
 | `software/witness_prover/README.md` | 114 | ~1 450 |
 | `software/witness_prover/prover_kernel.py` | 538 | ~5 050 |
 | `software/witness_prover/prover_top.py` | 310 | ~3 000 |
 
-Parser reference docs are budgeted in `software/README.md` (`HELP.md` ~5 050, `FULL_GUIDE.md` ~7 950).
+Parser reference docs are budgeted in `software/README.md` (`HELP.md` ~5 050, `FULL_GUIDE.md` ~7 950). The parser binary (6.4 MB) is not a text reading target and is excluded from the token budget.
 
 ### Entry points
 
@@ -63,7 +62,7 @@ Parser reference docs are budgeted in `software/README.md` (`HELP.md` ~5 050, `F
 
 ### No surprises
 
-- `Theory/agent-data-circuit/` is a snapshot of github.com/UserPC-SPB/agent-data-circuit (master `ab939aa`) with local link fixes in `rfcs/` and an added `For AI agents` section; its own `LICENSE-CODE` / `LICENSE-DOCS` apply inside. No nested `.git`.
+- `Theory/agent-data-circuit/` is a snapshot of github.com/UserPC-SPB/agent-data-circuit (master `ab939aa`) with local link/reference fixes in `rfcs/`, `CONTRIBUTING.md`, and `AGENT-RUNTIME.md`, plus an added `For AI agents` section; its own `LICENSE-CODE` / `LICENSE-DOCS` apply inside. No nested `.git`.
 - `_relay/` at repo root is a local agent workspace, gitignored; it may be absent.
 - Text files are UTF-8 (many with BOM). Branch: `v3.1-clean`.
 - The parser is one unified executable: `software/parsers_for_AI/any_txt_parser.exe` (CLI + MCP); navguard is compiled into it, so there is no separate `navguard.exe`.

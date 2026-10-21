@@ -204,7 +204,7 @@ agent-data-circuit/
 ├── examples/ecommerce/     runnable demo circuit
 ├── reference/
 │   ├── adc/                Python reference server (stdlib only)
-│   ├── validator/          `adc validate ./site`
+│   ├── validator/          Python validator CLI (adc.py)
 │   └── mcp-tools/          MCP bridge exposing ADC methods as tools
 ├── agent-runtime/          normative agent-side algorithms
 ├── rfcs/                   design records for each subsystem
@@ -280,7 +280,7 @@ the vectors in [CONFORMANCE.md](CONFORMANCE.md).
 - **Cold entry:** [AI-ENTRY.md](AI-ENTRY.md) (informative design note). Normative spec: [SPEC.md](SPEC.md); conformance vectors: [CONFORMANCE.md](CONFORMANCE.md); security: [SECURITY.md](SECURITY.md); rationale: [RATIONALE.md](RATIONALE.md).
 - **Structure:** `schemas/` (JSON Schemas), `reference/` (Python reference server + validator + MCP bridge), `examples/ecommerce/`, `tests/` (conformance vectors), `tools/`, `rfcs/`.
 - **Budget:** this README ~3 250 tokens; `AI-ENTRY.md` ~2 600; `SPEC.md` ~12 500; `CONFORMANCE.md` ~2 500; `SECURITY.md` ~2 350.
-- **Gotchas:** DRAFT, no production implementations; docs are CC BY 4.0 ([LICENSE-DOCS](LICENSE-DOCS)), code/schemas Apache-2.0 ([LICENSE-CODE](LICENSE-CODE)); the reference server is Python 3.11+ stdlib-only and is started from this folder with `python -m reference.adc.server examples/ecommerce`; links under `rfcs/` were rebased to `../` and their `SPEC.md` anchors corrected in this snapshot.
+- **Gotchas:** DRAFT, no production implementations; docs are CC BY 4.0 ([LICENSE-DOCS](LICENSE-DOCS)), code/schemas Apache-2.0 ([LICENSE-CODE](LICENSE-CODE)); the reference server is Python 3.11+ stdlib-only and is started from this folder with `python -m reference.adc.server examples/ecommerce`; links under `rfcs/` were rebased to `../` and their `SPEC.md` anchors corrected, the RFC filenames in `CONTRIBUTING.md` were aligned with the shipped files, and a stale client reference in `AGENT-RUNTIME.md` was removed in this snapshot.
 
 ## License
 

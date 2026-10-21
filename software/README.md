@@ -23,9 +23,9 @@ Programs kept in this repository, apart from the theory files in `Theory/`.
 ## For AI agents
 
 ### Map
-- `software/parsers_for_AI/`: Rust workspace containing `src`, `crates`, `docs`, `examples`, `scripts`, `tests`, `.cargo`, and the unified executable `parsers_for_AI/any_txt_parser.exe`.
+- `software/parsers_for_AI/`: Rust workspace containing `src`, `crates`, `docs`, `examples`, `scripts`, `tests`, `.cargo`, and the unified executable `software/parsers_for_AI/any_txt_parser.exe`.
 - `software/parsers_for_AI/README.md`: AI-first usage guide; `HELP.md` is the CLI/template reference and `FULL_GUIDE.md` the long guide.
-- `software/witness_prover/`: Python implementation for proof-by-witness certificates, including `witness_prover/prover_kernel.py` and `witness_prover/prover_top.py`.
+- `software/witness_prover/`: Python implementation for proof-by-witness certificates, including `software/witness_prover/prover_kernel.py` and `software/witness_prover/prover_top.py`.
 - `software/README.md`: Top-level description for the software folder.
 
 ### Context budget
@@ -46,7 +46,7 @@ Programs kept in this repository, apart from the theory files in `Theory/`.
 3. Proof work: `software/witness_prover/README.md`.
 
 ### No-surprises / gotchas
-- `parsers_for_AI/any_txt_parser.exe` is the only executable; navguard is compiled into it, so there is no `navguard.exe`.
+- `software/parsers_for_AI/any_txt_parser.exe` is the only executable; navguard is compiled into it, so there is no `navguard.exe`.
 - The parser binary is Windows x64; MCP clients must pass `--root`.
 - Text files are UTF-8, many with BOM.
 - Branch is `v3.1-clean`.

@@ -46,10 +46,10 @@ An RFC must contain:
 *   **Test Vectors:** New or updated vectors that verify the change.
 
 The following initial RFCs serve as examples of the format:
-*   `0001-discovery.md`
-*   `0002-anchor-arithmetic.md`
-*   `0003-server-side-aggregations.md`
-*   `0004-dynamic-degradation.md`
+*   `0001-stateless-anchors.md`
+*   `0002-token-accounting.md`
+*   `0003-k-anonymous-aggregates.md`
+*   `0004-degradation-contract.md`
 
 ## 5. Style Guidelines
 

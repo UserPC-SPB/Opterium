@@ -144,7 +144,6 @@ This draft references the following implementation artifacts for normative behav
 
 *   `reference/adc/anchors.py`: Anchor table management, namespace stripping, and arithmetic validation.
 *   `reference/adc/budget.py`: Budget state machine, estimation logic, and reconciliation identity.
-*   `reference/adc/client.py`: Session bootstrap, discovery, and pointwise fetch loop.
 *   `reference/mcp-tools`: Tool bindings for exposing ADC operations to LLM agents.
 
-Developers SHOULD consult these references for concrete error codes and state transitions.
+A standalone reference client is not shipped; `reference/mcp-tools` is the only client-side integration, and it is a thin HTTP client rather than a full session runtime. Developers SHOULD consult these references for concrete error codes and state transitions.
