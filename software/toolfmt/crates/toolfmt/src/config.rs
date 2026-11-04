@@ -3,7 +3,7 @@
 //! Accepts the usual MCP client layout (`{"mcpServers": {...}}`, also
 //! `servers`), so an existing client config can be pasted as is. Server
 //! order is the file order: on a tool-name collision the first server keeps
-//! the bare name.
+//! the bare name, unless the client already saw the names (D6).
 
 use crate::json::J;
 use glob::Pattern;

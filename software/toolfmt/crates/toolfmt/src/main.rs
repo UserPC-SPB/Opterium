@@ -87,12 +87,24 @@ enum Cmd {
     },
     /// A demo MCP server with typical output shapes (for trying standards)
     DemoServer {
-        /// Add failure tools for tests: crash, sleep, noise, ask_client, grow, big
+        /// Add tools for tests: crash, sleep, cancels, noise, ask_client, grow, big, mixed
         #[arg(long)]
         test_modes: bool,
         /// Split tools/list into pages of this many tools (0: one page)
         #[arg(long, default_value_t = 0)]
         page_size: usize,
+        /// Put this in `_meta.server` of every tool answer (tells servers apart)
+        #[arg(long)]
+        tag: Option<String>,
+        /// Answer initialize only after this many milliseconds (a slow server)
+        #[arg(long, default_value_t = 0)]
+        init_delay_ms: u64,
+        /// Answer initialize with this protocol version instead of the requested one
+        #[arg(long)]
+        protocol: Option<String>,
+        /// Append one line to this file on every start
+        #[arg(long)]
+        start_log: Option<PathBuf>,
     },
 }
 
@@ -297,9 +309,18 @@ fn run(cli: Cli) -> Result<ExitCode, String> {
         Cmd::DemoServer {
             test_modes,
             page_size,
-        } => Ok(ExitCode::from(
-            toolfmt::demo::serve(test_modes, page_size) as u8
-        )),
+            tag,
+            init_delay_ms,
+            protocol,
+            start_log,
+        } => Ok(ExitCode::from(toolfmt::demo::serve(&toolfmt::demo::Opts {
+            test_modes,
+            page_size,
+            tag,
+            init_delay_ms,
+            protocol,
+            start_log,
+        }) as u8)),
     }
 }
 

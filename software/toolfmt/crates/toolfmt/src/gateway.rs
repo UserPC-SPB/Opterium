@@ -1,13 +1,18 @@
 //! The MCP gateway: one stdio server in front of every upstream server.
 //!
 //! Tools keep their original names; a name already taken is exposed as
-//! `<server>__<tool>` (D6: identity is the pair, nothing becomes
-//! unreachable). Overrides are taken out of the arguments before the
-//! upstream call. Errors, and tools without a standard, go back exactly as
-//! the upstream sent them (D1); a failed standard gives the raw output plus
-//! a note (D2).
+//! `<server>__<tool>` (then `_2`, `_3`, ...). Once the client has seen or
+//! used the names they never move to another tool for the life of the
+//! process (D6: identity is the pair, nothing becomes unreachable).
+//! Overrides are taken out of the arguments before the upstream call.
+//! Errors, and tools without a standard, go back exactly as the upstream
+//! sent them (D1); a failed standard gives the raw output plus a note (D2).
+//!
+//! It is a gateway for tools: client cancellations and progress pass
+//! through, but resources and prompts are not aggregated and the upstream's
+//! own requests to the client (sampling, elicitation) are refused.
 
-use crate::capture::{Audit, Captures, Payload, payload, write_atomic, write_baseline};
+use crate::capture::{Audit, Captures, Payload, Source, payload_src, write_atomic, write_baseline};
 use crate::catalog;
 use crate::config::{Config, Expose, ServerCfg};
 use crate::detect::detect;
@@ -26,13 +31,42 @@ use std::sync::{Arc, Condvar, Mutex, RwLock, mpsc};
 use std::thread;
 use std::time::{Duration, Instant};
 
+/// The newest MCP version toolfmt speaks: offered to every upstream.
 pub const PROTOCOL: &str = "2025-06-18";
+/// Every version toolfmt speaks, newest first (the set of any_txt_parser's
+/// own MCP server). The gateway forwards tool definitions and results
+/// without translating them between versions.
+pub const PROTOCOLS: [&str; 3] = ["2025-06-18", "2025-03-26", "2024-11-05"];
+
+/// The version to answer a client that asked for `requested`: the same one
+/// when toolfmt speaks it, else the newest (the MCP negotiation rule).
+pub fn negotiate(requested: Option<&str>) -> &'static str {
+    requested
+        .and_then(|r| PROTOCOLS.iter().find(|v| **v == r))
+        .copied()
+        .unwrap_or(PROTOCOL)
+}
+
+/// The version an upstream answered to `initialize`, when toolfmt speaks it.
+fn check_upstream_protocol(init: &J) -> Result<&'static str, String> {
+    let spoken = PROTOCOLS.join(", ");
+    match init.get("protocolVersion").and_then(J::as_str) {
+        Some(v) => PROTOCOLS.iter().find(|p| **p == v).copied().ok_or_else(|| {
+            format!("incompatible protocol version '{v}' (toolfmt speaks {spoken})")
+        }),
+        None => Err(format!(
+            "its initialize answer has no protocolVersion (toolfmt speaks {spoken})"
+        )),
+    }
+}
+
+type Reply = Result<J, J>;
 
 struct Conn {
     server: String,
     stdin: Mutex<ChildStdin>,
     child: Mutex<Child>,
-    pending: Mutex<HashMap<u64, mpsc::Sender<Result<J, J>>>>,
+    pending: Mutex<HashMap<u64, mpsc::Sender<Reply>>>,
     next: AtomicU64,
     alive: AtomicBool,
 }
@@ -46,7 +80,13 @@ impl Conn {
         w.flush()
     }
 
-    fn request(&self, method: &str, params: J, timeout: Duration) -> Result<J, J> {
+    fn request(&self, method: &str, params: J, timeout: Duration) -> Reply {
+        let (id, rx) = self.send(method, params)?;
+        self.wait(id, &rx, timeout)
+    }
+
+    /// Sends a request; its answer arrives on the receiver.
+    fn send(&self, method: &str, params: J) -> Result<(u64, mpsc::Receiver<Reply>), J> {
         if !self.alive.load(SeqCst) {
             return Err(error_obj(
                 -32603,
@@ -68,21 +108,34 @@ impl Conn {
                 format!("server '{}': write failed: {e}", self.server),
             ));
         }
+        Ok((id, rx))
+    }
+
+    /// Cancels request `id` if it is still running: the upstream is told
+    /// (`notifications/cancelled`), its waiter is released and a late
+    /// answer is dropped.
+    fn cancel(&self, id: u64, reason: Option<&str>) {
+        let Some(tx) = self.pending.lock().expect("pending").remove(&id) else {
+            return;
+        };
+        let mut params = J::obj().with("requestId", J::int(id));
+        if let Some(r) = reason {
+            params.set("reason", J::str(r));
+        }
+        let _ = self.write(
+            &J::obj()
+                .with("jsonrpc", J::str("2.0"))
+                .with("method", J::str("notifications/cancelled"))
+                .with("params", params),
+        );
+        let _ = tx.send(Err(error_obj(-32800, "request cancelled")));
+    }
+
+    fn wait(&self, id: u64, rx: &mpsc::Receiver<Reply>, timeout: Duration) -> Reply {
         match rx.recv_timeout(timeout) {
             Ok(r) => r,
             Err(mpsc::RecvTimeoutError::Timeout) => {
-                self.pending.lock().expect("pending").remove(&id);
-                let _ = self.write(
-                    &J::obj()
-                        .with("jsonrpc", J::str("2.0"))
-                        .with("method", J::str("notifications/cancelled"))
-                        .with(
-                            "params",
-                            J::obj()
-                                .with("requestId", J::int(id))
-                                .with("reason", J::str("timeout")),
-                        ),
-                );
+                self.cancel(id, Some("timeout"));
                 Err(error_obj(
                     -32001,
                     format!(
@@ -113,7 +166,8 @@ impl Conn {
     }
 }
 
-fn read_loop(conn: Arc<Conn>, out: impl BufRead, on_list_changed: impl Fn()) {
+/// Reads the upstream's stdout; `on_note` gets its notifications.
+fn read_loop(conn: Arc<Conn>, out: impl BufRead, on_note: impl Fn(&str, J)) {
     for_each_line(out, |line| {
         let t = line.trim();
         if t.is_empty() {
@@ -138,7 +192,9 @@ fn read_loop(conn: Arc<Conn>, out: impl BufRead, on_list_changed: impl Fn()) {
                 }
             }
             (Some(m), Some(id)) => {
-                // Requests from the server to its client: answer, never hang it.
+                // Requests from the server to its client: answer, never hang
+                // it. toolfmt is a gateway for tools: sampling, elicitation
+                // and the like are not forwarded to the client.
                 let reply = J::obj().with("jsonrpc", J::str("2.0")).with("id", id);
                 let reply = match m.as_str() {
                     "ping" => reply.with("result", J::obj()),
@@ -150,7 +206,7 @@ fn read_loop(conn: Arc<Conn>, out: impl BufRead, on_list_changed: impl Fn()) {
                 };
                 let _ = conn.write(&reply);
             }
-            (Some(m), None) if m == "notifications/tools/list_changed" => on_list_changed(),
+            (Some(m), None) => on_note(&m, msg),
             _ => {}
         }
     });
@@ -209,12 +265,75 @@ struct UpState {
     last_start: Option<Instant>,
     /// First sentence of the server's `instructions`: its catalog description.
     about: Option<String>,
+    /// The MCP version the server answered.
+    protocol: Option<&'static str>,
 }
 
 struct Upstream {
     cfg: ServerCfg,
     st: Mutex<UpState>,
     cv: Condvar,
+}
+
+/// Whether the caller may restart a dead server, decided and claimed in one
+/// step under the state lock: of many callers that find it dead at once,
+/// exactly one gets `true` (the phase is `Starting` from then on), the
+/// others wait for it.
+fn claim_restart(st: &mut UpState, backoff: Duration) -> bool {
+    let may = !matches!(st.phase, Phase::Starting)
+        && st.last_start.is_none_or(|t| t.elapsed() >= backoff);
+    if may {
+        st.phase = Phase::Starting;
+        st.last_start = Some(Instant::now());
+    }
+    may
+}
+
+/// What `connect` gives: the connection, the tools, the description, the
+/// protocol version.
+type Connected = (Arc<Conn>, Vec<J>, Option<String>, &'static str);
+
+/// Tools named by the gateway itself.
+const RESERVED: [&str; 4] = [meta::INSPECT, meta::SAVE, catalog::CATALOG, catalog::CALL];
+
+/// The first free name for `tool` of `server`: the tool's own name, else
+/// `<server>__<tool>`, else that with `_2`, `_3`, ... Never none (D6).
+fn free_name(taken: impl Fn(&str) -> bool, server: &str, tool: &str) -> String {
+    let free = |c: &str| !taken(c) && !RESERVED.contains(&c);
+    if free(tool) {
+        return tool.to_string();
+    }
+    let base = format!("{server}__{tool}");
+    if free(&base) {
+        return base;
+    }
+    (2u64..)
+        .map(|n| format!("{base}_{n}"))
+        .find(|c| free(c))
+        .expect("a free name")
+}
+
+/// Exposed name <-> (upstream index, tool name).
+#[derive(Default)]
+struct Names {
+    /// Set when the client first sees or uses the names (`tools/list`, a
+    /// call, the catalog). Before that names follow the file order afresh
+    /// on every rebuild; from then on a name given is kept for the life of
+    /// the process, also while its server is down or stops listing the
+    /// tool, so it can never come to mean another tool.
+    fixed: bool,
+    by_key: HashMap<(usize, String), String>,
+    owner: HashMap<String, (usize, String)>,
+}
+
+/// A client request served in its own thread, until it is answered.
+#[derive(Default)]
+struct Flight {
+    /// The client cancelled it: no answer is sent (MCP cancellation).
+    cancelled: bool,
+    reason: Option<String>,
+    /// The upstream request serving it, once sent.
+    upstream: Option<(Arc<Conn>, u64)>,
 }
 
 #[derive(Clone)]
@@ -288,6 +407,9 @@ pub struct Gateway {
     out: Out,
     ups: Vec<Upstream>,
     routes: RwLock<Routes>,
+    names: Mutex<Names>,
+    /// Client requests in progress, by their id as JSON text.
+    inflight: Mutex<HashMap<String, Flight>>,
     stats: Mutex<HashMap<String, Stat>>,
     listed: AtomicBool,
     warned: Mutex<std::collections::HashSet<String>>,
@@ -321,6 +443,7 @@ impl Gateway {
                     tools: Vec::new(),
                     last_start: None,
                     about: None,
+                    protocol: None,
                 }),
                 cv: Condvar::new(),
             })
@@ -333,6 +456,8 @@ impl Gateway {
             out: Out::stdout(),
             ups,
             routes: RwLock::new(Routes::default()),
+            names: Mutex::new(Names::default()),
+            inflight: Mutex::new(HashMap::new()),
             stats: Mutex::new(seed_stats(&home)),
             listed: AtomicBool::new(false),
             warned: Mutex::new(Default::default()),
@@ -340,11 +465,7 @@ impl Gateway {
         })
     }
 
-    #[allow(clippy::type_complexity)]
-    fn connect(
-        self: &Arc<Self>,
-        idx: usize,
-    ) -> Result<(Arc<Conn>, Vec<J>, Option<String>), String> {
+    fn connect(self: &Arc<Self>, idx: usize) -> Result<Connected, String> {
         let cfg = &self.ups[idx].cfg;
         let mut cmd = Command::new(resolve_program(&cfg.command));
         cmd.args(&cfg.args)
@@ -376,9 +497,15 @@ impl Gateway {
         let weak = Arc::downgrade(self);
         let reader_conn = conn.clone();
         thread::spawn(move || {
-            read_loop(reader_conn, BufReader::new(stdout), move || {
-                if let Some(gw) = weak.upgrade() {
-                    thread::spawn(move || gw.refresh_tools(idx));
+            read_loop(reader_conn, BufReader::new(stdout), move |method, msg| {
+                let Some(gw) = weak.upgrade() else { return };
+                match method {
+                    "notifications/tools/list_changed" => {
+                        thread::spawn(move || gw.refresh_tools(idx));
+                    }
+                    // The token is the client's own (passed on with the call).
+                    "notifications/progress" => gw.out.send(&msg),
+                    _ => {}
                 }
             })
         });
@@ -391,20 +518,30 @@ impl Gateway {
                     .with("name", J::str("toolfmt"))
                     .with("version", J::str(crate::VERSION)),
             );
-        let about = match conn.request("initialize", init, cfg.init_timeout) {
-            Ok(r) => r
-                .get("instructions")
-                .and_then(J::as_str)
-                .map(|s| crate::catalog::short(s, 100))
-                .filter(|s| !s.is_empty()),
+        let init = match conn.request("initialize", init, cfg.init_timeout) {
+            Ok(r) => r,
             Err(e) => {
                 conn.kill();
                 return Err(error_text(&e));
             }
         };
+        // A version toolfmt does not speak ends the connection (MCP: the
+        // client should disconnect), with the reason in the overview.
+        let protocol = match check_upstream_protocol(&init) {
+            Ok(v) => v,
+            Err(e) => {
+                conn.kill();
+                return Err(e);
+            }
+        };
+        let about = init
+            .get("instructions")
+            .and_then(J::as_str)
+            .map(|s| crate::catalog::short(s, 100))
+            .filter(|s| !s.is_empty());
         conn.notify("notifications/initialized");
         match list_tools(&conn, cfg.init_timeout) {
-            Ok(t) => Ok((conn, t, about)),
+            Ok(t) => Ok((conn, t, about, protocol)),
             Err(e) => {
                 conn.kill();
                 Err(error_text(&e))
@@ -412,27 +549,39 @@ impl Gateway {
         }
     }
 
+    /// First start of a server.
     fn start_upstream(self: &Arc<Self>, idx: usize) {
-        let up = &self.ups[idx];
         {
-            let mut st = up.st.lock().expect("state");
+            let mut st = self.ups[idx].st.lock().expect("state");
             st.phase = Phase::Starting;
             st.last_start = Some(Instant::now());
         }
+        self.finish_start(idx);
+    }
+
+    /// Connects a server whose phase the caller set to `Starting` (under the
+    /// state lock, so only one thread ever starts it), then publishes it.
+    fn finish_start(self: &Arc<Self>, idx: usize) {
+        let up = &self.ups[idx];
         let res = self.connect(idx);
         {
             let mut st = up.st.lock().expect("state");
             match res {
-                Ok((conn, tools, about)) => {
+                Ok((conn, tools, about, protocol)) => {
                     st.phase = Phase::Ready;
-                    st.conn = Some(conn);
+                    if let Some(old) = st.conn.replace(conn) {
+                        old.kill();
+                    }
                     st.tools = tools;
                     st.about = about;
+                    st.protocol = Some(protocol);
                 }
                 Err(e) => {
                     eprintln!("[toolfmt] server '{}' failed to start: {e}", up.cfg.name);
                     st.phase = Phase::Failed(e);
-                    st.conn = None;
+                    if let Some(old) = st.conn.take() {
+                        old.kill();
+                    }
                 }
             }
         }
@@ -467,13 +616,10 @@ impl Gateway {
                 return Ok(c.clone());
             }
         }
-        let can_restart = !matches!(st.phase, Phase::Starting)
-            && st
-                .last_start
-                .is_none_or(|t| t.elapsed() >= up.cfg.restart_backoff);
+        let restart = claim_restart(&mut st, up.cfg.restart_backoff);
         drop(st);
-        if can_restart {
-            self.start_upstream(idx);
+        if restart {
+            self.finish_start(idx);
         }
         let st = up.st.lock().expect("state");
         match (&st.conn, &st.phase) {
@@ -489,7 +635,13 @@ impl Gateway {
         }
     }
 
+    /// Recomputes the routes from the servers that are ready. A tool keeps
+    /// the name it was given once names are fixed; a new tool gets the
+    /// first free one (file order decides only among tools named together).
     fn rebuild_routes(&self) {
+        let mut names = self.names.lock().expect("names");
+        let names = &mut *names;
+        let mut given: HashMap<(usize, String), String> = HashMap::new();
         let mut r = Routes::default();
         for (i, up) in self.ups.iter().enumerate() {
             let st = up.st.lock().expect("state");
@@ -500,14 +652,21 @@ impl Gateway {
                 let Some(name) = t.get("name").and_then(J::as_str) else {
                     continue;
                 };
-                let mut exposed = name.to_string();
-                if r.by_name.contains_key(&exposed)
-                    || [meta::INSPECT, meta::SAVE, catalog::CATALOG, catalog::CALL]
-                        .contains(&exposed.as_str())
-                {
-                    exposed = format!("{}__{}", up.cfg.name, name);
-                }
+                let key = (i, name.to_string());
+                let exposed = match names.by_key.get(&key).or_else(|| given.get(&key)) {
+                    Some(e) => e.clone(),
+                    None => {
+                        let e = free_name(
+                            |c| names.owner.contains_key(c) || r.by_name.contains_key(c),
+                            &up.cfg.name,
+                            name,
+                        );
+                        given.insert(key, e.clone());
+                        e
+                    }
+                };
                 if r.by_name.contains_key(&exposed) {
+                    // The server listed the same tool twice.
                     continue;
                 }
                 let declared = t
@@ -532,6 +691,12 @@ impl Gateway {
                     read_only: hint("readOnlyHint"),
                     destructive: hint("destructiveHint"),
                 });
+            }
+        }
+        if names.fixed {
+            for (k, e) in given {
+                names.owner.insert(e.clone(), k.clone());
+                names.by_key.insert(k, e);
             }
         }
         let changed = {
@@ -564,20 +729,23 @@ impl Gateway {
         let method = msg.get("method").and_then(J::as_str).map(str::to_string);
         let id = msg.remove("id");
         let params = msg.remove("params").unwrap_or_else(J::obj);
-        let (Some(method), Some(id)) = (method, id) else {
+        let Some(method) = method else {
+            // A response: toolfmt sends no requests to its client.
+            return;
+        };
+        let Some(id) = id else {
+            if method == "notifications/cancelled" {
+                self.cancel(&params);
+            }
             return;
         };
         match method.as_str() {
             "initialize" => {
-                let v = params
-                    .get("protocolVersion")
-                    .and_then(J::as_str)
-                    .unwrap_or(PROTOCOL)
-                    .to_string();
+                let v = negotiate(params.get("protocolVersion").and_then(J::as_str));
                 self.out.respond(
                     &id,
                     J::obj()
-                        .with("protocolVersion", J::Str(v))
+                        .with("protocolVersion", J::str(v))
                         .with(
                             "capabilities",
                             J::obj().with("tools", J::obj().with("listChanged", J::Bool(true))),
@@ -593,10 +761,14 @@ impl Gateway {
             }
             "ping" | "logging/setLevel" => self.out.respond(&id, J::obj()),
             "tools/list" => {
+                self.take_off(&id);
                 let g = self.clone();
                 thread::spawn(move || g.tools_list(id));
             }
             "tools/call" => {
+                // Registered before the thread starts: a cancellation sent
+                // right after the request is never lost.
+                self.take_off(&id);
                 let g = self.clone();
                 thread::spawn(move || g.tools_call(id, params));
             }
@@ -615,8 +787,91 @@ impl Gateway {
         }
     }
 
+    fn take_off(&self, id: &J) {
+        self.inflight
+            .lock()
+            .expect("inflight")
+            .insert(id.to_json(), Flight::default());
+    }
+
+    /// Ends a client request; false when the client cancelled it, and then
+    /// no answer may be sent.
+    fn land(&self, id: &J) -> bool {
+        self.inflight
+            .lock()
+            .expect("inflight")
+            .remove(&id.to_json())
+            .is_none_or(|f| !f.cancelled)
+    }
+
+    fn answer(&self, id: &J, result: J) {
+        if self.land(id) {
+            self.out.respond(id, result);
+        }
+    }
+
+    fn fail(&self, id: &J, err: J) {
+        if self.land(id) {
+            self.out.error(id, err);
+        }
+    }
+
+    /// `notifications/cancelled` from the client: the request is marked so
+    /// it gets no answer, and the upstream request serving it is cancelled
+    /// too. A request already answered or unknown is ignored (MCP).
+    fn cancel(&self, params: &J) {
+        let Some(rid) = params.get("requestId") else {
+            return;
+        };
+        let reason = params.get("reason").and_then(J::as_str).map(str::to_string);
+        let upstream = {
+            let mut fl = self.inflight.lock().expect("inflight");
+            let Some(f) = fl.get_mut(&rid.to_json()) else {
+                return;
+            };
+            f.cancelled = true;
+            f.reason = reason.clone();
+            f.upstream.clone()
+        };
+        if let Some((conn, uid)) = upstream {
+            conn.cancel(uid, reason.as_deref());
+        }
+    }
+
+    /// Records the upstream request serving client request `id`; if the
+    /// client cancelled meanwhile, cancels it right away. False then.
+    fn link(&self, id: &J, conn: &Arc<Conn>, uid: u64) -> bool {
+        let cancelled = {
+            let mut fl = self.inflight.lock().expect("inflight");
+            match fl.get_mut(&id.to_json()) {
+                Some(f) if f.cancelled => Some(f.reason.clone()),
+                Some(f) => {
+                    f.upstream = Some((conn.clone(), uid));
+                    None
+                }
+                None => None,
+            }
+        };
+        match cancelled {
+            Some(reason) => {
+                conn.cancel(uid, reason.as_deref());
+                false
+            }
+            None => true,
+        }
+    }
+
+    fn cancelled(&self, id: &J) -> bool {
+        self.inflight
+            .lock()
+            .expect("inflight")
+            .get(&id.to_json())
+            .is_some_and(|f| f.cancelled)
+    }
+
     /// Waits (bounded) for servers still starting, then makes sure the
-    /// routes reflect every server that is ready by now.
+    /// routes reflect every server that is ready by now. From here on the
+    /// names are fixed: the client is about to see or use them.
     fn wait_startup(&self) {
         let deadline = Instant::now() + self.cfg.startup_wait;
         for up in &self.ups {
@@ -629,7 +884,23 @@ impl Gateway {
                 st = up.cv.wait_timeout(st, deadline - now).expect("state").0;
             }
         }
+        self.names.lock().expect("names").fixed = true;
         self.rebuild_routes();
+    }
+
+    fn names_fixed(&self) -> bool {
+        self.names.lock().expect("names").fixed
+    }
+
+    /// The server a name was given to, while the name has no route (its
+    /// server is down or stopped listing the tool).
+    fn bound_server(&self, name: &str) -> Option<usize> {
+        self.names
+            .lock()
+            .expect("names")
+            .owner
+            .get(name)
+            .map(|k| k.0)
     }
 
     /// Whether the upstream tools go behind `catalog` + `call_tool`.
@@ -662,7 +933,7 @@ impl Gateway {
             tools.extend(catalog::defs());
         }
         tools.extend(meta::defs());
-        self.out.respond(&id, J::obj().with("tools", J::Arr(tools)));
+        self.answer(&id, J::obj().with("tools", J::Arr(tools)));
     }
 
     fn entries(&self) -> Vec<catalog::Entry> {
@@ -782,7 +1053,7 @@ impl Gateway {
         let via_call = name == catalog::CALL;
         if via_call {
             let Some(inner) = args.get("tool").and_then(J::as_str).map(str::to_string) else {
-                return self.out.respond(
+                return self.answer(
                     &id,
                     text_result("call_tool needs 'tool' (a name from catalog)", true),
                 );
@@ -800,36 +1071,29 @@ impl Gateway {
         }
         if name == catalog::CATALOG {
             self.wait_startup();
-            return self.out.respond(&id, tool_text(self.catalog(&args)));
+            return self.answer(&id, tool_text(self.catalog(&args)));
         }
         if name == meta::INSPECT {
             self.wait_startup();
-            return self.out.respond(&id, tool_text(self.inspect(&args)));
+            return self.answer(&id, tool_text(self.inspect(&args)));
         }
         if name == meta::SAVE {
             self.wait_startup();
-            return self.out.respond(&id, tool_text(self.save(&args)));
+            return self.answer(&id, tool_text(self.save(&args)));
         }
-        let lookup = || {
-            let r = self.routes.read().expect("routes");
-            r.by_name.get(&name).map(|&i| r.list[i].clone())
-        };
-        let route = lookup().or_else(|| {
-            // A call can arrive before slow servers finished starting.
-            self.wait_startup();
-            lookup()
-        });
-        let Some(route) = route else {
-            if via_call {
+        let route = match self.route_of(&name) {
+            Ok(r) => r,
+            Err(None) if via_call => {
                 let hint = catalog::search(&self.entries(), &name);
-                return self.out.respond(
+                return self.answer(
                     &id,
                     text_result(format!("unknown tool '{name}'. {hint}"), true),
                 );
             }
-            return self
-                .out
-                .error(&id, error_obj(-32602, format!("unknown tool '{name}'")));
+            Err(None) => {
+                return self.fail(&id, error_obj(-32602, format!("unknown tool '{name}'")));
+            }
+            Err(Some(e)) => return self.fail(&id, e),
         };
         let ov = Overrides::extract(&mut args, &route.declared);
         if via_call {
@@ -839,7 +1103,7 @@ impl Gateway {
             let missing = catalog::missing(schema, &args);
             if !missing.is_empty() {
                 let (sig, _) = catalog::signature(schema);
-                return self.out.respond(
+                return self.answer(
                     &id,
                     text_result(
                         format!(
@@ -854,20 +1118,76 @@ impl Gateway {
         }
         let conn = match self.ensure_conn(route.up) {
             Ok(c) => c,
-            Err(e) => return self.out.error(&id, e),
+            Err(e) => return self.fail(&id, e),
         };
+        if self.cancelled(&id) {
+            // Cancelled before it reached the upstream: never sent at all.
+            self.land(&id);
+            return;
+        }
         let timeout = self.ups[route.up].cfg.timeout;
-        let call = J::obj()
+        let mut call = J::obj()
             .with("name", J::str(&route.tool))
             .with("arguments", args.clone());
+        // A progress token is the client's own: the upstream's progress
+        // notifications go back to the client as they are.
+        if let Some(m) = params.remove("_meta") {
+            call.set("_meta", m);
+        }
         let t0 = Instant::now();
-        match conn.request("tools/call", call, timeout) {
-            Err(e) => self.out.error(&id, e),
+        let (uid, rx) = match conn.send("tools/call", call) {
+            Ok(x) => x,
+            Err(e) => return self.fail(&id, e),
+        };
+        if !self.link(&id, &conn, uid) {
+            self.land(&id);
+            return;
+        }
+        match conn.wait(uid, &rx, timeout) {
+            Err(e) => self.fail(&id, e),
             Ok(result) => {
                 let r = self.process(&route, &args, ov, result, t0);
-                self.out.respond(&id, r);
+                self.answer(&id, r);
             }
         }
+    }
+
+    /// The route of a tool name. `None`: no such name. A name the client
+    /// was given whose server is down or stopped listing the tool stays
+    /// that tool's: the server is restarted if the backoff allows, and the
+    /// call never reaches another tool.
+    fn route_of(self: &Arc<Self>, name: &str) -> Result<Route, Option<J>> {
+        let lookup = || {
+            let r = self.routes.read().expect("routes");
+            r.by_name.get(name).map(|&i| r.list[i].clone())
+        };
+        // First use before any tools/list: name by the file order of every
+        // server that comes up in time, then fix the names.
+        let waited = !self.names_fixed();
+        if waited {
+            self.wait_startup();
+        }
+        if let Some(r) = lookup() {
+            return Ok(r);
+        }
+        if !waited {
+            // A call can arrive before slow servers finished starting.
+            self.wait_startup();
+            if let Some(r) = lookup() {
+                return Ok(r);
+            }
+        }
+        let up = self.bound_server(name).ok_or(None)?;
+        self.ensure_conn(up).map_err(Some)?;
+        lookup().ok_or_else(|| {
+            Some(error_obj(
+                -32602,
+                format!(
+                    "tool '{name}' is no longer offered by server '{}'",
+                    self.ups[up].cfg.name
+                ),
+            ))
+        })
     }
 
     fn process(&self, route: &Route, args: &J, ov: Overrides, result: J, t0: Instant) -> J {
@@ -880,14 +1200,14 @@ impl Gateway {
         if cfg.capture {
             self.caps.maybe_capture(server, &route.tool, args, &result);
         }
-        let outcome: Option<Outcome> = {
-            let pl = payload(&result);
+        let (outcome, src): (Option<Outcome>, Source) = {
+            let (pl, src) = payload_src(&result);
             let data = match &pl {
                 Payload::Text(t) => Some(Data::Text(t)),
                 Payload::Json(j) => Some(Data::Json(j)),
                 Payload::None => None,
             };
-            data.map(|data| {
+            let outcome = data.map(|data| {
                 let req = Request {
                     server,
                     tool: &route.tool,
@@ -899,7 +1219,8 @@ impl Gateway {
                     family: self.cfg.family_of(server, &route.tool),
                 };
                 pipeline::run(Some(&self.store), &req, None)
-            })
+            });
+            (outcome, src)
         };
         let Some(out) = outcome else {
             self.account(route, "passthrough", 0, 0, t0);
@@ -912,37 +1233,20 @@ impl Gateway {
             out.out_chars as u64,
             t0,
         );
-        let mut result = result;
-        let blocks = match result.remove("content") {
-            Some(J::Arr(b)) => b,
-            _ => Vec::new(),
-        };
         let header = out.header.clone().unwrap_or_default();
         match out.body {
-            Body::Untouched => {
-                result.set("content", J::Arr(blocks));
-                result
-            }
+            Body::Untouched => result,
             Body::Fallback(_) => {
-                let mut content = vec![text_block(header)];
-                content.extend(blocks);
-                result.set("content", J::Arr(content));
+                let mut result = result;
+                match result.get_mut("content") {
+                    Some(J::Arr(blocks)) => blocks.insert(0, text_block(header)),
+                    _ => result.set("content", J::Arr(vec![text_block(header)])),
+                }
                 result
             }
             Body::Formatted(text) => {
-                let image = out.used.starts_with(Render::ImageMeta.name());
-                let mut content = vec![text_block(format!("{header}\n{text}"))];
-                for b in blocks {
-                    let kind = b.get("type").and_then(J::as_str).unwrap_or("");
-                    if kind != "text" && !(image && kind == "image") {
-                        content.push(b);
-                    }
-                }
-                let mut r = J::obj().with("content", J::Arr(content));
-                if let Some(m) = result.remove("_meta") {
-                    r.set("_meta", m);
-                }
-                r
+                let image_meta = out.used.starts_with(Render::ImageMeta.name());
+                formatted_result(result, &src, format!("{header}\n{text}"), image_meta)
             }
         }
     }
@@ -979,11 +1283,19 @@ impl Gateway {
 
     /// `tool` as listed, `server.tool` or `server__tool`.
     fn resolve(&self, name: &str) -> Result<(String, String, Option<Route>), String> {
-        let routes = self.routes.read().expect("routes");
-        if let Some(&i) = routes.by_name.get(name) {
-            let r = routes.list[i].clone();
-            return Ok((self.ups[r.up].cfg.name.clone(), r.tool.clone(), Some(r)));
+        {
+            let routes = self.routes.read().expect("routes");
+            if let Some(&i) = routes.by_name.get(name) {
+                let r = routes.list[i].clone();
+                return Ok((self.ups[r.up].cfg.name.clone(), r.tool.clone(), Some(r)));
+            }
         }
+        // A listed name whose server is down right now. (Lock order:
+        // names before routes, as in rebuild_routes.)
+        if let Some((up, tool)) = self.names.lock().expect("names").owner.get(name) {
+            return Ok((self.ups[*up].cfg.name.clone(), tool.clone(), None));
+        }
+        let routes = self.routes.read().expect("routes");
         for sep in [".", "__"] {
             if let Some((s, t)) = name.split_once(sep) {
                 if self.cfg.server(s).is_some() {
@@ -1021,7 +1333,11 @@ impl Gateway {
             let st = up.st.lock().expect("state");
             let state = match &st.phase {
                 Phase::Starting => "starting".to_string(),
-                Phase::Ready => format!("{} tools", st.tools.len()),
+                Phase::Ready => format!(
+                    "{} tools, protocol {}",
+                    st.tools.len(),
+                    st.protocol.unwrap_or("?")
+                ),
                 Phase::Failed(e) => format!("failed: {e}"),
             };
             let _ = writeln!(out, "server {}: {state}", up.cfg.name);
@@ -1253,12 +1569,17 @@ impl Gateway {
             ));
         }
         let dry = args.get("dry_run").and_then(J::as_bool) == Some(true);
+        let force = args.get("force").and_then(J::as_bool) == Some(true);
         let mut report = String::new();
         let mut budget = 6_000usize;
         let mut rows = Vec::new();
+        let mut fell_back = Vec::new();
+        let mut empty = Vec::new();
         for (i, f) in caps.iter().enumerate() {
             let Some((o, raw)) = run_fixture(Some(&self.store), Some(&self.cfg), f, Some(&std))
             else {
+                let _ = writeln!(report, "#{} has no payload: not replayed\n", i + 1);
+                empty.push(format!("#{}", i + 1));
                 continue;
             };
             let agent = o.agent_text(&raw);
@@ -1272,6 +1593,7 @@ impl Gateway {
             );
             if matches!(o.body, Body::Fallback(_)) {
                 report.push_str(" FELL BACK TO RAW");
+                fell_back.push(format!("#{}", i + 1));
             }
             report.push('\n');
             let p = preview(&agent, budget.clamp(200, 3_000));
@@ -1280,27 +1602,63 @@ impl Gateway {
             report.push_str("\n\n");
             rows.push((i, clean_text(&o, &raw), o.used));
         }
+        let report = report.trim_end();
+        // A standard that does not work on the real outputs it was written
+        // against is not saved unless asked for explicitly.
+        let problem = if rows.is_empty() {
+            Some("no capture has a payload to replay it on".to_string())
+        } else if !fell_back.is_empty() {
+            Some(format!(
+                "it fell back to raw output on capture {} of {}",
+                fell_back.join(", "),
+                caps.len()
+            ))
+        } else {
+            None
+        };
         if dry {
-            report.insert_str(
-                0,
-                &format!("dry run, not saved. Replay on {} captures:\n", caps.len()),
-            );
-            return Ok(report.trim_end().to_string());
+            let verdict = match &problem {
+                Some(p) => format!(" Saving would be refused: {p} (force=true saves anyway)."),
+                None => String::new(),
+            };
+            return Ok(format!(
+                "dry run, not saved.{verdict} Replay on {} captures:\n{report}",
+                caps.len()
+            ));
+        }
+        if let Some(p) = &problem {
+            if !force {
+                return Err(format!(
+                    "not saved: {p}. Fix the standard, or pass force=true to save it anyway. Replay on {} captures:\n{report}",
+                    caps.len()
+                ));
+            }
         }
         write_atomic(&path, yaml).map_err(|e| format!("cannot write {}: {e}", path.display()))?;
         self.store.invalidate(&path);
-        for (i, text, used) in rows {
-            let _ = write_baseline(&caps[i], &text, &used);
+        let mut failed = Vec::new();
+        for (i, text, used) in &rows {
+            if let Err(e) = write_baseline(&caps[*i], text, used) {
+                failed.push(format!("#{} ({}: {e})", i + 1, caps[*i].path.display()));
+            }
         }
-        report.insert_str(
-            0,
-            &format!(
-                "saved {} (applies from the next call; baselines recorded in {} captures). Replay:\n",
-                path.display(),
-                caps.len()
-            ),
+        let mut head = format!(
+            "saved {} (applies from the next call). Baselines recorded in {} of {} captures",
+            path.display(),
+            rows.len() - failed.len(),
+            caps.len()
         );
-        Ok(report.trim_end().to_string())
+        if !empty.is_empty() {
+            let _ = write!(head, "; no payload: {}", empty.join(", "));
+        }
+        if !failed.is_empty() {
+            let _ = write!(head, "; FAILED to write: {}", failed.join(", "));
+        }
+        head.push('.');
+        if let Some(p) = &problem {
+            let _ = write!(head, " Saved with force=true although {p}.");
+        }
+        Ok(format!("{head} Replay:\n{report}"))
     }
 
     fn shutdown(&self) {
@@ -1316,6 +1674,75 @@ fn text_block(text: String) -> J {
     J::obj()
         .with("type", J::str("text"))
         .with("text", J::Str(text))
+}
+
+/// The result with a formatted `text`. The text takes the place of exactly
+/// what the payload was made of (`src`): structuredContent and the text
+/// blocks that mirror it, all the text blocks it joined, or, for
+/// image_meta, the one image it described. It goes where the first of them
+/// was; every other block keeps its place and every other field of the
+/// result (`_meta`, `isError`, extensions) stays. Fields all the replaced
+/// blocks share (`annotations`, `_meta`) move to the new block.
+fn formatted_result(mut result: J, src: &Source, text: String, image_meta: bool) -> J {
+    let blocks = match result.get_mut("content") {
+        Some(J::Arr(b)) => std::mem::take(b),
+        _ => Vec::new(),
+    };
+    let replaced: Vec<usize> = match src {
+        Source::Texts(ix) => ix.clone(),
+        Source::Image(i) if image_meta => vec![*i],
+        Source::Structured => {
+            // The serialized copy MCP asks servers to add; any other text
+            // is information of its own and stays.
+            let sc = result.get("structuredContent");
+            blocks
+                .iter()
+                .enumerate()
+                .filter(|(_, b)| b.get("type").and_then(J::as_str) == Some("text"))
+                .filter(|(_, b)| {
+                    b.get("text")
+                        .and_then(J::as_str)
+                        .and_then(J::parse_doc)
+                        .as_ref()
+                        == sc
+                })
+                .map(|(i, _)| i)
+                .collect()
+        }
+        _ => Vec::new(),
+    };
+    let mut block = text_block(text);
+    if let Some((&first, rest)) = replaced.split_first() {
+        if let Some(J::Obj(fields)) = blocks.get(first) {
+            for (k, v) in fields {
+                let content_field = matches!(k.as_str(), "type" | "text" | "data" | "mimeType");
+                if !content_field && rest.iter().all(|&i| blocks[i].get(k) == Some(v)) {
+                    block.set(k, v.clone());
+                }
+            }
+        }
+    }
+    // A described-but-kept image (not image_meta) gets its text in front.
+    let at = match src {
+        Source::Image(i) => *i,
+        _ => replaced.first().copied().unwrap_or(0),
+    };
+    let mut block = Some(block);
+    let mut content = Vec::with_capacity(blocks.len() + 1);
+    for (i, b) in blocks.into_iter().enumerate() {
+        if i == at {
+            content.extend(block.take());
+        }
+        if !replaced.contains(&i) {
+            content.push(b);
+        }
+    }
+    content.extend(block.take());
+    if *src == Source::Structured {
+        result.remove("structuredContent");
+    }
+    result.set("content", J::Arr(content));
+    result
 }
 
 fn list_tools(conn: &Conn, timeout: Duration) -> Result<Vec<J>, J> {
@@ -1358,4 +1785,250 @@ pub fn serve(cfg: Config, home: &Path) -> i32 {
     });
     gw.shutdown();
     0
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// A gateway over servers that are never started: their state is set
+    /// by hand.
+    fn gw(servers: &[&str]) -> Arc<Gateway> {
+        let list: Vec<String> = servers
+            .iter()
+            .map(|s| format!(r#""{s}":{{"command":"none"}}"#))
+            .collect();
+        let text = format!(r#"{{"audit":false,"mcpServers":{{{}}}}}"#, list.join(","));
+        let cfg = Config::parse(&text, Path::new(".")).unwrap();
+        Gateway::new(cfg, std::env::temp_dir().join("toolfmt-unit-names"))
+    }
+
+    fn ready(g: &Gateway, up: usize, tools: &[&str]) {
+        let mut st = g.ups[up].st.lock().unwrap();
+        st.phase = Phase::Ready;
+        st.tools = tools
+            .iter()
+            .map(|t| J::obj().with("name", J::str(*t)))
+            .collect();
+    }
+
+    fn down(g: &Gateway, up: usize) {
+        g.ups[up].st.lock().unwrap().phase = Phase::Failed("down".into());
+    }
+
+    /// `server.tool` behind a listed name.
+    fn target(g: &Gateway, name: &str) -> Option<String> {
+        let r = g.routes.read().unwrap();
+        r.by_name
+            .get(name)
+            .map(|&i| format!("{}.{}", g.ups[r.list[i].up].cfg.name, r.list[i].tool))
+    }
+
+    fn fix(g: &Gateway) {
+        g.names.lock().unwrap().fixed = true;
+        g.rebuild_routes();
+    }
+
+    #[test]
+    fn free_name_never_gives_up() {
+        let taken = ["t", "s__t", "s__t_2"];
+        assert_eq!(free_name(|c| taken.contains(&c), "s", "u"), "u");
+        assert_eq!(free_name(|c| taken.contains(&c), "s", "t"), "s__t_3");
+        assert_eq!(free_name(|_| false, "s", "catalog"), "s__catalog");
+        assert_eq!(
+            free_name(|_| false, "s", meta::SAVE),
+            "s__formatter_save_standard"
+        );
+    }
+
+    #[test]
+    fn before_names_are_fixed_the_file_order_decides() {
+        let g = gw(&["a", "b"]);
+        ready(&g, 1, &["foo"]);
+        g.rebuild_routes();
+        assert_eq!(target(&g, "foo").as_deref(), Some("b.foo"));
+        // Nobody saw the names yet: the first server takes the bare one.
+        ready(&g, 0, &["foo"]);
+        g.rebuild_routes();
+        assert_eq!(target(&g, "foo").as_deref(), Some("a.foo"));
+        assert_eq!(target(&g, "b__foo").as_deref(), Some("b.foo"));
+    }
+
+    #[test]
+    fn a_fixed_name_never_moves_to_another_tool() {
+        let g = gw(&["a", "b"]);
+        ready(&g, 1, &["foo", "delete_all"]);
+        fix(&g);
+        assert_eq!(target(&g, "delete_all").as_deref(), Some("b.delete_all"));
+        // The earlier server starts late: it gets the prefixed names, the
+        // names the client already has keep pointing where they did.
+        ready(&g, 0, &["foo", "delete_all"]);
+        g.rebuild_routes();
+        assert_eq!(target(&g, "delete_all").as_deref(), Some("b.delete_all"));
+        assert_eq!(target(&g, "a__delete_all").as_deref(), Some("a.delete_all"));
+        assert_eq!(target(&g, "foo").as_deref(), Some("b.foo"));
+        // b goes down: its names stay reserved, no route, nothing stolen.
+        down(&g, 1);
+        g.rebuild_routes();
+        assert_eq!(target(&g, "delete_all"), None);
+        assert_eq!(g.bound_server("delete_all"), Some(1));
+        assert_eq!(target(&g, "a__delete_all").as_deref(), Some("a.delete_all"));
+        // b comes back: the same names as before.
+        ready(&g, 1, &["foo", "delete_all"]);
+        g.rebuild_routes();
+        assert_eq!(target(&g, "delete_all").as_deref(), Some("b.delete_all"));
+        assert_eq!(target(&g, "a__foo").as_deref(), Some("a.foo"));
+        // A tool b stops listing keeps its name reserved too.
+        ready(&g, 1, &["delete_all"]);
+        ready(&g, 0, &["foo", "delete_all", "bar"]);
+        g.rebuild_routes();
+        assert_eq!(target(&g, "foo"), None);
+        assert_eq!(g.bound_server("foo"), Some(1));
+        assert_eq!(target(&g, "bar").as_deref(), Some("a.bar"));
+    }
+
+    #[test]
+    fn every_collision_is_resolved() {
+        let g = gw(&["c", "a", "b", "s"]);
+        ready(&g, 0, &["t"]);
+        ready(&g, 1, &["b__t"]);
+        ready(&g, 2, &["t", "t"]);
+        ready(&g, 3, &["catalog", "formatter_inspect", "call_tool"]);
+        fix(&g);
+        assert_eq!(target(&g, "t").as_deref(), Some("c.t"));
+        assert_eq!(target(&g, "b__t").as_deref(), Some("a.b__t"));
+        // Both the bare and the prefixed name taken: a suffix, not a drop.
+        assert_eq!(target(&g, "b__t_2").as_deref(), Some("b.t"));
+        assert_eq!(target(&g, "s__catalog").as_deref(), Some("s.catalog"));
+        assert_eq!(
+            target(&g, "s__formatter_inspect").as_deref(),
+            Some("s.formatter_inspect")
+        );
+        assert_eq!(target(&g, "s__call_tool").as_deref(), Some("s.call_tool"));
+        // A tool listed twice by its server is one route.
+        assert_eq!(g.routes.read().unwrap().list.len(), 6);
+    }
+
+    fn j(s: &str) -> J {
+        J::parse(s).unwrap()
+    }
+
+    fn content(r: &J) -> String {
+        r.get("content").unwrap().to_json()
+    }
+
+    #[test]
+    fn formatting_replaces_every_text_block_and_keeps_the_rest() {
+        let r = j(r#"{"content":[
+            {"type":"text","text":"a","annotations":{"audience":["assistant"]},"_meta":{"k":1}},
+            {"type":"image","mimeType":"image/png","data":"AA=="},
+            {"type":"text","text":"b","annotations":{"audience":["assistant"]},"_meta":{"k":2}},
+            {"type":"resource_link","uri":"file:///x","name":"x"}],
+            "isError":false,"x_ext":1,"_meta":{"m":1}}"#);
+        let (pl, src) = payload_src(&r);
+        assert!(matches!(pl, Payload::Text(t) if t == "a\nb"));
+        assert_eq!(src, Source::Texts(vec![0, 2]));
+        let out = formatted_result(r.clone(), &src, "[x]\nAB".into(), false);
+        assert_eq!(
+            content(&out),
+            r#"[{"type":"text","text":"[x]\nAB","annotations":{"audience":["assistant"]}},{"type":"image","mimeType":"image/png","data":"AA=="},{"type":"resource_link","uri":"file:///x","name":"x"}]"#
+        );
+        // Every other field of the result is kept, in its place.
+        let keys: Vec<&str> = out
+            .as_obj()
+            .unwrap()
+            .iter()
+            .map(|(k, _)| k.as_str())
+            .collect();
+        assert_eq!(keys, ["content", "isError", "x_ext", "_meta"]);
+    }
+
+    #[test]
+    fn annotations_the_text_blocks_disagree_on_are_not_invented() {
+        let r = j(r#"{"content":[
+            {"type":"text","text":"1","annotations":{"audience":["user"]}},
+            {"type":"text","text":"2","annotations":{"audience":["assistant"]}}]}"#);
+        let (_, src) = payload_src(&r);
+        let out = formatted_result(r.clone(), &src, "t".into(), false);
+        assert_eq!(content(&out), r#"[{"type":"text","text":"t"}]"#);
+    }
+
+    #[test]
+    fn structured_content_takes_its_copy_along_but_not_other_text() {
+        let r = j(r#"{"content":[
+            {"type":"text","text":"2 items found"},
+            {"type":"text","text":"{\n  \"items\": [1, 2]\n}","annotations":{"priority":1}}],
+            "structuredContent":{"items":[1,2]},"_meta":{"m":1}}"#);
+        let (_, src) = payload_src(&r);
+        assert_eq!(src, Source::Structured);
+        let out = formatted_result(r.clone(), &src, "t".into(), false);
+        assert_eq!(
+            content(&out),
+            r#"[{"type":"text","text":"2 items found"},{"type":"text","text":"t","annotations":{"priority":1}}]"#
+        );
+        assert!(out.get("structuredContent").is_none());
+        assert!(out.get("_meta").is_some());
+        // No copy at all: the text goes first, the summary stays.
+        let r = j(r#"{"content":[{"type":"text","text":"done"}],"structuredContent":{"a":1}}"#);
+        let out = formatted_result(r, &Source::Structured, "t".into(), false);
+        assert_eq!(
+            content(&out),
+            r#"[{"type":"text","text":"t"},{"type":"text","text":"done"}]"#
+        );
+        let r = j(r#"{"structuredContent":{"a":1}}"#);
+        let out = formatted_result(r, &Source::Structured, "t".into(), false);
+        assert_eq!(content(&out), r#"[{"type":"text","text":"t"}]"#);
+    }
+
+    #[test]
+    fn image_meta_drops_only_the_image_it_described() {
+        let r = j(r#"{"content":[
+            {"type":"image","mimeType":"image/png","data":"AA=="},
+            {"type":"image","mimeType":"image/gif","data":"BB=="}]}"#);
+        let (_, src) = payload_src(&r);
+        assert_eq!(src, Source::Image(0));
+        let out = formatted_result(r.clone(), &src, "m".into(), true);
+        assert_eq!(
+            content(&out),
+            r#"[{"type":"text","text":"m"},{"type":"image","mimeType":"image/gif","data":"BB=="}]"#
+        );
+        // Any other render on an image keeps the pixels.
+        let out = formatted_result(r, &src, "m".into(), false);
+        assert_eq!(out.get("content").unwrap().as_arr().unwrap().len(), 3);
+    }
+
+    #[test]
+    fn only_one_caller_claims_a_restart() {
+        let g = gw(&["a"]);
+        let mut st = g.ups[0].st.lock().unwrap();
+        st.phase = Phase::Ready;
+        st.last_start = Some(Instant::now() - Duration::from_secs(60));
+        // The first caller to find the server dead claims the restart; the
+        // next one, even with no backoff at all, sees it starting.
+        assert!(claim_restart(&mut st, Duration::ZERO));
+        assert!(matches!(st.phase, Phase::Starting));
+        assert!(!claim_restart(&mut st, Duration::ZERO));
+        // After a failed start the backoff decides.
+        st.phase = Phase::Failed("x".into());
+        assert!(!claim_restart(&mut st, Duration::from_secs(600)));
+        assert!(claim_restart(&mut st, Duration::ZERO));
+    }
+
+    #[test]
+    fn protocol_versions() {
+        assert_eq!(negotiate(Some("2025-03-26")), "2025-03-26");
+        assert_eq!(negotiate(Some("2024-11-05")), "2024-11-05");
+        assert_eq!(negotiate(Some("2099-01-01")), PROTOCOL);
+        assert_eq!(negotiate(None), PROTOCOL);
+        assert_eq!(
+            check_upstream_protocol(&j(r#"{"protocolVersion":"2025-03-26"}"#)),
+            Ok("2025-03-26")
+        );
+        let e = check_upstream_protocol(&j(r#"{"protocolVersion":"1999-01-01"}"#)).unwrap_err();
+        assert!(
+            e.contains("incompatible protocol version '1999-01-01'"),
+            "{e}"
+        );
+        assert!(check_upstream_protocol(&j("{}")).is_err());
+    }
 }

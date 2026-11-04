@@ -20,43 +20,65 @@ pub enum Payload<'a> {
     None,
 }
 
+/// What a payload was made of: the parts of the result a formatted text
+/// replaces. Everything else in the result is kept.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum Source {
+    /// `structuredContent`.
+    Structured,
+    /// These text blocks (indexes into `content`), every one of them.
+    Texts(Vec<usize>),
+    /// This image block, as a data URI.
+    Image(usize),
+    None,
+}
+
 /// `structuredContent` when present (typed, no text parsing), otherwise the
 /// text blocks, otherwise an image block as a data URI.
 pub fn payload(result: &J) -> Payload<'_> {
+    payload_src(result).0
+}
+
+/// [`payload`] and the parts of the result it was taken from.
+pub fn payload_src(result: &J) -> (Payload<'_>, Source) {
     if let Some(sc) = result
         .get("structuredContent")
         .filter(|v| !matches!(v, J::Null))
     {
-        return Payload::Json(Cow::Borrowed(sc));
+        return (Payload::Json(Cow::Borrowed(sc)), Source::Structured);
     }
     let blocks = result.get("content").and_then(J::as_arr);
     let Some(blocks) = blocks else {
-        return Payload::None;
+        return (Payload::None, Source::None);
     };
-    let texts: Vec<&str> = blocks
+    let (idx, texts): (Vec<usize>, Vec<&str>) = blocks
         .iter()
-        .filter(|b| b.get("type").and_then(J::as_str) == Some("text"))
-        .filter_map(|b| b.get("text").and_then(J::as_str))
-        .collect();
+        .enumerate()
+        .filter(|(_, b)| b.get("type").and_then(J::as_str) == Some("text"))
+        .filter_map(|(i, b)| Some((i, b.get("text").and_then(J::as_str)?)))
+        .unzip();
     match texts.len() {
-        1 => Payload::Text(Cow::Borrowed(texts[0])),
+        1 => (Payload::Text(Cow::Borrowed(texts[0])), Source::Texts(idx)),
         0 => blocks
             .iter()
-            .find(|b| b.get("type").and_then(J::as_str) == Some("image"))
-            .and_then(|b| {
+            .enumerate()
+            .find(|(_, b)| b.get("type").and_then(J::as_str) == Some("image"))
+            .and_then(|(i, b)| {
                 let mime = b.get("mimeType").and_then(J::as_str).unwrap_or("image/png");
                 let data = b.get("data").and_then(J::as_str)?;
-                Some(Payload::Text(Cow::Owned(format!(
-                    "data:{mime};base64,{data}"
-                ))))
+                Some((
+                    Payload::Text(Cow::Owned(format!("data:{mime};base64,{data}"))),
+                    Source::Image(i),
+                ))
             })
-            .unwrap_or(Payload::None),
+            .unwrap_or((Payload::None, Source::None)),
         _ => {
             let docs: Option<Vec<J>> = texts.iter().map(|t| J::parse_doc(t)).collect();
-            match docs {
+            let pl = match docs {
                 Some(d) => Payload::Json(Cow::Owned(J::Arr(d))),
                 None => Payload::Text(Cow::Owned(texts.join("\n"))),
-            }
+            };
+            (pl, Source::Texts(idx))
         }
     }
 }

@@ -1,6 +1,6 @@
 [package]
 name = "toolfmt"
-version = "3.1.1"
+version = "3.1.2"
 edition = "2024"
 description = "Universal tool-output formatter and MCP gateway: every tool's output reaches the agent in the format the agent chose"
 license = "MIT"

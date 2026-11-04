@@ -61,8 +61,8 @@
 - BOM в начале `crates/navguard/src/watch.rs` удалён.
 - `examples/errors.yml` и `examples/example.log` упомянуты в `README.md` и проверяются тестом
   `readme_example_finds_the_error_with_its_context` (`tests/golden.rs`).
-- `README.md`: размер exe «~6.4 MB» (было «~6.5 MB»); ссылки на русское руководство в README
-  и комментариях тестов заменены.
+- `README.md`: размер exe «~6.4 MB» (было «~6.5 MB»); ссылки на русское руководство в README,
+  `my_memory.md` и комментариях тестов заменены.
 
 ## 1.5.0 — 2026-10-19
 

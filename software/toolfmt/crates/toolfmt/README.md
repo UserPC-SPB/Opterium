@@ -57,8 +57,24 @@ The binary is `target/release/toolfmt(.exe)`.
    ```
 
 The agent now sees every tool of every server under its original name (a
-name taken by an earlier server appears as `<server>__<tool>`), plus two
-tools of toolfmt itself.
+name taken by an earlier server appears as `<server>__<tool>`, then with
+`_2`, `_3`), plus two tools of toolfmt itself. Once the agent has seen the
+names they stay put for the session: a server that starts late never takes
+over a name the agent already uses for another server's tool.
+
+## What it is, and what it is not
+
+toolfmt is a gateway for **tools**, not a general MCP proxy:
+
+- Tools: listed, called, formatted. Cancellations and progress
+  notifications from the client pass through to the upstream call.
+- Resources and prompts of the upstream servers are **not** aggregated
+  (`resources/list` and `prompts/list` answer empty lists).
+- Requests an upstream server sends to its client are **not** forwarded:
+  `roots/list` gets an empty list, sampling, elicitation and the like get
+  an error. A server that needs them will not work through toolfmt.
+- MCP versions 2025-06-18, 2025-03-26 and 2024-11-05; an upstream that
+  answers another version is disconnected (`formatter_inspect` says why).
 
 ## Many servers: the catalog
 
@@ -79,7 +95,7 @@ call_tool tool=search_text args={"pattern": "fn main"}
 With 34 tools this cut what every request carries from 13 708 to 1 988
 characters. Sections come from `section` / `groups` per server, a description
 from `sections` or the server's own instructions; `price` / `prices` add a
-declared money price to the cards..
+declared money price to the cards.
 
 ## Teach it a format (the agent does this)
 
@@ -89,7 +105,12 @@ declared money price to the cards..
    how standards are written.
 3. `formatter_save_standard tool=<name> yaml=...` replays the standard on
    the captured outputs, shows the result, and saves
-   `standards/<server>.<tool>.yml`. The next call is formatted.
+   `standards/<server>.<tool>.yml`. The next call is formatted. A standard
+   that falls back to raw output on a capture is not saved unless
+   `force=true`.
+
+A formatted result keeps everything the formatted text did not replace:
+other text blocks, images, resources, `_meta`, extra fields.
 
 A standard:
 

@@ -98,20 +98,41 @@ impl Client {
 
     /// Waits up to `secs` for a notification `method`.
     pub fn saw(&mut self, method: &str, secs: u64) -> bool {
+        self.note(method, secs).is_some()
+    }
+
+    /// Waits up to `secs` for a notification `method` and returns it.
+    pub fn note(&mut self, method: &str, secs: u64) -> Option<J> {
         let is =
             |m: &J| m.get("method").and_then(J::as_str) == Some(method) && m.get("id").is_none();
-        if self.stash.iter().any(is) {
-            return true;
+        self.find(is, secs)
+    }
+
+    /// Whether the response to `id` arrives within `secs`.
+    pub fn got(&mut self, id: u64, secs: u64) -> bool {
+        let is = |m: &J| m.get("id").and_then(J::as_u64) == Some(id) && m.get("method").is_none();
+        self.find(is, secs).is_some()
+    }
+
+    fn find(&mut self, is: impl Fn(&J) -> bool, secs: u64) -> Option<J> {
+        if let Some(m) = self.stash.iter().find(|m| is(m)) {
+            return Some(m.clone());
         }
         let deadline = Instant::now() + Duration::from_secs(secs);
         while let Some(m) = self.next_msg(deadline) {
             let hit = is(&m);
-            self.stash.push_back(m);
+            self.stash.push_back(m.clone());
             if hit {
-                return true;
+                return Some(m);
             }
         }
-        false
+        None
+    }
+
+    /// Sends a notification (no id, no answer).
+    pub fn notify(&mut self, method: &str, params: &str) {
+        let line = format!(r#"{{"jsonrpc":"2.0","method":"{method}","params":{params}}}"#);
+        self.send_raw(format!("{line}\n").as_bytes());
     }
 
     pub fn request(&mut self, method: &str, params: &str) -> J {

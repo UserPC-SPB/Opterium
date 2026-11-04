@@ -77,8 +77,10 @@ matches `SHA256SUMS.txt`.
    ```
 
 The agent now sees every tool of every server under its original name (a
-name taken by an earlier server appears as `<server>__<tool>`), plus two
-tools of toolfmt itself.
+name taken by an earlier server appears as `<server>__<tool>`, then with
+`_2`, `_3`). Once the agent has seen the names they stay put for the
+session: a server that starts late never takes over a name the agent
+already uses for another server's tool.
 
 ## Many servers: the catalog
 
@@ -109,7 +111,9 @@ declared money price to the cards.
    how standards are written.
 3. `formatter_save_standard tool=<name> yaml=...` replays the standard on
    the captured outputs, shows the result, and saves
-   `standards/<server>.<tool>.yml`. The next call is formatted.
+   `standards/<server>.<tool>.yml`. The next call is formatted. A standard
+   that falls back to raw output on a capture is not saved unless
+   `force=true`.
 
 A standard:
 
@@ -159,9 +163,9 @@ standards for each of its tools and a reviewed golden corpus
 
 | path | lines | ~tokens |
 |---|---|---|
-| `software/toolfmt/README.md` | 150 | ~1 700 |
-| `software/toolfmt/crates/toolfmt/README.md` | 124 | ~1 400 |
-| `software/toolfmt/CHANGELOG.md` | 686 | ~7 500 |
+| `software/toolfmt/README.md` | 187 | ~2 300 |
+| `software/toolfmt/crates/toolfmt/README.md` | 126 | ~1 400 |
+| `software/toolfmt/CHANGELOG.md` | 690 | ~7 600 |
 
 ### Entry points
 1. Read this file for what toolfmt is and how to register it.
@@ -174,6 +178,9 @@ standards for each of its tools and a reviewed golden corpus
   directory with `upstreams.json`.
 - The workspace root is the parser: `cargo build -p toolfmt` builds only the
   toolfmt binary, `cargo build` builds the parser too.
+- toolfmt is a gateway for **tools**, not a general MCP proxy: upstream
+  resources and prompts are not aggregated, and requests an upstream sends
+  to its client (`roots/list`, sampling, elicitation) are not forwarded.
 - Registering a new MCP server never requires creating standards for its
   tools. Tools without registered standards remain fully operational and
   return their original upstream output unchanged. Standards are optional

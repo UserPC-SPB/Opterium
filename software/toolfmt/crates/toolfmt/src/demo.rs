@@ -4,6 +4,26 @@
 use crate::json::J;
 use crate::rpc::{Out, error_obj, text_result};
 use std::io::{self, Write};
+use std::path::PathBuf;
+use std::sync::mpsc::RecvTimeoutError;
+use std::time::{Duration, Instant};
+
+/// How the demo server behaves; everything but the defaults is for tests.
+#[derive(Default, Clone, Debug)]
+pub struct Opts {
+    /// Add the failure tools (`TEST_TOOLS`).
+    pub test_modes: bool,
+    /// Split `tools/list` into pages of this many tools (0: one page).
+    pub page_size: usize,
+    /// Put into `_meta.server` of every answer of the regular tools.
+    pub tag: Option<String>,
+    /// Answer `initialize` only after this many milliseconds.
+    pub init_delay_ms: u64,
+    /// Answer `initialize` with this version instead of the requested one.
+    pub protocol: Option<String>,
+    /// Append one line to this file on every start.
+    pub start_log: Option<PathBuf>,
+}
 
 const TOOLS: &str = r#"[
 {"name":"add","description":"Adds two numbers exactly.","inputSchema":{"type":"object","properties":{"a":{"type":"number"},"b":{"type":"number"}},"required":["a","b"]},"annotations":{"readOnlyHint":true}},
@@ -168,7 +188,9 @@ fn call(name: &str, args: &J) -> Result<J, String> {
 /// Extra tools for failure tests, only with `--test-modes`.
 const TEST_TOOLS: &str = r#"[
 {"name":"crash","description":"Exits the server without answering.","inputSchema":{"type":"object","properties":{}}},
-{"name":"sleep","description":"Answers after ms milliseconds.","inputSchema":{"type":"object","properties":{"ms":{"type":"integer"}},"required":["ms"]}},
+{"name":"sleep","description":"Answers after ms milliseconds; stops early, without an answer, when cancelled. Reports progress when asked.","inputSchema":{"type":"object","properties":{"ms":{"type":"integer"}},"required":["ms"]}},
+{"name":"cancels","description":"The sleep requests cancelled so far, with the reasons given.","inputSchema":{"type":"object","properties":{}}},
+{"name":"mixed","description":"A result with structuredContent, an annotated summary, its JSON copy, an image, a resource link and an extra field.","inputSchema":{"type":"object","properties":{}}},
 {"name":"noise","description":"Writes junk to stdout (a banner, invalid UTF-8, a stray response) before answering.","inputSchema":{"type":"object","properties":{}}},
 {"name":"ask_client","description":"Sends roots/list and sampling/createMessage to its client and reports the answers.","inputSchema":{"type":"object","properties":{}}},
 {"name":"grow","description":"Adds a tool and sends notifications/tools/list_changed.","inputSchema":{"type":"object","properties":{}}},
@@ -192,9 +214,52 @@ fn big(n: u64) -> J {
     )
 }
 
-/// Runs the demo server. `test_modes` adds the failure tools; `page_size`
-/// splits `tools/list` into pages of that many tools.
-pub fn serve(test_modes: bool, page_size: usize) -> i32 {
+fn mixed(args: &J) -> J {
+    let item = |id: i64, name: &str| J::obj().with("id", J::int(id)).with("name", J::str(name));
+    let sc = J::obj().with("items", J::Arr(vec![item(1, "alpha"), item(2, "beta")]));
+    let text = |t: String, audience: &str| {
+        J::obj()
+            .with("type", J::str("text"))
+            .with("text", J::Str(t))
+            .with(
+                "annotations",
+                J::obj().with("audience", J::Arr(vec![J::str(audience)])),
+            )
+    };
+    J::obj()
+        .with(
+            "content",
+            J::Arr(vec![
+                text("2 items found".into(), "user"),
+                text(sc.to_pretty(), "assistant"),
+                J::obj()
+                    .with("type", J::str("image"))
+                    .with("mimeType", J::str("image/png"))
+                    .with("data", J::str(PNG_1X1)),
+                J::obj()
+                    .with("type", J::str("resource_link"))
+                    .with("uri", J::str("file:///demo/items.json"))
+                    .with("name", J::str("items.json")),
+            ]),
+        )
+        .with("structuredContent", sc)
+        .with("x_trace", J::str("trace-1"))
+        .with("_meta", J::obj().with("echo_args", args.clone()))
+}
+
+/// Runs the demo server.
+pub fn serve(opts: &Opts) -> i32 {
+    let (test_modes, page_size) = (opts.test_modes, opts.page_size);
+    if let Some(p) = &opts.start_log {
+        if let Ok(mut f) = std::fs::OpenOptions::new()
+            .create(true)
+            .append(true)
+            .open(p)
+        {
+            let _ = writeln!(f, "start {}", std::process::id());
+        }
+    }
+    let mut cancels: Vec<String> = Vec::new();
     let out = Out::stdout();
     let mut tools = J::parse(TOOLS)
         .expect("demo tools")
@@ -235,24 +300,28 @@ pub fn serve(test_modes: bool, page_size: usize) -> i32 {
             .to_string();
         let params = msg.remove("params").unwrap_or_else(J::obj);
         match method.as_str() {
-            "initialize" => out.respond(
-                &id,
-                J::obj()
-                    .with(
-                        "protocolVersion",
-                        params
-                            .get("protocolVersion")
-                            .cloned()
-                            .unwrap_or(J::str("2025-06-18")),
-                    )
-                    .with("capabilities", J::obj().with("tools", J::obj()))
-                    .with(
-                        "serverInfo",
-                        J::obj()
-                            .with("name", J::str("toolfmt-demo"))
-                            .with("version", J::str(crate::VERSION)),
-                    ),
-            ),
+            "initialize" => {
+                std::thread::sleep(Duration::from_millis(opts.init_delay_ms));
+                let version = match &opts.protocol {
+                    Some(v) => J::str(v),
+                    None => params
+                        .get("protocolVersion")
+                        .cloned()
+                        .unwrap_or(J::str("2025-06-18")),
+                };
+                out.respond(
+                    &id,
+                    J::obj()
+                        .with("protocolVersion", version)
+                        .with("capabilities", J::obj().with("tools", J::obj()))
+                        .with(
+                            "serverInfo",
+                            J::obj()
+                                .with("name", J::str("toolfmt-demo"))
+                                .with("version", J::str(crate::VERSION)),
+                        ),
+                )
+            }
             "ping" => out.respond(&id, J::obj()),
             "tools/list" => {
                 let start: usize = params
@@ -285,8 +354,70 @@ pub fn serve(test_modes: bool, page_size: usize) -> i32 {
                         "crash" => std::process::exit(3),
                         "sleep" => {
                             let ms = args.get("ms").and_then(J::as_u64).unwrap_or(0);
-                            std::thread::sleep(std::time::Duration::from_millis(ms));
-                            out.respond(&id, text_result(format!("slept {ms} ms"), false));
+                            if let Some(tok) =
+                                params.get("_meta").and_then(|m| m.get("progressToken"))
+                            {
+                                out.send(
+                                    &J::obj()
+                                        .with("jsonrpc", J::str("2.0"))
+                                        .with("method", J::str("notifications/progress"))
+                                        .with(
+                                            "params",
+                                            J::obj()
+                                                .with("progressToken", tok.clone())
+                                                .with("progress", J::int(0))
+                                                .with("total", J::int(ms)),
+                                        ),
+                                );
+                            }
+                            let until = Instant::now() + Duration::from_millis(ms);
+                            let mut stopped = None;
+                            while stopped.is_none() {
+                                let left = until.saturating_duration_since(Instant::now());
+                                if left.is_zero() {
+                                    break;
+                                }
+                                match rx.recv_timeout(left) {
+                                    Ok(m)
+                                        if m.get("method").and_then(J::as_str)
+                                            == Some("notifications/cancelled")
+                                            && m.get("params").and_then(|p| p.get("requestId"))
+                                                == Some(&id) =>
+                                    {
+                                        let p = m.get("params");
+                                        stopped = Some(
+                                            p.and_then(|p| p.get("reason"))
+                                                .map(J::text)
+                                                .unwrap_or_default(),
+                                        );
+                                    }
+                                    Ok(m) => backlog.push_back(m),
+                                    Err(RecvTimeoutError::Timeout) => break,
+                                    Err(RecvTimeoutError::Disconnected) => return 0,
+                                }
+                            }
+                            // Cancelled: no answer at all (MCP).
+                            match stopped {
+                                Some(reason) => {
+                                    cancels.push(format!("{} ({reason})", id.to_json()))
+                                }
+                                None => {
+                                    out.respond(&id, text_result(format!("slept {ms} ms"), false))
+                                }
+                            }
+                            continue;
+                        }
+                        "cancels" => {
+                            let t = if cancels.is_empty() {
+                                "none".to_string()
+                            } else {
+                                cancels.join("; ")
+                            };
+                            out.respond(&id, text_result(t, false));
+                            continue;
+                        }
+                        "mixed" => {
+                            out.respond(&id, mixed(args));
                             continue;
                         }
                         "noise" => {
@@ -360,10 +491,13 @@ pub fn serve(test_modes: bool, page_size: usize) -> i32 {
                     }
                 }
                 match call(name, args) {
-                    Ok(r) => out.respond(
-                        &id,
-                        r.with("_meta", J::obj().with("echo_args", args.clone())),
-                    ),
+                    Ok(r) => {
+                        let mut meta = J::obj().with("echo_args", args.clone());
+                        if let Some(t) = &opts.tag {
+                            meta.set("server", J::str(t));
+                        }
+                        out.respond(&id, r.with("_meta", meta))
+                    }
                     Err(e) => out.error(&id, error_obj(-32602, e)),
                 }
             }
