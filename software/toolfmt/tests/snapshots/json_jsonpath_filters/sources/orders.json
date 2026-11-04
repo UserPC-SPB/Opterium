@@ -1,0 +1,34 @@
+{
+  "meta": {"api": {"version": "2026-10", "deprecated": false}},
+  "customers": [
+    {"id": 1, "name": "Анна Ёлкина", "tier": "vip", "city": "Санкт-Петербург", "blocked": false},
+    {"id": 2, "name": "Bob Stone", "tier": "vip", "city": "Москва", "blocked": false},
+    {"id": 3, "name": "Chen Wei 陈伟", "tier": "regular", "city": "Казань", "blocked": true},
+    {"id": 4, "name": "Dana", "tier": "regular", "city": "Санкт-Петербург"}
+  ],
+  "orders": [
+    {
+      "id": "A-1001",
+      "status": "failed",
+      "total": 250.5,
+      "items": [{"sku": "HAM-01", "qty": 1}, {"sku": "NAIL-50", "qty": 3}],
+      "note": "  Позвонить клиенту\nпосле 18:00  "
+    },
+    {
+      "id": "A-1002",
+      "status": "failed",
+      "total": 99,
+      "items": [{"sku": "NAIL-50", "qty": 10}],
+      "note": "   "
+    },
+    {
+      "id": "A-1003",
+      "status": "paid",
+      "total": 1200,
+      "items": [{"sku": "SAW-02", "qty": 1}],
+      "delivery": {"note": "Оставить у двери 🚪"}
+    },
+    {"id": "A-1004", "status": "failed", "items": []},
+    {"id": "A-1005", "status": "failed", "total": 100.01, "items": [{"sku": "HAM-01", "qty": 2}]}
+  ]
+}

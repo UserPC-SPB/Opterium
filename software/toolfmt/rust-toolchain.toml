@@ -1,0 +1,7 @@
+# The rustc that builds the released exe. Another version gives other bytes
+# (1.5.0 rebuilt with 1.95.0 came out 34 KB larger) and may type-check the
+# code differently; move the pin together with a release.
+[toolchain]
+channel = "1.97.1"
+profile = "minimal"
+components = ["rustfmt", "clippy"]

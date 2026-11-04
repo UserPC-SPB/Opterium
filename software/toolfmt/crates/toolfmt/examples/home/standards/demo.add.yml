@@ -1,0 +1,4 @@
+# 2 + 3 = 5: the operands come from the call arguments.
+version: 3
+render: expression
+format: "{a} + {b} = {result}"

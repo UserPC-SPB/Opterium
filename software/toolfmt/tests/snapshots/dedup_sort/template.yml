@@ -1,0 +1,17 @@
+# document.stable_deduplicate drops repeated items of a rule result (first
+# kept, truncation report renumbered); document.sort orders blocks by their
+# first item, then by source. Item-level sort_desc runs per rule.
+version: 1
+name: dedup_and_sort
+document:
+  stable_deduplicate: true
+  sort: asc
+rules:
+  - id: levels
+    select: {type: regex, expression: "^([A-Z]+) "}
+  - id: messages
+    select: {type: regex, expression: "^[A-Z]+ (.+)$"}
+    limits: {max_item_chars: 16}
+  - id: users_desc
+    select: {type: regex, expression: "user=([a-z]+)"}
+    transforms: [sort_desc]

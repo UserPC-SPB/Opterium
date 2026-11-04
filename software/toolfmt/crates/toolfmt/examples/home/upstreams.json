@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "demo": {
+      "command": "toolfmt",
+      "args": ["demo-server"],
+      "families": {"list_*": "listing"}
+    }
+  }
+}

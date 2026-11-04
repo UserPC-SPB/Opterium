@@ -1,0 +1,28 @@
+# Markdown: every node type, aliases, and a `pattern` filter.
+version: 1
+name: readme_nodes
+rules:
+  - id: headings
+    select: {type: markdown, node: heading}
+  - id: install_heading
+    select: {type: markdown, node: h, pattern: "^Уст"}
+  - id: license_paragraphs
+    select: {type: markdown, node: p, pattern: "(?i)license|лицензи"}
+  - id: lists
+    select: {type: markdown, node: list}
+  - id: list_items
+    select: {type: markdown, node: li}
+  - id: table
+    select: {type: markdown, node: table}
+  - id: table_rows
+    select: {type: markdown, node: tr}
+  - id: table_cells
+    select: {type: markdown, node: td}
+  - id: code
+    select: {type: markdown, node: code_block}
+  - id: quotes
+    select: {type: markdown, node: quote}
+  - id: links
+    select: {type: markdown, node: link}
+  - id: images
+    select: {type: markdown, node: img}

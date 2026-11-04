@@ -1,0 +1,1 @@
+{"server":"demo","tool":"add","captured":"2026-11-04T15:45:46Z","hash":"07427c66b30ddc94","args":{"a":2,"b":3},"result":{"content":[{"type":"text","text":"5"}],"_meta":{"echo_args":{"a":2,"b":3}}},"baseline":{"used":"expression:add","text":"2 + 3 = 5"}}

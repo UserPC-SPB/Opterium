@@ -1,0 +1,1 @@
+{"kind":"keys","server":"demo","tool":"search","args":{"q":"rust"},"keys":["titles"],"data":"{\"query\":\"rust\",\"results\":[{\"title\":\"rust guide part 1\",\"url\":\"https://docs.example/rust/1\",\"score\":0.9}]}","baseline":{"used":"template:search[titles]","text":"titles: rust guide part 1"}}

@@ -1,0 +1,7 @@
+INFO  2026-10-18T09:00:00Z service started version=1.4.2
+DEBUG 2026-10-18T09:00:01Z cache warmed in 120 ms
+WARN  2026-10-18T09:00:05Z slow query request_id=a1f3 took 950 ms
+ERROR 2026-10-18T09:00:06Z payment failed request_id=b7c9: card declined
+INFO  2026-10-18T09:00:06Z retry scheduled request_id=b7c9
+ERROR 2026-10-18T09:00:09Z сбой подключения к БД: timeout
+INFO  2026-10-18T09:00:10Z shutdown requested

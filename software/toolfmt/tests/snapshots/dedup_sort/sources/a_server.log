@@ -1,0 +1,6 @@
+INFO login user=zoe
+WARN slow response for user=adam
+INFO login user=zoe
+ERROR timeout user=mia
+INFO login user=zoe
+WARN slow response for user=adam

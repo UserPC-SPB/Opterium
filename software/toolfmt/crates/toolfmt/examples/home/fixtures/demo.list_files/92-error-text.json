@@ -1,0 +1,1 @@
+{"kind":"error","server":"demo","tool":"list_files","args":{"cursor":"bad"},"data":"permission denied: cannot list /secret","baseline":{"used":"fallback:raw","text":"permission denied: cannot list /secret"}}

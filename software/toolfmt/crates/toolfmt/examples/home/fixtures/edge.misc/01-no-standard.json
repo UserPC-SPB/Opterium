@@ -1,0 +1,1 @@
+{"kind":"passthrough","server":"edge","tool":"misc","args":{},"data":"{\n  \"a\": 1,\n  \"b\": [1, 2, 3]\n}","baseline":{"used":"passthrough","text":"{\n  \"a\": 1,\n  \"b\": [1, 2, 3]\n}"}}

@@ -1,0 +1,4 @@
+# Family standard: any tool mapped to "listing" in upstreams.json.
+version: 3
+render: objects_table
+mode: markdown

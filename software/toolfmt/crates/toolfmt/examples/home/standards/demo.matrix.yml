@@ -1,0 +1,4 @@
+version: 3
+render: matrix_table
+max_rows: 4
+max_cols: 4

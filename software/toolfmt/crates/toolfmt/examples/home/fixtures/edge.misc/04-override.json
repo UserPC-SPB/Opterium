@@ -1,0 +1,1 @@
+{"kind":"override","server":"edge","tool":"misc","args":{},"_render":"num_stats","_pre":[{"sort_desc":true},{"limit_items":3}],"data":"[10, 7, 3, 99, 42, 5]","baseline":{"used":"num_stats:misc","text":"count 3 | min 10 | max 99 | sum 151 | mean 151/3 (≈50.333333)\nvalues: 99, 42, 10\n… 3 more items (limit_items 3)"}}

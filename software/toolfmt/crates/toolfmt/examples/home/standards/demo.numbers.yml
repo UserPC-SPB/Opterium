@@ -1,0 +1,3 @@
+version: 3
+render: num_stats
+sample: 5

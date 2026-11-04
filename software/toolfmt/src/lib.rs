@@ -1,0 +1,21 @@
+pub mod adapters;
+pub mod api;
+pub mod collect;
+pub mod commands;
+pub mod confine;
+pub mod discovery;
+pub mod help;
+pub mod jsonpath;
+pub mod limits;
+pub mod materialize;
+pub mod mcp;
+pub mod navigation;
+pub mod publish;
+pub mod render;
+pub mod run;
+pub mod template;
+pub mod tools;
+pub mod transform;
+pub mod xpath;
+
+pub const PARSER_VERSION: &str = "1.5.0";

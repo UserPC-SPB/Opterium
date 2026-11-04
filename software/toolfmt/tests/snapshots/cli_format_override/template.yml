@@ -1,0 +1,12 @@
+# --format text (args.txt) overrides the template's input format and the
+# extensions: every file is read as text, and the json-only rule never
+# applies in this run (stated in Applied Template).
+version: 1
+name: grep_everything
+input: {format: json}
+rules:
+  - id: json_level
+    when: {format: json}
+    select: {type: jsonpath, expression: "$.level"}
+  - id: error_lines
+    select: {type: contains, expression: "ERROR"}

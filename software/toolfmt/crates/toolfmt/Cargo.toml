@@ -1,0 +1,22 @@
+[package]
+name = "toolfmt"
+version = "3.1.1"
+edition = "2024"
+description = "Universal tool-output formatter and MCP gateway: every tool's output reaches the agent in the format the agent chose"
+license = "MIT"
+
+[[bin]]
+name = "toolfmt"
+path = "src/main.rs"
+
+[lib]
+name = "toolfmt"
+path = "src/lib.rs"
+
+[dependencies]
+any_txt_parser = { path = "../.." }
+clap = { version = "4", features = ["derive"] }
+serde = { version = "1", features = ["derive"] }
+serde_yaml = "0.9"
+regex = "1"
+glob = "0.3"

@@ -1,0 +1,4 @@
+<modules>
+  <module id="core"/>
+  <module id="cli"/>
+</modules>

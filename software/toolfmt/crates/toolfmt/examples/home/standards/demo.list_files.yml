@@ -1,0 +1,7 @@
+# Page of files: path and human size; the cursor line stays.
+version: 3
+render: objects_table
+root: items
+columns: [path, size, modified]
+formats: {size: bytes}
+rows: 10

@@ -1,0 +1,34 @@
+{
+  "tickets": [
+    {
+      "id": 101,
+      "subject": "Не приходит письмо с подтверждением регистрации",
+      "body": "Здравствуйте!\nЯ зарегистрировался вчера, но письмо так и не пришло.\nПроверил спам.",
+      "tags": ["email", "registration"]
+    },
+    {
+      "id": 102,
+      "subject": "Refund",
+      "body": "Please refund order A-1001.",
+      "tags": ["billing"]
+    },
+    {
+      "id": 103,
+      "subject": "Приложение падает при запуске на Android 15 🤖",
+      "body": "После обновления до версии 3.2 приложение закрывается сразу после заставки.\nЛог прилагаю.",
+      "tags": ["android", "crash", "mobile"]
+    },
+    {
+      "id": 104,
+      "subject": "Вопрос по тарифу",
+      "body": "Можно ли перейти на годовой тариф с сохранением скидки?",
+      "tags": ["billing", "pricing"]
+    },
+    {
+      "id": 105,
+      "subject": "Fifth ticket is omitted by max_items",
+      "body": "Fifth body is omitted by limit_items.",
+      "tags": ["misc"]
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+# Block splitting under a small --max-block-chars (see args.txt): many
+# items are grouped into parts, and one multi-line Unicode item that does
+# not fit any block is cut into continuation fragments.
+# A split parent counts the items of its parts (`Items: 10`) and names the
+# parts that hold them.
+version: 1
+name: release_notes
+rules:
+  - id: whole_file
+    select: {type: line, from: 1, to: 100}
+  - id: numbered
+    select: {type: regex, expression: "^[0-9]+\\. (.+)$"}

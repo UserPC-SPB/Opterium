@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE catalog [
+  <!ENTITY vendor "ООО «Книжный дом»">
+  <!ENTITY copy "&#169; 2026 &vendor;">
+]>
+<catalog xmlns="urn:example:catalog" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.1">
+  <item id="b1" type="book" xml:lang="ru">
+    <title>Война и мир</title>
+    <dc:creator>Лев Толстой</dc:creator>
+    <price currency="RUB">890</price>
+    <note>Издание &vendor;, <b>твёрдый</b> переплёт</note>
+  </item>
+  <item id="m1" type="magazine">
+    <title>Наука и жизнь</title>
+    <price currency="RUB">250</price>
+  </item>
+  <item id="b2" type="book">
+    <title>Master &amp; Margarita</title>
+    <dc:creator>Михаил Булгаков</dc:creator>
+    <price>12.50</price>
+  </item>
+  <footer>&copy;</footer>
+</catalog>

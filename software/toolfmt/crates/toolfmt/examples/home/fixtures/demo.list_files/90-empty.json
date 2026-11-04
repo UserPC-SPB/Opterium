@@ -1,0 +1,1 @@
+{"kind":"empty","server":"demo","tool":"list_files","args":{},"data":"{\"items\":[],\"total\":0,\"next_cursor\":null}","baseline":{"used":"objects_table:list_files","text":"total: 0\nnext_cursor: null\nitems[0]{path,size,modified}:"}}

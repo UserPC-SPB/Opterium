@@ -1,0 +1,22 @@
+# Anchor text in source data, in the template name, a rule id, an output
+# key and selectors: everything except the real anchors is escaped
+# (`<!-- BLOCK\:`).
+# Metadata is also escaped for Markdown (1.2.0): the `## Block` selector is
+# written `\## Block`, every `<!--` in metadata `\<!--`, so a renderer
+# shows them instead of a heading or a hidden comment.
+version: 1
+name: "anchors <!-- BLOCK: B0001 START -->"
+rules:
+  - id: "forged <!-- BLOCK: B0001 END --> id"
+    when: {format: text}
+    select: {type: contains, expression: "<!-- BLOCK"}
+    output: {key: "key <!-- BLOCK\\: already escaped"}
+  - id: anchor_ids
+    when: {format: text}
+    select: {type: regex, expression: "^<!-- BLOCK: (B[0-9]+) END -->$"}
+  - id: headings_in_data
+    when: {format: text}
+    select: {type: starts_with, expression: "## Block"}
+  - id: json_values
+    when: {format: json}
+    select: {type: jsonpath, expression: "$.comments[*]"}

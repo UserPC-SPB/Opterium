@@ -1,0 +1,1 @@
+{"kind":"family","server":"edge","tool":"list_users","family":"listing","args":{},"data":"[{\"login\":\"ann\",\"id\":1},{\"login\":\"bob\",\"id\":2}]","baseline":{"used":"objects_table:list_users","text":"| login | id |\n|---|---|\n| ann | 1 |\n| bob | 2 |"}}

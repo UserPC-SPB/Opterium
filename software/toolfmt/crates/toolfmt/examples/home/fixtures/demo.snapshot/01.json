@@ -1,0 +1,1 @@
+{"server":"demo","tool":"snapshot","captured":"2026-11-04T15:45:46Z","hash":"9a698ef41b7f1243","args":{},"result":{"content":[{"type":"image","mimeType":"image/png","data":"iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=="}],"_meta":{"echo_args":{}}},"baseline":{"used":"image_meta:snapshot","text":"image: png 1x1, 70 B (inline)"}}

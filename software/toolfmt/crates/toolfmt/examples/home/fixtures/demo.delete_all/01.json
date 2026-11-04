@@ -1,0 +1,1 @@
+{"server":"demo","tool":"delete_all","captured":"2026-11-04T15:45:46Z","hash":"3c13c9f8ea3d5206","args":{},"result":{"content":[{"type":"text","text":"deleted 0 items (demo)"}],"_meta":{"echo_args":{}}},"baseline":{"used":"passthrough","text":"deleted 0 items (demo)"}}

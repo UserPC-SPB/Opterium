@@ -1,0 +1,27 @@
+# A mixed directory: every rule is limited to one format by when.format,
+# so each file gets only its own rules and the run is a clean success.
+# Files without a known extension are sniffed by content.
+version: 1
+name: mixed_project
+rules:
+  - id: json_name
+    when: {format: json}
+    select: {type: jsonpath, expression: "$.name"}
+  - id: yaml_port
+    when: {format: yaml}
+    select: {type: path, expression: "$.server.port"}
+  - id: toml_version
+    when: {format: toml}
+    select: {type: path, expression: "[package].version"}
+  - id: xml_ids
+    when: {format: xml}
+    select: {type: xpath, expression: "//module/@id"}
+  - id: html_title
+    when: {format: html}
+    select: {type: css, expression: "title"}
+  - id: md_headings
+    when: {format: markdown}
+    select: {type: markdown, node: heading}
+  - id: log_errors
+    when: {format: text}
+    select: {type: contains, expression: "ERROR"}

@@ -1,0 +1,18 @@
+# Hard split (ТЗ §59, priority 6): sources/one_line.txt is one line of 1350
+# characters without any line break (Cyrillic, ZWJ emoji sequences, a
+# combining acute accent, a regional-indicator flag), and --max-block-chars
+# 700 (see args.txt) leaves no logical boundary to cut at, so the item is cut
+# inside the line and the parts carry continuation metadata
+# (`Item continuation: 1`); joined in part order without separators, the
+# fragments give the source line exactly.
+# Known issues frozen here: the cut is at a character boundary but ignores
+# grapheme clusters (part 3 ends with the first person and ZWJ of the
+# 👨‍👩‍👧 family sequence, part 4 starts with the rest); part 2 ends with a
+# space that a Markdown renderer does not show; the Result Semantics section
+# does not explain how to join fragments (only HELP.md does). The parent
+# B0001 counts the item of its parts (`Items: 1`) and names them.
+version: 1
+name: hard_split
+rules:
+  - id: whole_line
+    select: {type: line, from: 1, to: 1}

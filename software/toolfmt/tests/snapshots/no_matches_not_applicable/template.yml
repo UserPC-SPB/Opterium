@@ -1,0 +1,12 @@
+# Rules without when.format run on every file: a parsed file where a rule
+# finds nothing gets "no matches found", a selector of another format gets
+# "rule not applicable"; both are warnings, exit code 1.
+version: 1
+name: statuses
+rules:
+  - id: user_names
+    select: {type: jsonpath, expression: "$.users[*].name"}
+  - id: missing_field
+    select: {type: jsonpath, expression: "$.users[*].email"}
+  - id: todo_lines
+    select: {type: contains, expression: "TODO"}

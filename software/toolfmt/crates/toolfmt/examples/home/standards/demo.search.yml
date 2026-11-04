@@ -1,0 +1,11 @@
+# structuredContent is typed JSON: the parser's jsonpath rules read it directly.
+version: 3
+render: template
+input: {format: json}
+rules:
+  - id: query
+    select: {type: jsonpath, expression: "$.query"}
+  - id: titles
+    select: {type: jsonpath, expression: "$.results[*].title"}
+  - id: urls
+    select: {type: jsonpath, expression: "$.results[*].url"}

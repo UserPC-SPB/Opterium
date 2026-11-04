@@ -1,0 +1,44 @@
+# Rendered by helm: web stack
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+  labels: &labels
+    app: web
+    tier: frontend
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        <<: *labels
+        version: "1.27"
+---
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-svc
+  labels:
+    <<: [{app: web}, {tier: edge, team: core}]
+    app: web-public
+spec:
+  ports:
+    - port: 80
+    - port: 443
+--- ~
+---
+# Source: chart/templates/empty.yaml
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: web-config
+data:
+  greeting: "Привет, мир"
+  banner: |
+    Добро пожаловать
+    Welcome
+  enabled: "true"
+...

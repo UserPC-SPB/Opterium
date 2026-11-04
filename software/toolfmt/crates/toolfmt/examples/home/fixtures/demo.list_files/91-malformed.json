@@ -1,0 +1,1 @@
+{"kind":"malformed","server":"demo","tool":"list_files","args":{},"data":"{\"items\": [ {\"path\": \"src/a.rs\", ","baseline":{"used":"fallback:raw","text":"{\"items\": [ {\"path\": \"src/a.rs\", "}}

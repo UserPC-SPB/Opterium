@@ -1,0 +1,3 @@
+version: 3
+render: log
+max_items: 5
