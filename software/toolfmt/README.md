@@ -164,8 +164,8 @@ standards for each of its tools and a reviewed golden corpus
 | path | lines | ~tokens |
 |---|---|---|
 | `software/toolfmt/README.md` | 187 | ~2 300 |
-| `software/toolfmt/crates/toolfmt/README.md` | 126 | ~1 400 |
-| `software/toolfmt/CHANGELOG.md` | 690 | ~7 600 |
+| `software/toolfmt/crates/toolfmt/README.md` | 144 | ~1 400 |
+| `software/toolfmt/CHANGELOG.md` | 686 | ~7 600 |
 
 ### Entry points
 1. Read this file for what toolfmt is and how to register it.

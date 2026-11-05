@@ -1,2 +1,2 @@
-# toolfmt 3.1.2, built from commit b4a4125
+# toolfmt 3.1.2, built from commit 5f1dd3c
 bca1cc8103d161944306262a4e66c72b9a1d588d5916e7ac580840711109b818  toolfmt.exe

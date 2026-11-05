@@ -10,6 +10,7 @@ Opterium is a repository containing a number ontology and theory equipped with m
 | `Theory/agent-data-circuit/` | Agent Data Circuit (ADC): publisher-side protocol proposal — manifest, schemas, reference server, MCP bridge | [`AI-ENTRY.md`](Theory/agent-data-circuit/AI-ENTRY.md) — cold entry; [`README.md`](Theory/agent-data-circuit/README.md) |
 | `software/parsers_for_AI/` | Unified parser `any_txt_parser.exe` (CLI + MCP server) | [`README.md`](software/parsers_for_AI/README.md) — usage; [`software/README.md`](software/README.md) |
 | `software/witness_prover/` | Proof-by-witness certificate prover | [`README.md`](software/witness_prover/README.md) — proof model; [`software/README.md`](software/README.md) |
+| `software/toolfmt/` | MCP gateway that formats tool outputs (`toolfmt.exe` v3.1.2) | [`README.md`](software/toolfmt/README.md) — usage; [`software/README.md`](software/README.md) |
 | `README.md` | This router | — |
 
 ## How to read (AI agents)
@@ -24,7 +25,7 @@ Convention: **every section folder has its own README with a `For AI agents` sec
 
 ## Verification
 
-Internally audited 2026-10-21: structure, links, token budgets, artifact/reference claims, and AI metadata checked; all findings fixed.
+Internally audited 2026-10-21: structure, links, token budgets, artifact/reference claims, and AI metadata checked; all findings fixed. `software/toolfmt/` was added 2026-11-05 (v3.1.2) and follows the same conventions.
 
 ## For AI agents
 
@@ -49,6 +50,7 @@ Internally audited 2026-10-21: structure, links, token budgets, artifact/referen
 | `Theory/ontology_of_number/readme_supplement.md` | 269 | ~3 250 |
 | `software/README.md` | 54 | ~700 |
 | `software/parsers_for_AI/README.md` | 143 | ~2 050 |
+| `software/toolfmt/README.md` | 187 | ~2 300 |
 | `software/witness_prover/README.md` | 114 | ~1 450 |
 | `software/witness_prover/prover_kernel.py` | 538 | ~5 050 |
 | `software/witness_prover/prover_top.py` | 310 | ~3 000 |
@@ -58,7 +60,7 @@ Parser reference docs are budgeted in `software/README.md` (`HELP.md` ~5 050, `F
 ### Entry points
 
 - Theory: `Theory/ontology_of_number/README.md` → surface (`outside_AI_opinion.md`) or deep path → `nav_index.md` → docs.
-- Tools: `software/README.md` → parser or witness README.
+- Tools: `software/README.md` → parser, witness or toolfmt README.
 
 ### No surprises
 
@@ -66,3 +68,4 @@ Parser reference docs are budgeted in `software/README.md` (`HELP.md` ~5 050, `F
 - `_relay/` at repo root is a local agent workspace, gitignored; it may be absent.
 - Text files are UTF-8 (many with BOM). Branch: `v3.1-clean`.
 - The parser is one unified executable: `software/parsers_for_AI/any_txt_parser.exe` (CLI + MCP); navguard is compiled into it, so there is no separate `navguard.exe`.
+- `software/toolfmt/` bundles the parser source as its workspace root crate, so it builds standalone; the shipped `toolfmt.exe` hash is in `software/toolfmt/SHA256SUMS.txt`.
