@@ -1,6 +1,6 @@
-﻿# Opterium — Number ontology with machine-checkable witnesses and AI-first structure
+﻿# Opterium — Number ontology and AI software for development
 
-Opterium is a repository containing a number ontology and theory equipped with machine-checkable witnesses. It is structured for AI consumption first, featuring a reading protocol, claims index, and per-folder AI sections. Correctness is enforced by verification and audit rather than trust.
+Opterium is a repository with two halves: a **number ontology and theory** equipped with machine-checkable witnesses (`Theory/`), and **AI software for development** (`software/`) — the exact data parser `any_txt_parser` and the MCP gateway `toolfmt` that formats tool outputs to save tokens and gives the agent exact project navigation. It is structured for AI consumption first, featuring a reading protocol, claims index, and per-folder AI sections. Correctness is enforced by verification and audit rather than trust.
 
 ## Repository map
 
