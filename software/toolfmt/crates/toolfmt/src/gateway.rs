@@ -756,7 +756,7 @@ impl Gateway {
                                 .with("name", J::str("toolfmt"))
                                 .with("version", J::str(crate::VERSION)),
                         )
-                        .with("instructions", J::str(meta::INSTRUCTIONS)),
+                        .with("instructions", J::str(meta::instructions(self.cfg.formatter_tools))),
                 );
             }
             "ping" | "logging/setLevel" => self.out.respond(&id, J::obj()),
@@ -932,7 +932,9 @@ impl Gateway {
         if catalog {
             tools.extend(catalog::defs());
         }
-        tools.extend(meta::defs());
+        if self.cfg.formatter_tools {
+            tools.extend(meta::defs());
+        }
         self.answer(&id, J::obj().with("tools", J::Arr(tools)));
     }
 
@@ -1073,11 +1075,11 @@ impl Gateway {
             self.wait_startup();
             return self.answer(&id, tool_text(self.catalog(&args)));
         }
-        if name == meta::INSPECT {
+        if name == meta::INSPECT && self.cfg.formatter_tools {
             self.wait_startup();
             return self.answer(&id, tool_text(self.inspect(&args)));
         }
-        if name == meta::SAVE {
+        if name == meta::SAVE && self.cfg.formatter_tools {
             self.wait_startup();
             return self.answer(&id, tool_text(self.save(&args)));
         }

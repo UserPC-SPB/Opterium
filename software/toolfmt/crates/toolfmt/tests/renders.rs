@@ -280,3 +280,82 @@ fn declared_loss_and_fallbacks() {
     assert_eq!(out.used, "builtin:json_list->objects_table");
     assert!(matches!(out.body, Body::Formatted(_)));
 }
+
+/// Agent text for `data` in built-in auto mode (no standard).
+fn auto(data: &str) -> String {
+    let req = Request {
+        server: "s",
+        tool: "t",
+        args: &J::obj(),
+        data: Data::Text(data),
+        keys: None,
+        ov: Overrides::default(),
+        auto: true,
+        family: None,
+    };
+    run(None, &req, None).agent_text(data)
+}
+
+fn records(value: &str) -> String {
+    let rows: Vec<String> = (0..8)
+        .map(|i| format!(r#"{{"record_number":{i},"payload_value":{value}}}"#))
+        .collect();
+    format!("[{}]", rows.join(","))
+}
+
+/// Two different inputs must never look the same to the agent.
+fn distinct(a: &str, b: &str) {
+    let (x, y) = (auto(a), auto(b));
+    assert_ne!(x, y, "identical agent text for\n{a}\n{b}");
+}
+
+#[test]
+fn auto_keeps_nested_array_apart_from_its_string() {
+    distinct(&records("[1,2]"), &records(r#""[1,2]""#));
+    // The nested value makes the table ambiguous: the agent gets the JSON.
+    let data = records("[1,2]");
+    assert_eq!(auto(&data), data);
+}
+
+#[test]
+fn auto_keeps_nested_object_apart_from_its_string() {
+    distinct(&records(r#"{"a":1}"#), &records(r#""{\"a\":1}""#));
+}
+
+#[test]
+fn auto_keeps_envelope_null_apart_from_its_string() {
+    let rows = records("42");
+    let a = format!(r#"{{"total":null,"items":{rows}}}"#);
+    let b = format!(r#"{{"total":"null","items":{rows}}}"#);
+    distinct(&a, &b);
+    assert!(auto(&b).contains("total: \"null\"\n"), "{}", auto(&b));
+}
+
+#[test]
+fn auto_never_drops_a_repeated_key() {
+    let payload = |n: u32| {
+        let row = format!(r#"{{"record_number":1,"record_number":{n},"description":"sample"}}"#);
+        format!("[{}]", vec![row; 8].join(","))
+    };
+    distinct(&payload(11), &payload(12));
+    // A standard asking for a table cannot show both values either.
+    let out = fmt("render: objects_table", &payload(11));
+    assert!(out.starts_with("[fallback:raw] objects_table: an item repeats a key"), "{out}");
+}
+
+#[test]
+fn cursor_named_in_content_is_still_given() {
+    // The content mentions both cursors; only the field says which is next.
+    for token in ["p1", "p2"] {
+        let data = format!(r#"{{"note":"next_cursor supports p1 and p2","next_cursor":"{token}"}}"#);
+        let out = fmt("render: expression\nformat: \"{result.note}\"", &data);
+        assert_eq!(
+            out,
+            format!("[expression]\nnext_cursor supports p1 and p2\ncursor: next_cursor={token}")
+        );
+    }
+    // A cursor the format prints itself is not repeated.
+    let data = r#"{"note":"x","next_cursor":"p2"}"#;
+    let out = fmt("render: expression\nformat: \"{result.note} next={result.next_cursor}\"", data);
+    assert_eq!(out, "[expression]\nx next=p2");
+}

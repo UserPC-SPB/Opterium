@@ -26,6 +26,7 @@ before (list_files, 1629 chars of pretty JSON)        after (564 chars)
 - Exact: numbers keep the digits the tool wrote, key order is kept, every
   cut is declared (`… 37 more rows`), pagination cursors are never dropped,
   a broken standard gives the raw output plus a note.
+- The authoritative specification is [SPEC.md](SPEC.md).
 
 ## Build
 
@@ -62,6 +63,14 @@ name taken by an earlier server appears as `<server>__<tool>`, then with
 names they stay put for the session: a server that starts late never takes
 over a name the agent already uses for another server's tool.
 
+The two own tools, `formatter_inspect` and `formatter_save_standard`, are
+for the agent that writes standards. For an agent that only does its work,
+leave them out with `"formatter_tools": false` in `upstreams.json`:
+standards still apply, the agent just is not offered the formatter. In
+measured runs with a local model most failures with these tools visible
+were an agent spending its turns on them instead of on the task, and none
+were left once they were hidden.
+
 ## What it is, and what it is not
 
 toolfmt is a gateway for **tools**, not a general MCP proxy:
@@ -95,7 +104,7 @@ call_tool tool=search_text args={"pattern": "fn main"}
 With 34 tools this cut what every request carries from 13 708 to 1 988
 characters. Sections come from `section` / `groups` per server, a description
 from `sections` or the server's own instructions; `price` / `prices` add a
-declared money price to the cards.
+declared money price to the cards. Details: [SPEC.md](SPEC.md) section 2.1.
 
 ## Teach it a format (the agent does this)
 

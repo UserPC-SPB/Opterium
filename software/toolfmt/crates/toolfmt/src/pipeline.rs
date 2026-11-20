@@ -421,16 +421,23 @@ fn execute(s: &Standard, inp: &Input, req: &Request) -> Result<(String, Effect),
     let r = render(&ctx)?;
     eff.lossy |= r.eff.lossy;
     eff.notes.extend(r.eff.notes);
+    // POST operations rewrite the text, so what the render wrote out is no
+    // longer known to be there.
+    if s.post.is_empty() {
+        eff.shown = r.eff.shown;
+    }
     let mut text = apply_post(&s.post, r.text, &mut eff);
     for n in &eff.notes {
         text.push_str("\n… ");
         text.push_str(n);
     }
+    // I8: a cursor is trusted as visible only when the render says it wrote
+    // that field out exactly. A substring of the text proves nothing: the
+    // content may mention another page's cursor.
     if let Some(j) = inp.json {
         for (k, v) in cursors(j) {
-            let vt = v.text();
-            if !(text.contains(&vt) && text.contains(k.rsplit('.').next().unwrap_or(&k))) {
-                text.push_str(&format!("\ncursor: {k}={vt}"));
+            if !eff.shows(&k) {
+                text.push_str(&format!("\ncursor: {k}={}", v.text()));
             }
         }
     }

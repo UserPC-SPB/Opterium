@@ -75,6 +75,10 @@ pub struct Config {
     pub pin: Vec<Pattern>,
     /// Section path -> description shown in the catalog.
     pub sections: Vec<(String, String)>,
+    /// Whether the agent is offered `formatter_inspect` and
+    /// `formatter_save_standard`. Off for a working agent: in measured runs
+    /// these tools drew turns away from the task itself.
+    pub formatter_tools: bool,
 }
 
 impl Default for Config {
@@ -88,6 +92,7 @@ impl Default for Config {
             catalog_threshold: 30,
             pin: Vec::new(),
             sections: Vec::new(),
+            formatter_tools: true,
         }
     }
 }
@@ -149,6 +154,11 @@ impl Config {
             Some("catalog") => Expose::Catalog,
             Some(o) => return Err(format!("expose '{o}': expected all, catalog or auto")),
         };
+        match j.get("formatter_tools") {
+            None => {}
+            Some(J::Bool(b)) => cfg.formatter_tools = *b,
+            Some(o) => return Err(format!("formatter_tools {}: expected true or false", o.to_json())),
+        }
         if let Some(n) = j.get("catalog_threshold").and_then(J::as_u64) {
             cfg.catalog_threshold = n as usize;
         }

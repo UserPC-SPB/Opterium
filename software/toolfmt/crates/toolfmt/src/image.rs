@@ -23,7 +23,7 @@ pub fn render(c: &Ctx) -> RResult {
     // Pixels are never given to the agent: metadata only.
     let eff = Effect {
         lossy: true,
-        notes: Vec::new(),
+        ..Effect::default()
     };
     Ok(Rendered {
         text: format!("image: {fmt} {w}x{h}, {} ({label})", human(total)),

@@ -14,7 +14,7 @@ root (`mcp --root DIR`); `..`, other absolute paths and links pointing outside a
     any_txt_parser recon logs/                                   # format, encoding, shape, first lines
     any_txt_parser extract -i logs/ -r contains:ERROR --context 1  # rules TYPE:EXPR, repeatable -r, --json
     any_txt_parser extract -i data.json -r "jsonpath:$.users[*].email"
-    any_txt_parser map --root DIR | symbols FILE | find NAME [--exact] | lines FILE A B | search TEXT | todos | changes
+    any_txt_parser map --root DIR [--name FILE] | symbols FILE | find NAME [--exact] | lines FILE A B | search TEXT | todos | changes
     any_txt_parser search TEXT [FILE] [--context auto|line|sentence]  # auto: the line in code, the sentence in prose
     any_txt_parser nav --oneshot                                 # navigator.md -> deep -> deep2, exact line pointers
     any_txt_parser mcp --root DIR                                # MCP server on stdio (10 tools, 2 resources)
@@ -188,7 +188,9 @@ Starts with `# any_txt_parser output`, then:
   overrides, as a reusable template) · `Result Semantics` · `CLI Arguments` · `Block Index` (block → line range).
 - Metadata values (paths, rule ids, keys, selectors, messages) are written on one line: a line break inside one
   appears as `
-` (`` as ``). Effective Template keeps the exact values.
+` (`
+` as `
+`). Effective Template keeps the exact values.
 - Metadata is escaped for Markdown, so a renderer shows it as written: every `<!--` is `\<!--`; a value that
   starts a line and would start a block there (`## x`, `> x`, `- x`, `1. x`, `---`, a code fence, `<...`) gets a
   `\` before that mark (`Selector:` `\## x`); `|` in table cells is `\|`. Data items are never escaped.

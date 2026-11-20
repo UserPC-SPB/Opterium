@@ -1,2 +1,2 @@
-# toolfmt 3.1.2, built from commit 5f1dd3c
-bca1cc8103d161944306262a4e66c72b9a1d588d5916e7ac580840711109b818  toolfmt.exe
+﻿# toolfmt 3.1.3 for Windows (x86_64-pc-windows-gnu cross build), built from commit a07405f
+1b2225c575be982214bc3463ca0cc55752073a55f6dcc746900f4964299582f1  toolfmt.exe

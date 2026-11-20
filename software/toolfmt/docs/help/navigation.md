@@ -7,7 +7,7 @@ list) and always navguard's own files: the three navigators,
 `.navguard_cache.json`, `.navguard_rules` and the `nav --triangle` state and
 log (`.abc_triangle_state.json`, `.abc_triangle_log.json`).
 
-    any_txt_parser map      [--root DIR] [--max-files N] [--json]
+    any_txt_parser map      [--root DIR] [--max-files N] [--name FILE_NAME] [--json]
     any_txt_parser symbols  [FILE] [--root DIR] [--json]
     any_txt_parser find     PATTERN [--root DIR] [--exact] [--case-sensitive] [--max-hits N] [--json]
     any_txt_parser lines    FILE START [END] [--root DIR] [--json]
@@ -54,6 +54,21 @@ estimate (binary files: their size):
       Cargo.toml  20 ~170
       logo.png  binary, 20480 bytes
       src/cart.rs  410 ~4100
+
+`--name` (MCP: `name`) looks one file name up in the whole project, before
+`--max-files`: every file whose name (the last path part) equals it exactly,
+case included, with its full relative path and the same figures. No tree.
+The count is over all scanned files, so "no file" is an answer, not an
+error; a name with a directory in it is an error (exit 3):
+
+    map C:/work/shop: 42 files, 6810 lines, ~61200 tokens
+    name "main.rs": 2 files with this name among all 42 files
+    files (lines, ~tokens):
+      src/main.rs  35 ~300
+      tools/gen/main.rs  12 ~90
+
+With `--json` the map gains `name` and `matched` (both absent from a plain
+map).
 
 ## symbols and find
 

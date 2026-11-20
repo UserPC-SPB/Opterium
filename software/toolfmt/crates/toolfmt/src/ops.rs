@@ -11,9 +11,25 @@ pub struct Effect {
     pub lossy: bool,
     /// Declared omissions, appended after the output as `… <note>`.
     pub notes: Vec<String>,
+    /// Paths of input fields the render wrote out exactly, value beside its
+    /// key (`""` is the whole document). The pipeline trusts only these
+    /// when it decides whether a pagination cursor is already visible.
+    pub shown: Vec<String>,
 }
 
 impl Effect {
+    /// Whether the field at `path` (`a.b`) was written out exactly, itself
+    /// or as part of a parent written out whole.
+    pub fn shows(&self, path: &str) -> bool {
+        self.shown.iter().any(|p| {
+            p.is_empty()
+                || p == path
+                || path
+                    .strip_prefix(p.as_str())
+                    .is_some_and(|t| t.starts_with('.'))
+        })
+    }
+
     pub fn lose(&mut self, note: impl Into<String>) {
         self.lossy = true;
         self.notes.push(note.into());

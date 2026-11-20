@@ -86,6 +86,10 @@ pub struct MapTotals {
 pub struct MapOptions {
     /// Return at most this many files (in path order); `None` = all.
     pub max_files: Option<usize>,
+    /// Only files whose name (last path component) equals this exactly,
+    /// case included. Searched over every scanned file, before
+    /// [`MapOptions::max_files`]; totals still cover the whole project.
+    pub name: Option<String>,
 }
 
 /// Result of [`map`].
@@ -98,6 +102,12 @@ pub struct ProjectMap {
     pub totals: MapTotals,
     /// True when `files` (and `tree`) omit files because of the cap.
     pub truncated: bool,
+    /// With [`MapOptions::name`]: the name looked up and how many scanned
+    /// files have it (before the cap). Absent from a plain map.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub name: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub matched: Option<usize>,
     /// Text tree (`├──`/`└──`/`│`) of exactly the files in `files`;
     /// directories first, `/`-terminated.
     pub tree: String,
@@ -455,9 +465,20 @@ impl Project {
             lines: files.iter().map(|f| f.lines).sum(),
             tokens: files.iter().map(|f| f.tokens).sum(),
         };
+        let name = match opts.name.as_deref() {
+            Some(n) if n.is_empty() || n.contains(['/', '\\']) => {
+                return Err(format!("name '{n}': expected a file name without directories"));
+            }
+            n => n,
+        };
+        let picked: Vec<&FileInfo> = files
+            .iter()
+            .filter(|f| name.is_none_or(|n| f.path.rsplit('/').next() == Some(n)))
+            .collect();
+        let matched = name.map(|_| picked.len());
         let cap = opts.max_files.unwrap_or(usize::MAX);
-        let truncated = files.len() > cap;
-        let files: Vec<FileEntry> = files.iter().take(cap).map(FileEntry::from).collect();
+        let truncated = picked.len() > cap;
+        let files: Vec<FileEntry> = picked.into_iter().take(cap).map(FileEntry::from).collect();
         let paths: Vec<&str> = files.iter().map(|f| f.path.as_str()).collect();
         Ok(ProjectMap {
             root: posix(&self.cfg.root),
@@ -465,6 +486,8 @@ impl Project {
             files,
             totals,
             truncated,
+            name: name.map(str::to_string),
+            matched,
         })
     }
 

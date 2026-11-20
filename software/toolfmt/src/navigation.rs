@@ -57,8 +57,19 @@ fn cut_note(shown: usize, total: usize, what: &str, option: &str) -> String {
     }
 }
 
-pub fn map(root: &Path, max_files: Option<usize>, as_json: bool) -> Result<String, String> {
-    let map = nav::map(root, &nav::MapOptions { max_files })?;
+/// `name`: only files with exactly this file name, looked up in the whole
+/// project (see [`nav::MapOptions::name`]).
+pub fn map(
+    root: &Path,
+    max_files: Option<usize>,
+    name: Option<&str>,
+    as_json: bool,
+) -> Result<String, String> {
+    let opts = nav::MapOptions {
+        max_files,
+        name: name.map(str::to_string),
+    };
+    let map = nav::map(root, &opts)?;
     if as_json {
         return Ok(json(&map));
     }
@@ -72,6 +83,7 @@ pub fn tree(root: &Path) -> Result<String, String> {
         root,
         &nav::MapOptions {
             max_files: Some(MCP_MAX_FILES),
+            ..Default::default()
         },
     )?;
     Ok(map_text(
@@ -92,13 +104,31 @@ fn map_text(shown_root: &str, map: &nav::ProjectMap, cap_option: &str) -> String
         "map {}: {} files, {} lines, ~{} tokens\n",
         shown_root, map.totals.files, map.totals.lines, map.totals.tokens
     );
-    out.push_str(&cut_note(
-        map.files.len(),
-        map.totals.files,
-        "files",
-        cap_option,
-    ));
-    out.push_str(&map.tree);
+    if let (Some(name), Some(matched)) = (&map.name, map.matched) {
+        // A lookup: the matches only, no tree. The count is over the whole
+        // project, so "no file" is an answer, not a cut.
+        let what = match matched {
+            0 => "no file".to_string(),
+            1 => "1 file".to_string(),
+            n => format!("{n} files"),
+        };
+        out.push_str(&format!(
+            "name \"{}\": {} with this name among all {} files\n",
+            name, what, map.totals.files
+        ));
+        out.push_str(&cut_note(map.files.len(), matched, "matches", cap_option));
+        if matched == 0 {
+            return out;
+        }
+    } else {
+        out.push_str(&cut_note(
+            map.files.len(),
+            map.totals.files,
+            "files",
+            cap_option,
+        ));
+        out.push_str(&map.tree);
+    }
     if !map.tree.ends_with('\n') {
         out.push('\n');
     }

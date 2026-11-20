@@ -44,7 +44,15 @@ pub fn render(c: &Ctx) -> RResult {
     match c.std.render {
         Render::Passthrough => Ok(Rendered {
             text: c.text.to_string(),
-            eff: Effect::default(),
+            eff: Effect {
+                // A JSON string payload is decoded, so its text is not the
+                // document; any other payload is passed on as received.
+                shown: match c.json {
+                    Some(J::Str(_)) => Vec::new(),
+                    _ => vec![String::new()],
+                },
+                ..Effect::default()
+            },
         }),
         Render::Json => json(c),
         Render::Expression => expression(c),
@@ -117,10 +125,17 @@ fn approx(x: f64) -> String {
 }
 
 /// A value on a `key: value` line: multi-line strings and strings that
-/// would read as another type are quoted.
+/// would read as another type (`null`, `42`, `[1,2]`, `{...}`, `"x"`) are
+/// quoted, so `total: null` and `total: "null"` stay apart.
 fn line_value(v: &J, s: String) -> String {
     match v {
-        J::Str(raw) if raw.contains(['\n', '\r']) || raw.is_empty() || raw != raw.trim() => {
+        J::Str(raw)
+            if raw.contains(['\n', '\r'])
+                || raw.is_empty()
+                || raw != raw.trim()
+                || looks_literal(raw)
+                || raw.starts_with(['[', '{', '"']) =>
+        {
             quote(raw)
         }
         _ => s,
@@ -129,9 +144,33 @@ fn line_value(v: &J, s: String) -> String {
 
 fn context_lines(c: &Ctx, out: &mut String, eff: &mut Effect, cut: &mut usize) {
     for (k, v) in c.rest {
+        let before = *cut;
         let s = cell(c, k, v, eff, cut);
+        let exact = *cut == before && !(matches!(v, J::Num(_)) && c.std.format_for(k).is_some());
+        if exact {
+            eff.shown.push(k.clone());
+        }
         let _ = writeln!(out, "{}: {}", k, line_value(v, s));
     }
+}
+
+/// Why the built-in table would mislead: a nested array or object prints
+/// like a string holding the same JSON, and a repeated key shows only one
+/// of its values. `None` when every cell reads back as its value.
+fn table_ambiguity(list: &[Cow<J>], builtin: bool) -> Option<&'static str> {
+    for x in list {
+        let J::Obj(m) = x.as_ref() else { continue };
+        let mut seen: HashSet<&str> = HashSet::new();
+        for (k, v) in m {
+            if !seen.insert(k.as_str()) {
+                return Some("an item repeats a key");
+            }
+            if builtin && matches!(v, J::Arr(_) | J::Obj(_)) {
+                return Some("a cell holds a nested array or object");
+            }
+        }
+    }
+    None
 }
 
 fn cut_note(eff: &mut Effect, cut: usize, c: &Ctx) {
@@ -169,8 +208,17 @@ fn json(c: &Ctx) -> RResult {
             s.push(']');
             s
         }
-        (None, _) => c.node.ok_or("input is not JSON")?.to_json(),
+        (None, _) => {
+            let node = c.node.ok_or("input is not JSON")?;
+            if c.json.is_some_and(|j| std::ptr::eq(j, node)) {
+                eff.shown.push(String::new());
+            }
+            node.to_json()
+        }
     };
+    if c.list_key.is_some() {
+        eff.shown.extend(c.rest.iter().map(|(k, _)| k.clone()));
+    }
     eff.lossy = false;
     Ok(Rendered { text, eff })
 }
@@ -278,7 +326,12 @@ fn expression(c: &Ctx) -> RResult {
                         eff.lossy |= lossy;
                         out.push_str(&s);
                     }
-                    None => out.push_str(&v.text()),
+                    None => {
+                        if head == "result" && c.json.is_some() {
+                            eff.shown.push(tail.trim_start_matches('.').to_string());
+                        }
+                        out.push_str(&v.text())
+                    }
                 }
             }
         }
@@ -337,6 +390,9 @@ fn objects(c: &Ctx) -> RResult {
     let list = c.list.ok_or("input has no list of objects")?;
     if !list.iter().all(|x| matches!(x.as_ref(), J::Obj(_))) {
         return Err("items are not all objects".into());
+    }
+    if let Some(why) = table_ambiguity(list, c.std.origin == "builtin") {
+        return Err(why.into());
     }
     let mut eff = Effect::default();
     let mut cut = 0usize;

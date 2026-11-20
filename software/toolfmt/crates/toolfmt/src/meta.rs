@@ -10,6 +10,13 @@ use crate::standard::{Standard, Store};
 pub const INSPECT: &str = "formatter_inspect";
 pub const SAVE: &str = "formatter_save_standard";
 
+const ROUTING: &str = "toolfmt gateway. If a `catalog` tool is listed, the servers' tools are behind it: browse or search with catalog, read a tool's card (catalog tools=[name]), then call it with call_tool.";
+
+/// The initialize instructions; without the formatter tools only routing.
+pub fn instructions(formatter_tools: bool) -> &'static str {
+    if formatter_tools { INSTRUCTIONS } else { ROUTING }
+}
+
 pub const INSTRUCTIONS: &str = "toolfmt gateway. If a `catalog` tool is listed, the servers' tools are behind it: browse or search with catalog, read a tool's card (catalog tools=[name]), then call it with call_tool. A tool's output is shown as the tool returned it until a standard exists for it; to make outputs compact, formatter_inspect tool=<name> shows its captured real outputs and formatter_save_standard saves a YAML standard (formatter_inspect topic=schema explains the format).";
 
 pub fn defs() -> Vec<J> {

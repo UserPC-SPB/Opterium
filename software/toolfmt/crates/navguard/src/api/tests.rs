@@ -80,12 +80,48 @@ fn map_lists_files_totals_and_a_tree_from_the_scan() {
     assert!(!m.root.contains('\\'));
     assert!(m.files.iter().all(|f| f.sha.len() == 8));
 
-    let capped = map(dir.path(), &MapOptions { max_files: Some(2) }).unwrap();
+    let capped = map(dir.path(), &MapOptions { max_files: Some(2), ..Default::default() }).unwrap();
     assert!(capped.truncated);
     assert_eq!(capped.files.len(), 2);
     assert_eq!(capped.totals.files, 4);
     assert_eq!(capped.tree, "├── README.md\n└── navguard.json\n");
     assert_eq!(listing(dir.path()), before, "map must not write files");
+}
+
+#[test]
+fn map_looks_up_a_file_name_in_the_whole_project() {
+    let dir = project();
+    let root = dir.path();
+    fs::create_dir_all(root.join("a/deep")).unwrap();
+    fs::write(root.join("a/deep/lib.rs"), "fn a() {}\n").unwrap();
+    fs::write(root.join("a/deep/LIB.rs"), "fn b() {}\n").unwrap();
+    let by = |name: &str, max: Option<usize>| {
+        map(root, &MapOptions { max_files: max, name: Some(name.into()) })
+    };
+    // Same name in two directories: both, in path order; case counts.
+    let m = by("lib.rs", None).unwrap();
+    let paths: Vec<&str> = m.files.iter().map(|f| f.path.as_str()).collect();
+    assert_eq!(paths, ["a/deep/lib.rs", "src/lib.rs"]);
+    assert_eq!(m.matched, Some(2));
+    assert_eq!(m.name.as_deref(), Some("lib.rs"));
+    assert_eq!(m.totals.files, 6, "totals still cover the whole project");
+    let full = map(root, &MapOptions::default()).unwrap();
+    for f in &m.files {
+        let same = full.files.iter().find(|g| g.path == f.path).unwrap();
+        assert_eq!((f.lines, f.tokens, f.bytes, &f.sha), (same.lines, same.tokens, same.bytes, &same.sha));
+    }
+    // The name is looked up before the cap, so a cut says so.
+    let capped = by("lib.rs", Some(1)).unwrap();
+    assert_eq!((capped.files.len(), capped.matched, capped.truncated), (1, Some(2), true));
+    // A missing name is an empty answer, not an error; a path is an error.
+    let none = by("missing.rs", None).unwrap();
+    assert_eq!((none.files.len(), none.matched), (0, Some(0)));
+    assert!(by("src/lib.rs", None).unwrap_err().contains("without directories"));
+    // An excluded file is not found by name either.
+    assert_eq!(by("skip.rs", None).unwrap().matched, Some(0));
+    // A plain map keeps its JSON: no lookup fields.
+    let plain = serde_json::to_string(&full).unwrap();
+    assert!(!plain.contains("\"matched\"") && !plain.contains("\"name\""), "{plain}");
 }
 
 #[test]

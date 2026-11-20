@@ -278,12 +278,13 @@ pub fn navigation_tools() -> Vec<Tool> {
         Tool {
             name: "map",
             title: "Project map",
-            description: "Project tree and every file with line count and token estimate (skips .git, target, node_modules, __pycache__, .zvec-grep and navguard's own files; a navguard.json in the root can change that). Start here to see what a project contains.",
+            description: "Project tree and every file with line count and token estimate (skips .git, target, node_modules, __pycache__, .zvec-grep and navguard's own files; a navguard.json in the root can change that). Start here to see what a project contains. With name: only the files with exactly that file name, looked up in the whole project, e.g. {\"name\": \"main.rs\"}.",
             input_schema: json!({
                 "type": "object",
                 "properties": {
                     "root": root_schema(),
                     "max_files": {"type": "integer", "minimum": 1, "description": "files listed (default 1000); totals always cover all"},
+                    "name": {"type": "string", "description": "only files with exactly this file name (no directories, case-sensitive), searched in the whole project; every match is listed with its full relative path"},
                     "output": output_schema()
                 }
             }),
@@ -291,7 +292,8 @@ pub fn navigation_tools() -> Vec<Tool> {
                 let json = output_json(a)?;
                 let root = root_arg(a)?;
                 let max = cap(a, "max_files", navigation::MCP_MAX_FILES)?;
-                navigation::map(&root, Some(max), json)
+                let name = args::optional_string(a, "name")?;
+                navigation::map(&root, Some(max), name.as_deref(), json)
             },
         },
         Tool {
@@ -457,6 +459,9 @@ struct MapArgs {
     /// List at most N files (totals still cover all).
     #[arg(long = "max-files", value_name = "N")]
     max_files: Option<usize>,
+    /// Only files with exactly this file name, from the whole project.
+    #[arg(long, value_name = "FILE_NAME")]
+    name: Option<String>,
     /// Print JSON instead of text.
     #[arg(long)]
     json: bool,
@@ -572,7 +577,10 @@ pub fn navigation_command(command: &str, args: &[String]) -> i32 {
     use navigation::resolve_root;
     let result = match command {
         "map" => parse::<MapArgs>(command, args)
-            .map(|a| navigation::map(&resolve_root(a.root.as_deref()), a.max_files, a.json)),
+            .map(|a| {
+                let root = resolve_root(a.root.as_deref());
+                navigation::map(&root, a.max_files, a.name.as_deref(), a.json)
+            }),
         "symbols" => parse::<SymbolsArgs>(command, args).map(|a| {
             let root = resolve_root(a.root.as_deref());
             navigation::symbols(&root, a.path.as_deref(), a.json)
