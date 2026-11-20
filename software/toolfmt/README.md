@@ -18,7 +18,6 @@ carries the parser's docs. Everything below is that parser documentation
 (current version: [`../parsers_for_AI/README.md`](../parsers_for_AI/README.md)).
 
 ---
-
 # any_txt_parser
 
 **One small program that lets an AI agent get exact data out of files and find
@@ -40,9 +39,16 @@ person does not need to learn it.
 | Rereads a big project at every step | `nav --oneshot` writes three linked navigator files: the tree with the absolute root and scan time, then exact line pointers to sizes and to symbols |
 | Needs instructions on how to use a new tool | Built-in English help with examples (`help`), MCP tool descriptions, and this README |
 
-Under the hood there are two separate modules behind one command line:
-the **parser** (extraction) and **navguard** (project navigation). The AI picks
-the tool and builds its own instruction from short keys.
+Under the hood one executable contains two modules: the **parser**
+(extraction) and **navguard** (project navigation). The AI picks the tool and
+builds its own instruction from short keys. There is no separate navguard.exe.
+
+## For AI agents
+
+- **Structure:** this README → `HELP.md` (CLI/template reference) → `FULL_GUIDE.md` (long guide) → `docs/help/` (built-in help sources). Code: `src/` (parser) and `crates/navguard/` (navigation library, linked into the same exe); fixtures: `tests/snapshots/`.
+- **Entry points:** `any_txt_parser.exe help`; MCP server: `any_txt_parser.exe mcp --root <dir>` (10 tools + 2 resources).
+- **Budget:** `HELP.md` ~5 050 tokens; `FULL_GUIDE.md` ~7 950; `CHANGELOG.md` ~10 800. Prefer `help <topic>` over the full guide.
+- **Gotchas:** Windows x64 executable; navigation is confined to `--root`; `nav --patch` is the only write command; `tests/snapshots/` contains intentionally broken fixtures; exit codes are listed below.
 
 ## Give it to an AI
 
@@ -112,7 +118,7 @@ it on: `-i examples/example.log -t examples/errors.yml -o report.md`.
   (`// TODO`, `todo: x`, `@todo`), no longer words like `todos` or
   `todo_hits`; `--loose` (MCP `loose: true`) keeps the old substring match.
 
-The full history (Russian) is `CHANGELOG.md` in the source repository.
+The full history is in `CHANGELOG.md` in the source repository (Russian; the English version is in `../parsers_for_AI/CHANGELOG.md`).
 
 ## Exit codes
 
