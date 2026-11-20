@@ -1,3 +1,24 @@
+# toolfmt workspace (MCP gateway, v3.1.3)
+
+This folder is the **toolfmt** workspace: the MCP gateway that stands between
+an agent and all of its MCP servers (`toolfmt.exe gateway --home <home>`,
+stdio; discovery via `catalog`, invocation via `call_tool`, per-call YAML
+standards rendering). It is an MCP gateway — not only a parser and not
+Windows-only: a Windows x64 binary ships here (`toolfmt.exe`), and a Linux
+x86_64 build is published as the release asset
+`toolfmt-3.1.3-linux-x86_64.tar.gz`.
+
+- Gateway usage: [`crates/toolfmt/README.md`](crates/toolfmt/README.md)
+- Authoritative gateway spec: [`crates/toolfmt/SPEC.md`](crates/toolfmt/SPEC.md)
+- Adaptive method architecture (how agents compose these tools):
+  [`../../ADAPTIVE_METHOD.md`](../../ADAPTIVE_METHOD.md)
+
+The workspace bundles `any_txt_parser` as its root crate, so this folder also
+carries the parser's docs. Everything below is that parser documentation
+(current version: [`../parsers_for_AI/README.md`](../parsers_for_AI/README.md)).
+
+---
+
 # any_txt_parser
 
 **One small program that lets an AI agent get exact data out of files and find

@@ -1,6 +1,6 @@
 ﻿# Opterium — Number ontology and AI software for development
 
-Opterium is a repository with two halves: a **number ontology and theory** equipped with machine-checkable witnesses (`Theory/`), and **AI software for development** (`software/`) — the exact data parser `any_txt_parser` and the MCP gateway `toolfmt` that formats tool outputs to save tokens and gives the agent exact project navigation. It is structured for AI consumption first, featuring a reading protocol, claims index, and per-folder AI sections. Correctness is enforced by verification and audit rather than trust.
+Opterium is a repository with two halves: a **number ontology and theory** equipped with machine-checkable witnesses (`Theory/`), and **AI software for development** (`software/`) — the exact data parser `any_txt_parser` and the MCP gateway `toolfmt` that formats tool outputs to save tokens and gives the agent exact project navigation. How an agent composes these tools into task-specific methods is described in [`ADAPTIVE_METHOD.md`](ADAPTIVE_METHOD.md). The repository is structured for AI consumption first, featuring a reading protocol, claims index, and per-folder AI sections. Correctness is enforced by verification and audit rather than trust.
 
 ## Repository map
 
@@ -10,22 +10,24 @@ Opterium is a repository with two halves: a **number ontology and theory** equip
 | `Theory/agent-data-circuit/` | Agent Data Circuit (ADC): publisher-side protocol proposal — manifest, schemas, reference server, MCP bridge | [`AI-ENTRY.md`](Theory/agent-data-circuit/AI-ENTRY.md) — cold entry; [`README.md`](Theory/agent-data-circuit/README.md) |
 | `software/parsers_for_AI/` | Unified parser `any_txt_parser.exe` (CLI + MCP server) | [`README.md`](software/parsers_for_AI/README.md) — usage; [`software/README.md`](software/README.md) |
 | `software/witness_prover/` | Proof-by-witness certificate prover | [`README.md`](software/witness_prover/README.md) — proof model; [`software/README.md`](software/README.md) |
-| `software/toolfmt/` | MCP gateway that formats tool outputs (`toolfmt.exe` v3.1.2) | [`README.md`](software/toolfmt/README.md) — usage; [`software/README.md`](software/README.md) |
+| `software/toolfmt/` | MCP gateway that formats tool outputs and fronts all of an agent's MCP servers (`toolfmt` v3.1.3; Windows x64 binary + Linux x86_64 build) | [`crates/toolfmt/README.md`](software/toolfmt/crates/toolfmt/README.md) — gateway usage; [`crates/toolfmt/SPEC.md`](software/toolfmt/crates/toolfmt/SPEC.md) — authoritative spec; [`README.md`](software/toolfmt/README.md) — bundled parser docs; [`software/README.md`](software/README.md) |
+| `ADAPTIVE_METHOD.md` | Adaptive method architecture: how the agent builds task-specific methods from the available capabilities (toolfmt gateway + any_txt_parser) | — |
 | `README.md` | This router | — |
 
 ## How to read (AI agents)
 
 1. This file — repository map and context budget.
-2. [`Theory/ontology_of_number/README.md`](Theory/ontology_of_number/README.md) — compact reading guide: surface path (one file) or deep path (protocol order).
-3. [`Theory/ontology_of_number/nav_index.md`](Theory/ontology_of_number/nav_index.md) — claims index: every claim with witness and closure.
-4. [`Theory/agent-data-circuit/AI-ENTRY.md`](Theory/agent-data-circuit/AI-ENTRY.md) — ADC protocol cold entry (only if your task is about data circuits).
-5. The documents themselves, chosen by the context budget below.
+2. [`ADAPTIVE_METHOD.md`](ADAPTIVE_METHOD.md) — adaptive method architecture: how the agent composes the tools into task-specific methods (read this when your task is about tooling or methods).
+3. [`Theory/ontology_of_number/README.md`](Theory/ontology_of_number/README.md) — compact reading guide: surface path (one file) or deep path (protocol order).
+4. [`Theory/ontology_of_number/nav_index.md`](Theory/ontology_of_number/nav_index.md) — claims index: every claim with witness and closure.
+5. [`Theory/agent-data-circuit/AI-ENTRY.md`](Theory/agent-data-circuit/AI-ENTRY.md) — ADC protocol cold entry (only if your task is about data circuits).
+6. The documents themselves, chosen by the context budget below.
 
 Convention: **every section folder has its own README with a `For AI agents` section — read it before the folder's content.** Nested snapshot and test-fixture folders are exempt. No surprises by design.
 
 ## Verification
 
-Internally audited 2026-10-21: structure, links, token budgets, artifact/reference claims, and AI metadata checked; all findings fixed. `software/toolfmt/` was added 2026-11-05 (v3.1.2) and follows the same conventions.
+Internally audited 2026-10-21: structure, links, token budgets, artifact/reference claims, and AI metadata checked; all findings fixed. `software/toolfmt/` was added 2026-11-05 (v3.1.2 at the time; the gateway is now v3.1.3) and follows the same conventions.
 
 ## For AI agents
 
@@ -33,6 +35,7 @@ Internally audited 2026-10-21: structure, links, token budgets, artifact/referen
 
 | path | lines | ~tokens |
 |---|---|---|
+| `ADAPTIVE_METHOD.md` | 273 | ~3 200 |
 | `Theory/agent-data-circuit/AI-ENTRY.md` | 254 | ~2 600 |
 | `Theory/agent-data-circuit/README.md` | 288 | ~3 250 |
 | `Theory/agent-data-circuit/SPEC.md` | 1182 | ~12 500 |
@@ -50,7 +53,9 @@ Internally audited 2026-10-21: structure, links, token budgets, artifact/referen
 | `Theory/ontology_of_number/readme_supplement.md` | 269 | ~3 250 |
 | `software/README.md` | 54 | ~700 |
 | `software/parsers_for_AI/README.md` | 143 | ~2 050 |
-| `software/toolfmt/README.md` | 187 | ~2 300 |
+| `software/toolfmt/README.md` | 136 | ~1 600 |
+| `software/toolfmt/crates/toolfmt/README.md` | 153 | ~1 800 |
+| `software/toolfmt/crates/toolfmt/SPEC.md` | 711 | ~8 400 |
 | `software/witness_prover/README.md` | 114 | ~1 450 |
 | `software/witness_prover/prover_kernel.py` | 538 | ~5 050 |
 | `software/witness_prover/prover_top.py` | 310 | ~3 000 |
@@ -60,7 +65,7 @@ Parser reference docs are budgeted in `software/README.md` (`HELP.md` ~5 050, `F
 ### Entry points
 
 - Theory: `Theory/ontology_of_number/README.md` → surface (`outside_AI_opinion.md`) or deep path → `nav_index.md` → docs.
-- Tools: `software/README.md` → parser, witness or toolfmt README.
+- Tools: `software/README.md` → parser, witness, or toolfmt gateway README (`software/toolfmt/crates/toolfmt/README.md`).
 
 ### No surprises
 

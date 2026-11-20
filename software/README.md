@@ -24,16 +24,19 @@ Programs kept in this repository, apart from the theory files in `Theory/`.
 
 - Path: `toolfmt/`
 - A Rust workspace (edition 2024) that formats MCP tool outputs and acts as an
-  MCP gateway: one `toolfmt.exe` (v3.1.2) between an agent and all of its MCP
-  servers.
+  MCP gateway: one `toolfmt.exe` (v3.1.3) between an agent and all of its MCP
+  servers. Gateway documentation: `crates/toolfmt/README.md` (usage) and
+  `crates/toolfmt/SPEC.md` (authoritative spec); the folder-level `README.md`
+  documents the bundled `any_txt_parser` root crate.
 - **Requires `any_txt_parser`** — it is used as a library for `template`
   rules. The parser lives in `../parsers_for_AI/` and is also bundled in this
   workspace (the root crate), so the tree builds standalone.
 - Workspace crates: `any_txt_parser` (root, bundled), `navguard`, `toolfmt`
   (the formatter/gateway binary).
 - Key subfolders: `crates`, `docs`, `examples`, `scripts`, `src`, `tests`.
-- Binary: 5.5 MB, Windows x64, no installer or runtime; SHA256 in
-  `SHA256SUMS.txt`.
+- Binaries: Windows x64 (~5.5 MB) in this folder, no installer or runtime,
+  SHA256 in `SHA256SUMS.txt`; a Linux x86_64 build is published as the release
+  asset `toolfmt-3.1.3-linux-x86_64.tar.gz`.
 - Register it in the MCP client instead of the upstream servers:
   `toolfmt.exe gateway --home <home>` with `upstreams.json` in the home.
 
@@ -43,7 +46,7 @@ Programs kept in this repository, apart from the theory files in `Theory/`.
 - `software/parsers_for_AI/`: Rust workspace containing `src`, `crates`, `docs`, `examples`, `scripts`, `tests`, `.cargo`, and the unified executable `software/parsers_for_AI/any_txt_parser.exe`.
 - `software/parsers_for_AI/README.md`: AI-first usage guide; `HELP.md` is the CLI/template reference and `FULL_GUIDE.md` the long guide.
 - `software/witness_prover/`: Python implementation for proof-by-witness certificates, including `software/witness_prover/prover_kernel.py` and `software/witness_prover/prover_top.py`.
-- `software/toolfmt/`: Rust workspace for tool-output formatting and the MCP gateway; ships `software/toolfmt/toolfmt.exe` (v3.1.2); requires `any_txt_parser` (`software/parsers_for_AI/`).
+- `software/toolfmt/`: Rust workspace for tool-output formatting and the MCP gateway; ships `software/toolfmt/toolfmt.exe` (v3.1.3, Windows x64; a Linux x86_64 build is also released); gateway usage in `software/toolfmt/crates/toolfmt/README.md`, authoritative spec in `software/toolfmt/crates/toolfmt/SPEC.md`; the folder `README.md` documents the bundled `any_txt_parser` root crate; requires `any_txt_parser` (`software/parsers_for_AI/`).
 - `software/README.md`: Top-level description for the software folder.
 
 ### Context budget
@@ -57,13 +60,15 @@ Programs kept in this repository, apart from the theory files in `Theory/`.
 | `software/witness_prover/README.md` | 114 | ~1 450 |
 | `software/witness_prover/prover_kernel.py` | 538 | ~5 050 |
 | `software/witness_prover/prover_top.py` | 310 | ~3 000 |
-| `software/toolfmt/README.md` | 187 | ~2 300 |
+| `software/toolfmt/README.md` | 136 | ~1 600 |
+| `software/toolfmt/crates/toolfmt/README.md` | 153 | ~1 800 |
+| `software/toolfmt/crates/toolfmt/SPEC.md` | 711 | ~8 400 |
 
 ### Entry points
 1. Read this file for high-level orientation.
 2. Parser work: `software/parsers_for_AI/README.md` → `HELP.md` for CLI/template details.
 3. Proof work: `software/witness_prover/README.md`.
-4. Tool-output / MCP gateway work: `software/toolfmt/README.md`.
+4. Tool-output / MCP gateway work: `software/toolfmt/crates/toolfmt/README.md` (spec: `SPEC.md` in the same folder).
 
 ### No-surprises / gotchas
 - `software/parsers_for_AI/any_txt_parser.exe` is the only executable; navguard is compiled into it, so there is no `navguard.exe`.
