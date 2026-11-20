@@ -12,7 +12,7 @@
 #     explicitly adopted axiom system; if an axiom is wrong, Lean still
 #     produces "valid" derivations (garbage in, garbage out). Opterium
 #     admits no axioms or postulates: introducing anything unjustified or
-#     merely postulated is forbidden вЂ” every premise must be justified and
+#     merely postulated is forbidden — every premise must be justified and
 #     re-verified, never accepted on faith.
 #   - NOT a runtime self-assertion ("verified: true" from the engine).
 #
@@ -55,8 +55,8 @@ CUBE_DEF_PATHS = [
 DISCLAIMER = (
     "This certificate implements Borisov's speculative geometry \"Opterium\"."
     " It is an experimental, unorthodox framework: computations are "
-    "grounded solely in explicitly justified, derived definitions вЂ” no "
-    "postulates or axioms are admitted вЂ” but it is NOT established "
+    "grounded solely in explicitly justified, derived definitions — no "
+    "postulates or axioms are admitted — but it is NOT established "
     "peer-reviewed mathematics. Treat certificates as internal to this "
     "system."
 )

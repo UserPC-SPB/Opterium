@@ -350,7 +350,7 @@ def compute_structural_numbers() -> Dict:
 
 # ──────────────────────────────────────────────────────────────
 # PART 3b: NEUTRAL SHELL, DARK MATTER, AND CUBE27
-# README §10 + инструкция..txt:
+# README §10 + instruction file (instruktsiya.txt):
 #
 # NEUTRAL SHELL:
 #   v_em = (1,1,1,1,1,1,1,1) is the U(1)_em gauge direction.
@@ -445,7 +445,7 @@ def compute_cube27() -> Dict:
 
 # ──────────────────────────────────────────────────────────────
 # PART 3c: ZERO-DIVISOR CLASSIFICATION (8sign vs 16sign)
-# инструкция..txt + V_zero_divisor.py:
+# instruction file (instruktsiya.txt) + V_zero_divisor.py:
 #
 # Sedenions (16D) introduce zero divisors: two non-zero elements
 # whose product is zero. In the ternary address space (x,y,z),
@@ -1118,7 +1118,7 @@ def compute_qcd() -> Dict:
 
 # ──────────────────────────────────────────────────────────────
 # PART 5b: DOCTOR GEOMETRIC NAVIGATOR
-# README §4 + инструкция..txt:
+# README §4 + instruction file (instruktsiya.txt):
 #
 # Doctor is a universal 3-bit oracle mapping any state onto
 # an E8-compatible subspace via a finite number of steps.

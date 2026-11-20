@@ -4,14 +4,14 @@
     "range": [0, 10],
     "symmetry": "x <= y",
     "total_cells": 66,
-    "description": "Полная навигационная сетка 0..10 x 0..10. Только уникальные точки (x <= y). Содержит пути S (антидиагональ) и D (диагональ) для прямого обхода без внешних индексов. Глобальный by_P для деления."
+    "description": "Full navigation grid 0..10 x 0..10. Only unique points (x <= y). Contains S (anti-diagonal) and D (diagonal) paths for direct traversal without external indexes. Global by_P for division."
   },
   "rules": {
-    "add": "Для a+b: собрать ключ (a,b). Если a>b, взять (b,a). Найти блок. Пройти по S_path до точки с y=0, вернуть её x.",
-    "sub": "Для a-b: если a>=b, ключ (a,b), иначе (b,a) с инверсией знака. Найти блок. Пройти по D_path: при a>=b до точки с y=0 (вернуть её x), при a<b до точки с x=0 (вернуть её y со знаком минус).",
-    "mul": "Взять P из блока (при a>b транспонировать в (b,a)).",
-    "div": "Использовать by_P[P]. Найти пару, содержащую делитель. Вернуть другую координату.",
-    "scale": "Извлечь prim=[seed_x, seed_y, scale]. Умножить P на k², S на k, D на k."
+    "add": "For a+b: build key (a,b). If a>b, take (b,a). Find the block. Walk S_path to the point with y=0, return its x.",
+    "sub": "For a-b: if a>=b, key (a,b), else (b,a) with sign inversion. Find the block. Walk D_path: if a>=b to the point with y=0 (return its x), if a<b to the point with x=0 (return its y with a minus sign).",
+    "mul": "Take P from the block (transpose to (b,a) if a>b).",
+    "div": "Use by_P[P]. Find the pair containing the divisor. Return the other coordinate.",
+    "scale": "Extract prim=[seed_x, seed_y, scale]. Multiply P by k², S by k, D by k."
   },
   "points": {
     "0:0": {"P":0, "S_path":["0:0"], "D_path":["0:0"], "prim":[0,0,0]},

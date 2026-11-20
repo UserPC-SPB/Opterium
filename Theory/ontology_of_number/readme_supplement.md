@@ -139,19 +139,19 @@ The probability of 19 accidental agreements at this precision is negligible.
 
 ### GLOSSARY
 
-**Ternary minimum / Тернарный минимум**
+**Ternary minimum**
 The smallest relational structure that can sustain an irreversible, directed
 cycle: three elements A→B→C→A. Binary systems (A↔B) have mirror symmetry
 and cannot generate a preferred direction. Four or more elements decompose
 or reduce to a triangle plus redundancy. Three is the unique minimum.
 
-**Tick / Тик**
+**Tick**
 The elementary transition in the E8 temporal structure: inner triangle T
 flips to outer triangle T⁻ (sign reversal of all three root vectors). The
 tick period is 2 (T→T⁻→T). The arrow of time is the irreversibility of this
 flip, forced by the antipodal asymmetry (dot=−8 vs dot=+4).
 
-**Doctor / Доктор**
+**Doctor**
 The closure verification engine. For any geometric claim, Doctor runs
 multiple independent routes to the same address and counts failures (tension τ).
 τ=0 means the claim is geometrically certified. τ>0 means at least one route
@@ -159,35 +159,35 @@ disagrees — the claim is fractured and the fracture pattern identifies the err
 Named by analogy with a doctor who diagnoses by checking multiple independent
 symptoms, not a single test.
 
-**Fano plane / Плоскость Фано**
+**Fano plane**
 The smallest projective plane: 7 points, 7 lines, 3 points per line, 3 lines
 per point. In Opterium it arises automatically from the XOR structure of the
 7 non-rest states of three-axis halving (GF(2)³). Every element {a,b,c}
 satisfying a XOR b XOR c = 0 is a Fano line. The Fano plane is the
 multiplication table of the imaginary octonions.
 
-**Halving / Дробление (оператор H)**
+**Halving (operator H)**
 The universe's primary operation: given a sum S, find the most symmetric
 split (⌊S/2⌋, ⌈S/2⌉). For even S: exact split, D=0, no arrow. For odd S:
 unavoidable asymmetry D=−1, zero loss in product. This D=−1 residue is the
 arrow of time, the source of the Fibonacci sequence, and the seed of the
 entire E8 structure.
 
-**Closure geometry / Геометрия замыкания**
+**Closure geometry**
 The proof method of Opterium. A result is proven when ≥3 independent geometric
 routes arrive at the same address with τ=0. This is stronger than deduction
 from axioms: if the axioms are wrong, deduction preserves the error;
 independent routes with different dependencies cannot all fail the same way
 unless the result is genuinely wrong.
 
-**OPT_G / Оптимальный спуск**
+**OPT_G**
 The principle of descent toward minimum tension: among all witnesses of a
 given product, the one closest to the diagonal (smallest |D|) is the stable
 node. The universe "finds" stable configurations by arriving at the address
 where maximum independent geometric routes agree — the same principle as
 energy minimization, but stated in relational geometry rather than calculus.
 
-**n-value / n-значение**
+**n-value**
 The Dirac eigenvalue index for a fermion on the S⁷ fiber. Each n is the
 L₁ norm of the projection of an E8 root onto the first three Cartan
 coordinates of the Standard Model subgroup SU(3)×SU(2)×U(1), via the
@@ -195,19 +195,19 @@ branching chain E8→E6→SO(10)→SU(5)→SM. Together with C=3/2, the n-value
 determines the fermion mass via m = m_e × exp(C·n/2). The n-values come
 from group theory (dimensions and ranks), not from fitting to masses.
 
-**Neutral shell / Нейтральная оболочка (126)**
+**Neutral shell (126)**
 For any E8 root r, the 126 other roots with dot product = 0. These roots do
 not interact with r. The number 126 = C(9,4) is a combinatorial fact about
 E8, not a choice. It appears in the Higgs formula as α⁻¹ − 126 = 11.036
 (the "active" electromagnetic coupling count).
 
-**Debt system / Система долга**
+**Debt system**
 Exact representation of decimal numbers as (mantissa, debt) pairs:
 value = mantissa × 10^debt. All operations are exact integer arithmetic on
 the mantissa; the debt tracks the decimal cursor. Eliminates all floating-
 point errors. Example: 0.3 + 0.4 = (3,−1)+(4,−1) = (7,−1) = 0.7, exactly.
 
-**Zero-cloud / Нулевое облако**
+**Zero-cloud**
 Every number is an infinite string of zeros with a finite excitation pattern.
 The number 420 is ...000420.000... The zeros are not padding — they are the
 medium. The decimal point is a cursor marking "where the ones column is."

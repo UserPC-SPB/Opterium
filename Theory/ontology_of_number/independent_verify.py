@@ -478,6 +478,6 @@ print("-" * 70)
 for cat, name, p, e, err, ok in results:
     if cat in ('q', 'l', 'f', 'ν'):
         print(f"{cat:<12} {name:<8} {p:>14.6f} {e:>14.6f} {err:>10.3f} {'OK' if ok else 'FAIL':<6}")
-# космологическая постоянная
+# cosmological constant
 print(f"{'cosmo':<12} {'Λ':<8} {LAMBDA_PRED:>14.4e} {LAMBDA_EXP:>14.4e} {err:>10.3f} {'OK' if ok else 'FAIL':<6}")
 print("=" * 70)
