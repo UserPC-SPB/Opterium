@@ -35,8 +35,9 @@ Programs kept in this repository, apart from the theory files in `Theory/`.
   (the formatter/gateway binary).
 - Key subfolders: `crates`, `docs`, `examples`, `scripts`, `src`, `tests`.
 - Binaries: Windows x64 (~4.8 MB; 4,834,304 B) in this folder, no installer or runtime,
-  SHA256 in `SHA256SUMS.txt`; a Linux x86_64 build is expected to be published as
-  the release asset `toolfmt-3.1.3-linux-x86_64.tar.gz`.
+  SHA256 in `SHA256SUMS.txt`; a Linux x86_64 build is published as the
+  release asset [`toolfmt-3.1.3-linux-x86_64.tar.gz`](https://github.com/UserPC-SPB/Opterium/releases/download/v3.1.3/toolfmt-3.1.3-linux-x86_64.tar.gz)
+  (release `v3.1.3`).
 - Register it in the MCP client instead of the upstream servers:
   `toolfmt.exe gateway --home <home>` with `upstreams.json` in the home.
 

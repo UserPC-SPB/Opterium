@@ -6,7 +6,8 @@ stdio; discovery via `catalog`, invocation via `call_tool`, per-call YAML
 standards rendering). It is an MCP gateway — not only a parser and not
 Windows-only: a Windows x64 binary ships here (`toolfmt.exe`), and a Linux
 x86_64 build is published as the release asset
-`toolfmt-3.1.3-linux-x86_64.tar.gz`.
+[`toolfmt-3.1.3-linux-x86_64.tar.gz`](https://github.com/UserPC-SPB/Opterium/releases/download/v3.1.3/toolfmt-3.1.3-linux-x86_64.tar.gz)
+(release `v3.1.3`).
 
 - Gateway usage: [`crates/toolfmt/README.md`](crates/toolfmt/README.md)
 - Authoritative gateway spec: [`crates/toolfmt/SPEC.md`](crates/toolfmt/SPEC.md)
