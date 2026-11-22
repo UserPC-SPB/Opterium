@@ -16,7 +16,7 @@ Programs kept in this repository, apart from the theory files in `Theory/`.
 
 - Path: `witness_prover/`
 - Implements machine-checkable proof certificates for Opterium.
-- Contains 4 files (three visible plus `.gitignore`) and no subdirectories.
+- Contains 3 files (`cube.exe`, `README.md`, `CUBE_REFERENCE.md`) and no subdirectories.
 - Focuses on epistemology and explicit verification procedures for proof closure.
 - Provides concrete, machine-readable, re-checkable certificate files.
 
@@ -34,9 +34,9 @@ Programs kept in this repository, apart from the theory files in `Theory/`.
 - Workspace crates: `any_txt_parser` (root, bundled), `navguard`, `toolfmt`
   (the formatter/gateway binary).
 - Key subfolders: `crates`, `docs`, `examples`, `scripts`, `src`, `tests`.
-- Binaries: Windows x64 (~5.5 MB) in this folder, no installer or runtime,
-  SHA256 in `SHA256SUMS.txt`; a Linux x86_64 build is published as the release
-  asset `toolfmt-3.1.3-linux-x86_64.tar.gz`.
+- Binaries: Windows x64 (~4.8 MB; 4,834,304 B) in this folder, no installer or runtime,
+  SHA256 in `SHA256SUMS.txt`; a Linux x86_64 build is expected to be published as
+  the release asset `toolfmt-3.1.3-linux-x86_64.tar.gz`.
 - Register it in the MCP client instead of the upstream servers:
   `toolfmt.exe gateway --home <home>` with `upstreams.json` in the home.
 
@@ -45,7 +45,7 @@ Programs kept in this repository, apart from the theory files in `Theory/`.
 ### Map
 - `software/parsers_for_AI/`: Rust workspace containing `src`, `crates`, `docs`, `examples`, `scripts`, `tests`, `.cargo`, and the unified executable `software/parsers_for_AI/any_txt_parser.exe`.
 - `software/parsers_for_AI/README.md`: AI-first usage guide; `HELP.md` is the CLI/template reference and `FULL_GUIDE.md` the long guide.
-- `software/witness_prover/`: Python implementation for proof-by-witness certificates, including `software/witness_prover/prover_kernel.py` and `software/witness_prover/prover_top.py`.
+- `software/witness_prover/`: proof-by-witness certificates provided by `software/witness_prover/cube.exe`; see `software/witness_prover/README.md` and `software/witness_prover/CUBE_REFERENCE.md`.
 - `software/toolfmt/`: Rust workspace for tool-output formatting and the MCP gateway; ships `software/toolfmt/toolfmt.exe` (v3.1.3, Windows x64; a Linux x86_64 build is also released); gateway usage in `software/toolfmt/crates/toolfmt/README.md`, authoritative spec in `software/toolfmt/crates/toolfmt/SPEC.md`; the folder `README.md` documents the bundled `any_txt_parser` root crate; requires `any_txt_parser` (`software/parsers_for_AI/`).
 - `software/README.md`: Top-level description for the software folder.
 
@@ -53,14 +53,12 @@ Programs kept in this repository, apart from the theory files in `Theory/`.
 
 | path | lines | ~tokens |
 |---|---|---|
-| `software/README.md` | 54 | ~700 |
+| `software/README.md` | 80 | ~700 |
 | `software/parsers_for_AI/README.md` | 143 | ~2 050 |
 | `software/parsers_for_AI/HELP.md` | 238 | ~5 050 |
 | `software/parsers_for_AI/FULL_GUIDE.md` | 626 | ~7 950 |
-| `software/witness_prover/README.md` | 114 | ~1 450 |
-| `software/witness_prover/prover_kernel.py` | 538 | ~5 050 |
-| `software/witness_prover/prover_top.py` | 310 | ~3 000 |
-| `software/toolfmt/README.md` | 136 | ~1 600 |
+| `software/witness_prover/README.md` | 125 | ~1 450 |
+| `software/toolfmt/README.md` | 163 | ~1 600 |
 | `software/toolfmt/crates/toolfmt/README.md` | 153 | ~1 800 |
 | `software/toolfmt/crates/toolfmt/SPEC.md` | 711 | ~8 400 |
 

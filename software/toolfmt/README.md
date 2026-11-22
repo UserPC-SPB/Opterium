@@ -45,10 +45,10 @@ builds its own instruction from short keys. There is no separate navguard.exe.
 
 ## For AI agents
 
-- **Structure:** this README → `HELP.md` (CLI/template reference) → `FULL_GUIDE.md` (long guide) → `docs/help/` (built-in help sources). Code: `src/` (parser) and `crates/navguard/` (navigation library, linked into the same exe); fixtures: `tests/snapshots/`.
+- **Structure:** this README → `HELP.md` (CLI/template reference) → `../parsers_for_AI/FULL_GUIDE.md` (long guide; lives in the sibling `parsers_for_AI` folder, not in the toolfmt root) → `docs/help/` (built-in help sources). Code: `src/` (parser) and `crates/navguard/` (navigation library, linked into the same exe); fixtures: `tests/snapshots/`.
 - **Entry points:** `any_txt_parser.exe help`; MCP server: `any_txt_parser.exe mcp --root <dir>` (10 tools + 2 resources).
 - **Budget:** `HELP.md` ~5 050 tokens; `FULL_GUIDE.md` ~7 950; `CHANGELOG.md` ~10 800. Prefer `help <topic>` over the full guide.
-- **Gotchas:** Windows x64 executable; navigation is confined to `--root`; `nav --patch` is the only write command; `tests/snapshots/` contains intentionally broken fixtures; exit codes are listed below.
+- **Gotchas:** Windows x64 executable; navigation is confined to `--root`; writes to the project are limited to `nav --patch` (edits a file), `changes --persist` (writes `.navguard_cache.json`) and `nav --oneshot`/`--watch` (write the three navigator files into the root); `tests/snapshots/` contains intentionally broken fixtures; exit codes are listed below.
 
 ## Give it to an AI
 
@@ -135,8 +135,9 @@ the exe, `HELP.md` and this README to `dist\` and the bundled skill folders.
 Its build leaves no build-machine paths in the exe and the linker writes no
 timestamps, so the same sources, rustc and MSVC toolset (the release prints
 it) give the same bytes. `HELP.md` (template DSL reference, English) ships
-with the exe; the source repository also has `FULL_GUIDE.md` (full guide),
-`CHANGELOG.md`, `docs/help/` (the built-in help), `examples/` and `LICENSE`.
+with the exe; this folder also has `docs/help/` (the built-in help),
+`examples/` and `LICENSE`. `FULL_GUIDE.md` (full guide) and `CHANGELOG.md`
+live in the sibling source repository `parsers_for_AI\`.
 
 ## License
 

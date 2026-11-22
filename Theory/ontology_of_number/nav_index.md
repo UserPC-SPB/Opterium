@@ -10,7 +10,7 @@ These require no prior knowledge. Verify directly from the AnchorFile table.
 
 [§L0-1] NUMBER IS A RELATIONAL WEB
   Claim:    420 IS the set {(x,y)|x×y=420}, not the digit string "420"
-  Witness:  by_P[420] = all factor pairs of 420
+  Witness:  factor pairs of 420 (key "420" not in the stored table — max P = 100)
   Closure:  by_P enumerates them completely. ΔT=0 if enumeration matches.
   Section:  Part 0, §0.1
 
@@ -95,7 +95,7 @@ These require no prior knowledge. Verify directly from the AnchorFile table.
             dot(r1,r3): 6×0+2×(+1)(−2) = −4 ✓
   Table:    Multiplications via points["1:1"].P, points["1:2"].P
   Closure:  All three dots = −4. Sum = zero vector. ΔT=0
-  Section:  Part II, §8; AnchorFile §9.5
+  Section:  Part II, §8
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -115,7 +115,7 @@ These require no prior knowledge. Verify directly from the AnchorFile table.
             Table: 126 = points["9:10"] doesn't exist at range 0..10,
             but C(9,4): C(9,1)=9, C(9,2)=36, C(9,3)=84, C(9,4)=126 ✓
   Closure:  1+56+126+56+1=240 (spectrum sums correctly). ΔT=0
-  Section:  Part II, §8; Part III, §10
+  Section:  Part II, §8; Part II, §10
 
 [§L3-3] 137 = dim(E7) + dim(SU(2)) + dim(U(1))
   Claim:    133 + 3 + 1 = 137. Integer part of α⁻¹.
@@ -134,7 +134,7 @@ These require no prior knowledge. Verify directly from the AnchorFile table.
             Route 3: n(τ) = 11 − α_s×11/10
             Table: points["4:7"].S_path gives sum 11. 4+7=11 ✓
   Closure:  Three independent routes → same integer 11. P(chance)=(1/20)³≈10⁻⁴. ΔT=0
-  Section:  Part III, §15.5; §16; Part XI, §39; Addendum AD1
+  Section:  Part III, §15.5; §16; Part XI, §39
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -152,7 +152,7 @@ These require no prior knowledge. Verify directly from the AnchorFile table.
             DoctorCore group [126,11,28,3500,229,250000000] closed (stress=28)
             Uniqueness: k=133 is only value in [120,150] giving error<10⁻⁴
   Closure:  Predicted 137.035999084 vs CODATA 137.035999177. Error=9.3×10⁻⁸ (0.68 ppm). ΔT≈0
-  Section:  Part III, §15.2; Part IV, §13
+  Section:  Part III, §15.2; Part III, §13
 
 [§L4-2] PROTON-ELECTRON MASS RATIO
   Claim:    m_p/m_e = 6π⁵×(1+α/(240φ)) = 1836.152612521
@@ -195,7 +195,7 @@ These require no prior knowledge. Verify directly from the AnchorFile table.
             Route G2: C = N_gen/rank(G₂) = 3/2
             Route G3: C = J+½ at J=1 (spin-1 Dirac shift) = 3/2
             Numerical check from u,d,t quarks: C_u=1.504, C_d=1.493, C_t=1.498
-            Table: points["3:2"] → P=6, S=5, D=1. 3/2 verified as ratio.
+            Table: points["2:3"] → P=6, S=5, D=1. 3/2 verified as ratio.
   Closure:  All three routes → 3/2. Numeric spread <0.5%. ΔT=0
   Section:  Part X, §37
 

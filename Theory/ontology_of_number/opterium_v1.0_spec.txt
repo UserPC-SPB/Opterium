@@ -689,7 +689,7 @@ Only V(B₇) closes. V(B₇) is the volume of the 7-sphere — the unique parall
 
     α⁻¹ = 126 + 11 + 1/28 + 1/3500 − 229/250000000 = 137.035999084
 
-Each term is a pre-existing group-theoretic invariant (see README §15.2 for full decomposition). The group [126,11,28,3500,229,250000000] is closed under DoctorCore with stress = 28 (perfect number), confirming structural coherence.
+Each term is a pre-existing group-theoretic invariant (see Borisov_K_theory.md §15.2 for full decomposition). The group [126,11,28,3500,229,250000000] is closed under DoctorCore with stress = 28 (perfect number), confirming structural coherence.
 
 **Example 2 — m_p/m_e = 6·π⁵·(1 + α/(240·φ)):**
 

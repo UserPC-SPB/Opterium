@@ -41,7 +41,7 @@ Publishers must declare operational limits in their manifest to prevent resource
 Server-side aggregates are subject to privacy risks, particularly differencing attacks. To mitigate these, ADC enforces the following rules:
 
 *   **k-Anonymity:** Publishers must enforce a minimum group size (`min_group_size`). Any group with a count below this threshold must be suppressed (omitted from the response).
-*   **Extremum Masking:** If a group size is less than `2 * min_group_size`, the publisher must mask extremum values (e.g., replace max/min with the median or omit them) to prevent identification of individuals in small groups.
+*   **Extremum Masking:** When a group size is below `2k`, the publisher MUST NOT emit exact `min`/`max` if it would reveal an individual's attribute; it must emit `null` and include `metric_suppressed: true`.
 *   **Totals Differencing Attack:** An attacker can calculate the value of a suppressed group by subtracting the sum of visible groups from the total. To mitigate this:
     *   Publishers should set `totals_visible_only=true` to ensure the total only reflects visible groups.
     *   Alternatively, publishers may omit the total field entirely.
@@ -65,7 +65,7 @@ ADC defines strict rules for caching to ensure billing accuracy and data freshne
 *   **Degraded Responses:** If a response is degraded (e.g., due to server-side filtering or partial data), it must not be charged to the agent. The response must include a header or field indicating `DEGRADATION_BILLING_VIOLATION` if billing is attempted on degraded data.
 *   **CDN Caching:** If a response is cached by a CDN, the cached copy must report zero cost in the billing metadata. Agents must verify that cached responses do not incur charges.
 *   **POST Responses:** Responses to `POST` requests (e.g., for aggregates or filters) must be marked `Cache-Control: no-store` and must not include an `ETag` header. This prevents accidental caching of personalized or dynamic data.
-*   **Freshness Generations:** Passports include a `freshness_generation` field. Agents must check this field to ensure they are not using stale data in critical transactions. If the generation is older than the agent's tolerance threshold, the agent should refetch the data.
+*   **Freshness Generations:** The passport reports `tree_generation` and `updated_at` (SPEC.md 6.3), and each slice carries its own `generation`. Agents must compare these generations against their local state to ensure they are not using stale data in critical transactions. If the generation is older than the agent's tolerance threshold, the agent should refetch the data.
 
 ## 7. Trust Tier Crypto
 

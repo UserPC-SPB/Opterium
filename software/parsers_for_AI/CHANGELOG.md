@@ -237,7 +237,7 @@ different metadata format. "Before" refers to the released 1.1.0. Regression tes
   `max_item_chars`. Before, already truncated values were compared, and different records with a common
   beginning were removed as duplicates (data loss): `aaaaaaaaaaX`, `aaaaaaaaaaY` with
   `max_item_chars: 10` yielded one item, now two. True duplicates are removed as before,
-  the line `N truncated item(s) dropped as duplicates by stable_deduplicate` remains (§8).
+  the line `N truncated item(s) dropped as duplicates by stable_deduplicate` remains (§7.8/§10).
 - **[contract]** One newline translation rule for all formats: LF, CRLF, and single CR
   (old Mac) — end of line. Decoded text is immediately normalized to LF, before format detection.
   Therefore a file with only CRs is multiple lines, not one (`line:`, `contains`,
@@ -267,7 +267,7 @@ different metadata format. "Before" refers to the released 1.1.0. Regression tes
 - **[contract]** The parent of a split group shows in `Items:` the number of items in the entire group
   (fragments of one item — one item; before it was `Items: 0`), and instead of `(no data)` —
   `(in the continuation parts)`. The same number is in the `Items` column of the parent line in
-  `## Block Index` (§8).
+  `## Block Index` (§10).
 - **[contract]** For a block with `rule not applicable` in `### Warnings`, the reason is specified:
   `rule not applicable: selector type css does not apply to json files (they take jsonpath,
   path)`. The same warning is in the results of `extract`/MCP with `--include-empty` (§7.9).
@@ -278,7 +278,7 @@ different metadata format. "Before" refers to the released 1.1.0. Regression tes
 - **[contract]** Metadata is escaped for Markdown minimally, so that when rendered they look as written and hide nothing: every `<!--` is written as `\<!--` (before, text up to the nearest `-->` became a comment); a value that starts a line or list item and would start a block there (`## x`, `> x`, `- x`, `1. x`, `---`, code fence, `<…`, table row separator, link definition) gets a `\` before this character
   (`Selector:` → `\## x`, `1\. x`); `|` in table cells is written as `\|` and no longer breaks the
   line `## Files`/`## Block Index`. Single-line-ness and anchor escaping are preserved,
-  data is never escaped (§9).
+  data is never escaped (§10).
 
 ### Navigation
 
@@ -409,7 +409,7 @@ One portable program for AI agents: data extraction and project navigation in a 
   attributes, external DTDs and entities are never loaded (`&nbsp;` from XHTML DTD —
   file error `unknown entity reference`). Dangerous DTDs are rejected before parsing as a file
   error `XML DTD rejected: …`: expansion exceeding 8 MiB, copying more than 1 GiB of text,
-  more than 64 Mi entity comparisons or 1 GiB of compared names, nesting deeper than 10,
+  more than 64 MiB entity comparisons or 1 GiB of compared names, nesting deeper than 10,
   recursion, unbalanced markup in an entity.
 - The depth limit of 128 accounts for elements from entities
   (`… (entity 'deep' adds 100 levels of elements)`).
@@ -434,7 +434,7 @@ One portable program for AI agents: data extraction and project navigation in a 
   as yaml if each non-empty document looks like a config; a document consisting only of comments
   `#` is considered empty (so front matter with a body of only headings `# …` is now also yaml).
 
-### Effective Template (§8, §9)
+### Effective Template (§10)
 
 - **[contract]** `## Effective Template` — a valid template in canonical form: it can be
   saved to `.yml` and passed to `-t` without edits, it compiles to the same configuration.

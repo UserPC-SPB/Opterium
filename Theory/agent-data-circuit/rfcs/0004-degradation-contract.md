@@ -114,9 +114,9 @@ wire channel to report it with.
 
 ## Test vectors
 Note: the illustrative hydration example in [SPEC.md 6.4.3](../SPEC.md#643-per-slice-hydration)
-shows `staleness_seconds: 1023` against `max_staleness_seconds: 900` while labelling the
-status `stale_fallback`, which the normative sentence below it forbids. The vectors below use
-a compliant pair and add an explicit violation case.
+shows a compliant pair (`staleness_seconds: 612` within `max_staleness_seconds: 900`); the
+`1023` value occurs only in this RFC's own test vector below, where it is a deliberate
+violation. The vectors below reuse that compliant pair and add an explicit violation case.
 ```json
 [
   {

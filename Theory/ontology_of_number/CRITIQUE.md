@@ -10,7 +10,7 @@ Each step is uniquely forced by the previous one (e.g., Hurwitz theorem: only O(
 
 ### 2. "You fitted 19 parameters."
 
-**Response:** There is **exactly one free parameter**: `m_e = 0.511 MeV`, which sets the absolute mass scale. All dimensionless ratios (e.g., `m_p/m_e`, mixing angles, coupling constants) are pure predictions from the E8 structure. The list of 19 constants includes 6 quark masses, 3 lepton masses, 3 neutrino mixing angles, 4 fundamental constants (α, m_p/m_e, α_s, sin²θ_W), Higgs mass, and Λ — all derived with zero additional freedom.
+**Response:** There is **exactly one free parameter**: `m_e = 0.511 MeV`, which sets the absolute mass scale. All dimensionless ratios (e.g., `m_p/m_e`, mixing angles, coupling constants) are pure predictions from the E8 structure. The list of 19 constants includes 6 quark masses, 4 lepton quantities (2 masses + 2 mass ratios), 3 neutrino mixing angles, 4 fundamental constants (α, m_p/m_e, α_s, sin²θ_W), Higgs mass, and Λ — all derived with zero additional freedom.
 
 ### 3. "Why E8? Why not some other group?"
 
@@ -26,7 +26,7 @@ Each step is uniquely forced by the previous one (e.g., Hurwitz theorem: only O(
 
 ### 6. "Can I reproduce this without the MCP server?"
 
-**Response:** Yes. All formulas and constants are explicitly given in `independent_verify.py` and this document. The MCP server is only needed for real‑time verification of root properties; the mathematical derivations stand on their own.
+**Response:** Yes. All formulas and constants are explicitly given in `independent_verify.py` (18 of the 19 predicted quantities — the two lepton-mass ratio rows are not computed by the script) and this document. The MCP server is only needed for real‑time verification of root properties; the mathematical derivations stand on their own.
 
 ---
 

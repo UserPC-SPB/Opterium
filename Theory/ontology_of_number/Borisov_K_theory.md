@@ -1657,12 +1657,14 @@ print(f"Global audit: {'PASSED — tension τ=0' if audit_universe(roots) else '
 #         Global audit: PASSED — tension τ=0
 ```
 
-The independent verification script (`independent_verify.py`) is available in the repository and computes all 19 predicted quantities against CODATA 2022 / PDG 2024 values.
+The independent verification script (`independent_verify.py`) is available in the repository and computes 18 of the 19 predicted quantities (all except the two lepton-mass ratios m_μ/m_e and m_τ/m_μ) against CODATA 2022 / PDG 2024 values.
 
 
 ---
 
 ## GeoFormer — Pure-Lookup Engine
+
+(status: not yet shipped — no GeoFormer source or binary in this tree)
 
 **GeoFormer** is a computational engine built on Opterium Mathematics (S/D/P coordinate system). It executes mathematical operations through a specialized coordinate transformation core — bypassing standard CPU arithmetic pipelines for deterministic, zero-float results.
 
@@ -1749,11 +1751,14 @@ The result is a **reproducible computation record** (a JSON certificate with
 per-route SHA-256 hashes and a closure verdict), not an axiom chain. Any third
 party can re-run the kernels offline and get bit-identical verdicts.
 
-```bash
-python software/witness_prover/prover_top.py --list
-python software/witness_prover/prover_top.py --cert T-e8-spectrum
-python software/witness_prover/prover_top.py --run-all          # writes certificates/*.cert.json
-python software/witness_prover/prover_top.py --run-all --no-engine   # offline, reproducible
+```text
+# Current workflow — witness_prover/ ships the self-contained cube_v5 build:
+#   cube.exe (local MCP server over stdio, 87 tools; Windows x64;
+#   first start generates cube_v5.bin next to the executable),
+#   launched from an MCP-capable client.
+# Usage: software/witness_prover/README.md (overview) and
+#        software/witness_prover/CUBE_REFERENCE.md (installation/CLI, sections 6–7;
+#        verification and witness-based workflows, sections 16–17).
 ```
 
 The optional native engine is used only to attach the engine's **live witness** as extra
@@ -1764,7 +1769,7 @@ Certified theorems currently include: the Pythagorean identity `τ=(x+y)²−4xy
 E8 240 roots = 112 D8 + 128 spinor with ‖r‖²=8; the dot spectrum
 `{−8:1,−4:56,0:126,+4:56,+8:1}`; exact decimals `0.1+0.2=0.3`; `3¹⁰⁰`;
 `(1+i)¹⁰⁰=−2⁵⁰` and `|3+4i|=5`; E8 tunnels `(0,6,31)` (2240 total); and the
-Doctor layer's countable invariants (14 channels, OK@≥10, closed@≥7).
+Doctor layer's countable invariants (6-channel closure check and 7-channel health vector as implemented in helpdoc.py, L741/L1218).
 
 See [software/witness_prover/README.md](../../software/witness_prover/README.md) for the full
 methodology and certificate format.

@@ -38,7 +38,7 @@ Ungrouped aggregates are one group of all matched records (reading of
 [SPEC.md 6.9.4](../SPEC.md#694-response), which is silent here): if
 `0 < matched_count < min_group_size`, the server MUST return `"values": {}` with
 `"suppressed_groups": 1`, `"partial": true`, and no `totals`, rather than a single-record
-average. `reference/adc/aggregate.py` already returns this shape; this RFC generalizes it to privacy.
+average. `reference/adc/aggregate.py` does not yet return this shape (to-be-implemented); this RFC defines it as the generalization to privacy.
 
 ### D3. Totals: recompute over visible groups, or omit
 When `suppressed_groups > 0`, exactly one of: recompute `totals` from the visible groups

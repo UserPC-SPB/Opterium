@@ -1,2 +1,2 @@
-﻿# toolfmt 3.1.3 for Windows (x86_64-pc-windows-gnu cross build), built from commit a07405f
+﻿# toolfmt 3.1.3 for Windows (x86_64-pc-windows-gnu cross build), built from commit c3c45713
 1b2225c575be982214bc3463ca0cc55752073a55f6dcc746900f4964299582f1  toolfmt.exe

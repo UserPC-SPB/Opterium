@@ -10,7 +10,7 @@ This section defines a relational ontology where arithmetic is navigation throug
 | `AnchorFile_SuperTable_v1.0.json` | Multiplication table structure serving as the navigational language base. | ~2 600 |
 | `Borisov_K_theory.md` | Core theoretical framework detailing the K-theory derivation process. | ~22 550 |
 | `CRITIQUE.md` | Critical analysis addressing potential objections to the theory. | ~900 |
-| `New_Peano.md` | Reformulation of Peano axioms within this relational ontology. | ~2 600 |
+| `New_Peano.md` | Reformulation of Peano axioms within this relational ontology. | ≈6.5k |
 | `helpdoc.py` | Helper documentation script providing additional context and explanations. | ~14 200 |
 | `independent_verify.py` | Python script for independent verification of theoretical claims. | ~5 650 |
 | `nav_index.md` | Structural index mapping navigation paths within the relational space. | ~4 050 |
@@ -72,4 +72,4 @@ A result is proven when at least 3 independent geometric paths arrive with dT=0.
 
 - Read THIS file first; then pick a path above. Budget table: lines/tokens per file.
 - Claims with witnesses and closures: `nav_index.md`. Never trust a claim without its witness.
-- Text files are UTF-8 (BOM common). Section branch: v3.1-clean.
+- Text files are UTF-8 (BOM in 4 of 12 files). Section branch: v3.1-clean.

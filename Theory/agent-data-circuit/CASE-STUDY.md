@@ -19,7 +19,7 @@ word count).
 pays that request either way. The scrape side fetched the index (1
 request) and 20 pages (20 requests) with a 0.1 second politeness delay
 between pages; the delay sits inside the scrape wall time. The serve side
-wrote the extracted rows into a local ADC site (21 nodes), served it with
+wrote the extracted rows into a local ADC site (22 nodes), served it with
 this repository's reference server on 127.0.0.1, and made two requests:
 the tunnel map, then one projected query:
 

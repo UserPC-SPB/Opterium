@@ -34,11 +34,11 @@ verdicts — including on a machine that has never seen the engine.
 | `T-intpow` | 3¹⁰⁰ = 515…001 (48 digits) | repeated squaring / bigint | exact integer pow |
 | `T-complex` | (1+i)¹⁰⁰ = −2⁵⁰, \|3+4i\|=5 | Gaussian squaring / 3-4-5 | exact integers |
 | `T-tunnel` | r_i+r_j+r_k=0, dots −4, side²=24, 2240 tunnels | witness (0,6,31) / full enum | identity audit |
-| `T-doctor` | 14 channels, OK@≥10, closed@≥7, fracture {C1_Txy,C2_Txz} | signature/gating | count inspection |
+| `T-doctor` | Doctor layer as implemented in helpdoc.py: 6-channel closure check (L741, C1–C6, CLOSED iff axis point) + 7-channel health vector (L1218, verdicts OK/WARN/QUARANTINE/ROLLBACK) | signature/gating | count inspection |
 
 ## Certificate format (v1)
 
-Each `certificates/*.cert.json` contains:
+Each `certificates/*.cert.json` contains: (status: no `certificates/` directory or certificate files exist in this tree — this format is descriptive only; the shipped workflow is the cube_v5 build, see `software/witness_prover/README.md` and `CUBE_REFERENCE.md`)
 
 * `schema`, `certificate`, `statement`, `claims` — human/machine statement;
 * `routes[]` — independent witness routes, each with `witness` (bool),
@@ -60,8 +60,12 @@ the harness refuses to certify what it cannot re-derive.
 is exact integer or `Fraction` arithmetic. The certificates are therefore
 deterministic, portable, and independently reproducible.
 
-```bash
-python software/witness_prover/prover_top.py --run-all --no-engine   # offline, reproducible
+```text
+# Current workflow (witness_prover/): the self-contained cube_v5 build —
+# run software/witness_prover/cube.exe (local MCP server over stdio, 87 tools)
+# from an MCP-capable client (first start generates cube_v5.bin).
+# Usage: software/witness_prover/README.md (overview) and
+#        software/witness_prover/CUBE_REFERENCE.md (installation/CLI, sections 6–7).
 ```
 
 > This tool implements Borisov's speculative geometry "Opterium". It is an

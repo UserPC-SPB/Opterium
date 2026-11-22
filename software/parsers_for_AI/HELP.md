@@ -7,7 +7,7 @@ Single portable exe, no dependencies. Strict exit codes, atomic publish, determi
 ## Commands (1.1): rules on the command line, project navigation, MCP
 
 Since 1.1 the same exe also answers short commands on stdout — no template file, no report to read back.
-Full built-in documentation with examples: `any_txt_parser help [overview|extract|rules|recon|navigation|mcp]`.
+Full built-in documentation with examples: `any_txt_parser help [overview|extract|rules|recon|navigation|mcp|reference]`.
 Navigation commands read only inside `--root` (default: the current folder), the MCP server only inside its
 root (`mcp --root DIR`); `..`, other absolute paths and links pointing outside are refused (since 1.3).
 
@@ -144,7 +144,7 @@ trim, empty kept, absent → no item; `attr:xml:lang`, root prefixes work). Afte
 XML with a DOCTYPE uses only its internal subset: external DTDs and entities are never loaded (`&nbsp;` from the
 XHTML DTD → file error `unknown entity reference`). A file is rejected before parsing (file error
 `XML DTD rejected: ...`) if its entities expand to more than 8 MiB, would make the parser copy more than 1 GiB of
-text, need more than 64 Mi entity lookups or compare more than 1 GiB of entity names, nest deeper than 10 levels,
+text, need more than 64 MiB entity lookups or compare more than 1 GiB of entity names, nest deeper than 10 levels,
 are recursive, or (used in content) contain unbalanced markup.
 XML nested deeper than 128 elements, counting elements that come from entities, is a per-file error (the JSON,
 YAML and TOML parsers stop at 127, 128 and 80). Markdown selection includes nested nodes in source order.

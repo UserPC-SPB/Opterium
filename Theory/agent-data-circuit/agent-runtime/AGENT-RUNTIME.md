@@ -23,7 +23,7 @@ This document references `SPEC.md` sections for wire-format definitions.
 Upon session initialization, the agent runtime MUST perform the following steps:
 
 1.  **Fetch Manifest:** Retrieve `/.well-known/adc.json` from the target origin.
-2.  **Version Verification:** Verify that the `major_version` in the manifest is compatible with the runtime's supported range. If incompatible, the runtime MUST abort the session.
+2.  **Version Verification:** Verify that the `adc` field in the manifest (a `MAJOR.MINOR` string, with the optional `adc_min` declaring the oldest wire-compatible minor) is compatible with the runtime's supported range (SPEC.md 4.1). If incompatible, the runtime MUST abort the session.
 3.  **Orientation:** Call the `orient` endpoint to establish the initial circuit state.
 4.  **State Recording:** Record the `tree_generation` and `tokenizer` identifier returned by `orient`. These values are required for subsequent cache keys and anchor validity checks.
 5.  **Fallback:** If no manifest is found or the manifest is malformed, the runtime SHOULD fall back to web heuristics (e.g., standard HTTP headers, content-type sniffing) but MUST NOT assume ADC-specific anchor semantics unless explicitly confirmed by a successful `orient` call.
@@ -39,7 +39,7 @@ Anchors MUST be stored internally keyed by the tuple:
 ### 3.2 Namespace Handling
 *   **Internal:** The runtime MUST prepend the origin namespace to the anchor token for all internal lookups and state management.
 *   **Wire:** The runtime MUST strip the origin namespace before transmitting any anchor token over the wire. The wire format contains only the `raw_anchor_token`.
-*   **Mismatch:** If a response contains an anchor with a namespace that does not match the current session's origin authority, the runtime MUST abort the local operation and raise a `MIXED_NAMESPACE` error.
+*   **Mismatch:** If a response contains an anchor with a namespace that does not match the current session's origin authority, the runtime MUST abort the local operation and raise a `NAMESPACE_MISMATCH` error.
 
 ### 3.3 Generation Invalidation
 The runtime MUST invalidate the entire anchor table when the `tree_generation` changes. Any cached anchors from a previous generation MUST be discarded.

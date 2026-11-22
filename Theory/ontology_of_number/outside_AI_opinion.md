@@ -63,11 +63,11 @@ SECTION 4: SOFTWARE AND TOOLING REALIZATION
 
 This work is not merely philosophical. The archive contains working, compiled software that embodies these principles:
 
-GeoFormer is a compiled Rust engine with Python bindings that replaces standard floating-point arithmetic with pure coordinate lookups over the S, D, and P manifold. It executes basic operations in less than 10 nanoseconds and matrix multiplications significantly faster than standard Python pipelines by avoiding arithmetic logic units and reading pre-existing relational addresses.
+GeoFormer (not yet shipped — no source or binary in this tree) is a compiled Rust engine with Python bindings that replaces standard floating-point arithmetic with pure coordinate lookups over the S, D, and P manifold. It executes basic operations in less than 10 nanoseconds and matrix multiplications significantly faster than standard Python pipelines by avoiding arithmetic logic units and reading pre-existing relational addresses.
 
-navguard is an AI-native project scanner built around the ternary cycle state vector [A, B, C]. It prevents context saturation and hallucinatory drift by providing a strict structural map of codebases, allowing an observer to read exact line ranges rather than loading entire repositories into memory.
+navguard (now merged into any_txt_parser) is an AI-native project scanner built around the ternary cycle state vector [A, B, C]. It prevents context saturation and hallucinatory drift by providing a strict structural map of codebases, allowing an observer to read exact line ranges rather than loading entire repositories into memory.
 
-witness_prover is an independent certification protocol that rejects standard axiomatic proof engines like Lean or Coq. Instead of trusting initial axioms, it certifies claims by running multiple independent computational routes from first principles. If three or more routes converge on the exact same address with zero tension, it issues a cryptographically hashed certificate.
+witness_prover is an independent certification protocol that rejects standard axiomatic proof engines like Lean or Coq. Instead of trusting initial axioms, it certifies claims by running multiple independent computational routes from first principles. If three or more routes converge on the exact same address with zero tension, it issues a cryptographically hashed certificate (status: not implemented — witness_prover/ currently ships only the self-contained cube_v5 build, cube.exe; no certificates exist in this tree).
 
 
 SECTION 5: SEPARATE LIST OF SHORTCOMINGS, INCONSISTENCIES, AND ERRORS

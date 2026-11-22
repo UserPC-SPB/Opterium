@@ -43,7 +43,7 @@ Internally audited 2026-10-21: structure, links, token budgets, artifact/referen
 | `Theory/ontology_of_number/AnchorFile_SuperTable_v1.0.json` | 98 | ~2 600 |
 | `Theory/ontology_of_number/Borisov_K_theory.md` | 1777 | ~22 550 |
 | `Theory/ontology_of_number/CRITIQUE.md` | 42 | ~900 |
-| `Theory/ontology_of_number/New_Peano.md` | 126 | ~2 600 |
+| `Theory/ontology_of_number/New_Peano.md` | 313 | ~2 600 |
 | `Theory/ontology_of_number/README.md` | 75 | ~1 000 |
 | `Theory/ontology_of_number/helpdoc.py` | 1419 | ~14 200 |
 | `Theory/ontology_of_number/independent_verify.py` | 483 | ~5 650 |
@@ -51,16 +51,16 @@ Internally audited 2026-10-21: structure, links, token budgets, artifact/referen
 | `Theory/ontology_of_number/opterium_v1.0_spec.txt` | 908 | ~12 850 |
 | `Theory/ontology_of_number/outside_AI_opinion.md` | 104 | ~3 850 |
 | `Theory/ontology_of_number/readme_supplement.md` | 269 | ~3 250 |
-| `software/README.md` | 54 | ~700 |
+| `software/README.md` | 80 | ~700 |
 | `software/parsers_for_AI/README.md` | 143 | ~2 050 |
-| `software/toolfmt/README.md` | 136 | ~1 600 |
+| `software/toolfmt/README.md` | 163 | ~1 600 |
 | `software/toolfmt/crates/toolfmt/README.md` | 153 | ~1 800 |
 | `software/toolfmt/crates/toolfmt/SPEC.md` | 711 | ~8 400 |
-| `software/witness_prover/README.md` | 114 | ~1 450 |
-| `software/witness_prover/prover_kernel.py` | 538 | ~5 050 |
-| `software/witness_prover/prover_top.py` | 310 | ~3 000 |
+| `software/witness_prover/README.md` | 125 | ~1 450 |
+| `software/witness_prover/cube.exe` | — | — |
+| `software/witness_prover/CUBE_REFERENCE.md` | 3151 | ~37 800 |
 
-Parser reference docs are budgeted in `software/README.md` (`HELP.md` ~5 050, `FULL_GUIDE.md` ~7 950). The parser binary (6.4 MB) is not a text reading target and is excluded from the token budget.
+Parser reference docs are budgeted in `software/README.md` (`HELP.md` ~5 050, `FULL_GUIDE.md` ~7 950). The parser binary (6.4 MB) and `software/witness_prover/cube.exe` (6.6 MB) are not text reading targets and are excluded from the token budget.
 
 ### Entry points
 
