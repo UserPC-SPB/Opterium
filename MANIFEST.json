@@ -1,0 +1,5523 @@
+{
+  "generated": "2026-11-22",
+  "branch": "v3.1-clean",
+  "totals": {
+    "files": 645,
+    "bytes": 23304348,
+    "approx_tokens": 979105
+  },
+  "zones": [
+    {
+      "name": "root",
+      "files": 3,
+      "bytes": 23780,
+      "approx_tokens": 5890,
+      "mode_totals": {
+        "safe": 2,
+        "structure_only": 0,
+        "skip": 1
+      }
+    },
+    {
+      "name": "software/toolfmt",
+      "files": 267,
+      "bytes": 6933990,
+      "approx_tokens": 346105,
+      "mode_totals": {
+        "safe": 129,
+        "structure_only": 5,
+        "skip": 133
+      }
+    },
+    {
+      "name": "software/parsers_for_AI",
+      "files": 200,
+      "bytes": 8146452,
+      "approx_tokens": 262670,
+      "mode_totals": {
+        "safe": 70,
+        "structure_only": 6,
+        "skip": 124
+      }
+    },
+    {
+      "name": "software/witness_prover",
+      "files": 3,
+      "bytes": 6810206,
+      "approx_tokens": 48955,
+      "mode_totals": {
+        "safe": 1,
+        "structure_only": 1,
+        "skip": 1
+      }
+    },
+    {
+      "name": "Theory/agent-data-circuit",
+      "files": 159,
+      "bytes": 1053165,
+      "approx_tokens": 235017,
+      "mode_totals": {
+        "safe": 144,
+        "structure_only": 2,
+        "skip": 13
+      }
+    },
+    {
+      "name": "Theory/ontology_of_number",
+      "files": 12,
+      "bytes": 331733,
+      "approx_tokens": 79214,
+      "mode_totals": {
+        "safe": 9,
+        "structure_only": 3,
+        "skip": 0
+      }
+    },
+    {
+      "name": "software",
+      "files": 1,
+      "bytes": 5022,
+      "approx_tokens": 1254,
+      "mode_totals": {
+        "safe": 1,
+        "structure_only": 0,
+        "skip": 0
+      }
+    }
+  ],
+  "files": [
+    {
+      "path": ".gitignore",
+      "zone": "root",
+      "lines": null,
+      "bytes": 62,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "git config"
+    },
+    {
+      "path": "ADAPTIVE_METHOD.md",
+      "zone": "root",
+      "lines": 273,
+      "bytes": 17112,
+      "approx_tokens": 4251,
+      "mode": "safe"
+    },
+    {
+      "path": "README.md",
+      "zone": "root",
+      "lines": 76,
+      "bytes": 6606,
+      "approx_tokens": 1639,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/.github/workflows/ci.yml",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 53,
+      "bytes": 1620,
+      "approx_tokens": 405,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/.gitignore",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 32,
+      "bytes": 363,
+      "approx_tokens": 91,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/AI-ENTRY.md",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 254,
+      "bytes": 10658,
+      "approx_tokens": 2665,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/CASE-STUDY.md",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 102,
+      "bytes": 5116,
+      "approx_tokens": 1279,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/CHANGELOG.md",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 31,
+      "bytes": 1159,
+      "approx_tokens": 290,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/CODE_OF_CONDUCT.md",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 80,
+      "bytes": 5226,
+      "approx_tokens": 1307,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/CONFORMANCE.md",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 153,
+      "bytes": 10215,
+      "approx_tokens": 2553,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/CONTRIBUTING.md",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 71,
+      "bytes": 3557,
+      "approx_tokens": 890,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/ECONOMICS.md",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 222,
+      "bytes": 9427,
+      "approx_tokens": 2357,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/LICENSE-CODE",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 202,
+      "bytes": 11560,
+      "approx_tokens": 2890,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/LICENSE-DOCS",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 396,
+      "bytes": 19053,
+      "approx_tokens": 4763,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/NON-GOALS.md",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 27,
+      "bytes": 4121,
+      "approx_tokens": 1031,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/RATIONALE.md",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 89,
+      "bytes": 11593,
+      "approx_tokens": 2899,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/README.md",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 288,
+      "bytes": 13538,
+      "approx_tokens": 3340,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/SECURITY.md",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 94,
+      "bytes": 9521,
+      "approx_tokens": 2380,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/SPEC.md",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 1182,
+      "bytes": 51460,
+      "approx_tokens": 12805,
+      "mode": "structure-only"
+    },
+    {
+      "path": "Theory/agent-data-circuit/agent-runtime/AGENT-RUNTIME.md",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 149,
+      "bytes": 8118,
+      "approx_tokens": 2030,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/README.md",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 47,
+      "bytes": 2554,
+      "approx_tokens": 639,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/ai.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 12,
+      "bytes": 317,
+      "approx_tokens": 80,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/generate.py",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 777,
+      "bytes": 28923,
+      "approx_tokens": 7231,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/manifest.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 101,
+      "bytes": 2129,
+      "approx_tokens": 533,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a1.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 149,
+      "bytes": 3052,
+      "approx_tokens": 763,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a10.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 194,
+      "bytes": 4241,
+      "approx_tokens": 1061,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a11.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 195,
+      "bytes": 4261,
+      "approx_tokens": 1066,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a12.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 194,
+      "bytes": 4233,
+      "approx_tokens": 1059,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a13.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 194,
+      "bytes": 4228,
+      "approx_tokens": 1057,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a14.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 195,
+      "bytes": 4257,
+      "approx_tokens": 1065,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a15.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 195,
+      "bytes": 4243,
+      "approx_tokens": 1061,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a16.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 194,
+      "bytes": 4215,
+      "approx_tokens": 1054,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a17.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 196,
+      "bytes": 4257,
+      "approx_tokens": 1065,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a18.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 195,
+      "bytes": 4257,
+      "approx_tokens": 1065,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a19.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 195,
+      "bytes": 4260,
+      "approx_tokens": 1065,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a2.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 142,
+      "bytes": 2913,
+      "approx_tokens": 729,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a20.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 193,
+      "bytes": 4215,
+      "approx_tokens": 1054,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a21.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 194,
+      "bytes": 4233,
+      "approx_tokens": 1059,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a22.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 193,
+      "bytes": 4230,
+      "approx_tokens": 1058,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a23.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 193,
+      "bytes": 4245,
+      "approx_tokens": 1062,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a24.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 194,
+      "bytes": 4229,
+      "approx_tokens": 1058,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a25.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 193,
+      "bytes": 4225,
+      "approx_tokens": 1057,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a26.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 193,
+      "bytes": 4244,
+      "approx_tokens": 1061,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a27.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 193,
+      "bytes": 4205,
+      "approx_tokens": 1052,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a28.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 142,
+      "bytes": 2913,
+      "approx_tokens": 729,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a29.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 149,
+      "bytes": 3104,
+      "approx_tokens": 776,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a3.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 496,
+      "bytes": 12394,
+      "approx_tokens": 3099,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a30.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 916,
+      "bytes": 23800,
+      "approx_tokens": 5950,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a31.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 196,
+      "bytes": 4219,
+      "approx_tokens": 1055,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a32.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 196,
+      "bytes": 4224,
+      "approx_tokens": 1056,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a33.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 199,
+      "bytes": 4289,
+      "approx_tokens": 1073,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a34.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 197,
+      "bytes": 4245,
+      "approx_tokens": 1062,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a35.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 198,
+      "bytes": 4274,
+      "approx_tokens": 1069,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a36.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 193,
+      "bytes": 4189,
+      "approx_tokens": 1048,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a37.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 192,
+      "bytes": 4173,
+      "approx_tokens": 1044,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a38.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 201,
+      "bytes": 4344,
+      "approx_tokens": 1086,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a39.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 196,
+      "bytes": 4215,
+      "approx_tokens": 1054,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a4.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 194,
+      "bytes": 4219,
+      "approx_tokens": 1055,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a40.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 197,
+      "bytes": 4254,
+      "approx_tokens": 1064,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a41.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 199,
+      "bytes": 4300,
+      "approx_tokens": 1075,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a42.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 199,
+      "bytes": 4286,
+      "approx_tokens": 1072,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a43.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 193,
+      "bytes": 4190,
+      "approx_tokens": 1048,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a44.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 192,
+      "bytes": 4166,
+      "approx_tokens": 1042,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a45.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 193,
+      "bytes": 4197,
+      "approx_tokens": 1050,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a46.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 192,
+      "bytes": 4167,
+      "approx_tokens": 1042,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a47.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 197,
+      "bytes": 4265,
+      "approx_tokens": 1067,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a48.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 199,
+      "bytes": 4284,
+      "approx_tokens": 1071,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a49.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 198,
+      "bytes": 4293,
+      "approx_tokens": 1074,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a5.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 195,
+      "bytes": 4248,
+      "approx_tokens": 1062,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a50.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 200,
+      "bytes": 4338,
+      "approx_tokens": 1085,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a51.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 199,
+      "bytes": 4280,
+      "approx_tokens": 1070,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a52.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 198,
+      "bytes": 4256,
+      "approx_tokens": 1064,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a53.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 201,
+      "bytes": 4328,
+      "approx_tokens": 1082,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a54.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 199,
+      "bytes": 4271,
+      "approx_tokens": 1068,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a55.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 199,
+      "bytes": 4290,
+      "approx_tokens": 1073,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a56.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 201,
+      "bytes": 4326,
+      "approx_tokens": 1082,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a57.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 200,
+      "bytes": 4299,
+      "approx_tokens": 1075,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a58.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 198,
+      "bytes": 4261,
+      "approx_tokens": 1066,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a59.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 199,
+      "bytes": 4285,
+      "approx_tokens": 1072,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a6.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 193,
+      "bytes": 4205,
+      "approx_tokens": 1052,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a60.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 196,
+      "bytes": 4216,
+      "approx_tokens": 1054,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a61.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 199,
+      "bytes": 4286,
+      "approx_tokens": 1072,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a62.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 200,
+      "bytes": 4311,
+      "approx_tokens": 1078,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a63.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 198,
+      "bytes": 4276,
+      "approx_tokens": 1069,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a64.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 192,
+      "bytes": 4156,
+      "approx_tokens": 1039,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a65.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 192,
+      "bytes": 4158,
+      "approx_tokens": 1040,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a66.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 194,
+      "bytes": 4200,
+      "approx_tokens": 1050,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a67.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 199,
+      "bytes": 4290,
+      "approx_tokens": 1073,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a68.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 198,
+      "bytes": 4304,
+      "approx_tokens": 1076,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a69.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 200,
+      "bytes": 4304,
+      "approx_tokens": 1076,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a7.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 195,
+      "bytes": 4250,
+      "approx_tokens": 1063,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a70.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 198,
+      "bytes": 4248,
+      "approx_tokens": 1062,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a71.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 198,
+      "bytes": 4263,
+      "approx_tokens": 1066,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a72.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 199,
+      "bytes": 4278,
+      "approx_tokens": 1070,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a73.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 198,
+      "bytes": 4257,
+      "approx_tokens": 1065,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a74.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 198,
+      "bytes": 4263,
+      "approx_tokens": 1066,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a75.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 197,
+      "bytes": 4263,
+      "approx_tokens": 1066,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a76.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 198,
+      "bytes": 4266,
+      "approx_tokens": 1067,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a77.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 197,
+      "bytes": 4249,
+      "approx_tokens": 1063,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a78.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 199,
+      "bytes": 4287,
+      "approx_tokens": 1072,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a79.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 376,
+      "bytes": 9258,
+      "approx_tokens": 2315,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a8.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 193,
+      "bytes": 4225,
+      "approx_tokens": 1057,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a80.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 196,
+      "bytes": 4241,
+      "approx_tokens": 1061,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a81.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 196,
+      "bytes": 4239,
+      "approx_tokens": 1060,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a82.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 198,
+      "bytes": 4294,
+      "approx_tokens": 1074,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a83.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 197,
+      "bytes": 4264,
+      "approx_tokens": 1066,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a84.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 197,
+      "bytes": 4258,
+      "approx_tokens": 1065,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a85.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 196,
+      "bytes": 4237,
+      "approx_tokens": 1060,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a86.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 196,
+      "bytes": 4229,
+      "approx_tokens": 1058,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a87.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 195,
+      "bytes": 4191,
+      "approx_tokens": 1048,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a88.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 196,
+      "bytes": 4216,
+      "approx_tokens": 1054,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a89.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 195,
+      "bytes": 4214,
+      "approx_tokens": 1054,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a9.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 194,
+      "bytes": 4246,
+      "approx_tokens": 1062,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a90.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 196,
+      "bytes": 4236,
+      "approx_tokens": 1059,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a91.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 197,
+      "bytes": 4235,
+      "approx_tokens": 1059,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a92.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 195,
+      "bytes": 4205,
+      "approx_tokens": 1052,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a93.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 197,
+      "bytes": 4243,
+      "approx_tokens": 1061,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a94.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 197,
+      "bytes": 4259,
+      "approx_tokens": 1065,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/nodes/a95.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 196,
+      "bytes": 4244,
+      "approx_tokens": 1061,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/examples/ecommerce/tree.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 772,
+      "bytes": 22970,
+      "approx_tokens": 5743,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/pytest.ini",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 6,
+      "bytes": 116,
+      "approx_tokens": 29,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/reference/adc/__init__.py",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 14,
+      "bytes": 488,
+      "approx_tokens": 122,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/reference/adc/aggregate.py",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 511,
+      "bytes": 17943,
+      "approx_tokens": 4486,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/reference/adc/anchors.py",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 304,
+      "bytes": 10908,
+      "approx_tokens": 2727,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/reference/adc/budget.py",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 162,
+      "bytes": 5988,
+      "approx_tokens": 1497,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/reference/adc/errors.py",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 103,
+      "bytes": 4390,
+      "approx_tokens": 1098,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/reference/adc/filters.py",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 488,
+      "bytes": 16647,
+      "approx_tokens": 4162,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/reference/adc/pathing.py",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 75,
+      "bytes": 2419,
+      "approx_tokens": 605,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/reference/adc/server.py",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 1426,
+      "bytes": 56479,
+      "approx_tokens": 14120,
+      "mode": "structure-only"
+    },
+    {
+      "path": "Theory/agent-data-circuit/reference/adc/site.py",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 596,
+      "bytes": 23886,
+      "approx_tokens": 5972,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/reference/adc/tokens.py",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 64,
+      "bytes": 2267,
+      "approx_tokens": 567,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/reference/mcp-tools/README.md",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 46,
+      "bytes": 2234,
+      "approx_tokens": 558,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/reference/mcp-tools/adc_mcp.py",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 891,
+      "bytes": 32129,
+      "approx_tokens": 8033,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/reference/validator/adc.py",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 128,
+      "bytes": 4380,
+      "approx_tokens": 1095,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/rfcs/0001-stateless-anchors.md",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 164,
+      "bytes": 10754,
+      "approx_tokens": 2689,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/rfcs/0002-token-accounting.md",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 153,
+      "bytes": 10283,
+      "approx_tokens": 2571,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/rfcs/0003-k-anonymous-aggregates.md",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 160,
+      "bytes": 11047,
+      "approx_tokens": 2762,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/rfcs/0004-degradation-contract.md",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 160,
+      "bytes": 11598,
+      "approx_tokens": 2900,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/schemas/v0.1/aggregate-request.schema.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 168,
+      "bytes": 5207,
+      "approx_tokens": 1302,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/schemas/v0.1/aggregate-response.schema.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 91,
+      "bytes": 3079,
+      "approx_tokens": 770,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/schemas/v0.1/block.schema.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 74,
+      "bytes": 2431,
+      "approx_tokens": 608,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/schemas/v0.1/fetch-request.schema.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 132,
+      "bytes": 4158,
+      "approx_tokens": 1040,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/schemas/v0.1/fetch-response.schema.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 84,
+      "bytes": 2790,
+      "approx_tokens": 698,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/schemas/v0.1/index.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 13,
+      "bytes": 1014,
+      "approx_tokens": 254,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/schemas/v0.1/manifest.schema.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 132,
+      "bytes": 4634,
+      "approx_tokens": 1159,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/schemas/v0.1/passport.schema.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 140,
+      "bytes": 4597,
+      "approx_tokens": 1150,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/schemas/v0.1/problem.schema.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 42,
+      "bytes": 3058,
+      "approx_tokens": 765,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/schemas/v0.1/tree.schema.json",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 38,
+      "bytes": 1352,
+      "approx_tokens": 338,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/agent-data-circuit/tests/conftest.py",
+      "zone": "Theory/agent-data-circuit",
+      "lines": null,
+      "bytes": 6917,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "Theory/agent-data-circuit/tests/test_aggregate.py",
+      "zone": "Theory/agent-data-circuit",
+      "lines": null,
+      "bytes": 9146,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "Theory/agent-data-circuit/tests/test_ai_entry.py",
+      "zone": "Theory/agent-data-circuit",
+      "lines": null,
+      "bytes": 7852,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "Theory/agent-data-circuit/tests/test_anchors.py",
+      "zone": "Theory/agent-data-circuit",
+      "lines": null,
+      "bytes": 9257,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "Theory/agent-data-circuit/tests/test_budget.py",
+      "zone": "Theory/agent-data-circuit",
+      "lines": null,
+      "bytes": 5134,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "Theory/agent-data-circuit/tests/test_degradation.py",
+      "zone": "Theory/agent-data-circuit",
+      "lines": null,
+      "bytes": 6237,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "Theory/agent-data-circuit/tests/test_filters.py",
+      "zone": "Theory/agent-data-circuit",
+      "lines": null,
+      "bytes": 10846,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "Theory/agent-data-circuit/tests/test_mcp_bridge.py",
+      "zone": "Theory/agent-data-circuit",
+      "lines": null,
+      "bytes": 7788,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "Theory/agent-data-circuit/tests/test_pathing.py",
+      "zone": "Theory/agent-data-circuit",
+      "lines": null,
+      "bytes": 3185,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "Theory/agent-data-circuit/tests/test_server_endpoints.py",
+      "zone": "Theory/agent-data-circuit",
+      "lines": null,
+      "bytes": 27170,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "Theory/agent-data-circuit/tests/test_site_validation.py",
+      "zone": "Theory/agent-data-circuit",
+      "lines": null,
+      "bytes": 6463,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "Theory/agent-data-circuit/tests/test_validation_order.py",
+      "zone": "Theory/agent-data-circuit",
+      "lines": null,
+      "bytes": 8173,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "Theory/agent-data-circuit/tests/test_validator_cli.py",
+      "zone": "Theory/agent-data-circuit",
+      "lines": null,
+      "bytes": 4719,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "Theory/agent-data-circuit/tools/measure_case_study.py",
+      "zone": "Theory/agent-data-circuit",
+      "lines": 575,
+      "bytes": 19511,
+      "approx_tokens": 4878,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/ontology_of_number/APPENDIX_MATH.md",
+      "zone": "Theory/ontology_of_number",
+      "lines": 30,
+      "bytes": 1417,
+      "approx_tokens": 348,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/ontology_of_number/AnchorFile_SuperTable_v1.0.json",
+      "zone": "Theory/ontology_of_number",
+      "lines": 98,
+      "bytes": 10518,
+      "approx_tokens": 2630,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/ontology_of_number/Borisov_K_theory.md",
+      "zone": "Theory/ontology_of_number",
+      "lines": 1782,
+      "bytes": 100740,
+      "approx_tokens": 23068,
+      "mode": "structure-only"
+    },
+    {
+      "path": "Theory/ontology_of_number/CRITIQUE.md",
+      "zone": "Theory/ontology_of_number",
+      "lines": 42,
+      "bytes": 3750,
+      "approx_tokens": 921,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/ontology_of_number/New_Peano.md",
+      "zone": "Theory/ontology_of_number",
+      "lines": 317,
+      "bytes": 25899,
+      "approx_tokens": 6454,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/ontology_of_number/README.md",
+      "zone": "Theory/ontology_of_number",
+      "lines": 75,
+      "bytes": 4045,
+      "approx_tokens": 1003,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/ontology_of_number/helpdoc.py",
+      "zone": "Theory/ontology_of_number",
+      "lines": 1419,
+      "bytes": 61510,
+      "approx_tokens": 14589,
+      "mode": "structure-only"
+    },
+    {
+      "path": "Theory/ontology_of_number/independent_verify.py",
+      "zone": "Theory/ontology_of_number",
+      "lines": 483,
+      "bytes": 23219,
+      "approx_tokens": 5771,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/ontology_of_number/nav_index.md",
+      "zone": "Theory/ontology_of_number",
+      "lines": 345,
+      "bytes": 18369,
+      "approx_tokens": 4113,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/ontology_of_number/opterium_v1.0_spec.txt",
+      "zone": "Theory/ontology_of_number",
+      "lines": 908,
+      "bytes": 53008,
+      "approx_tokens": 13092,
+      "mode": "structure-only"
+    },
+    {
+      "path": "Theory/ontology_of_number/outside_AI_opinion.md",
+      "zone": "Theory/ontology_of_number",
+      "lines": 104,
+      "bytes": 15796,
+      "approx_tokens": 3945,
+      "mode": "safe"
+    },
+    {
+      "path": "Theory/ontology_of_number/readme_supplement.md",
+      "zone": "Theory/ontology_of_number",
+      "lines": 269,
+      "bytes": 13462,
+      "approx_tokens": 3280,
+      "mode": "safe"
+    },
+    {
+      "path": "software/README.md",
+      "zone": "software",
+      "lines": 79,
+      "bytes": 5022,
+      "approx_tokens": 1254,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/.cargo/config.toml",
+      "zone": "software/parsers_for_AI",
+      "lines": 7,
+      "bytes": 469,
+      "approx_tokens": 118,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/.gitattributes",
+      "zone": "software/parsers_for_AI",
+      "lines": 14,
+      "bytes": 673,
+      "approx_tokens": 169,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/.gitignore",
+      "zone": "software/parsers_for_AI",
+      "lines": 13,
+      "bytes": 231,
+      "approx_tokens": 58,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/CHANGELOG.md",
+      "zone": "software/parsers_for_AI",
+      "lines": 575,
+      "bytes": 43634,
+      "approx_tokens": 10827,
+      "mode": "structure-only"
+    },
+    {
+      "path": "software/parsers_for_AI/Cargo.lock",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 39619,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "lockfile"
+    },
+    {
+      "path": "software/parsers_for_AI/Cargo.toml",
+      "zone": "software/parsers_for_AI",
+      "lines": 43,
+      "bytes": 1152,
+      "approx_tokens": 288,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/FULL_GUIDE.md",
+      "zone": "software/parsers_for_AI",
+      "lines": 626,
+      "bytes": 31913,
+      "approx_tokens": 7934,
+      "mode": "structure-only",
+      "note": "large reference doc (named anchor)"
+    },
+    {
+      "path": "software/parsers_for_AI/HELP.md",
+      "zone": "software/parsers_for_AI",
+      "lines": 236,
+      "bytes": 20290,
+      "approx_tokens": 5046,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/LICENSE",
+      "zone": "software/parsers_for_AI",
+      "lines": 21,
+      "bytes": 1083,
+      "approx_tokens": 271,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/README.md",
+      "zone": "software/parsers_for_AI",
+      "lines": 143,
+      "bytes": 8470,
+      "approx_tokens": 2113,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/any_txt_parser.exe",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 6443008,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "binary"
+    },
+    {
+      "path": "software/parsers_for_AI/build_release.bat",
+      "zone": "software/parsers_for_AI",
+      "lines": 9,
+      "bytes": 544,
+      "approx_tokens": 136,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/build_test.bat",
+      "zone": "software/parsers_for_AI",
+      "lines": 4,
+      "bytes": 167,
+      "approx_tokens": 42,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/crates/navguard/Cargo.toml",
+      "zone": "software/parsers_for_AI",
+      "lines": 21,
+      "bytes": 481,
+      "approx_tokens": 121,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/crates/navguard/HELP.md",
+      "zone": "software/parsers_for_AI",
+      "lines": 59,
+      "bytes": 3266,
+      "approx_tokens": 816,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/crates/navguard/src/api.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 1026,
+      "bytes": 36110,
+      "approx_tokens": 9024,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/crates/navguard/src/api/tests.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 671,
+      "bytes": 22498,
+      "approx_tokens": 5610,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/crates/navguard/src/build_rs.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 218,
+      "bytes": 7493,
+      "approx_tokens": 1871,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/crates/navguard/src/cache.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 885,
+      "bytes": 28909,
+      "approx_tokens": 7228,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/crates/navguard/src/cli.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 971,
+      "bytes": 35588,
+      "approx_tokens": 8891,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/crates/navguard/src/config.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 97,
+      "bytes": 3012,
+      "approx_tokens": 753,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/crates/navguard/src/lib.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 24,
+      "bytes": 687,
+      "approx_tokens": 172,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/crates/navguard/src/navigator.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 576,
+      "bytes": 21596,
+      "approx_tokens": 5354,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/crates/navguard/src/parser.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 297,
+      "bytes": 9431,
+      "approx_tokens": 2358,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/crates/navguard/src/parser/brace.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 1027,
+      "bytes": 33236,
+      "approx_tokens": 8309,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/crates/navguard/src/parser/indent.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 116,
+      "bytes": 3911,
+      "approx_tokens": 978,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/crates/navguard/src/parser/lexer.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 531,
+      "bytes": 17391,
+      "approx_tokens": 4348,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/crates/navguard/src/parser/tests.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 688,
+      "bytes": 19065,
+      "approx_tokens": 4767,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/crates/navguard/src/paths.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 162,
+      "bytes": 5861,
+      "approx_tokens": 1466,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/crates/navguard/src/responder.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 223,
+      "bytes": 6771,
+      "approx_tokens": 1693,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/crates/navguard/src/scanner.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 230,
+      "bytes": 8190,
+      "approx_tokens": 2048,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/crates/navguard/src/step.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 351,
+      "bytes": 11344,
+      "approx_tokens": 2836,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/crates/navguard/src/text.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 131,
+      "bytes": 4295,
+      "approx_tokens": 1071,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/crates/navguard/src/triangle.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 498,
+      "bytes": 16546,
+      "approx_tokens": 4137,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/crates/navguard/src/validate.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 71,
+      "bytes": 2194,
+      "approx_tokens": 549,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/crates/navguard/src/watch.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 130,
+      "bytes": 4398,
+      "approx_tokens": 1100,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/crates/navguard/src/write.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 51,
+      "bytes": 1629,
+      "approx_tokens": 408,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/docs/help/extract.md",
+      "zone": "software/parsers_for_AI",
+      "lines": 116,
+      "bytes": 6283,
+      "approx_tokens": 1570,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/docs/help/mcp.md",
+      "zone": "software/parsers_for_AI",
+      "lines": 93,
+      "bytes": 4671,
+      "approx_tokens": 1164,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/docs/help/navigation.md",
+      "zone": "software/parsers_for_AI",
+      "lines": 174,
+      "bytes": 8574,
+      "approx_tokens": 2132,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/docs/help/overview.md",
+      "zone": "software/parsers_for_AI",
+      "lines": 100,
+      "bytes": 5925,
+      "approx_tokens": 1477,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/docs/help/recon.md",
+      "zone": "software/parsers_for_AI",
+      "lines": 54,
+      "bytes": 2072,
+      "approx_tokens": 518,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/docs/help/rules.md",
+      "zone": "software/parsers_for_AI",
+      "lines": 83,
+      "bytes": 3783,
+      "approx_tokens": 942,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/examples/errors.yml",
+      "zone": "software/parsers_for_AI",
+      "lines": 18,
+      "bytes": 289,
+      "approx_tokens": 73,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/examples/example.log",
+      "zone": "software/parsers_for_AI",
+      "lines": 4,
+      "bytes": 101,
+      "approx_tokens": 26,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/rust-toolchain.toml",
+      "zone": "software/parsers_for_AI",
+      "lines": 7,
+      "bytes": 295,
+      "approx_tokens": 74,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/scripts/release.bat",
+      "zone": "software/parsers_for_AI",
+      "lines": 13,
+      "bytes": 729,
+      "approx_tokens": 183,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/scripts/release.ps1",
+      "zone": "software/parsers_for_AI",
+      "lines": 699,
+      "bytes": 32246,
+      "approx_tokens": 8062,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/src/adapters/html.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 862,
+      "bytes": 31568,
+      "approx_tokens": 7891,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/src/adapters/json.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 80,
+      "bytes": 2210,
+      "approx_tokens": 553,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/src/adapters/markdown.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 384,
+      "bytes": 12754,
+      "approx_tokens": 3189,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/src/adapters/mod.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 319,
+      "bytes": 11380,
+      "approx_tokens": 2845,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/src/adapters/path_selector.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 218,
+      "bytes": 8045,
+      "approx_tokens": 2012,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/src/adapters/text.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 222,
+      "bytes": 7357,
+      "approx_tokens": 1840,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/src/adapters/toml.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 84,
+      "bytes": 2471,
+      "approx_tokens": 618,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/src/adapters/xml.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 186,
+      "bytes": 6704,
+      "approx_tokens": 1676,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/src/adapters/xml_dtd.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 1136,
+      "bytes": 44340,
+      "approx_tokens": 11085,
+      "mode": "structure-only"
+    },
+    {
+      "path": "software/parsers_for_AI/src/adapters/yaml.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 566,
+      "bytes": 19871,
+      "approx_tokens": 4968,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/src/api.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 2007,
+      "bytes": 75120,
+      "approx_tokens": 18777,
+      "mode": "structure-only"
+    },
+    {
+      "path": "software/parsers_for_AI/src/collect.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 655,
+      "bytes": 22013,
+      "approx_tokens": 5503,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/src/commands.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 316,
+      "bytes": 11722,
+      "approx_tokens": 2931,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/src/confine.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 119,
+      "bytes": 4303,
+      "approx_tokens": 1076,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/src/discovery.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 671,
+      "bytes": 23970,
+      "approx_tokens": 5992,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/src/help.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 88,
+      "bytes": 2879,
+      "approx_tokens": 720,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/src/jsonpath.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 1230,
+      "bytes": 43977,
+      "approx_tokens": 10992,
+      "mode": "structure-only"
+    },
+    {
+      "path": "software/parsers_for_AI/src/lib.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 21,
+      "bytes": 360,
+      "approx_tokens": 90,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/src/limits.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 115,
+      "bytes": 3072,
+      "approx_tokens": 768,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/src/main.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 189,
+      "bytes": 5728,
+      "approx_tokens": 1432,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/src/materialize.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 525,
+      "bytes": 18899,
+      "approx_tokens": 4725,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/src/mcp.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 463,
+      "bytes": 18201,
+      "approx_tokens": 4551,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/src/navigation.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 322,
+      "bytes": 9388,
+      "approx_tokens": 2347,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/src/publish.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 149,
+      "bytes": 4653,
+      "approx_tokens": 1161,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/src/render.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 792,
+      "bytes": 29167,
+      "approx_tokens": 7288,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/src/run.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 769,
+      "bytes": 27192,
+      "approx_tokens": 6798,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/src/template.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 1713,
+      "bytes": 55853,
+      "approx_tokens": 13956,
+      "mode": "structure-only"
+    },
+    {
+      "path": "software/parsers_for_AI/src/tools.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 628,
+      "bytes": 27140,
+      "approx_tokens": 6785,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/src/transform.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 449,
+      "bytes": 14561,
+      "approx_tokens": 3624,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/src/xpath.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": 863,
+      "bytes": 29382,
+      "approx_tokens": 7346,
+      "mode": "safe"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/api.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 59702,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/fuzz.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 114423,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/fuzz_regressions.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 8306,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/golden.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 19044,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/known_limits.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 21173,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/navigator_state.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 10809,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/one_exe.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 18658,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/regressions.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 17874,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/root_bounds.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 12470,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 25189,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/absolute_paths/args.txt",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 121,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/absolute_paths/expected.md",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 3554,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/absolute_paths/expected_exit.txt",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 2,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/absolute_paths/sources/nested/orders.json",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 90,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/absolute_paths/sources/notes.txt",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 35,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/absolute_paths/template.yml",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 592,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/all_files_fail/expected.md",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 3051,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/all_files_fail/expected_exit.txt",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 2,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/all_files_fail/sources/latin1.json",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 13,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/all_files_fail/sources/mismatched.xml",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 27,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/all_files_fail/sources/truncated.json",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 12,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/all_files_fail/template.yml",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 451,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/anchor_text/expected.md",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 5398,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/anchor_text/expected_exit.txt",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 2,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/anchor_text/sources/comments.json",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 121,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/anchor_text/sources/forged.txt",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 164,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/anchor_text/template.yml",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 931,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/cli_format_override/args.txt",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 64,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/cli_format_override/expected.md",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 3580,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/cli_format_override/expected_exit.txt",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 2,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/cli_format_override/sources/alert.yaml",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 41,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/cli_format_override/sources/event.json",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 43,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/cli_format_override/template.yml",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 424,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/dedup_sort/expected.md",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 5992,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/dedup_sort/expected_exit.txt",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 2,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/dedup_sort/sources/a_server.log",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 149,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/dedup_sort/sources/b_worker.log",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 83,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/dedup_sort/template.yml",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 579,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/hash_glob_input/args.txt",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 24,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/hash_glob_input/expected.md",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 3111,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/hash_glob_input/expected_exit.txt",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 2,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/hash_glob_input/sources/a_plain.txt",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 31,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/hash_glob_input/sources/b_bom.txt",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 27,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/hash_glob_input/sources/c_skipped.md",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 30,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/hash_glob_input/template.yml",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 222,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/html_extract_modes/expected.md",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 8154,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/html_extract_modes/expected_exit.txt",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 2,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/html_extract_modes/sources/product.html",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 1100,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/html_extract_modes/template.yml",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 877,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/json_jsonpath_filters/expected.md",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 6346,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/json_jsonpath_filters/expected_exit.txt",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 2,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/json_jsonpath_filters/sources/orders.json",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 1239,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/json_jsonpath_filters/template.yml",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 898,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/markdown_nodes/expected.md",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 10106,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/markdown_nodes/expected_exit.txt",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 2,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/markdown_nodes/sources/README.md",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 763,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/markdown_nodes/template.yml",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 859,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/mixed_when_format/expected.md",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 8023,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/mixed_when_format/expected_exit.txt",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 2,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/mixed_when_format/sources/Cargo.toml",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 46,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/mixed_when_format/sources/build.log",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 26,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/mixed_when_format/sources/config/app.yaml",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 37,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/mixed_when_format/sources/config/service.conf",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 21,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/mixed_when_format/sources/docs/guide.md",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 27,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/mixed_when_format/sources/docs/index.html",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 89,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/mixed_when_format/sources/manifest",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 25,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/mixed_when_format/sources/modules.xml",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 64,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/mixed_when_format/sources/package.json",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 38,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/mixed_when_format/template.yml",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 905,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/no_matches_not_applicable/expected.md",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 5647,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/no_matches_not_applicable/expected_exit.txt",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 2,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/no_matches_not_applicable/sources/notes.txt",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 19,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/no_matches_not_applicable/sources/users.json",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 48,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/no_matches_not_applicable/template.yml",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 469,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/partial_unparsable/expected.md",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 3243,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/partial_unparsable/expected_exit.txt",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 2,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/partial_unparsable/sources/a_users.json",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 81,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/partial_unparsable/sources/b_broken.json",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 82,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/partial_unparsable/sources/c_users.json",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 46,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/partial_unparsable/template.yml",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 265,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/split_hard_line/args.txt",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 22,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/split_hard_line/expected.md",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 7205,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/split_hard_line/expected_exit.txt",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 2,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/split_hard_line/sources/one_line.txt",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 2710,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/split_hard_line/template.yml",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 1021,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/split_unicode_items/args.txt",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 22,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/split_unicode_items/expected.md",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 7408,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/split_unicode_items/expected_exit.txt",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 2,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/split_unicode_items/sources/release_notes.txt",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 1182,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/split_unicode_items/template.yml",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 475,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/text_logs_context/expected.md",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 10294,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/text_logs_context/expected_exit.txt",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 2,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/text_logs_context/sources/app.log",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 427,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/text_logs_context/sources/classic_mac.log",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 147,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/text_logs_context/sources/windows.log",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 155,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/text_logs_context/template.yml",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 690,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/toml_tables/expected.md",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 6856,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/toml_tables/expected_exit.txt",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 2,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/toml_tables/sources/service.toml",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 404,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/toml_tables/template.yml",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 933,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/truncation_limits/expected.md",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 6296,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/truncation_limits/expected_exit.txt",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 2,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/truncation_limits/sources/tickets.json",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 1254,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/truncation_limits/template.yml",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 745,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/xml_namespaces_dtd/expected.md",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 7975,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/xml_namespaces_dtd/expected_exit.txt",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 2,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/xml_namespaces_dtd/sources/catalog.xml",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 842,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/xml_namespaces_dtd/template.yml",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 1199,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/yaml_multidoc_merge/expected.md",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 5671,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/yaml_multidoc_merge/expected_exit.txt",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 2,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/yaml_multidoc_merge/sources/manifest.yaml",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 667,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/snapshots/yaml_multidoc_merge/template.yml",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 646,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/stabilization.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 15159,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/support/mod.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 15698,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/tier2_effective.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 21606,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/tier2_html.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 8048,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/tier2_jsonpath.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 10286,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/tier2_release.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 32598,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/tier2_status.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 27554,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/tier2_unescape.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 2812,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/tier2_xml.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 17055,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/parsers_for_AI/tests/tier2_yaml.rs",
+      "zone": "software/parsers_for_AI",
+      "lines": null,
+      "bytes": 9798,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/.cargo/config.toml",
+      "zone": "software/toolfmt",
+      "lines": 7,
+      "bytes": 469,
+      "approx_tokens": 118,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/.gitattributes",
+      "zone": "software/toolfmt",
+      "lines": 14,
+      "bytes": 673,
+      "approx_tokens": 169,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/.gitignore",
+      "zone": "software/toolfmt",
+      "lines": 13,
+      "bytes": 231,
+      "approx_tokens": 58,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/Cargo.lock",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 39758,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "lockfile"
+    },
+    {
+      "path": "software/toolfmt/Cargo.toml",
+      "zone": "software/toolfmt",
+      "lines": 43,
+      "bytes": 1170,
+      "approx_tokens": 293,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/HELP.md",
+      "zone": "software/toolfmt",
+      "lines": 239,
+      "bytes": 20398,
+      "approx_tokens": 5073,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/LICENSE",
+      "zone": "software/toolfmt",
+      "lines": 21,
+      "bytes": 1083,
+      "approx_tokens": 271,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/README.md",
+      "zone": "software/toolfmt",
+      "lines": 165,
+      "bytes": 9736,
+      "approx_tokens": 2429,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/SHA256SUMS.txt",
+      "zone": "software/toolfmt",
+      "lines": 2,
+      "bytes": 173,
+      "approx_tokens": 43,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/build_release.bat",
+      "zone": "software/toolfmt",
+      "lines": 9,
+      "bytes": 544,
+      "approx_tokens": 136,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/build_test.bat",
+      "zone": "software/toolfmt",
+      "lines": 4,
+      "bytes": 167,
+      "approx_tokens": 42,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/navguard/Cargo.toml",
+      "zone": "software/toolfmt",
+      "lines": 21,
+      "bytes": 481,
+      "approx_tokens": 121,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/navguard/HELP.md",
+      "zone": "software/toolfmt",
+      "lines": 59,
+      "bytes": 3266,
+      "approx_tokens": 816,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/navguard/src/api.rs",
+      "zone": "software/toolfmt",
+      "lines": 1049,
+      "bytes": 37206,
+      "approx_tokens": 9298,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/navguard/src/api/tests.rs",
+      "zone": "software/toolfmt",
+      "lines": 707,
+      "bytes": 24418,
+      "approx_tokens": 6090,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/navguard/src/build_rs.rs",
+      "zone": "software/toolfmt",
+      "lines": 218,
+      "bytes": 7493,
+      "approx_tokens": 1871,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/navguard/src/cache.rs",
+      "zone": "software/toolfmt",
+      "lines": 885,
+      "bytes": 29105,
+      "approx_tokens": 7223,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/navguard/src/cli.rs",
+      "zone": "software/toolfmt",
+      "lines": 971,
+      "bytes": 35588,
+      "approx_tokens": 8891,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/navguard/src/config.rs",
+      "zone": "software/toolfmt",
+      "lines": 97,
+      "bytes": 3012,
+      "approx_tokens": 753,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/navguard/src/lib.rs",
+      "zone": "software/toolfmt",
+      "lines": 24,
+      "bytes": 687,
+      "approx_tokens": 172,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/navguard/src/navigator.rs",
+      "zone": "software/toolfmt",
+      "lines": 576,
+      "bytes": 21596,
+      "approx_tokens": 5354,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/navguard/src/parser.rs",
+      "zone": "software/toolfmt",
+      "lines": 297,
+      "bytes": 9431,
+      "approx_tokens": 2358,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/navguard/src/parser/brace.rs",
+      "zone": "software/toolfmt",
+      "lines": 1027,
+      "bytes": 33236,
+      "approx_tokens": 8309,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/navguard/src/parser/indent.rs",
+      "zone": "software/toolfmt",
+      "lines": 116,
+      "bytes": 3911,
+      "approx_tokens": 978,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/navguard/src/parser/lexer.rs",
+      "zone": "software/toolfmt",
+      "lines": 531,
+      "bytes": 17391,
+      "approx_tokens": 4348,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/navguard/src/parser/tests.rs",
+      "zone": "software/toolfmt",
+      "lines": 688,
+      "bytes": 19065,
+      "approx_tokens": 4767,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/navguard/src/paths.rs",
+      "zone": "software/toolfmt",
+      "lines": 162,
+      "bytes": 5861,
+      "approx_tokens": 1466,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/navguard/src/responder.rs",
+      "zone": "software/toolfmt",
+      "lines": 223,
+      "bytes": 6771,
+      "approx_tokens": 1693,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/navguard/src/scanner.rs",
+      "zone": "software/toolfmt",
+      "lines": 230,
+      "bytes": 8190,
+      "approx_tokens": 2048,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/navguard/src/step.rs",
+      "zone": "software/toolfmt",
+      "lines": 351,
+      "bytes": 11344,
+      "approx_tokens": 2836,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/navguard/src/text.rs",
+      "zone": "software/toolfmt",
+      "lines": 131,
+      "bytes": 4295,
+      "approx_tokens": 1071,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/navguard/src/triangle.rs",
+      "zone": "software/toolfmt",
+      "lines": 498,
+      "bytes": 16546,
+      "approx_tokens": 4137,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/navguard/src/validate.rs",
+      "zone": "software/toolfmt",
+      "lines": 71,
+      "bytes": 2194,
+      "approx_tokens": 549,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/navguard/src/watch.rs",
+      "zone": "software/toolfmt",
+      "lines": 130,
+      "bytes": 4398,
+      "approx_tokens": 1100,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/navguard/src/write.rs",
+      "zone": "software/toolfmt",
+      "lines": 51,
+      "bytes": 1629,
+      "approx_tokens": 408,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/Cargo.toml",
+      "zone": "software/toolfmt",
+      "lines": 22,
+      "bytes": 495,
+      "approx_tokens": 124,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/README.md",
+      "zone": "software/toolfmt",
+      "lines": 153,
+      "bytes": 6937,
+      "approx_tokens": 1729,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/REPORT_2026-11-04.md",
+      "zone": "software/toolfmt",
+      "lines": 259,
+      "bytes": 21546,
+      "approx_tokens": 5354,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/REPORT_2026-11-20.md",
+      "zone": "software/toolfmt",
+      "lines": 111,
+      "bytes": 11269,
+      "approx_tokens": 2799,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/SPEC.md",
+      "zone": "software/toolfmt",
+      "lines": 711,
+      "bytes": 35222,
+      "approx_tokens": 8765,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/examples/home/.gitignore",
+      "zone": "software/toolfmt",
+      "lines": 2,
+      "bytes": 26,
+      "approx_tokens": 7,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/examples/home/fixtures/demo.add/01.json",
+      "zone": "software/toolfmt",
+      "lines": 1,
+      "bytes": 253,
+      "approx_tokens": 64,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/examples/home/fixtures/demo.add/02.json",
+      "zone": "software/toolfmt",
+      "lines": 1,
+      "bytes": 398,
+      "approx_tokens": 100,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/examples/home/fixtures/demo.delete_all/01.json",
+      "zone": "software/toolfmt",
+      "lines": 1,
+      "bytes": 269,
+      "approx_tokens": 68,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/examples/home/fixtures/demo.list_files/01.json",
+      "zone": "software/toolfmt",
+      "lines": 1,
+      "bytes": 2709,
+      "approx_tokens": 677,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/examples/home/fixtures/demo.list_files/02.json",
+      "zone": "software/toolfmt",
+      "lines": 1,
+      "bytes": 2673,
+      "approx_tokens": 668,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/examples/home/fixtures/demo.list_files/90-empty.json",
+      "zone": "software/toolfmt",
+      "lines": 1,
+      "bytes": 234,
+      "approx_tokens": 59,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/examples/home/fixtures/demo.list_files/91-malformed.json",
+      "zone": "software/toolfmt",
+      "lines": 1,
+      "bytes": 199,
+      "approx_tokens": 50,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/examples/home/fixtures/demo.list_files/92-error-text.json",
+      "zone": "software/toolfmt",
+      "lines": 1,
+      "bytes": 207,
+      "approx_tokens": 52,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/examples/home/fixtures/demo.log_tail/01.json",
+      "zone": "software/toolfmt",
+      "lines": 1,
+      "bytes": 1898,
+      "approx_tokens": 474,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/examples/home/fixtures/demo.matrix/01.json",
+      "zone": "software/toolfmt",
+      "lines": 1,
+      "bytes": 400,
+      "approx_tokens": 99,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/examples/home/fixtures/demo.numbers/01.json",
+      "zone": "software/toolfmt",
+      "lines": 1,
+      "bytes": 358,
+      "approx_tokens": 89,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/examples/home/fixtures/demo.paths/01.json",
+      "zone": "software/toolfmt",
+      "lines": 1,
+      "bytes": 454,
+      "approx_tokens": 114,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/examples/home/fixtures/demo.pow/01.json",
+      "zone": "software/toolfmt",
+      "lines": 1,
+      "bytes": 337,
+      "approx_tokens": 85,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/examples/home/fixtures/demo.search/01.json",
+      "zone": "software/toolfmt",
+      "lines": 1,
+      "bytes": 992,
+      "approx_tokens": 248,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/examples/home/fixtures/demo.search/90-keys.json",
+      "zone": "software/toolfmt",
+      "lines": 1,
+      "bytes": 298,
+      "approx_tokens": 75,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/examples/home/fixtures/demo.snapshot/01.json",
+      "zone": "software/toolfmt",
+      "lines": 1,
+      "bytes": 380,
+      "approx_tokens": 95,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/examples/home/fixtures/edge.misc/01-no-standard.json",
+      "zone": "software/toolfmt",
+      "lines": 1,
+      "bytes": 190,
+      "approx_tokens": 48,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/examples/home/fixtures/edge.misc/02-auto-list.json",
+      "zone": "software/toolfmt",
+      "lines": 1,
+      "bytes": 438,
+      "approx_tokens": 110,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/examples/home/fixtures/edge.misc/03-auto-pretty-object.json",
+      "zone": "software/toolfmt",
+      "lines": 1,
+      "bytes": 410,
+      "approx_tokens": 103,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/examples/home/fixtures/edge.misc/04-override.json",
+      "zone": "software/toolfmt",
+      "lines": 1,
+      "bytes": 322,
+      "approx_tokens": 80,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/examples/home/fixtures/edge.misc/05-bad-inline-template.json",
+      "zone": "software/toolfmt",
+      "lines": 1,
+      "bytes": 160,
+      "approx_tokens": 40,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/examples/home/fixtures/edge.misc/06-scalar.json",
+      "zone": "software/toolfmt",
+      "lines": 1,
+      "bytes": 127,
+      "approx_tokens": 32,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/examples/home/fixtures/edge.misc/07-family.json",
+      "zone": "software/toolfmt",
+      "lines": 1,
+      "bytes": 259,
+      "approx_tokens": 65,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/examples/home/standards/demo.add.yml",
+      "zone": "software/toolfmt",
+      "lines": 4,
+      "bytes": 117,
+      "approx_tokens": 30,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/examples/home/standards/demo.list_files.yml",
+      "zone": "software/toolfmt",
+      "lines": 7,
+      "bytes": 170,
+      "approx_tokens": 43,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/examples/home/standards/demo.log_tail.yml",
+      "zone": "software/toolfmt",
+      "lines": 3,
+      "bytes": 36,
+      "approx_tokens": 9,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/examples/home/standards/demo.matrix.yml",
+      "zone": "software/toolfmt",
+      "lines": 4,
+      "bytes": 56,
+      "approx_tokens": 14,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/examples/home/standards/demo.numbers.yml",
+      "zone": "software/toolfmt",
+      "lines": 3,
+      "bytes": 39,
+      "approx_tokens": 10,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/examples/home/standards/demo.paths.yml",
+      "zone": "software/toolfmt",
+      "lines": 2,
+      "bytes": 24,
+      "approx_tokens": 6,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/examples/home/standards/demo.pow.yml",
+      "zone": "software/toolfmt",
+      "lines": 3,
+      "bytes": 74,
+      "approx_tokens": 19,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/examples/home/standards/demo.search.yml",
+      "zone": "software/toolfmt",
+      "lines": 11,
+      "bytes": 356,
+      "approx_tokens": 89,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/examples/home/standards/demo.snapshot.yml",
+      "zone": "software/toolfmt",
+      "lines": 2,
+      "bytes": 30,
+      "approx_tokens": 8,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/examples/home/standards/family/listing.yml",
+      "zone": "software/toolfmt",
+      "lines": 4,
+      "bytes": 115,
+      "approx_tokens": 29,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/examples/home/upstreams.json",
+      "zone": "software/toolfmt",
+      "lines": 9,
+      "bytes": 145,
+      "approx_tokens": 37,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/src/capture.rs",
+      "zone": "software/toolfmt",
+      "lines": 455,
+      "bytes": 14687,
+      "approx_tokens": 3672,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/src/catalog.rs",
+      "zone": "software/toolfmt",
+      "lines": 564,
+      "bytes": 18386,
+      "approx_tokens": 4592,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/src/config.rs",
+      "zone": "software/toolfmt",
+      "lines": 298,
+      "bytes": 10796,
+      "approx_tokens": 2699,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/src/demo.rs",
+      "zone": "software/toolfmt",
+      "lines": 508,
+      "bytes": 24077,
+      "approx_tokens": 6020,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/src/detect.rs",
+      "zone": "software/toolfmt",
+      "lines": 184,
+      "bytes": 5536,
+      "approx_tokens": 1384,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/src/gateway.rs",
+      "zone": "software/toolfmt",
+      "lines": 2036,
+      "bytes": 75764,
+      "approx_tokens": 18940,
+      "mode": "structure-only"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/src/http.rs",
+      "zone": "software/toolfmt",
+      "lines": 124,
+      "bytes": 4383,
+      "approx_tokens": 1096,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/src/image.rs",
+      "zone": "software/toolfmt",
+      "lines": 172,
+      "bytes": 5501,
+      "approx_tokens": 1376,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/src/json.rs",
+      "zone": "software/toolfmt",
+      "lines": 749,
+      "bytes": 22677,
+      "approx_tokens": 5667,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/src/lib.rs",
+      "zone": "software/toolfmt",
+      "lines": 28,
+      "bytes": 724,
+      "approx_tokens": 181,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/src/main.rs",
+      "zone": "software/toolfmt",
+      "lines": 335,
+      "bytes": 11253,
+      "approx_tokens": 2814,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/src/meta.rs",
+      "zone": "software/toolfmt",
+      "lines": 171,
+      "bytes": 8003,
+      "approx_tokens": 2000,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/src/ops.rs",
+      "zone": "software/toolfmt",
+      "lines": 326,
+      "bytes": 11027,
+      "approx_tokens": 2756,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/src/pipeline.rs",
+      "zone": "software/toolfmt",
+      "lines": 706,
+      "bytes": 22114,
+      "approx_tokens": 5528,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/src/render.rs",
+      "zone": "software/toolfmt",
+      "lines": 820,
+      "bytes": 26426,
+      "approx_tokens": 6604,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/src/replay.rs",
+      "zone": "software/toolfmt",
+      "lines": 79,
+      "bytes": 2420,
+      "approx_tokens": 605,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/src/rpc.rs",
+      "zone": "software/toolfmt",
+      "lines": 99,
+      "bytes": 2861,
+      "approx_tokens": 716,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/src/standard.rs",
+      "zone": "software/toolfmt",
+      "lines": 767,
+      "bytes": 23619,
+      "approx_tokens": 5905,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/src/tpl.rs",
+      "zone": "software/toolfmt",
+      "lines": 141,
+      "bytes": 4978,
+      "approx_tokens": 1245,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/tests/common/mod.rs",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 6389,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/tests/corpus.rs",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 1262,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/tests/failures.rs",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 5628,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/tests/formatter_tools.rs",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 1376,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/tests/fuzz.rs",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 5647,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/tests/gateway.rs",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 13839,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/tests/http.rs",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 4690,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/tests/proxy.rs",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 10239,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/crates/toolfmt/tests/renders.rs",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 12127,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/docs/help/extract.md",
+      "zone": "software/toolfmt",
+      "lines": 116,
+      "bytes": 6283,
+      "approx_tokens": 1570,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/docs/help/mcp.md",
+      "zone": "software/toolfmt",
+      "lines": 93,
+      "bytes": 4671,
+      "approx_tokens": 1164,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/docs/help/navigation.md",
+      "zone": "software/toolfmt",
+      "lines": 189,
+      "bytes": 9240,
+      "approx_tokens": 2298,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/docs/help/overview.md",
+      "zone": "software/toolfmt",
+      "lines": 100,
+      "bytes": 5925,
+      "approx_tokens": 1477,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/docs/help/recon.md",
+      "zone": "software/toolfmt",
+      "lines": 54,
+      "bytes": 2072,
+      "approx_tokens": 518,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/docs/help/rules.md",
+      "zone": "software/toolfmt",
+      "lines": 83,
+      "bytes": 3783,
+      "approx_tokens": 942,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/examples/errors.yml",
+      "zone": "software/toolfmt",
+      "lines": 18,
+      "bytes": 289,
+      "approx_tokens": 73,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/examples/example.log",
+      "zone": "software/toolfmt",
+      "lines": 4,
+      "bytes": 101,
+      "approx_tokens": 26,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/rust-toolchain.toml",
+      "zone": "software/toolfmt",
+      "lines": 7,
+      "bytes": 295,
+      "approx_tokens": 74,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/scripts/release.bat",
+      "zone": "software/toolfmt",
+      "lines": 13,
+      "bytes": 729,
+      "approx_tokens": 183,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/scripts/release.ps1",
+      "zone": "software/toolfmt",
+      "lines": 699,
+      "bytes": 32246,
+      "approx_tokens": 8062,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/src/adapters/html.rs",
+      "zone": "software/toolfmt",
+      "lines": 862,
+      "bytes": 31568,
+      "approx_tokens": 7891,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/src/adapters/json.rs",
+      "zone": "software/toolfmt",
+      "lines": 530,
+      "bytes": 18334,
+      "approx_tokens": 4582,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/src/adapters/markdown.rs",
+      "zone": "software/toolfmt",
+      "lines": 384,
+      "bytes": 12754,
+      "approx_tokens": 3189,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/src/adapters/mod.rs",
+      "zone": "software/toolfmt",
+      "lines": 322,
+      "bytes": 11537,
+      "approx_tokens": 2884,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/src/adapters/path_selector.rs",
+      "zone": "software/toolfmt",
+      "lines": 218,
+      "bytes": 8045,
+      "approx_tokens": 2012,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/src/adapters/text.rs",
+      "zone": "software/toolfmt",
+      "lines": 222,
+      "bytes": 7357,
+      "approx_tokens": 1840,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/src/adapters/toml.rs",
+      "zone": "software/toolfmt",
+      "lines": 84,
+      "bytes": 2471,
+      "approx_tokens": 618,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/src/adapters/xml.rs",
+      "zone": "software/toolfmt",
+      "lines": 186,
+      "bytes": 6704,
+      "approx_tokens": 1676,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/src/adapters/xml_dtd.rs",
+      "zone": "software/toolfmt",
+      "lines": 1136,
+      "bytes": 44340,
+      "approx_tokens": 11085,
+      "mode": "structure-only"
+    },
+    {
+      "path": "software/toolfmt/src/adapters/yaml.rs",
+      "zone": "software/toolfmt",
+      "lines": 567,
+      "bytes": 19929,
+      "approx_tokens": 4983,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/src/api.rs",
+      "zone": "software/toolfmt",
+      "lines": 2010,
+      "bytes": 75261,
+      "approx_tokens": 18813,
+      "mode": "structure-only"
+    },
+    {
+      "path": "software/toolfmt/src/collect.rs",
+      "zone": "software/toolfmt",
+      "lines": 655,
+      "bytes": 22013,
+      "approx_tokens": 5503,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/src/commands.rs",
+      "zone": "software/toolfmt",
+      "lines": 316,
+      "bytes": 11722,
+      "approx_tokens": 2931,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/src/confine.rs",
+      "zone": "software/toolfmt",
+      "lines": 119,
+      "bytes": 4303,
+      "approx_tokens": 1076,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/src/discovery.rs",
+      "zone": "software/toolfmt",
+      "lines": 671,
+      "bytes": 23970,
+      "approx_tokens": 5992,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/src/help.rs",
+      "zone": "software/toolfmt",
+      "lines": 88,
+      "bytes": 2879,
+      "approx_tokens": 720,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/src/jsonpath.rs",
+      "zone": "software/toolfmt",
+      "lines": 1230,
+      "bytes": 43977,
+      "approx_tokens": 10992,
+      "mode": "structure-only"
+    },
+    {
+      "path": "software/toolfmt/src/lib.rs",
+      "zone": "software/toolfmt",
+      "lines": 21,
+      "bytes": 360,
+      "approx_tokens": 90,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/src/limits.rs",
+      "zone": "software/toolfmt",
+      "lines": 115,
+      "bytes": 3072,
+      "approx_tokens": 768,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/src/main.rs",
+      "zone": "software/toolfmt",
+      "lines": 189,
+      "bytes": 5728,
+      "approx_tokens": 1432,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/src/materialize.rs",
+      "zone": "software/toolfmt",
+      "lines": 525,
+      "bytes": 18899,
+      "approx_tokens": 4725,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/src/mcp.rs",
+      "zone": "software/toolfmt",
+      "lines": 463,
+      "bytes": 18201,
+      "approx_tokens": 4551,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/src/navigation.rs",
+      "zone": "software/toolfmt",
+      "lines": 352,
+      "bytes": 10360,
+      "approx_tokens": 2590,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/src/publish.rs",
+      "zone": "software/toolfmt",
+      "lines": 149,
+      "bytes": 4653,
+      "approx_tokens": 1161,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/src/render.rs",
+      "zone": "software/toolfmt",
+      "lines": 792,
+      "bytes": 29167,
+      "approx_tokens": 7288,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/src/run.rs",
+      "zone": "software/toolfmt",
+      "lines": 769,
+      "bytes": 27192,
+      "approx_tokens": 6798,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/src/template.rs",
+      "zone": "software/toolfmt",
+      "lines": 1713,
+      "bytes": 55853,
+      "approx_tokens": 13956,
+      "mode": "structure-only"
+    },
+    {
+      "path": "software/toolfmt/src/tools.rs",
+      "zone": "software/toolfmt",
+      "lines": 636,
+      "bytes": 27781,
+      "approx_tokens": 6946,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/src/transform.rs",
+      "zone": "software/toolfmt",
+      "lines": 449,
+      "bytes": 14561,
+      "approx_tokens": 3624,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/src/xpath.rs",
+      "zone": "software/toolfmt",
+      "lines": 863,
+      "bytes": 29382,
+      "approx_tokens": 7346,
+      "mode": "safe"
+    },
+    {
+      "path": "software/toolfmt/tests/api.rs",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 59702,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/fuzz.rs",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 114423,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/fuzz_regressions.rs",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 8404,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/golden.rs",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 19107,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/known_limits.rs",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 21173,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/navigator_state.rs",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 10809,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/one_exe.rs",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 18658,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/regressions.rs",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 17874,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/root_bounds.rs",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 12470,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots.rs",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 25189,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/absolute_paths/args.txt",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 121,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/absolute_paths/expected.md",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 3554,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/absolute_paths/expected_exit.txt",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 2,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/absolute_paths/sources/nested/orders.json",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 90,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/absolute_paths/sources/notes.txt",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 35,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/absolute_paths/template.yml",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 592,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/all_files_fail/expected.md",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 3051,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/all_files_fail/expected_exit.txt",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 2,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/all_files_fail/sources/latin1.json",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 13,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/all_files_fail/sources/mismatched.xml",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 27,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/all_files_fail/sources/truncated.json",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 12,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/all_files_fail/template.yml",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 451,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/anchor_text/expected.md",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 5398,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/anchor_text/expected_exit.txt",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 2,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/anchor_text/sources/comments.json",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 121,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/anchor_text/sources/forged.txt",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 164,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/anchor_text/template.yml",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 931,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/cli_format_override/args.txt",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 64,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/cli_format_override/expected.md",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 3580,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/cli_format_override/expected_exit.txt",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 2,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/cli_format_override/sources/alert.yaml",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 41,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/cli_format_override/sources/event.json",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 43,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/cli_format_override/template.yml",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 424,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/dedup_sort/expected.md",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 5992,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/dedup_sort/expected_exit.txt",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 2,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/dedup_sort/sources/a_server.log",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 149,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/dedup_sort/sources/b_worker.log",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 83,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/dedup_sort/template.yml",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 579,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/hash_glob_input/args.txt",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 24,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/hash_glob_input/expected.md",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 3111,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/hash_glob_input/expected_exit.txt",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 2,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/hash_glob_input/sources/a_plain.txt",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 31,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/hash_glob_input/sources/b_bom.txt",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 27,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/hash_glob_input/sources/c_skipped.md",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 30,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/hash_glob_input/template.yml",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 222,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/html_extract_modes/expected.md",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 8154,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/html_extract_modes/expected_exit.txt",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 2,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/html_extract_modes/sources/product.html",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 1100,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/html_extract_modes/template.yml",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 877,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/json_jsonpath_filters/expected.md",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 6346,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/json_jsonpath_filters/expected_exit.txt",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 2,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/json_jsonpath_filters/sources/orders.json",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 1239,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/json_jsonpath_filters/template.yml",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 898,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/markdown_nodes/expected.md",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 10106,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/markdown_nodes/expected_exit.txt",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 2,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/markdown_nodes/sources/README.md",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 763,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/markdown_nodes/template.yml",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 859,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/mixed_when_format/expected.md",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 8023,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/mixed_when_format/expected_exit.txt",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 2,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/mixed_when_format/sources/Cargo.toml",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 46,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/mixed_when_format/sources/build.log",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 26,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/mixed_when_format/sources/config/app.yaml",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 37,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/mixed_when_format/sources/config/service.conf",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 21,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/mixed_when_format/sources/docs/guide.md",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 27,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/mixed_when_format/sources/docs/index.html",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 89,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/mixed_when_format/sources/manifest",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 25,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/mixed_when_format/sources/modules.xml",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 64,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/mixed_when_format/sources/package.json",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 38,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/mixed_when_format/template.yml",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 905,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/no_matches_not_applicable/expected.md",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 5647,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/no_matches_not_applicable/expected_exit.txt",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 2,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/no_matches_not_applicable/sources/notes.txt",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 19,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/no_matches_not_applicable/sources/users.json",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 48,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/no_matches_not_applicable/template.yml",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 469,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/partial_unparsable/expected.md",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 3243,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/partial_unparsable/expected_exit.txt",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 2,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/partial_unparsable/sources/a_users.json",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 81,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/partial_unparsable/sources/b_broken.json",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 82,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/partial_unparsable/sources/c_users.json",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 46,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/partial_unparsable/template.yml",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 265,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/split_hard_line/args.txt",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 22,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/split_hard_line/expected.md",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 7205,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/split_hard_line/expected_exit.txt",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 2,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/split_hard_line/sources/one_line.txt",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 2710,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/split_hard_line/template.yml",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 1021,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/split_unicode_items/args.txt",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 22,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/split_unicode_items/expected.md",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 7408,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/split_unicode_items/expected_exit.txt",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 2,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/split_unicode_items/sources/release_notes.txt",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 1182,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/split_unicode_items/template.yml",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 475,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/text_logs_context/expected.md",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 10294,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/text_logs_context/expected_exit.txt",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 2,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/text_logs_context/sources/app.log",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 427,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/text_logs_context/sources/classic_mac.log",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 147,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/text_logs_context/sources/windows.log",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 155,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/text_logs_context/template.yml",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 690,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/toml_tables/expected.md",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 6856,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/toml_tables/expected_exit.txt",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 2,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/toml_tables/sources/service.toml",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 404,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/toml_tables/template.yml",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 933,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/truncation_limits/expected.md",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 6296,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/truncation_limits/expected_exit.txt",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 2,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/truncation_limits/sources/tickets.json",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 1254,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/truncation_limits/template.yml",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 745,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/xml_namespaces_dtd/expected.md",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 7975,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/xml_namespaces_dtd/expected_exit.txt",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 2,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/xml_namespaces_dtd/sources/catalog.xml",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 842,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/xml_namespaces_dtd/template.yml",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 1199,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/yaml_multidoc_merge/expected.md",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 5671,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/yaml_multidoc_merge/expected_exit.txt",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 2,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/yaml_multidoc_merge/sources/manifest.yaml",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 667,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/snapshots/yaml_multidoc_merge/template.yml",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 646,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/stabilization.rs",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 15159,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/support/mod.rs",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 15698,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/tier2_effective.rs",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 21606,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/tier2_html.rs",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 8048,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/tier2_jsonpath.rs",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 11188,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/tier2_release.rs",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 32598,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/tier2_status.rs",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 27554,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/tier2_unescape.rs",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 2812,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/tier2_xml.rs",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 17055,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/tests/tier2_yaml.rs",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 9798,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "fixture"
+    },
+    {
+      "path": "software/toolfmt/toolfmt.exe",
+      "zone": "software/toolfmt",
+      "lines": null,
+      "bytes": 4834304,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "binary"
+    },
+    {
+      "path": "software/witness_prover/CUBE_REFERENCE.md",
+      "zone": "software/witness_prover",
+      "lines": 3151,
+      "bytes": 182471,
+      "approx_tokens": 45280,
+      "mode": "structure-only"
+    },
+    {
+      "path": "software/witness_prover/README.md",
+      "zone": "software/witness_prover",
+      "lines": 125,
+      "bytes": 14743,
+      "approx_tokens": 3675,
+      "mode": "safe"
+    },
+    {
+      "path": "software/witness_prover/cube.exe",
+      "zone": "software/witness_prover",
+      "lines": null,
+      "bytes": 6612992,
+      "approx_tokens": null,
+      "mode": "skip",
+      "note": "binary"
+    }
+  ]
+}

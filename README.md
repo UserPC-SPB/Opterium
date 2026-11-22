@@ -9,9 +9,10 @@ Opterium is a repository with two halves: a **number ontology and theory** equip
 | `Theory/ontology_of_number/` | The number ontology: theory, reading guide, claims index | [`README.md`](Theory/ontology_of_number/README.md) — compact reading guide (start here) |
 | `Theory/agent-data-circuit/` | Agent Data Circuit (ADC): publisher-side protocol proposal — manifest, schemas, reference server, MCP bridge | [`AI-ENTRY.md`](Theory/agent-data-circuit/AI-ENTRY.md) — cold entry; [`README.md`](Theory/agent-data-circuit/README.md) |
 | `software/parsers_for_AI/` | Unified parser `any_txt_parser.exe` (CLI + MCP server) | [`README.md`](software/parsers_for_AI/README.md) — usage; [`software/README.md`](software/README.md) |
-| `software/witness_prover/` | Proof-by-witness certificate prover | [`README.md`](software/witness_prover/README.md) — proof model; [`software/README.md`](software/README.md) |
+| `software/witness_prover/` | Self-contained cube_v5 exact-math engine (cube.exe, 87 MCP tools, local stdio) | [`README.md`](software/witness_prover/README.md) — product overview; [`CUBE_REFERENCE.md`](software/witness_prover/CUBE_REFERENCE.md) — full reference (structure-only); [`software/README.md`](software/README.md) |
 | `software/toolfmt/` | MCP gateway that formats tool outputs and fronts all of an agent's MCP servers (`toolfmt` v3.1.3; Windows x64 binary + Linux x86_64 build — [release asset](https://github.com/UserPC-SPB/Opterium/releases/download/v3.1.3/toolfmt-3.1.3-linux-x86_64.tar.gz)) | [`crates/toolfmt/README.md`](software/toolfmt/crates/toolfmt/README.md) — gateway usage; [`crates/toolfmt/SPEC.md`](software/toolfmt/crates/toolfmt/SPEC.md) — authoritative spec; [`README.md`](software/toolfmt/README.md) — bundled parser docs; [`software/README.md`](software/README.md) |
 | `ADAPTIVE_METHOD.md` | Adaptive method architecture: how the agent builds task-specific methods from the available capabilities (toolfmt gateway + any_txt_parser) | — |
+| `MANIFEST.md` / `MANIFEST.json` | Cost map for visiting agents: every file's lines/bytes/~tokens and reading mode (safe / structure-only / skip) — consult BEFORE reading anything | [`MANIFEST.md`](MANIFEST.md) (machine-readable: `MANIFEST.json`) |
 | `README.md` | This router | — |
 
 ## How to read (AI agents)
